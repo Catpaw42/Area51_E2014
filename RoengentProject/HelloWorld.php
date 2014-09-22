@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +30,7 @@ spl_autoload_extensions(".php");
 function classloader($class)
 {
 	echo "here we are in the autoloader!!<br>";
-	
+	echo "\$class = ", $class, "<br>";
 	//make the classname lowercase.
 	$filename = strtolower($class);
 	//divide the classname at all "\" as these signify the namespace.
