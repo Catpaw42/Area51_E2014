@@ -10,6 +10,7 @@ class UserDTO {
 	var $position; // kan muligvis lave vores egen enum klasse - Rùni
 	
 	function __construct($username=""){
+		$this->username = $username;
 		return self::class;
 	}
 	
