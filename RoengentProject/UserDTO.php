@@ -3,11 +3,11 @@ namespace testSpaceStuff;
 
 class UserDTO {
 	
-	var $username;
-	var $userId;
-	var $cpr;
+	private $username; 
+	private $userId;
+	var $cpr;		//"var" er en PHP 4 ting, i PHP5 bør du bruge private/protected/public ligesom i java - M
 	var $password;
-	var $position; // kan muligvis lave vores egen enum klasse - R�ni
+	var $position; // kan muligvis lave vores egen enum klasse - Rùni
 	
 	function __construct($username=""){
 		$this->username = $username;
