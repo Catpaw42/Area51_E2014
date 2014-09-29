@@ -7,7 +7,7 @@
     <p>This page uses frames. The current browser you are using does not support frames.</p>
     <?php
     echo "test 1";
-	$userDTO = new UserDTO("Rúni");
+	$userDTO = new testSpaceStuff\UserDTO("Rúni");
 	echo "test 2";
 	echo $userDTO->getUsername();
 	echo "test 3";

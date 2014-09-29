@@ -1,4 +1,6 @@
 <?php
+namespace testSpaceStuff;
+
 class UserDTO {
 	
 	var $username;
