@@ -14,6 +14,8 @@ class DBAccess
 	 */
 	public function __construct($host, $username, $password, $dbname)
 	{
+								// et "\" foran et kald flytter kaldet til globalt-namespace.
+								//(vigtig hvis man selv havde lavet en mysqli funktion/classe)
 		$this->connection = new \mysqli($host, $username, $password, $dbname);
 	}
 	

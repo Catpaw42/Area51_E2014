@@ -3,11 +3,13 @@ namespace testSpaceStuff;
 
 class UserDTO {
 	
+
 	private $username;
 	private $userId;
 	private $cpr;
 	private $password;
 	private $position; // kan muligvis lave vores egen enum klasse - Rùni
+
 	
 	function __construct($username="", $cpr=0, $position=array()){
 		$this->username = $username;

@@ -14,7 +14,7 @@
     $teststuff = new testSpaceStuff\UserDTO();
     echo $teststuff->getUsername();
     echo "test 1.5";
-	$userDTO = new testSpaceStuff\UserDTO("Rúni");
+	$userDTO = new testSpaceStuff\UserDTO("RÃ¹ni");
 	echo "test 2 <br>";
 	echo $userDTO->getUsername();
 	echo "<br>test 3 <br>";
