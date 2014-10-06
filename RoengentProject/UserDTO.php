@@ -4,18 +4,21 @@ namespace testSpaceStuff;
 class UserDTO {
 	
 
-	private $username;
-	private $userId;
-	private $cpr;
+	private $name;
+	private $userID;
 	private $password;
-	private $position; // kan muligvis lave vores egen enum klasse - Rùni
+	private $phoneNo;
+	private $department;
+	private $permissions; // kan muligvis lave vores egen enum klasse - Rùni
 
 	
-	function __construct($username="", $cpr=0, $position=array()){
-		$this->username = $username;
-		$this->cpr = $cpr;
-		$this->position = $position;
-		return self::class;
+	function __construct($name="", $userID="", $password="", $phoneNo="", $department="", $permissions=array()){
+		$this->username = $name;
+		$this->userID = $userID;
+		$this->password= $password;
+		$this->phoneNo=$phoneNo;
+		$this->department=$department;
+		$this->permissions = $permissions;
 	}
 	
 	function getUserId(){
@@ -26,25 +29,43 @@ class UserDTO {
 	}
 	
 	
-	function getUsername(){
-		return $this->username;
+	function getName(){
+		return $this->name;
 	}
-	function setUsername($username){
-		$this->username = $username;
-	}
-	
-	function getCpr(){
-		return $this->cpr;
-	}
-	function setCpr($cpr){
-		$this->cpr = $cpr;	
+	function setName($name){
+		$this->name = $name;
 	}
 	
-	function getPosition(){
-		return $this->position;
+	
+	function getPermissions(){
+		return $this->permissions;
 	}
-	function setPosition($position){
-		$this->position = $position;
+	function setPermissions($permissions=array()){
+		$this->permissions = $permissions;
+	}
+	
+	function getPassword(){
+		return $this->password;
+	}
+	
+	function setPassword($password){
+		$this->password=$password;
+	}
+	
+	function getPhoneNo(){
+		return $this->phoneNo;
+	}
+	
+	function  setPhoneNo($phoneNo){
+		$this->phoneNo=$phoneNo;
+	}
+	
+	function getDepartment(){
+		return $this->department;
+	}
+	
+	function setDepartment($department){
+		$this->department=$department;
 	}
 	
 	
