@@ -1,22 +1,44 @@
 <?php
 namespace DBAccess;
-
+/** 
+ *  
+ * @author Christian
+ * Database Connector class - Singleton pattern
+ */
 class DBAccess
 {
-	private $connection = null;
+	private static $connection = null;
 	
+
+	public function __construct()
+	{
+		die('No calls to constructor allowed - use connect() to get connection');
+
+	}
 	/**
-	 * 
+	 *
 	 * @param string $host Either a host name or an IP address
 	 * @param string $username The MySQL user name
 	 * @param string $password The password to log in with
 	 * @param string $dbname The default database to be used when performing queries
 	 */
-	public function __construct($host, $username, $password, $dbname)
-	{
-								// et "\" foran et kald flytter kaldet til globalt-namespace.
-								//(vigtig hvis man selv havde lavet en mysqli funktion/classe)
-		$this->connection = new \mysqli($host, $username, $password, $dbname);
+	public static function connect($host, $user, $password, $database){
+		//Singleton pattern
+		$succes;
+		if (self::$connection == null){
+			$succes	= self::$connection = new \mysqli($host, $user, $password, $database);				
+		}
+		if ($succes){
+		return self::$connection;
+		} else {
+			throw new \Exception('Connection failed');
+		}
+	}
+	/**
+	 * Disconnecting from DB
+	 */
+	public static function disconnect(){
+		self::$connection=null;
 	}
 	
 	public function printDatabases()
