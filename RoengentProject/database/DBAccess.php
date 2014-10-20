@@ -22,17 +22,17 @@ class DBAccess
 	 * @param string $password The password to log in with
 	 * @param string $dbname The default database to be used when performing queries
 	 */
-	public static function connect($host, $user, $password, $database){
+	
+	public static function connectparam($host, $user, $password, $database){
 		//Singleton pattern
-		$succes;
 		if (self::$connection == null){
-			$succes	= self::$connection = new \mysqli($host, $user, $password, $database);				
+			self::$connection = new \mysqli($host, $user, $password, $database);				
 		}
-		if ($succes){
 		return self::$connection;
-		} else {
-			throw new \Exception('Connection failed');
-		}
+		
+	}
+	public static function connect(){
+		return self::connectparam('sql-lab1.cc.dtu.dk', 's134000', 'hastings', 's134000');
 	}
 	/**
 	 * Disconnecting from DB
