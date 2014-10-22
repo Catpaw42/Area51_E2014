@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+.roentgenform {
+	width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.inline {
+	display: inline;
+	float: left;
+}
+
+#patientData {
+	border: 1px solid black;
+}
+#rekvirentData {
+	border: 1px solid black;
+}
+#indlagtTransport {
+	display: none;
+}
