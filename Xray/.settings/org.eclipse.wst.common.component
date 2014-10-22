@@ -2,6 +2,7 @@
     <wb-module deploy-name="Xray">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/jars"/>
         <property name="context-root" value="Xray"/>
         <property name="java-output-path" value="/Xray/build/classes"/>
     </wb-module>
