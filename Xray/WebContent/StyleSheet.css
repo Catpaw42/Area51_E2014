@@ -1,0 +1,27 @@
+@CHARSET "ISO-8859-1";
+body {
+	background-color: #80ffff;
+}
+#test {
+	color: navy;
+	margin-left: 20px;
+	font-family: Georgia;
+}
+h1 {
+	color: navy;
+	margin-left: 20px;
+	font-family: Arial;
+}
+p {
+	font-family: Courier New;
+	font-style: italic;
+}
+#specialP {
+	color: red;
+}
+#try0 {
+	color: green;
+}
+#try1 {
+	color: blue;
+}
