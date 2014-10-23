@@ -1,13 +1,4 @@
 <!DOCTYPE HTML>
-<?php 
-//create variables and set them to NULL of they dont exist in the _POST array
-$username = (isset($_POST["username"]) ? $_POST["username"] : NULL);
-$password = (isset($_POST["password"]) ? $_POST["password"] : NULL);
-
-//if the "submit" variable is not set in _POST show the form.
-if(!isset($_POST["submit"]))
-{
-	?>
 	<html>
 		<head>
 			<title>Login</title>
@@ -18,7 +9,7 @@ if(!isset($_POST["submit"]))
 		<body>
 			<section class="loginform" >
 			<h1>Login</h1>
-				<form id="login" action=<?php echo htmlentities($_SERVER["PHP_SELF"]); ?> method="post" accept-charset="utf-8">
+				<form id="login" action=LoginServlet method="post" accept-charset="utf-8">
 					<ul>
 						<li>
 						<label for="username">Brugernavn:</label>
@@ -36,12 +27,3 @@ if(!isset($_POST["submit"]))
 			</section>
 		</body>
 	</html>
-<?php 
-}
-//if the "sumbmit" variable has been set in _POST, display the results of the form
-else 
-{
-	echo "username: $username <br> password: $password";
-}
-
-?>
