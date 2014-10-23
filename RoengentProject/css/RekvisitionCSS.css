@@ -1,21 +1,50 @@
 @CHARSET "UTF-8";
 
 .roentgenform {
-	width: 1024px;
+	width: 665px;
 	margin-left: auto;
 	margin-right: auto;
+	border: 1px solid blue;
+	padding: 20px;
+}
+.roentgenform input:not([type="checkbox"]):not([type="radio"]) {
+	display: block;
+}
+.roentgenform select {
+	display: block;
+}
+.roentgenform textarea {
+	display: block;
+	width: 660px;
+	height: 120px;
+	
+}
+.roentgenform ul {
+	padding: 0;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }
 
-.inline {
+.inline li {
 	display: inline;
 	float: left;
 }
 
+#undersøgelseData {
+	clear: both;
+}
+
 #patientData {
-	border: 1px solid black;
+	width: 330px;
 }
 #rekvirentData {
-	border: 1px solid black;
+	width: 330px;
 }
 #indlagtTransport {
 	display: none;
