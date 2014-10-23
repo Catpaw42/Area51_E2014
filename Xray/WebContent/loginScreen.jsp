@@ -3,7 +3,7 @@
 		<head>
 			<title>Login</title>
 			<meta charset="utf-8">
-			<link href="css/loginScreenStyle.css" rel="stylesheet" type="text/css" media="screen">
+			<link href="StyleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		</head>
 		
 		<body>
