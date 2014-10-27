@@ -1,11 +1,5 @@
 package servlets;
-//TODO : Refactor to support new project! 
 import java.io.IOException;
-
-import javaMeasure.User;
-import javaMeasure.control.DataBaseController;
-import javaMeasure.control.interfaces.IDatabaseController.DataBaseException;
-import javaMeasure.control.interfaces.IDatabaseController.UserNotFoundException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,37 +7,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.DataBaseController;
+import database.interfaces.IDataBaseController;
+import dto.DTOUser;
+
 /**
  * Servlet implementation class LoginServlet
+ * 
  */
+@SuppressWarnings("serial")
 @WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	DataBaseController dbctrl = new DataBaseController();
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LoginServlet() {
+public class LoginServlet extends HttpServlet
+{
+	IDataBaseController dbctrl = new DataBaseController();
+
+	public LoginServlet()
+	{
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		//Check for login
-		if (request.getSession().getAttribute("user")!= null){
+		if (request.getSession().getAttribute("user")!= null)
 			response.sendRedirect("MenuServlet");
-		} else {
-			request.getRequestDispatcher("WEB-INF/userlogin.jsp").forward(request, response);
-		}
+		else
+			request.getRequestDispatcher("WEB-INF/loginScreen.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		//User posts login data
 		System.out.println("UserLogin - Post");
 		String username = request.getParameter("username");
