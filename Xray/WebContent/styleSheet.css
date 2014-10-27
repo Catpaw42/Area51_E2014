@@ -1,27 +1,143 @@
-@CHARSET "ISO-8859-1";
-body {
-	background-color: #80ffff;
+/*------------------------------------------------------------------------------------
+rekvisition.jsp
+------------------------------------------------------------------------------------*/
+.roentgenform {
+	width: 665px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid blue;
+	padding: 20px;
 }
-#test {
-	color: navy;
-	margin-left: 20px;
-	font-family: Georgia;
+.roentgenform input:not([type="checkbox"]):not([type="radio"]) {
+	display: block;
 }
-h1 {
-	color: navy;
-	margin-left: 20px;
-	font-family: Arial;
+.roentgenform select {
+	display: block;
 }
-p {
-	font-family: Courier New;
-	font-style: italic;
+.roentgenform textarea {
+	display: block;
+	width: 660px;
+	height: 120px;
+	
 }
-#specialP {
-	color: red;
+.roentgenform ul {
+	padding: 0;
 }
-#try0 {
-	color: green;
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }
-#try1 {
-	color: blue;
+
+.inline li {
+	display: inline;
+	float: left;
 }
+
+#undersøgelseData {
+	clear: both;
+}
+
+#patientData {
+	width: 330px;
+}
+#rekvirentData {
+	width: 330px;
+}
+#indlagtTransport {
+	display: none;
+}
+
+/*------------------------------------------------------------------------------------
+loginScreen.jsp
+------------------------------------------------------------------------------------*/
+/*set the background, and a font size for the entire page*/
+html { 
+	background: url(../images/background1.png) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	font-size: 10pt;
+}
+/*set the size of the loginform-element*/
+.loginform {
+	width: 455px;
+	height: 105px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*remove padding and margin from un-ordered lists in the form*/
+.loginform ul {
+	padding: 0;
+	margin: 0;
+}
+
+/*set the list items to display inline, and float to the left of each other*/
+.loginform li {
+    display: inline;
+    float: left;
+}
+
+/*change the labes to block-display instead of inline, also sets a color*/
+label {
+    display: block;
+    color: #999;
+}
+/*not quite sure what this does (Since we float the li, the parents will collapse,
+ *so we need to clear things around the parent with the clearfix hack.)*/
+.loginform :BEFORE,
+.loginform :AFTER {
+	content: "";
+	display: table;
+}
+
+.loginform :AFTER {
+	clear: both;
+}
+
+/*set the outline of focused items to 0*/
+:FOCUS {
+	outline: 0;
+}
+
+/*style input items on the form that have a type != submit, meaning the two textfield*/
+.loginform input:not([type=submit]) {  
+    padding: 5px;  
+    margin-right: 10px;  
+    border: 1px solid rgba(0, 0, 0, 0.3);  
+    border-radius: 3px;  
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.1),   
+                0px 1px 0px 0px rgba(250, 250, 250, 0.5) ;  
+}
+
+/*style the button*/
+.loginform input[type=submit] {  
+    border: 1px solid rgba(0, 0, 0, 0.3);  
+    background: #64c8ef; /* Old browsers */  
+    background: -moz-linear-gradient(top,  #64c8ef 0%, #00a2e2 100%); /* FF3.6+ */  
+    background: -webkit-gradient(linear, left top, left bottombottom, color-stop(0%,#64c8ef), color-stop(100%,#00a2e2)); /* Chrome,Safari4+ */  
+    background: -webkit-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%); /* Chrome10+,Safari5.1+ */  
+    background: -o-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%); /* Opera 11.10+ */  
+    background: -ms-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%); /* IE10+ */  
+    background: linear-gradient(to bottombottom,  #64c8ef 0%,#00a2e2 100%); /* W3C */  
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64c8ef', endColorstr='#00a2e2',GradientType=0 ); /* IE6-9 */  
+    color: #fff;  
+    padding: 5px 15px;  
+    margin-right: 0;  
+    margin-top: 18px;  
+    border-radius: 3px;  
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);  
+} 
+/*------------------------------------------------------------------------------------
+mainMenu.jsp
+------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------
+rekvirer.jsp
+------------------------------------------------------------------------------------*/
