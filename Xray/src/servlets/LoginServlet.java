@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			System.out.println("username: " + username);
 			System.out.println("password: " + password);
-			User loginUser = new User(username, 0, password);
+			DTOUser loginUser = new DTOUser(username, 0, password);
 			System.out.println(loginUser);
 			//Validating user
 			try {loginSuccess = dbctrl.validateUser(loginUser);
@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
 			System.out.println(loginSuccess);
 			if (loginSuccess) {
 				try {
-				User log=dbctrl.getUserFromString(username);
+				DTOUser log=dbctrl.getUserFromString(username);
 				if(log.isActive()){
 				System.out.println("Login success forwarding");
 				
