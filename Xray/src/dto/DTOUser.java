@@ -3,19 +3,18 @@ package dto;
 import java.util.ArrayList;
 
 public class DTOUser {
+	public enum Permission{ADMIN, VISITATE, BOOKING, REKVISITION};
 	
+	
+	private int userId;
 	private String username;
 	private String password;
 	private String department;
 	private String name;
-	private int userId;
-	public enum Permission{ADMIN, VISITATE, BOOKING, REKVISITION};
 	private ArrayList<Permission> permissions;
-	
 	
 	@SuppressWarnings("serial")
 	private static ArrayList<Permission> defaultPermission = new ArrayList<Permission>(){{add(Permission.REKVISITION);}};
-	
 	private static int NOID = -1; // if newly created user, it is not possible to set id, so this is used. ID is set in database with autoincrement
 	
 	/**
@@ -28,7 +27,7 @@ public class DTOUser {
 	 * @param permissions
 	 */
 	public DTOUser(int userid, String username, String password, String department, String name, ArrayList<Permission> permissions){
-		this.setUserId(userid);
+		this.userId = userid;
 		this.username = username;
 		this.password = password;
 		this.department = department;
