@@ -15,18 +15,28 @@ public class DataSourceConnector {
 	 * @throws SQLException - when connection fails
 	 */
 	public static Connection getConnection() throws SQLException{
+		
 		Connection connection = null;
 		try {
-			// Get DataSource from context.xml/web.xml file - look there...
+			// Get DataSource from context.xml/web.xml file - look there... ONLY works in a servlet
 			Context initContext  = new InitialContext();
 			Context envContext  = (Context)initContext.lookup("java:/comp/env");
 			dataSource = (DataSource)envContext.lookup("jdbc/s134000");
 			connection = dataSource.getConnection();
 		} catch (NamingException e) {
+			//TODO handle exception...
 			e.printStackTrace();
 		}
 		return connection;
 		
+	}
+	public static void main(String[] args){
+		try {
+			Connection c = DataSourceConnector.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
