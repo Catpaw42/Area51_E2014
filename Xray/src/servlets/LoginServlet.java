@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.DataBaseController;
 import database.interfaces.IDataBaseController;
+import database.interfaces.IDataBaseController.DatabaseException;
+import database.interfaces.IDataBaseController.UserNotFoundException;
 import dto.DTOUser;
 
 /**
@@ -29,6 +31,7 @@ public class LoginServlet extends HttpServlet
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		//Check for login
@@ -41,61 +44,78 @@ public class LoginServlet extends HttpServlet
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		//User posts login data
-		System.out.println("UserLogin - Post");
 		String username = request.getParameter("username");
-		if (username != null){
+		String password = request.getParameter("password");
+		System.out.println("username: " + username);
+		System.out.println("password: " + password);
+		
+		if (username != null && password != null)
+		{
 			boolean loginSuccess = false;
-			String password = request.getParameter("password");
-			System.out.println("username: " + username);
-			System.out.println("password: " + password);
-			DTOUser loginUser = new DTOUser(username, 0, password);
-			System.out.println(loginUser);
+				
+			DTOUser user = new DTOUser(username, password, null, null);		
+			System.out.println(user);
+			
 			//Validating user
-			try {loginSuccess = dbctrl.validateUser(loginUser);
-			} catch (DataBaseException e) {		e.printStackTrace();	
-				System.err.println("failed to validateUser in login servlet");
+			try 
+			{
+				loginSuccess = dbctrl.validateUser(user);
+			}
+			catch (DatabaseException e)
+			{	
+				e.printStackTrace();
+				System.err.println(e.getMessage());
+				System.err.println("failed to validate User in loginServlet");
 			}
 			System.out.println(loginSuccess);
-			if (loginSuccess) {
-				try {
-				DTOUser log=dbctrl.getUserFromString(username);
-				if(log.isActive()){
-				System.out.println("Login success forwarding");
+			if (loginSuccess)
+			{
+				try
+				{
+					DTOUser loggedInUser=dbctrl.getUserFromUsername(username);
+					
+					if(loggedInUser.isActive())
+					{
+						System.out.println("Login success, forwarding");
+						request.getSession().setAttribute("user", loggedInUser );
+					
+						request.getSession().setAttribute("database", dbctrl);
+						response.sendRedirect("MenuServlet");
+						System.out.println("forward finished");
+					}
+					else
+					{
+						request.setAttribute("loginFail", true);
+						request.getRequestDispatcher("WEB-INF/userlogin.jsp").forward(request, response);
+					}
 				
-					request.getSession().setAttribute("user", log );
-				
-				request.getSession().setAttribute("database", dbctrl);
-				response.sendRedirect("MenuServlet");
-				System.out.println("forward finished");
 				}
-				else{
-					request.setAttribute("loginFail", true);
-					request.getRequestDispatcher("WEB-INF/userlogin.jsp").forward(request, response);
+				catch (DatabaseException e)
+				{
+					e.printStackTrace();
 				}
-				
-			} catch (DataBaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UserNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally{}
+				catch (UserNotFoundException e)
+				{
+					e.printStackTrace();
 				}
-			else{
+			}
+			else
+			{
 				request.setAttribute("loginFail", true);
-				request.getRequestDispatcher("WEB-INF/userlogin.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/loginScreen.jsp").forward(request, response);
 			}
 				
 			
-		} else {
-			if (request.getParameter("username")  != null) 
+		}
+		else
+		{
+			if (request.getParameter("username") != null)
 				request.setAttribute("loginFail", true);
 			request.getRequestDispatcher("WEB-INF/userlogin.jsp").forward(request, response);
 		}
 	}
-
-
 }

@@ -2,8 +2,19 @@ package database.interfaces;
 
 import dto.DTOUser;
 
-public interface IDataBaseController {
+public interface IDataBaseController
+{
+	boolean validateUser(DTOUser loginUser) throws DatabaseException;
 
-	boolean validateUser(DTOUser loginUser);
+	DTOUser getUserFromUsername(String username) throws DatabaseException, UserNotFoundException;
+	
+	public class DatabaseException extends Exception
+	{
 
+	}
+	
+	public class UserNotFoundException extends Exception
+	{
+
+	}
 }
