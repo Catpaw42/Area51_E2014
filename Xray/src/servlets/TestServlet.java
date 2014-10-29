@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import database.DataSourceConnector;
+import database.interfaces.IDataSourceConnector.ConnectionException;
 
 /**
  * Servlet implementation class TestServlet
@@ -51,6 +52,8 @@ public class TestServlet extends HttpServlet {
 				System.out.println(resultSet.getString(1) + resultSet.getString(2) + resultSet.getString(3));
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}finally {
 			try { if(null!=resultSet)resultSet.close();} catch (SQLException e) 
