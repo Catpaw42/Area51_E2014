@@ -23,14 +23,6 @@ rekvisition.jsp
 .roentgenform ul {
 	padding: 0;
 }
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
 
 .inline li {
 	display: inline;
@@ -55,7 +47,7 @@ hr {
 loginScreen.jsp
 ------------------------------------------------------------------------------------*/
 /*set the background, and a font size for the entire page*/
-html { 
+.loginform { 
 	background: url(../images/background1.png) no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -78,7 +70,7 @@ html {
 	margin: 0;
 }
 
-/*set the list items to display inline, and float to the left of each other*/
+/*set the list items to display inline, and float to the left*/
 .loginform li {
     display: inline;
     float: left;
@@ -135,9 +127,48 @@ label {
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);  
 } 
 /*------------------------------------------------------------------------------------
-mainMenu.jsp
+mainPage.jsp
 ------------------------------------------------------------------------------------*/
-
+#topBanner {
+	background-color: purple;
+	width: 1024px;
+	height: 105px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.mainPage ul {
+	padding: 0;
+	margin: 0;
+}
+.mainPage li {
+	display: inline;
+	float: left;
+}
+#mainmenu {
+	clear: both;
+	width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#mainpage {
+	clear: both;
+	width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#embededSite {
+	margin-left: 10px;
+	width: 700px;
+	height: 400px;
+	border: 1px solid black;
+}
+#rekvisitionList table, #rekvisitionList th, #rekvisitionList td {
+	border: 1px solid black;
+}
+#search table, #search th, #search td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
 /*------------------------------------------------------------------------------------
 rekvirer.jsp
 ------------------------------------------------------------------------------------*/
