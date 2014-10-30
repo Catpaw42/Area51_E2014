@@ -15,7 +15,7 @@ public class RequisitionTemplate {
 	}
 
 	public enum HenvistTil{radiologisk, klinisk}
-	public enum HospitalOenske{hillerød, frederikssund};
+	public enum HospitalOenske{hillerï¿½d, frederikssund};
 	public enum Prioritering{haste, rutine, fremskyndet, pakkeforloeb};
 	public enum AmbulantKoersel{ingen, siddende, liggende};
 	public enum IndlaeggelseTransport{gaaMedPortoer, gaaUdenPortoer, koerestol, seng};
@@ -30,7 +30,7 @@ public class RequisitionTemplate {
 	private boolean ambulant;
 	private String datoForslag; // skal typecheckes for korrekt dato input
 	private AmbulantKoersel ambulantKoersel;
-	private boolean indlaeggelse;
+	private boolean udfIndlagt;
 	private IndlaeggelseTransport indlagtTransport;
 	private boolean pregnancy; 
 	private String cave;
