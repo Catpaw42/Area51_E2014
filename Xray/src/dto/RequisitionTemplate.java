@@ -1,5 +1,6 @@
 package dto;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -50,10 +51,12 @@ public class RequisitionTemplate {
 	private String kliniskProblemstilling;
 	private String triage;
 	private String henvlaege;
+	private String henvafd;
 	private String kontakttlf;
 	
 	private String visitatorPrioritering;
 	private Status status;
+	private Timestamp afsendtDato; 
 	
 	
 	
