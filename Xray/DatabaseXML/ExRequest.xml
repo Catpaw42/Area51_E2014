@@ -118,11 +118,97 @@
 					<not-null />
 					<edit />
 				</column>
-				<column name="hoerehaemmet">
+				<column name="synshaemmet">
 					<type>boolean</type>
 					<not-null />
 					<edit />
 				</column>
+				<column name="amputeret">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="kan_ikke_staa">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="ilt_liter_prmin">
+					<type>short</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="tolk_sprog">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="dement">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="afasi">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="isolation">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="cytostatika_dato">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="undersoegelsestype">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="tidl_billed_diagnostik">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="klinisk_problemstilling">
+					<type max-length="1000">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="triage">
+					<type max-length="1000">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="henv_laege">
+					<type max-length="500">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="henv_afd">
+					<type max-length="100">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="kontakt_tlf">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="visitator_pririotering">
+					<type max-length="100">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="afsendt_dato">
+					<type>Timestamp</type>
+					<not-null />
+					<edit />
+				</column>
+				
 			</columns>
 		</table>
 	</tables>
