@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import database.DataSourceConnector;
+import database.interfaces.IDataSourceConnector.ConnectionException;
+
 /**
  * Servlet implementation class TestServlet
  */
@@ -36,38 +39,32 @@ public class TestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Statement statement = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
 		try {
-			// Get DataSource from context.xml/web.xml file - look there...
-			Context initContext  = new InitialContext();
-			Context envContext  = (Context)initContext.lookup("java:/comp/env");
-			dataSource = (DataSource)envContext.lookup("jdbc/s134000");
-			//Initialize
-			ResultSet resultSet = null;
-			Connection connection = null;
-			Statement statement = null;
-			try {
-				// Get Connection and Statement
-				connection = dataSource.getConnection();
-				statement = connection.createStatement();
-				String query = "SELECT * FROM users";
-				resultSet = statement.executeQuery(query);
-				while (resultSet.next()) {
-					System.out.println(resultSet.getString(1) + resultSet.getString(2) + resultSet.getString(3));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				try { if(null!=resultSet)resultSet.close();} catch (SQLException e) 
-				{e.printStackTrace();}
-				try { if(null!=statement)statement.close();} catch (SQLException e) 
-				{e.printStackTrace();}
-				try { if(null!=connection)connection.close();} catch (SQLException e) 
-				{e.printStackTrace();}
+			// Get Connection and Statement
+			connection = DataSourceConnector.getConnection();
+			statement = connection.createStatement();
+			String query = "SELECT * FROM users";
+			resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				System.out.println(resultSet.getString(1) + resultSet.getString(2) + resultSet.getString(3));
 			}
-
-		} catch (NamingException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		}finally {
+			try { if(null!=resultSet)resultSet.close();} catch (SQLException e) 
+			{e.printStackTrace();}
+			try { if(null!=statement)statement.close();} catch (SQLException e) 
+			{e.printStackTrace();}
+			try { if(null!=connection)connection.close();} catch (SQLException e) 
+			{e.printStackTrace();}
 		}
+
+
 	}
 
 	/**
