@@ -10,13 +10,13 @@ public class CheckListData {
 		t.test3();
 	}
 
-	public enum HenvistTil{Radiologisk, Klinisk};
-	public enum HospitalOenske{Hillerød, Frederikssund};
+	public enum HenvistTil{radiologisk, klinisk}
+	public enum HospitalOenske{hillerød, frederikssund};
 	public enum Prioritering{haste, rutine, fremskyndet, pakkeforloeb};
 	public enum AmbulantKoersel{ingen, siddende, liggende};
 	public enum IndlaeggelseTransport{gaaMedPortoer, gaaUdenPortoer, koerestol, seng};
-	private enum SaerligeForhold{hoerehaemmet, synshaemmet, amputeret, kanIkkeStaa, dement, afasi, };
-	
+	public enum SaerligeForhold{hoerehaemmet, synshaemmet, amputeret, kanIkkeStaa, dement, afasi, isolation, ilt, tolk, sytostatikaDato};
+	public enum Undersoegelse{PET_CT, CT, CTKontrast, ultralyd, mr, other};
 	
 	
 	private HenvistTil henvistTil;
@@ -31,6 +31,20 @@ public class CheckListData {
 	private boolean pregnancy; 
 	private String cave;
 	private ArrayList<SaerligeForhold> saerligeForhold;
+	private String ilt;
+	private String isolation;
+	private String cytostatikaDato;
+	private String tolk;
+	private Undersoegelse undersoegelse;
+	private String tidlBilleddiagnostiskUndersoegelseLokalt;
+	private String relevantUndersoegelse;
+	private String kliniskProblemstilling;
+	private String triage;
+	
+	
+	
+	
+	
 	
 	interface test{
 		public void setHenvistTil(HenvistTil value);
