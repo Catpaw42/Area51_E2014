@@ -56,7 +56,7 @@
 					</enum>
 					<edit />
 				</column>
-				<column name="undersoegelse_modalitet">
+				<column name="undersoegelses_modalitet">
 					<type>short</type>
 					<enum>
 						<value>PET_CT</value>
@@ -79,13 +79,55 @@
 					</enum>
 					<edit />
 				</column>
+				<column name="samtykke">
+					<type>short</type>
+					<enum>
+						<value>JA</value>
+						<value>NEJ</value>
+						<value>UDEN_SAMTYKKE</value>
+					</enum>
+					<edit />
+				</column>
 				<column name="rekvisition_id">
-					<type>long</type>
+					<type>int</type>
 					<not-null />
 					<pk />
 				</column>
-				<column name="samtykke">
-					<type>boolean</type>
+				<column name="rekvirent_id">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="visitator_id">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="patient_cpr">
+					<type max-length="30">String</type>
+					<not-null />
+				</column>
+				<column name="patient_foedselsdag">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="MR_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="PETCT_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="CT_contrast_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
 					<not-null />
 					<edit />
 				</column>
@@ -201,7 +243,6 @@
 					<not-null />
 					<edit />
 				</column>
-				
 			</columns>
 		</table>
 	</tables>
