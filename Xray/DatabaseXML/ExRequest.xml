@@ -1,97 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database xmlns="http://www.spoledge.com/audao" version="1.0">
 
-  <config>
-    <factory>
-      <create-params default="false" direct="true"/>
-    </factory>
-  </config>
-  <tables>
-	
-    <table name="ex_request">
-            <edit-mode>column</edit-mode>
-      <auto-find/>
-      <columns>
-        <column name="henvist_til">
-    <type>short</type>
-    <enum>
-      <value>RADIOLOGISK</value>
-      <value>KLINISK</value>
-    </enum>
-        <column name="hospital_oenske">
-    <type>short</type>
-    <enum>
-      <value>HILLEROED</value>
-      <value>FREDERIKSSUND</value>
-    </enum>
-    <column name="pririotering">
-    <type>short</type>
-    <enum>
-      <value>HASTE</value>
-      <value>RUTINE</value>
-      <value>FREMSKYNDET</value>
-      <value>PAKKEFORLOEB</value>
-    </enum>
-    <column name="ambulant_koersel">
-    <type>short</type>
-    <enum>
-      <value>INGEN</value>
-      <value>SIDDENDE</value>
-      <value>LIGGENDE</value>
-    </enum>
-    <column name="indlaeggelse_transport">
-    <type>short</type>
-    <enum>
-      <value>GAA_MED_PORTOER</value>
-      <value>GAA_UDEN_PORTOER</value>
-      <value>KOERESTOL</value>
-      <value>SENG</value>
-    </enum>
-    <column name="undersoegelse_modalitet">
-    <type>short</type>
-    <enum>
-      <value>PET_CT</value>
-      <value>CT</value>
-      <value>CT_KONTRAST</value>
-      <value>ULTRALYD</value>
-      <value>MR</value>
-      <value>OTHER</value>
-    </enum>
-    <column name="status">
-    <type>short</type>
-    <enum>
-      <value>PENDING</value>
-      <value>CANCELED</value>
-      <value>APPROVED</value>
-      <value>DECLINED</value>
-      <value>BOOKED</value>
-    </enum>  
-    <edit/>
-  </column>
-        <column name="samtykke">
-          <type>boolean</type>
-          
-        </column>
-        <column name="ambulent">
-          <type>int</type>
-          <not-null/>
-        </column>
-        <column name="user_name">
-          <type max-length="500">String</type>
-          <not-null/>
-        </column>
-        <column name="created_date">
-          <type>Date</type>
-          <auto/>
-          <not-null/>
-        </column>
-        <column name="last_login_date">
-          <type>Timestamp</type>
-          <auto/>
-          <not-null/>
-          <edit/>
-        </column>
-      </columns>
-    </table>
-  </tables>
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+		<table name="requisition">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="henvist_til">
+					<type>short</type>
+					<enum>
+						<value>RADIOLOGISK</value>
+						<value>KLINISK</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="hospital_oenske">
+					<type>short</type>
+					<enum>
+						<value>HILLEROED</value>
+						<value>FREDERIKSSUND</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="pririotering">
+					<type>short</type>
+					<enum>
+						<value>HASTE</value>
+						<value>RUTINE</value>
+						<value>FREMSKYNDET</value>
+						<value>PAKKEFORLOEB</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="ambulant_koersel">
+					<type>short</type>
+					<enum>
+						<value>INGEN</value>
+						<value>SIDDENDE</value>
+						<value>LIGGENDE</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="indlaeggelse_transport">
+					<type>short</type>
+					<enum>
+						<value>GAA_MED_PORTOER</value>
+						<value>GAA_UDEN_PORTOER</value>
+						<value>KOERESTOL</value>
+						<value>SENG</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="undersoegelse_modalitet">
+					<type>short</type>
+					<enum>
+						<value>PET_CT</value>
+						<value>CT</value>
+						<value>CT_KONTRAST</value>
+						<value>ULTRALYD</value>
+						<value>MR</value>
+						<value>OTHER</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="status">
+					<type>short</type>
+					<enum>
+						<value>PENDING</value>
+						<value>CANCELED</value>
+						<value>APPROVED</value>
+						<value>DECLINED</value>
+						<value>BOOKED</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="rekvisition_id">
+					<type>long</type>
+					<not-null />
+					<pk />
+				</column>
+				<column name="samtykke">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="ambulant">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="dato_forslag">
+					<type max-length="50">String</type>
+					<edit />
+				</column>
+				<column name="udf_indlagt">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="graviditet">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="cave">
+					<type max-length="500">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="hoerehaemmet">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="hoerehaemmet">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+			</columns>
+		</table>
+	</tables>
 </database>
