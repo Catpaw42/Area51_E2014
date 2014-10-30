@@ -105,7 +105,6 @@
 				</column>
 				<column name="graviditet">
 					<type>boolean</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="cave">
@@ -135,12 +134,10 @@
 				</column>
 				<column name="ilt_liter_prmin">
 					<type>short</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="tolk_sprog">
 					<type max-length="50">String</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="dement">
@@ -159,8 +156,7 @@
 					<edit />
 				</column>
 				<column name="cytostatika_dato">
-					<type max-length="50">String</type>
-					<not-null />
+					<type>Timestamp</type>
 					<edit />
 				</column>
 				<column name="undersoegelsestype">
@@ -170,7 +166,6 @@
 				</column>
 				<column name="tidl_billed_diagnostik">
 					<type max-length="50">String</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="klinisk_problemstilling">
@@ -180,7 +175,6 @@
 				</column>
 				<column name="triage">
 					<type max-length="1000">String</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="henv_laege">
@@ -198,9 +192,8 @@
 					<not-null />
 					<edit />
 				</column>
-				<column name="visitator_pririotering">
+				<column name="visitator_prioritering">
 					<type max-length="100">String</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="afsendt_dato">
