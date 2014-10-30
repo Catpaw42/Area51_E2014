@@ -1,18 +1,20 @@
 <!DOCTYPE HTML>
-<html class="mainPage">
+<html>
 	<head>
 		<meta charset="utf-8">
 		<link href="styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/mainPage.js"></script>
 		<title>Main Page</title>
 	</head>
 	
-	<body>
+	<body class="mainPage">
 		<div id="topBanner">
-			<ul>
-				<li>
+			<ul class=showInline>
+				<li id="logo">
 					<h3>Area 51</h3>
 				</li>
-				<li>
+				<li id="user">
 					<p>Brian Bjørn</p>
 					<p>Visitator</p>
 				</li>
@@ -20,17 +22,19 @@
 			</ul>
 		</div>
 		<div id="mainmenu">
-			<ul>
-				<li>
-					<a href="rekvirer.jsp">Rekvirer</a>
-				</li>
-				<li>
-					<a href="visiter.jsp">Visiter</a>
-				</li>
-				<li>
-					<a href="book.jsp">Book</a>
-				</li>
-			</ul>
+			<nav>
+				<ul>
+					<li>
+						<a href="rekvirer.jsp">Rekvirer</a>
+					</li>
+					<li>
+						<a href="visiter.jsp">Visiter</a>
+					</li>
+					<li>
+						<a href="book.jsp">Book</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 		
 		<div id="mainpage">
@@ -82,7 +86,7 @@
 		    	</form>
 			</div>
 			<hr />
-			<ul>
+			<ul  class=showInline>
 				<li>
 					<div id="rekvisitionList">
 						<table>
@@ -101,18 +105,18 @@
 								<td>Sendt</td>
 							</tr>
 							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td>050501-2222</td>
+								<td>CT</td>
+								<td>O</td>
+								<td>300115</td>
+								<td>Visiteret</td>
 							</tr>
 							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td>111100-1144</td>
+								<td>RGT</td>
+								<td>M</td>
+								<td>011211</td>
+								<td>Anulleret</td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>
@@ -182,7 +186,7 @@
 				</li>
 				<li>
 					<div id="embededSite">
-						<iframe id="embededSiteFrame" src="NewFile.jsp"></iframe>
+						<iframe id="embededSiteFrame" src="visiter.jsp"></iframe>
 					</div>
 				</li>
 			</ul>
