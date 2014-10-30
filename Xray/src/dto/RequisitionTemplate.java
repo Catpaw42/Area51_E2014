@@ -22,7 +22,7 @@ public class RequisitionTemplate {
 	public enum Undersoegelsemodalitet{PET_CT, CT, CTKontrast, ultralyd, mr, other};
 	public enum Status{PENDING, CANCELED, APPROVED, DECLINED, BOOKED}
 	
-	
+
 	private HenvistTil henvistTil;
 	private HospitalOenske hospitalOenske;
 	private Prioritering prioriteringOenske;
