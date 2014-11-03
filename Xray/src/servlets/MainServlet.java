@@ -58,7 +58,7 @@ public class MainServlet extends HttpServlet {
 			forward("/LoginServlet",request,response);
 			break;
 		case "rekvirer":
-			forward("/RekvisitioServlet",request,response);
+			forward("/RekvisitionServlet",request,response);
 			break;
 		case "visiter":
 			forward("/VisitationServlet", request, response);
