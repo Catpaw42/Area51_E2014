@@ -25,7 +25,123 @@
 						<value>KONTROLRECIDIV</value>
 					</enum>
 				</column>
-
+				<column name="formaal_behandlingskontrol_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="formaal_recidiv_text">
+					<type max-length="250">String</type>
+				</column>				
+				<column name="formaal_andet_text">
+					<type max-length="250">String</type>
+				</column>
+				<column name="kanPtLiggeStille30">
+					<type>boolean</type>
+					<not-null />
+				</column>					
+				<column name="ptTaalerFaste">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="diabetes">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="DMBeh">
+					<type max-length="50">String</type>
+				</column>
+				<column name="smerter">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="respInsuff">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="klaustrofobi">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="preMed">
+					<type>boolean</type>
+				</column>
+				<column name="DMRegime">
+					<type>boolean</type>
+				</column>
+				<column name="datoForslag">
+					<type max-length="50">String</type>
+				</column>
+				<column name="allergi">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="allergi_text">
+					<type max-length="50">String</type>
+				</column>	
+				<column name="fedme">
+					<type>boolean</type>
+					<not-null/>
+				</column>			
+				<column name="vaegt">
+					<type>int</type>
+				</column>
+				<column name="tidlBilledDiagnostik">
+					<type max-length="250">String</type>
+				</column>
+				<column name="biopsi">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="biopsi_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="operation">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="operation_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="kemo_og_straale">
+					<type>short</type>
+					<enum>
+						<value>ALDRIGGIVET</value>
+						<value>KEMOTERAPI</value>
+						<value>STRAALETERAPI</value>
+						<value>KEMO_OG_STRAALE</value>
+					</enum>
+				</column>
+				<column name="relKontraIndCT">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="relKontraIndCT_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="nedsatNyreFkt">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="SidstePKreatinin">
+					<type>int</type>
+				</column>
+				<column name="SidstePKreatTimestamp">
+					<type>Timestamp</type>
+				</column>
+				<column name="POKontrast">
+					<type>boolean</type>
+				</column>	
+				<column name="IVKontrast">
+					<type>boolean</type>
+				</column>
+				<column name="AktuelPKreatinin">
+					<type>int</type>
+				</column>	
+				<column name="AktuelPKreatTimestamp">
+					<type>Timestamp</type>
+				</column>
+				<column name="AktuelPKreatAndet_text">
+					<type max-length="50">String</type>
+				</column>																								
 			</columns>
 		</table>
 

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.naming.Context;
@@ -17,8 +18,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.spoledge.audao.db.dao.DaoException;
+
 import database.DataSourceConnector;
+import database.dao.DaoFactory;
+import database.dao.RequisitionDao;
+import database.dto.Requisition;
+import database.dto.Requisition.AmbulantKoersel;
+import database.dto.Requisition.HenvistTil;
+import database.dto.Requisition.HospitalOenske;
+import database.dto.Requisition.IndlaeggelseTransport;
+import database.dto.Requisition.Pririotering;
+import database.dto.Requisition.UndersoegelseModalitet;
 import database.interfaces.IDataSourceConnector.ConnectionException;
+import dto.DTOexRequest;
+import dto.DTOexRequest.Status;
+import dto.RequisitionTemplate.Prioritering;
 import dto.MrKontrol;
 
 /**
@@ -56,9 +71,11 @@ public class TestServlet extends HttpServlet {
 			e1.printStackTrace();
 		}
 		
-		testUser(statement, connection);
+//		testUser(statement, connection);
 		
-		testMrKontrol(statement, connection);
+//		testMrKontrol(statement, connection);
+		
+		testExRequest(connection);
 
 	}
 
@@ -90,6 +107,37 @@ public class TestServlet extends HttpServlet {
 		
 		
 		
+		
+	}
+	
+	private void testExRequest(Connection conn){
+//		DTOexRequest dtod = new DTOexRequest(-1, 2, 1, 0, Status.PENDING, new Timestamp(new Date().getTime()), null, new Timestamp(new Date(0).getTime()), null);
+//		DaoFactory f = new DaoFactory();
+		System.err.println("trying to get dao \n");
+		RequisitionDao dao = DaoFactory.createRequisitionDao(conn);
+		System.err.println("dao aquired");
+		Requisition dto = new Requisition();
+		dto.setAmbulant(true);
+		dto.setAmbulantKoersel(AmbulantKoersel.LIGGENDE);
+		dto.setCave("utrolig farligt altså");
+		dto.setDatoForslag("198-123-1");
+		dto.setGraviditet(true);
+		dto.setHenvistTil(HenvistTil.RADIOLOGISK);
+		dto.setHospitalOenske(HospitalOenske.FREDERIKSSUND);
+		dto.setIndlaeggelseTransport(IndlaeggelseTransport.GAA_MED_PORTOER);
+		dto.setPririotering(Pririotering.PAKKEFORLOEB);
+		dto.setRekvisitionId(new Long(2));
+		dto.setSamtykke(true);
+		dto.setStatus(database.dto.Requisition.Status.APPROVED);
+		dto.setUdfIndlagt(false);
+		dto.setUndersoegelseModalitet(UndersoegelseModalitet.CT_KONTRAST);
+		
+		try {
+			dao.insert(dto);
+		} catch (DaoException e) {
+			System.err.println("failed to insert row");
+			e.printStackTrace();
+		}
 		
 	}
 
