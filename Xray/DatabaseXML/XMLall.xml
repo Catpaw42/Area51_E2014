@@ -7,7 +7,7 @@
 		</factory>
 	</config>
 	<tables>
-		<table name="requisition">
+		<table name="rekvisition">
 			<edit-mode>column</edit-mode>
 			<auto-find />
 			<columns>
@@ -114,16 +114,17 @@
 					<not-null />
 					<edit />
 				</column>
-				<column name="MR_kontrolskema_id">
+				<column name="mr_kontrolskema_id">
 					<type>int</type>
 					<edit />
 				</column>
-				<column name="PETCT_kontrolskema_id">
+				<column name="petct_kontrolskema_id">
 					<type>int</type>
 					<edit />
 				</column>
-				<column name="CT_contrast_kontrolskema_id">
+				<column name="ct_contrast_kontrolskema_id">
 					<type>int</type>
+					<ref table="ct_kontrol"/>
 					<edit />
 				</column>
 				<column name="undersoegelses_type_id">
