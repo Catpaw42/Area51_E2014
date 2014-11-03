@@ -103,6 +103,7 @@
 				</column>
 				<column name="patient_cpr">
 					<type max-length="30">String</type>
+					<ref table="patient"/>
 					<not-null />
 				</column>
 				<column name="patient_foedselsdag">
@@ -341,6 +342,25 @@
 				</column>
 				<column name="pt_vaegt">
 					<type>int</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+		<table name="patient">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="cpr">
+					<type max-length="30">String</type>
+					<not-null />
+					<pk />
+				</column>
+				<column name="foedselsdag">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="afdeling">
+					<type max-length="50">String</type>
 					<not-null />
 				</column>
 			</columns>
