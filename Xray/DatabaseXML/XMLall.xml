@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+		<table name="rekvisition">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="rekvisition_id">
+					<type>int</type>
+					<not-null />
+					<pk />
+				</column>
+				<column name="henvist_til">
+					<type>short</type>
+					<enum>
+						<value>RADIOLOGISK</value>
+						<value>KLINISK</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="hospital_oenske">
+					<type>short</type>
+					<enum>
+						<value>HILLEROED</value>
+						<value>FREDERIKSSUND</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="pririotering">
+					<type>short</type>
+					<enum>
+						<value>HASTE</value>
+						<value>RUTINE</value>
+						<value>FREMSKYNDET</value>
+						<value>PAKKEFORLOEB</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="ambulant_koersel">
+					<type>short</type>
+					<enum>
+						<value>INGEN</value>
+						<value>SIDDENDE</value>
+						<value>LIGGENDE</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="indlaeggelse_transport">
+					<type>short</type>
+					<enum>
+						<value>GAA_MED_PORTOER</value>
+						<value>GAA_UDEN_PORTOER</value>
+						<value>KOERESTOL</value>
+						<value>SENG</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="undersoegelses_modalitet">
+					<type>short</type>
+					<enum>
+						<value>PET_CT</value>
+						<value>CT</value>
+						<value>CT_KONTRAST</value>
+						<value>ULTRALYD</value>
+						<value>MR</value>
+						<value>OTHER</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="status">
+					<type>short</type>
+					<enum>
+						<value>PENDING</value>
+						<value>CANCELED</value>
+						<value>APPROVED</value>
+						<value>DECLINED</value>
+						<value>BOOKED</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="samtykke">
+					<type>short</type>
+					<enum>
+						<value>JA</value>
+						<value>NEJ</value>
+						<value>UDEN_SAMTYKKE</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="rekvirent_id">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="visitator_id">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="patient_cpr">
+					<type max-length="30">String</type>
+					<not-null />
+				</column>
+				<column name="patient_foedselsdag">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="mr_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="petct_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="ct_contrast_kontrolskema_id">
+					<type>int</type>
+					<ref table="ct_kontrol"/>
+					<edit />
+				</column>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="ambulant">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="dato_forslag">
+					<type max-length="50">String</type>
+					<edit />
+				</column>
+				<column name="udf_indlagt">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="graviditet">
+					<type>boolean</type>
+					<edit />
+				</column>
+				<column name="cave">
+					<type max-length="500">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="hoerehaemmet">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="synshaemmet">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="amputeret">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="kan_ikke_staa">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="ilt_liter_prmin">
+					<type>short</type>
+					<edit />
+				</column>
+				<column name="tolk_sprog">
+					<type max-length="50">String</type>
+					<edit />
+				</column>
+				<column name="dement">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="afasi">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="isolation">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="cytostatika_dato">
+					<type>Timestamp</type>
+					<edit />
+				</column>
+				<column name="undersoegelsestype">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="tidl_billed_diagnostik">
+					<type max-length="50">String</type>
+					<edit />
+				</column>
+				<column name="klinisk_problemstilling">
+					<type max-length="1000">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="triage">
+					<type max-length="1000">String</type>
+					<edit />
+				</column>
+				<column name="henv_laege">
+					<type max-length="500">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="henv_afd">
+					<type max-length="100">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="kontakt_tlf">
+					<type max-length="50">String</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="visitator_prioritering">
+					<type max-length="100">String</type>
+					<edit />
+				</column>
+				<column name="afsendt_dato">
+					<type>Timestamp</type>
+					<not-null />
+					<edit />
+				</column>
+			</columns>
+		</table>
+		<table name="ct_kontrol">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="ct_kontrast_kontrolskema_id">
+					<type>int</type>
+					<auto />
+					<pk />
+				</column>
+				<column name="diabetes">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="nyrefunktion">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="nyreopereret">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="hjertesygdom">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="myokarieinfarkt">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="proteinuri">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="urinsyregigt">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="over70">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="hypertension">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="nsaid_praeparat">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="aminoglykosider">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="allergi">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="kontraststofreaktion">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="astma">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="hyperthyreoidisme">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="metformin">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="interleukin2">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="beta_blokkere">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="p_kreatin_vaerdi">
+					<type max-length="50">String</type>
+					<not-null />
+				</column>
+				<column name="p_kreatin_timestamp">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="pt_hoejde">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="pt_vaegt">
+					<type>int</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+	</tables>
+</database>
