@@ -7,10 +7,8 @@
 		<link href="styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 <title>Insert title here</title>
 </head>
-<body>
-
-
-<div id="topBanner">
+	<body>
+		<div id="topBanner">
 			<ul class=showInline>
 				<li id="logo">
 					<h3>Area 51</h3>
@@ -20,7 +18,6 @@
 					<p>Brian Bjørn</p>
 					<p>Visitator</p>
 				</li>
-				
 			</ul>
 		</div>
 		<div id="mainmenu">
@@ -41,5 +38,5 @@
 				</ul>
 			</nav>
 		</div>
-</body>
+	</body>
 </html>
