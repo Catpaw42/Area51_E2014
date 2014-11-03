@@ -245,7 +245,7 @@
 				</column>
 			</columns>
 		</table>
-		<table name="mr_kontrol">
+		<table name="ct_kontrol">
 			<edit-mode>column</edit-mode>
 			<auto-find />
 			<columns>
