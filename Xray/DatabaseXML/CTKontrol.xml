@@ -90,11 +90,11 @@
 					<not-null />
 				</column>
 				<column name="p_kreatin_vaerdi">
-					<type>string</type>
+					<type max-length="50">String</type>
 					<not-null />
 				</column>
 				<column name="p_kreatin_timestamp">
-					<type>timestamp</type>
+					<type>Timestamp</type>
 					<not-null />
 				</column>
 				<column name="pt_hoejde">
