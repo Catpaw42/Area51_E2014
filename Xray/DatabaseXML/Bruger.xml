@@ -14,8 +14,7 @@
 			<columns>
 				<column name="bruger_id">
 					<type>int</type>
-					<not-null />
-					<auto/>
+					<auto />
 					<pk />
 				</column>
 				<column name="bruger_navn">

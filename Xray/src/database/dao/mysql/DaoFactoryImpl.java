@@ -19,4 +19,31 @@ public class DaoFactoryImpl extends DaoFactory.Factory {
         return new RequisitionDaoImpl( conn );
     }
 
+	@Override
+	public BrugerDao createBrugerDao(Connection conn) {
+		return new BrugerDaoImpl(conn);
+	}
+	
+	public CtKontrolDao createCtKontrolDao( Connection conn ) {
+        return new CtKontrolDaoImpl( conn );
+    }
+	 public MrKontrolDao createMrKontrolDao( Connection conn ) {
+	        return new MrKontrolDaoImpl( conn );
+	    }
+	 public PatientDao createPatientDao( Connection conn ) {
+	        return new PatientDaoImpl( conn );
+	    }
+	 public PetctKontrolskemaDao createPetctKontrolskemaDao( Connection conn ) {
+	        return new PetctKontrolskemaDaoImpl( conn );
+	    }
+	 public RettighederDao createRettighederDao( Connection conn ) {
+	        return new RettighederDaoImpl( conn );
+	    }
+	 public UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn ) {
+	        return new UndersoegelsesTypeDaoImpl( conn );
+	    }
+	 public RegisteredUserDao createRegisteredUserDao( Connection conn ) {
+	        return new RegisteredUserDaoImpl( conn );
+	    }
+
 }

@@ -20,19 +20,23 @@ import javax.sql.DataSource;
 
 import com.spoledge.audao.db.dao.DaoException;
 
+import database.DAOUser;
 import database.DataSourceConnector;
+import database.dao.BrugerDao;
 import database.dao.DaoFactory;
 import database.dao.RequisitionDao;
+import database.dto.Bruger;
 import database.dto.Requisition;
 import database.dto.Requisition.AmbulantKoersel;
 import database.dto.Requisition.HenvistTil;
 import database.dto.Requisition.HospitalOenske;
 import database.dto.Requisition.IndlaeggelseTransport;
 import database.dto.Requisition.Pririotering;
+import database.dto.Requisition.Status;
 import database.dto.Requisition.UndersoegelseModalitet;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-import dto.DTOexRequest;
-import dto.DTOexRequest.Status;
+//import dto.DTOexRequest;
+//import dto.DTOexRequest.Status;
 import dto.RequisitionTemplate.Prioritering;
 import dto.MrKontrol;
 
@@ -75,7 +79,9 @@ public class TestServlet extends HttpServlet {
 		
 //		testMrKontrol(statement, connection);
 		
-		testExRequest(connection);
+//		testExRequest(connection);
+		
+		testBruger(connection);
 
 	}
 
@@ -110,7 +116,81 @@ public class TestServlet extends HttpServlet {
 		
 	}
 	
+	private void testBruger(Connection conn){
+		int id = 2;
+		String brugernavn = "Hans";
+		boolean erAktiv = true; 
+		
+		Bruger dto = new Bruger();
+		dto.setBrugerId(id);
+		dto.setBrugerNavn(brugernavn);
+		dto.setErAktiv(erAktiv);
+		BrugerDao dao = DaoFactory.createBrugerDao(conn);
+		try {
+			System.out.println("\n forsøger at indsætte bruger i database");
+			System.out.println("#######bruger til indsætning#####");
+			System.out.println("brugerId: " + id);
+			System.out.println("brugernavn: " + brugernavn);
+			System.out.println("erAktiv: " + erAktiv);
+			System.out.println("################");
+			Bruger alreadyExist = dao.findByPrimaryKey(id);
+			
+			if(alreadyExist != null){
+				System.out.println("bruger findes allerede med id= " + id);
+				System.out.println("#########fundet bruger###########");
+				System.out.println("brugerid: " + alreadyExist.getBrugerId());
+				System.out.println("brugernavn: " + alreadyExist.getBrugerNavn());
+				System.out.println("erAktiv: " + alreadyExist.getErAktiv());
+				System.out.println("#################################");
+				System.out.println("brugerid på givne dto ignoreres, og bliver automatisk sat i database");
+			}
+			
+			int pk = dao.insert(dto);
+			System.out.println("bruger tilføjet database");
+			System.out.println("####tilføjet bruger#########");
+			System.out.println("brugerId: " + pk);
+		} catch (DaoException e) {
+			System.err.println("fejlede at tilføjge bruger til database");
+		}
+		
+		try {
+			
+			System.out.println("\n forsøger at hente bruger fra database");
+			System.out.println("#######user#####");
+			System.out.println("brugerId: " + id);
+			System.out.println("################");
+			Bruger nDto = dao.findByPrimaryKey(id);
+			System.out.println("#####fundet bruger#######");
+			System.out.println("brugerId: " + nDto.getBrugerId());
+			System.out.println("brugernavn: " + nDto.getBrugerNavn());
+			System.out.println("erAktiv: " + nDto.getErAktiv());
+		} catch (Exception e) {
+			System.err.println("fejlede at hente bruger fra database");
+		}
+		
+		
+		
+		erAktiv = !erAktiv;
+		try{
+			System.out.println("\n forsøger at opdatere erAktiv for bruger i database");
+			System.out.println("######opdatering til bruger######");
+			System.out.println("userid: " + id);
+			System.out.println("isActive: " + erAktiv);
+			System.out.println("################");
+			dao.updateErAktiv(id, erAktiv);
+			System.out.println("bruger opdateret");
+		}catch (DaoException e){
+			System.err.println("fejlede at opdatere bruger i database");
+		}
+		
+	}
+	
+	private void testBrugerInput(String message, Bruger dto, BrugerDao dao, int id, String brugernavn, boolean erAktiv){
+		
+	}
+	
 	private void testExRequest(Connection conn){
+		Long primaryKey = new Long(2);
 //		DTOexRequest dtod = new DTOexRequest(-1, 2, 1, 0, Status.PENDING, new Timestamp(new Date().getTime()), null, new Timestamp(new Date(0).getTime()), null);
 //		DaoFactory f = new DaoFactory();
 		System.err.println("trying to get dao \n");
@@ -126,14 +206,31 @@ public class TestServlet extends HttpServlet {
 		dto.setHospitalOenske(HospitalOenske.FREDERIKSSUND);
 		dto.setIndlaeggelseTransport(IndlaeggelseTransport.GAA_MED_PORTOER);
 		dto.setPririotering(Pririotering.PAKKEFORLOEB);
-		dto.setRekvisitionId(new Long(2));
+		dto.setRekvisitionId(primaryKey); // primary key
 		dto.setSamtykke(true);
-		dto.setStatus(database.dto.Requisition.Status.APPROVED);
+		dto.setStatus(Status.APPROVED);
 		dto.setUdfIndlagt(false);
 		dto.setUndersoegelseModalitet(UndersoegelseModalitet.CT_KONTRAST);
 		
 		try {
+			// test insert
+			System.out.println("insert dto: pr-key: " + dto.getRekvisitionId() + "...");
 			dao.insert(dto);
+			System.out.println("dto inserted");
+			// test findByPrimary key by searching for previous inserted object
+			System.out.println("searching for inserted dto pr-key: " + dto.getRekvisitionId() + "...");
+			Requisition r =  dao.findByPrimaryKey(dto.getRekvisitionId());
+			System.out.println("objects primary key: " + r.getRekvisitionId());
+			
+			//test update of status
+			System.out.println("updating status...");
+			System.out.println("current status: " + dto.getStatus().toString() + " vs " + r.getStatus() );
+			boolean success = dao.updateStatus(dto.getRekvisitionId(), Status.CANCELED);
+			System.out.println("update was a success: " + success);
+			r = dao.findByPrimaryKey(primaryKey);
+			System.out.println("new status vs old: " + r.getStatus() + " vs " + dto.getStatus());
+			
+			
 		} catch (DaoException e) {
 			System.err.println("failed to insert row");
 			e.printStackTrace();
