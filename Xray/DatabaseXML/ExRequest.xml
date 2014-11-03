@@ -11,6 +11,11 @@
 			<edit-mode>column</edit-mode>
 			<auto-find />
 			<columns>
+				<column name="rekvisition_id">
+					<type>int</type>
+					<not-null />
+					<pk />
+				</column>
 				<column name="henvist_til">
 					<type>short</type>
 					<enum>
@@ -87,11 +92,6 @@
 						<value>UDEN_SAMTYKKE</value>
 					</enum>
 					<edit />
-				</column>
-				<column name="rekvisition_id">
-					<type>int</type>
-					<not-null />
-					<pk />
 				</column>
 				<column name="rekvirent_id">
 					<type>int</type>
