@@ -96,6 +96,7 @@
 				<column name="rekvirent_id">
 					<type>int</type>
 					<not-null />
+					<ref table="bruger" column="bruger_id"/>
 				</column>
 				<column name="visitator_id">
 					<type>int</type>
@@ -103,6 +104,7 @@
 				</column>
 				<column name="patient_cpr">
 					<type max-length="30">String</type>
+					<ref table="patient"/>
 					<not-null />
 				</column>
 				<column name="patient_foedselsdag">
@@ -112,6 +114,7 @@
 				<column name="undersoegelses_type_id">
 					<type>int</type>
 					<not-null />
+					<ref table="undersoegelses_type"/>
 					<edit />
 				</column>
 				<column name="mr_kontrolskema_id">
@@ -341,6 +344,84 @@
 				</column>
 				<column name="pt_vaegt">
 					<type>int</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+		<table name="patient">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="cpr">
+					<type max-length="30">String</type>
+					<not-null />
+					<pk />
+				</column>
+				<column name="foedselsdag">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="afdeling">
+					<type max-length="50">String</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+		<table name="bruger">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="bruger_id">
+					<type>int</type>
+					<not-null />
+					<auto/>
+					<pk />
+				</column>
+				<column name="bruger_navn">
+					<type max-length="30">String</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+		<table name="rettigheder">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="rettigheds_id">
+					<type>int</type>
+					<not-null />
+					<auto />
+					<pk />
+				</column>
+				<column name="bruger_id">
+					<type>int</type>
+					<not-null />
+					<ref table="bruger_rettigheder"/>
+				</column>
+				<column name="rettighed">
+					<type>short</type>
+					<enum>
+						<value>ADMIN</value>
+						<value>BOOKING</value>
+						<value>ASSESSOR</value>
+						<value>REQUEST</value>
+					</enum>
+					<edit />
+				</column>
+			</columns>
+		</table>
+		<table name="undersoegelses_type">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<auto />
+					<pk />
+				</column>
+				<column name="undersoegelses_navn">
+					<type max-length="40">String</type>
 					<not-null />
 				</column>
 			</columns>
