@@ -13,6 +13,7 @@
 				<li id="logo">
 					<h3>Area 51</h3>
 				</li>
+				
 				<li id="user">
 					<p>Brian Bjørn</p>
 					<p>Visitator</p>

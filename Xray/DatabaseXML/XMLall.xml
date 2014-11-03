@@ -381,6 +381,11 @@
 					<type max-length="30">String</type>
 					<not-null />
 				</column>
+				<column name="ambulant">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
 			</columns>
 		</table>
 		<table name="rettigheder">
