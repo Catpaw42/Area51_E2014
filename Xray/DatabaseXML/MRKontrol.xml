@@ -14,18 +14,16 @@
 			<columns>
 				<column name="mr_kontrolskema_id">
 					<type>int</type>
-					<edit />
+					<auto />
 					<pk />
 				</column>
 				<column name="patient_cpr">
 					<type>int</type>
 					<not-null />
-					<ref table="rekvisition"/>
 				</column>
 				<column name="tidl_billed_diagnostik">
 					<type max-length="50">String</type>
 					<edit />
-					<ref table="rekvisition"/>
 				</column>
 				<column name="pacemaker">
 					<type>boolean</type>
@@ -62,17 +60,14 @@
 				<column name="graviditet">
 					<type>boolean</type>
 					<edit />
-					<ref table="rekvisition"/>
 				</column>
 				<column name="graviditet_uge">
 					<type>int</type>
 					<edit />
-					<ref table="rekvisition"/>
 				</column>
 				<column name="klaustrofobi">
 					<type>boolean</type>
-					<edit />
-					<not-null/>
+					<not-null />
 				</column>
 				<column name="praep_forsyn">
 					<type max-length="500">String</type>
@@ -89,7 +84,6 @@
 				<column name="rekvirent_id">
 					<type>int</type>
 					<edit />
-					<ref table="rekvisition"/>
 				</column>
 				<column name="mr_boern">
 					<type>short</type>

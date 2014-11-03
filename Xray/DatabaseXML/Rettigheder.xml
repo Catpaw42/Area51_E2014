@@ -14,14 +14,12 @@
 			<columns>
 				<column name="rettigheds_id">
 					<type>int</type>
-					<not-null />
 					<auto />
 					<pk />
 				</column>
 				<column name="bruger_id">
 					<type>int</type>
 					<not-null />
-					<ref table="bruger_rettigheder"/>
 				</column>
 				<column name="rettighed">
 					<type>short</type>

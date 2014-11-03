@@ -35,7 +35,6 @@ public class DaoFactory {
         }
     }
 
-
     ////////////////////////////////////////////////////////////////////////////
     // Static methods
     ////////////////////////////////////////////////////////////////////////////
@@ -43,6 +42,30 @@ public class DaoFactory {
     public static RequisitionDao createRequisitionDao( Connection conn ) {
         return factory.createRequisitionDao( conn );
     }
+	  public static BrugerDao createBrugerDao( Connection conn ) {
+        return factory.createBrugerDao( conn );
+    }
+	  public static CtKontrolDao createCtKontrolDao( Connection conn ) {
+	        return factory.createCtKontrolDao( conn );
+	    }
+	  public static MrKontrolDao createMrKontrolDao( Connection conn ) {
+	        return factory.createMrKontrolDao( conn );
+	    }
+	  public static PatientDao createPatientDao( Connection conn ) {
+	        return factory.createPatientDao( conn );
+	    }
+	  public static PetctKontrolskemaDao createPetctKontrolskemaDao( Connection conn ) {
+	        return factory.createPetctKontrolskemaDao( conn );
+	    }
+	  public static RettighederDao createRettighederDao( Connection conn ) {
+	        return factory.createRettighederDao( conn );
+	    }
+	  public static UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn ) {
+	        return factory.createUndersoegelsesTypeDao( conn );
+	    }
+	  public static RegisteredUserDao createRegisteredUserDao( Connection conn ) {
+	        return factory.createRegisteredUserDao( conn );
+	    }
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -52,6 +75,15 @@ public class DaoFactory {
     public static abstract class Factory {
 
         public abstract RequisitionDao createRequisitionDao( Connection conn );
+        public abstract BrugerDao createBrugerDao( Connection conn );
+        public abstract CtKontrolDao createCtKontrolDao( Connection conn );
+        public abstract MrKontrolDao createMrKontrolDao( Connection conn );
+        public abstract PatientDao createPatientDao( Connection conn );
+        public abstract PetctKontrolskemaDao createPetctKontrolskemaDao( Connection conn );
+        public abstract RettighederDao createRettighederDao( Connection conn );
+        public abstract UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn );
+        public abstract RegisteredUserDao createRegisteredUserDao( Connection conn );
 
     }
+	
 }
