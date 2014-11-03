@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+
+		<table name="undersoegelses_type">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<auto />
+					<pk />
+				</column>
+				<column name="undersoegelses_navn">
+					<type max-length="40">String</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+	</tables>
+</database>

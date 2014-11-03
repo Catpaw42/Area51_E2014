@@ -114,6 +114,7 @@
 				<column name="undersoegelses_type_id">
 					<type>int</type>
 					<not-null />
+					<ref table="undersoegelses_type"/>
 					<edit />
 				</column>
 				<column name="mr_kontrolskema_id">
@@ -406,6 +407,22 @@
 						<value>REQUEST</value>
 					</enum>
 					<edit />
+				</column>
+			</columns>
+		</table>
+		<table name="undersoegelses_type">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<auto />
+					<pk />
+				</column>
+				<column name="undersoegelses_navn">
+					<type max-length="40">String</type>
+					<not-null />
 				</column>
 			</columns>
 		</table>
