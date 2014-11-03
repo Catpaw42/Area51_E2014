@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+
+		<table name="rettigheder">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="rettigheds_id">
+					<type>int</type>
+					<not-null />
+					<auto />
+					<pk />
+				</column>
+				<column name="bruger_id">
+					<type>int</type>
+					<not-null />
+					<ref table="bruger_rettigheder"/>
+				</column>
+				<column name="rettighed">
+					<type>short</type>
+					<enum>
+						<value>ADMIN</value>
+						<value>BOOKING</value>
+						<value>ASSESSOR</value>
+						<value>REQUEST</value>
+					</enum>
+					<edit />
+				</column>
+			</columns>
+		</table>
+	</tables>
+</database>

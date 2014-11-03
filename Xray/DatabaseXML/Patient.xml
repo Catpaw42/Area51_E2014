@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+
+		<table name="patient">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="cpr">
+					<type max-length="30">String</type>
+					<not-null />
+					<pk />
+				</column>
+				<column name="foedselsdag">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="afdeling">
+					<type max-length="50">String</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+	</tables>
+</database>
