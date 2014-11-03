@@ -10,7 +10,7 @@
 	
 	<body class="mainPage">
 		<div id="topMenuIframe">
-			<iframe src="topMenu.jsp" width="100%" frameBorder="0"></iframe>
+			<iframe src="topMenu.jsp" width="100%" height="60px" frameBorder="0"></iframe>
 		</div>
 		
 		<div id="mainpage">

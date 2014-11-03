@@ -2,15 +2,37 @@
 #logo {
 	width: 120px;
 	position: absolute;
-	left: 0px;
+	right: 0px;
 }
 #mainmenu {
 	width: auto;
 	position: absolute;
 	left: 121px;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+#mainmenu ul li {
+	display: inline;
+	vertical-align: bottom;
+}
+#mainmenu ul li a {
+	text-decoration:none;
+	color:#FFF;
+	background-color:#036;
+	padding:.2em 1em;
+}
+#mainmenu ul li a:hover {
+	background-color:#033;
 }
 #user {
 	position: absolute;
 	width: 120px;
-	right: 11px;
+	left: 3px;
+}
+body {
+	background-color: #E2E2E2;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: bold;
 }
