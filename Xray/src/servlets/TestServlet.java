@@ -29,10 +29,11 @@ import database.dto.Requisition.HenvistTil;
 import database.dto.Requisition.HospitalOenske;
 import database.dto.Requisition.IndlaeggelseTransport;
 import database.dto.Requisition.Pririotering;
+import database.dto.Requisition.Status;
 import database.dto.Requisition.UndersoegelseModalitet;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-import dto.DTOexRequest;
-import dto.DTOexRequest.Status;
+//import dto.DTOexRequest;
+//import dto.DTOexRequest.Status;
 import dto.RequisitionTemplate.Prioritering;
 import dto.MrKontrol;
 
@@ -111,6 +112,7 @@ public class TestServlet extends HttpServlet {
 	}
 	
 	private void testExRequest(Connection conn){
+		Long primaryKey = new Long(2);
 //		DTOexRequest dtod = new DTOexRequest(-1, 2, 1, 0, Status.PENDING, new Timestamp(new Date().getTime()), null, new Timestamp(new Date(0).getTime()), null);
 //		DaoFactory f = new DaoFactory();
 		System.err.println("trying to get dao \n");
@@ -126,14 +128,30 @@ public class TestServlet extends HttpServlet {
 		dto.setHospitalOenske(HospitalOenske.FREDERIKSSUND);
 		dto.setIndlaeggelseTransport(IndlaeggelseTransport.GAA_MED_PORTOER);
 		dto.setPririotering(Pririotering.PAKKEFORLOEB);
-		dto.setRekvisitionId(new Long(2));
+		dto.setRekvisitionId(primaryKey); // primary key
 		dto.setSamtykke(true);
-		dto.setStatus(database.dto.Requisition.Status.APPROVED);
+		dto.setStatus(Status.APPROVED);
 		dto.setUdfIndlagt(false);
 		dto.setUndersoegelseModalitet(UndersoegelseModalitet.CT_KONTRAST);
 		
 		try {
+
+			System.out.println("insert dto: pr-key: " + dto.getRekvisitionId() + "...");
 			dao.insert(dto);
+			System.out.println("dto inserted");
+			
+			System.out.println("searching for inserted dto pr-key: " + dto.getRekvisitionId() + "...");
+			Requisition r =  dao.findByPrimaryKey(dto.getRekvisitionId());
+			System.out.println("objects primary key: " + r.getRekvisitionId());
+			
+			System.out.println("updating status...");
+			System.out.println("current status: " + dto.getStatus().toString() + " vs " + r.getStatus() );
+			boolean success = dao.updateStatus(dto.getRekvisitionId(), Status.CANCELED);
+			System.out.println("update was a success: " + success);
+			r = dao.findByPrimaryKey(primaryKey);
+			System.out.println("new status vs old: " + r.getStatus() + " vs " + dto.getStatus());
+			
+			
 		} catch (DaoException e) {
 			System.err.println("failed to insert row");
 			e.printStackTrace();
