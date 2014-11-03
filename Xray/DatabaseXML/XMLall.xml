@@ -96,6 +96,7 @@
 				<column name="rekvirent_id">
 					<type>int</type>
 					<not-null />
+					<ref table="bruger" column="bruger_id"/>
 				</column>
 				<column name="visitator_id">
 					<type>int</type>
@@ -361,6 +362,22 @@
 				</column>
 				<column name="afdeling">
 					<type max-length="50">String</type>
+					<not-null />
+				</column>
+			</columns>
+		</table>
+		<table name="bruger">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="bruger_id">
+					<type>int</type>
+					<not-null />
+					<auto/>
+					<pk />
+				</column>
+				<column name="bruger_navn">
+					<type max-length="30">String</type>
 					<not-null />
 				</column>
 			</columns>
