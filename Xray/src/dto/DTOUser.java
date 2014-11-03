@@ -12,7 +12,9 @@ public class DTOUser {
 	private String department;
 	private String name;
 	private ArrayList<Permission> permissions;
+	private boolean isActive;
 	
+
 	@SuppressWarnings("serial")
 	private static ArrayList<Permission> defaultPermission = new ArrayList<Permission>(){{add(Permission.REQUEST);}};
 	private static int NOID = -1; // if newly created user, it is not possible to set id, so this is used. ID is set in database with autoincrement
@@ -87,6 +89,12 @@ public class DTOUser {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
