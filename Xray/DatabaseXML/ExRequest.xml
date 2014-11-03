@@ -149,6 +149,10 @@
 					<type>boolean</type>
 					<edit />
 				</column>
+				<column name="graviditet_uge">
+					<type>int</type>
+					<edit />
+				</column>
 				<column name="cave">
 					<type max-length="500">String</type>
 					<not-null />
