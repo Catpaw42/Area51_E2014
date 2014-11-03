@@ -8,24 +8,19 @@
 	</config>
 	<tables>
 
-		<table name="bruger">
+		<table name="mr_kontrol">
 			<edit-mode>column</edit-mode>
 			<auto-find />
 			<columns>
-				<column name="bruger_id">
+				<column name="undersoegelses_type_id">
 					<type>int</type>
 					<not-null />
-					<auto/>
+					<auto />
 					<pk />
 				</column>
-				<column name="bruger_navn">
-					<type max-length="30">String</type>
+				<column name="undersoegelses_navn">
+					<type max-length="40">String</type>
 					<not-null />
-				</column>
-				<column name="er_aktiv">
-					<type>boolean</type>
-					<not-null />
-					<edit />
 				</column>
 			</columns>
 		</table>
