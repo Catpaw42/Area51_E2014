@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+		<table name="petct_kontrolskema">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="petct_kontrolskema_id">
+					<type>int</type>
+					<auto />
+					<pk />
+				</column>
+				<column name="formaal">
+					<type>short</type>
+					<enum>
+						<value>PRIMAERDIAG</value>
+						<value>KONTROLBEH</value>
+						<value>KONTROLREMISSION</value>
+						<value>KONTROLRECIDIV</value>
+					</enum>
+					
+				</column>
+
+			</columns>
+		</table>
+
+
+
+	</tables>
+</database>
