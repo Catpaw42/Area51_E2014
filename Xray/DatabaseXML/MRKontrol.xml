@@ -15,6 +15,7 @@
 				<column name="mr_kontrolskema_id">
 					<type>int</type>
 					<edit />
+					<pk />
 				</column>
 				<column name="patient_cpr">
 					<type>int</type>
