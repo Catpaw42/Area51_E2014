@@ -15,7 +15,7 @@ public class RequisitionTemplate {
 	}
 
 	public enum HenvistTil{radiologisk, klinisk}
-	public enum HospitalOenske{hiller�d, frederikssund};
+	public enum HospitalOenske{hillereod, frederikssund};
 	public enum Prioritering{haste, rutine, fremskyndet, pakkeforloeb};
 	public enum AmbulantKoersel{ingen, siddende, liggende};
 	public enum IndlaeggelseTransport{gaaMedPortoer, gaaUdenPortoer, koerestol, seng};
