@@ -25,7 +25,7 @@ public class DataSourceConnector implements IDataSourceConnector {
 				// Get DataSource from context.xml/web.xml file - look there... ONLY works in a servlet
 				Context initContext  = new InitialContext();
 				Context envContext  = (Context)initContext.lookup("java:/comp/env");
-				dataSource = (DataSource)envContext.lookup("jdbc/s134000");
+				dataSource = (DataSource)envContext.lookup("jdbc/s134004");
 			} catch (NamingException e) {
 				e.printStackTrace();
 				throw new ConnectionException("Server context environment error - check context.xml/web.xml" );

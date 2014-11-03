@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context crossContext="true" reloadable="true">
     <!-- Specifying a JDBC datasource -->
-    <Resource name="jdbc/s134000" auth="Container"
-        type="javax.sql.DataSource" username="s134000" password="hastings"
+    <Resource name="jdbc/s134004" auth="Container"
+        type="javax.sql.DataSource" username="s134004" password="750inurerbest"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://sql-lab1.cc.dtu.dk:3306/s134000"
+        url="jdbc:mysql://sql-lab1.cc.dtu.dk:3306/s134004"
         maxActive="100" maxIdle="30" />
  
 </Context>

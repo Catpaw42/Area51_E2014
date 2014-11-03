@@ -34,7 +34,7 @@
   	  <!-- DataBase connection details for tomcat server, jdbc/s134000 is resource name used
   	  	to get the datasource in java code. javax.sql.DataSource  -->
       <description>DB Connection</description>
-      <res-ref-name>jdbc/s134000</res-ref-name>
+      <res-ref-name>jdbc/s134004</res-ref-name>
       <res-type>javax.sql.DataSource</res-type>
       <res-auth>Container</res-auth>
   </resource-ref>
