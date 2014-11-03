@@ -7,6 +7,15 @@
 		</head>
 		
 		<body class="visiter">
-			
+			<ul class="showInline">
+				<li>
+					<div id="stamdata">
+					</div>
+				</li>
+				<li>
+					<div id="supplerendeData">
+					</div>
+				</li>
+			</ul>
 		</body>
 	</html>

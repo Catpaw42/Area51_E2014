@@ -1,8 +1,8 @@
-$(function()
+$(document).ready(function()
 {    
     /* Get all rows from your 'table' but not the first one 
      * that includes headers. */
-    var rows = $("tr").not(":first");
+    var rows = $("#rekvisitionList tr").not(":first");
     
     /* Create 'click' event handler for rows */
     rows.on("click", function(e)
@@ -21,8 +21,7 @@ $(function()
      * (without this 'event') the text of the 'table' will be selected.
      * You can remove it if you want, I just tested this in 
      * Chrome v30.0.1599.69 */
-    $(document).bind("selectstart dragstart", function(e) { 
+    $(document).on("selectstart dragstart", function(e) { 
         e.preventDefault(); return false; 
     });
-    
 });

@@ -9,32 +9,8 @@
 	</head>
 	
 	<body class="mainPage">
-		<div id="topBanner">
-			<ul class=showInline>
-				<li id="logo">
-					<h3>Area 51</h3>
-				</li>
-				<li id="user">
-					<p>Brian Bjørn</p>
-					<p>Visitator</p>
-				</li>
-				
-			</ul>
-		</div>
-		<div id="mainmenu">
-			<nav>
-				<ul>
-					<li>
-						<a href="rekvirer.jsp">Rekvirer</a>
-					</li>
-					<li>
-						<a href="visiter.jsp">Visiter</a>
-					</li>
-					<li>
-						<a href="book.jsp">Book</a>
-					</li>
-				</ul>
-			</nav>
+		<div id="topMenuIframe">
+			<iframe src="topMenu.jsp"></iframe>
 		</div>
 		
 		<div id="mainpage">
@@ -82,7 +58,7 @@
 						  	</td>
 						</tr>
 		  			</table>
-		  			<input type="submit" id="applyFilter" name="applyFilter" value="Apply Filter">
+		  			<input type="submit" id="søg" name="søg" value="Søg">
 		    	</form>
 			</div>
 			<hr />
