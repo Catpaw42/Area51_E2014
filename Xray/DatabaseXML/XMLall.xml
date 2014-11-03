@@ -120,10 +120,12 @@
 				<column name="mr_kontrolskema_id">
 					<type>int</type>
 					<edit />
+					<ref table="mr_kontrol"/>
 				</column>
 				<column name="petct_kontrolskema_id">
 					<type>int</type>
 					<edit />
+					<ref table="petct_kontrolskema"/>
 				</column>
 				<column name="ct_contrast_kontrolskema_id">
 					<type>int</type>
@@ -151,6 +153,10 @@
 				</column>
 				<column name="graviditet">
 					<type>boolean</type>
+					<edit />
+				</column>
+				<column name="graviditet_uge">
+					<type>int</type>
 					<edit />
 				</column>
 				<column name="cave">
@@ -429,6 +435,245 @@
 					<type max-length="40">String</type>
 					<not-null />
 				</column>
+			</columns>
+		</table>
+		<table name="mr_kontrol">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="mr_kontrolskema_id">
+					<type>int</type>
+					<edit />
+					<pk />
+				</column>
+				<column name="patient_cpr">
+					<type>int</type>
+					<not-null />
+					<ref table="rekvisition"/>
+				</column>
+				<column name="tidl_billed_diagnostik">
+					<type max-length="50">String</type>
+					<edit />
+					<ref table="rekvisition"/>
+				</column>
+				<column name="pacemaker">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="metal_implantater">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="metal_implantater_beskrivelse">
+					<type max-length="100">String</type>
+					<edit />
+				</column>
+				<column name="andet_metalisk">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="metal_implantater_beskrivelse">
+					<type max-length="100">String</type>
+					<edit />
+				</column>
+				<column name="nyresygdom">
+					<type>boolean</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="nyresygdom_beskrivelse">
+					<type max-length="100">String</type>
+					<edit />
+				</column>
+				<column name="graviditet">
+					<type>boolean</type>
+					<edit />
+					<ref table="rekvisition"/>
+				</column>
+				<column name="graviditet_uge">
+					<type>int</type>
+					<edit />
+					<ref table="rekvisition"/>
+				</column>
+				<column name="klaustrofobi">
+					<type>boolean</type>
+					<edit />
+					<not-null/>
+				</column>
+				<column name="praep_forsyn">
+					<type max-length="500">String</type>
+					<edit />
+				</column>
+				<column name="hoejde">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="vaegt">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="rekvirent_id">
+					<type>int</type>
+					<edit />
+					<ref table="rekvisition"/>
+				</column>
+				<column name="mr_boern">
+					<type>short</type>
+					<enum>
+						<value>UDEN_SEDERING</value>
+						<value>I_GENEREL_ANAESTESI</value>
+					</enum>
+					<edit />
+				</column>
+				<column name="mr_voksen">
+					<type>short</type>
+					<enum>
+						<value>UDEN_SEDERING</value>
+						<value>MED_SEDERING</value>
+						<value>I_GENEREL_ANAESTESI</value>
+					</enum>
+					<edit />
+				</column>
+			</columns>
+		</table>
+		<table name="petct_kontrolskema">
+			<edit-mode>column</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="petct_kontrolskema_id">
+					<type>int</type>
+					<auto />
+					<pk />
+				</column>
+				<column name="formaal">
+					<type>short</type>
+					<enum>
+						<value>PRIMAERDIAG</value>
+						<value>KONTROLBEH</value>
+						<value>KONTROLREMISSION</value>
+						<value>KONTROLRECIDIV</value>
+					</enum>
+				</column>
+				<column name="formaal_behandlingskontrol_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="formaal_recidiv_text">
+					<type max-length="250">String</type>
+				</column>				
+				<column name="formaal_andet_text">
+					<type max-length="250">String</type>
+				</column>
+				<column name="kanPtLiggeStille30">
+					<type>boolean</type>
+					<not-null />
+				</column>					
+				<column name="ptTaalerFaste">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="diabetes">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="DMBeh">
+					<type max-length="50">String</type>
+				</column>
+				<column name="smerter">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="respInsuff">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="klaustrofobi">
+					<type>boolean</type>
+					<not-null />
+				</column>
+				<column name="preMed">
+					<type>boolean</type>
+				</column>
+				<column name="DMRegime">
+					<type>boolean</type>
+				</column>
+				<column name="datoForslag">
+					<type max-length="50">String</type>
+				</column>
+				<column name="allergi">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="allergi_text">
+					<type max-length="50">String</type>
+				</column>	
+				<column name="fedme">
+					<type>boolean</type>
+					<not-null/>
+				</column>			
+				<column name="vaegt">
+					<type>int</type>
+				</column>
+				<column name="tidlBilledDiagnostik">
+					<type max-length="250">String</type>
+				</column>
+				<column name="biopsi">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="biopsi_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="operation">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="operation_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="kemo_og_straale">
+					<type>short</type>
+					<enum>
+						<value>ALDRIGGIVET</value>
+						<value>KEMOTERAPI</value>
+						<value>STRAALETERAPI</value>
+						<value>KEMO_OG_STRAALE</value>
+					</enum>
+				</column>
+				<column name="relKontraIndCT">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="relKontraIndCT_text">
+					<type max-length="50">String</type>
+				</column>
+				<column name="nedsatNyreFkt">
+					<type>boolean</type>
+					<not-null/>
+				</column>
+				<column name="SidstePKreatinin">
+					<type>int</type>
+				</column>
+				<column name="SidstePKreatTimestamp">
+					<type>Timestamp</type>
+				</column>
+				<column name="POKontrast">
+					<type>boolean</type>
+				</column>	
+				<column name="IVKontrast">
+					<type>boolean</type>
+				</column>
+				<column name="AktuelPKreatinin">
+					<type>int</type>
+				</column>	
+				<column name="AktuelPKreatTimestamp">
+					<type>Timestamp</type>
+				</column>
+				<column name="AktuelPKreatAndet_text">
+					<type max-length="50">String</type>
+				</column>																								
 			</columns>
 		</table>
 	</tables>
