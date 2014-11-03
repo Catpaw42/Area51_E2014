@@ -10,12 +10,12 @@
 	
 	<body class="mainPage">
 		<div id="topMenuIframe">
-			<iframe src="topMenu.jsp" width="100%"></iframe>
+			<iframe src="topMenu.jsp" width="100%" frameBorder="0"></iframe>
 		</div>
 		
 		<div id="mainpage">
 			<div id="search">
-				<label for="search">SÃ¸g</label>
+				<label for="search">Søg</label>
 		    	<form id="search" name="search" method="post" action="">
 		    		<table>
 						<tr>
@@ -58,7 +58,7 @@
 						  	</td>
 						</tr>
 		  			</table>
-		  			<input type="submit" id="sï¿½g" name="sï¿½g" value="Sï¿½g">
+		  			<input type="submit" id="søg" name="søg" value="Søg">
 		    	</form>
 			</div>
 			<hr />

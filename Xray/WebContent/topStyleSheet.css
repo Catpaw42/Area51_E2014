@@ -1,0 +1,16 @@
+@charset "utf-8";
+#logo {
+	width: 120px;
+	position: absolute;
+	left: 0px;
+}
+#mainmenu {
+	width: auto;
+	position: absolute;
+	left: 121px;
+}
+#user {
+	position: absolute;
+	width: 120px;
+	right: 11px;
+}

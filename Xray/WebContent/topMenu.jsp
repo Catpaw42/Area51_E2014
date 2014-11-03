@@ -4,39 +4,31 @@
 <html>
 <head>
 		<meta charset="utf-8">
-		<link href="styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="topStyleSheet.css" rel="stylesheet" type="text/css" media="screen">
 <title>Insert title here</title>
 </head>
 	<body>
-		<div id="topBanner">
-			<ul class=showInline>
-				<li id="logo">
-					<h3>Area 51</h3>
-				</li>
+   	<div id="wrapper">
+ 	  <div id="logo">
+				<h3>Area 51</h3>
+                </div>
+				<div id="mainmenu">
+				  <nav>
+				    <ul>
+				      <li> <a href="MainServlet?page=rekvirer">Rekvirer</a> </li>
+				      <li> <a href="MainServlet?page=visiter">Visiter</a> </li>
+				      <li> <a href="MainServlet?page=book">Book</a> </li>
+				      <li> <a href="MainServlet?page=admin">Administrer Brugere</a> </li>
+			        </ul>
+			      </nav>
+	    </div>
+        <div id="user">
+		  <p>Brian Bjorn</p>
+				  <p>Visitator</p>
+	    </div>
+    </div>
 				
-				<li id="user">
-					<p>Brian Bjørn</p>
-					<p>Visitator</p>
-				</li>
-			</ul>
-		</div>
-		<div id="mainmenu">
-			<nav>
-				<ul>
-					<li>
-						<a href="MainServlet?page=rekvirer">Rekvirer</a>
-					</li>
-					<li>
-						<a href="MainServlet?page=visiter">Visiter</a>
-					</li>
-					<li>
-						<a href="MainServlet?page=book">Book</a>
-					</li>
-					<li>
-						<a href="MainServlet?page=admin">Administrer Brugere</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</body>
+
+   	
+</body>
 </html>
