@@ -105,7 +105,7 @@ public class TestServlet extends HttpServlet {
 		m.setNyreopereret(false);
 		m.setOver70(true);
 		m.setPKreatinTimestamp(new Date());
-		m.setPKreatinVaerdi("meget høj");
+		m.setPKreatinVaerdi("meget hï¿½j");
 		m.setProteinuri(true);
 		m.setPtHoejde(198);
 		m.setPtVaegt(32);
@@ -122,13 +122,13 @@ public class TestServlet extends HttpServlet {
 		boolean erAktiv = true; 
 		
 		Bruger dto = new Bruger();
-		dto.setBrugerId(id);
+		//dto.setBrugerId(id);
 		dto.setBrugerNavn(brugernavn);
 		dto.setErAktiv(erAktiv);
 		BrugerDao dao = DaoFactory.createBrugerDao(conn);
 		try {
-			System.out.println("\n forsøger at indsætte bruger i database");
-			System.out.println("#######bruger til indsætning#####");
+			System.out.println("\n forsï¿½ger at indsï¿½tte bruger i database");
+			System.out.println("#######bruger til indsï¿½tning#####");
 			System.out.println("brugerId: " + id);
 			System.out.println("brugernavn: " + brugernavn);
 			System.out.println("erAktiv: " + erAktiv);
@@ -142,20 +142,20 @@ public class TestServlet extends HttpServlet {
 				System.out.println("brugernavn: " + alreadyExist.getBrugerNavn());
 				System.out.println("erAktiv: " + alreadyExist.getErAktiv());
 				System.out.println("#################################");
-				System.out.println("brugerid på givne dto ignoreres, og bliver automatisk sat i database");
+				System.out.println("brugerid pï¿½ givne dto ignoreres, og bliver automatisk sat i database");
 			}
 			
 			int pk = dao.insert(dto);
-			System.out.println("bruger tilføjet database");
-			System.out.println("####tilføjet bruger#########");
+			System.out.println("bruger tilfï¿½jet database");
+			System.out.println("####tilfï¿½jet bruger#########");
 			System.out.println("brugerId: " + pk);
 		} catch (DaoException e) {
-			System.err.println("fejlede at tilføjge bruger til database");
+			System.err.println("fejlede at tilfï¿½jge bruger til database");
 		}
 		
 		try {
 			
-			System.out.println("\n forsøger at hente bruger fra database");
+			System.out.println("\n forsï¿½ger at hente bruger fra database");
 			System.out.println("#######user#####");
 			System.out.println("brugerId: " + id);
 			System.out.println("################");
@@ -172,7 +172,7 @@ public class TestServlet extends HttpServlet {
 		
 		erAktiv = !erAktiv;
 		try{
-			System.out.println("\n forsøger at opdatere erAktiv for bruger i database");
+			System.out.println("\n forsï¿½ger at opdatere erAktiv for bruger i database");
 			System.out.println("######opdatering til bruger######");
 			System.out.println("userid: " + id);
 			System.out.println("isActive: " + erAktiv);
@@ -199,7 +199,7 @@ public class TestServlet extends HttpServlet {
 		Requisition dto = new Requisition();
 		dto.setAmbulant(true);
 		dto.setAmbulantKoersel(AmbulantKoersel.LIGGENDE);
-		dto.setCave("utrolig farligt altså");
+		dto.setCave("utrolig farligt altsï¿½");
 		dto.setDatoForslag("198-123-1");
 		dto.setGraviditet(true);
 		dto.setHenvistTil(HenvistTil.RADIOLOGISK);

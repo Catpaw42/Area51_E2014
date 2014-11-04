@@ -13,13 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-
 import java.util.ArrayList;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.spoledge.audao.db.dao.AbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
-
 
 import database.dao.BrugerDao;
 import database.dto.Bruger;
@@ -75,8 +74,15 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
                 throw new DaoException("Value of column 'er_aktiv' cannot be null");
             }
             stmt.setByte( 2, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
-
-            int n = stmt.executeUpdate();
+            
+//            int n = stmt.executeUpdate();
+            //TODO update to handle constraints....
+            try {
+				int n = stmt.executeUpdate();
+			} catch (MySQLIntegrityConstraintViolationException e) {
+				System.err.println("Caught Duplicate user exception");
+            	throw new DuplicateEntryException();
+			}
 
             rs = stmt.getGeneratedKeys();
             rs.next();
