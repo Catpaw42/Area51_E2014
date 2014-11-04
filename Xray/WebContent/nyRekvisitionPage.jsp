@@ -9,7 +9,7 @@
 <body>
 	<section class="roentgenform">
 		<h1>Rekvisition til billeddiagnostisk undersøgelse</h1>
-		<form id="rekvisitionsForm" action=RequisitionController>
+		<form id="rekvisitionsForm" action=NyRekvisitionServlet>
 		<div  class="inline">
 			<ul>
 				<li>
