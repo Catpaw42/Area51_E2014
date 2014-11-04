@@ -25,7 +25,11 @@ import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.DaoFactory;
 import database.dao.RequisitionDao;
+import database.dao.mysql.PetctKontrolskemaDaoImpl;
 import database.dto.Bruger;
+import database.dto.PetctKontrolskema;
+import database.dto.PetctKontrolskema.Formaal;
+import database.dto.PetctKontrolskema.KemoOgStraale;
 import database.dto.Requisition;
 import database.dto.Requisition.AmbulantKoersel;
 import database.dto.Requisition.HenvistTil;
@@ -80,9 +84,121 @@ public class TestServlet extends HttpServlet {
 //		testMrKontrol(statement, connection);
 		
 //		testExRequest(connection);
-		
+		System.out.println("##########tester bruger dto#############");
 		testBruger(connection);
+		System.out.println("#############tester petCtKontrolskema#########");
+		testPetCtKontrolskema(connection);
 
+	}
+	
+	private void testPetCtKontrolskema(Connection conn){
+		//kan være null
+		Boolean setDMRegime= null;
+		Boolean setPOKontrast= null; 
+		Boolean setPreMed= null;
+		
+		//kan ikke være null
+		Boolean setDiabetes= true;
+		Boolean setKanPtLiggeStille30= true;
+		Boolean setKlaustrofobi= false; 
+		Boolean setNedsatNyreFkt= true;
+		Boolean setOperation= false;
+		Boolean setBiopsi= true;
+		Boolean setAllergi= false;
+		Boolean setFedme= true;
+		Boolean setIVKontrast= false;
+		Boolean setPtTaalerFaste= false;
+		Boolean setRelKontraIndCT= true;
+		Boolean setRespInsuff= false;
+		Boolean setSmerter= true; 
+		
+		String setAktuelPKreatAndetText = "det ser ikke så godt ud";
+		String setAllergiText= null;
+		String setBiopsiText= null;
+		String setDatoForslag= null;
+		String setDMBeh= null;
+		String setFormaalAndetText= null;
+		String setFormaalBehandlingsktrlText= null;
+		String setFormaalRecidivText= null;
+		String setOperationText= null;
+		String setRelKontraIndCTText= null;
+		String setTidlBilledDiagnostik= null;
+		
+		Integer setAktuelPKreatinin= null;
+		Integer setPetctKontrolskemaId= null;
+		Integer setSidstePKreatinin= null;
+		Integer setVaegt= null;
+		
+		Date setAktuelPKreatTimestamp= null;
+		Date setSidstePKreatTimestamp= null;
+		
+		Formaal setFormaal= null;
+		KemoOgStraale setKemoOgStraale= null;
+		
+		
+		PetctKontrolskema dto = new PetctKontrolskema();
+		PetctKontrolskemaDaoImpl dao = new PetctKontrolskemaDaoImpl(conn);
+		
+		dto.setAktuelPKreatAndetText(setAktuelPKreatAndetText);
+		dto.setAktuelPKreatinin(setAktuelPKreatinin);
+		dto.setAktuelPKreatTimestamp(setAktuelPKreatTimestamp);
+		dto.setAllergi(setAllergi);
+		dto.setAllergiText(setAllergiText);
+		dto.setBiopsi(setBiopsi);
+		dto.setBiopsiText(setBiopsiText);
+		dto.setDatoForslag(setDatoForslag);
+		dto.setDiabetes(setDiabetes);
+		dto.setDMBeh(setDMBeh);
+		dto.setDMRegime(setDMRegime);
+		dto.setFedme(setFedme);
+		dto.setFormaal(setFormaal);
+		dto.setFormaalAndetText(setFormaalAndetText);
+		dto.setFormaalBehandlingsktrlText(setFormaalBehandlingsktrlText);
+		dto.setFormaalRecidivText(setFormaalRecidivText);
+		dto.setIVKontrast(setIVKontrast);
+		dto.setKanPtLiggeStille30(setKanPtLiggeStille30);
+		dto.setKemoOgStraale(setKemoOgStraale);
+		dto.setKlaustrofobi(setKlaustrofobi);
+		dto.setNedsatNyreFkt(setNedsatNyreFkt);
+		dto.setOperation(setOperation);
+		dto.setOperationText(setOperationText);
+		dto.setPetctKontrolskemaId(setPetctKontrolskemaId);
+		dto.setPOKontrast(setPOKontrast);
+		dto.setPreMed(setPreMed);
+		dto.setPtTaalerFaste(setPtTaalerFaste);
+		dto.setRelKontraIndCT(setRelKontraIndCT);
+		dto.setRelKontraIndCTText(setRelKontraIndCTText);
+		dto.setRespInsuff(setRespInsuff);
+		dto.setSidstePKreatinin(setSidstePKreatinin);
+		dto.setSidstePKreatTimestamp(setSidstePKreatTimestamp);
+		dto.setSmerter(setSmerter);
+		dto.setTidlBilledDiagnostik(setTidlBilledDiagnostik);
+		dto.setVaegt(setVaegt);
+		
+		int pk = 0;
+		try {
+			System.out.println("indsætter petctkontrol dto i database");
+			pk = dao.insert(dto);
+			System.out.println("###########dto indsat med#######");
+			System.out.println("pk: " + pk);
+		} catch (DaoException e) {
+			System.err.println("petCtKontrol dto blev ikke succesfuldt sat ind i database");
+			e.printStackTrace();
+			System.out.println("########################################");
+		}
+		System.out.println("henter petctkontrolskema med pk: " + pk);
+		PetctKontrolskema fdto = dao.findByPrimaryKey(pk);
+		System.out.println("pk: " + fdto.getPetctKontrolskemaId());
+		System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatAndetText());
+		System.out.println("########################################");
+		System.out.println("henter ikke eksisterende objekt... pk: " + pk + 1000);
+		fdto = dao.findByPrimaryKey(pk+1000);
+		try{
+			System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatAndetText());
+		} catch (NullPointerException e){
+			System.out.println("nullPointerException kastet - objektet er null");
+		}
+		
 	}
 
 	private void testMrKontrol(Statement statement, Connection connection) {
@@ -127,7 +243,7 @@ public class TestServlet extends HttpServlet {
 		dto.setErAktiv(erAktiv);
 		BrugerDao dao = DaoFactory.createBrugerDao(conn);
 		try {
-			System.out.println("\n fors�ger at inds�tte bruger i database");
+			System.out.println("\n forsøger at inds�tte bruger i database");
 			System.out.println("#######bruger til inds�tning#####");
 			System.out.println("brugerId: " + id);
 			System.out.println("brugernavn: " + brugernavn);
@@ -142,20 +258,19 @@ public class TestServlet extends HttpServlet {
 				System.out.println("brugernavn: " + alreadyExist.getBrugerNavn());
 				System.out.println("erAktiv: " + alreadyExist.getErAktiv());
 				System.out.println("#################################");
-				System.out.println("brugerid p� givne dto ignoreres, og bliver automatisk sat i database");
+				System.out.println("brugerid på givne dto ignoreres, og bliver automatisk sat i database");
 			}
-			
 			int pk = dao.insert(dto);
-			System.out.println("bruger tilf�jet database");
-			System.out.println("####tilf�jet bruger#########");
+			System.out.println("bruger tilføjet database");
+			System.out.println("####tilføjet bruger#########");
 			System.out.println("brugerId: " + pk);
 		} catch (DaoException e) {
-			System.err.println("fejlede at tilf�jge bruger til database");
+			System.err.println("fejlede at tilføje bruger til database");
 		}
 		
 		try {
 			
-			System.out.println("\n fors�ger at hente bruger fra database");
+			System.out.println("\n forsøger at hente bruger fra database");
 			System.out.println("#######user#####");
 			System.out.println("brugerId: " + id);
 			System.out.println("################");
@@ -172,7 +287,7 @@ public class TestServlet extends HttpServlet {
 		
 		erAktiv = !erAktiv;
 		try{
-			System.out.println("\n fors�ger at opdatere erAktiv for bruger i database");
+			System.out.println("\n forsøger at opdatere erAktiv for bruger i database");
 			System.out.println("######opdatering til bruger######");
 			System.out.println("userid: " + id);
 			System.out.println("isActive: " + erAktiv);
