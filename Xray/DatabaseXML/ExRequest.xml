@@ -61,17 +61,8 @@
 					</enum>
 					<edit />
 				</column>
-				<column name="undersoegelses_modalitet">
-					<type>short</type>
-					<enum>
-						<value>PET_CT</value>
-						<value>CT</value>
-						<value>CT_KONTRAST</value>
-						<value>ULTRALYD</value>
-						<value>MR</value>
-						<value>OTHER</value>
-					</enum>
-					<edit />
+				<column name="modalitet_id">
+					<type>int</type>
 				</column>
 				<column name="status">
 					<type>short</type>

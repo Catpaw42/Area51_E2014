@@ -9,17 +9,13 @@
 	<tables>
 
 		<table name="mr_kontrol">
-			<edit-mode>column</edit-mode>
+			<edit-mode>row</edit-mode>
 			<auto-find />
 			<columns>
 				<column name="mr_kontrolskema_id">
 					<type>int</type>
 					<auto />
 					<pk />
-				</column>
-				<column name="patient_cpr">
-					<type>int</type>
-					<not-null />
 				</column>
 				<column name="tidl_billed_diagnostik">
 					<type max-length="50">String</type>
@@ -44,7 +40,7 @@
 					<not-null />
 					<edit />
 				</column>
-				<column name="metal_implantater_beskrivelse">
+				<column name="andet_metalisk_beskrivelse">
 					<type max-length="100">String</type>
 					<edit />
 				</column>
@@ -53,14 +49,14 @@
 					<not-null />
 					<edit />
 				</column>
-				<column name="nyresygdom_beskrivelse">
-					<type max-length="100">String</type>
+				<column name="nyresygdom_kreatinin">
+					<type>int</type>
 					<edit />
 				</column>
 				<column name="graviditet">
 					<type>boolean</type>
 					<edit />
-				</column>
+				</column> 
 				<column name="graviditet_uge">
 					<type>int</type>
 					<edit />
@@ -81,10 +77,6 @@
 					<type>int</type>
 					<edit />
 				</column>
-				<column name="rekvirent_id">
-					<type>int</type>
-					<edit />
-				</column>
 				<column name="mr_boern">
 					<type>short</type>
 					<enum>
@@ -101,6 +93,9 @@
 						<value>I_GENEREL_ANAESTESI</value>
 					</enum>
 					<edit />
+				</column>
+				<column name="mr_kontrolant_id">
+					<type>int</type>
 				</column>
 			</columns>
 		</table>
