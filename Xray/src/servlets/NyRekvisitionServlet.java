@@ -27,7 +27,7 @@ public class NyRekvisitionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Til at videredelegere til viewet
-		request.getRequestDispatcher("nyRequisitionPage.jsp").forward(request, response);
+		request.getRequestDispatcher("nyRekvisitionPage.jsp").forward(request, response);
 		}
 
 	/**
