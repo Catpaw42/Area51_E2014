@@ -81,7 +81,7 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
 				int n = stmt.executeUpdate();
 			} catch (MySQLIntegrityConstraintViolationException e) {
 				System.err.println("Caught Duplicate user exception");
-            	throw new DuplicateEntryException();
+            	throw new DuplicateEntryException("Username already exists");
 			}
 
             rs = stmt.getGeneratedKeys();
