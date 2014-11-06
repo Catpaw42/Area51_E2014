@@ -16,60 +16,55 @@
 						<li>
 							<div id="patientData">
 								<h2>Patient</h2>
-								<label for="cpr">CPR-Nummer</label>
-								<input type="text" id="cpr" name="cpr" placeholder="012345-6789" required="required">
-								<label for="ptNavn">Patient Navn</label>
-								<input type="text" id="ptNavn" name="ptNavn" placeholder="Navn">
-								<label for="ptAddresse">Addresse</label>
-								<input type="text" id="ptAddresse" name="ptAddresse" placeholder="Addresse">
-								<label for="telefonNr">Telefonnummer</label>
-								<input type="text" id="telefonNr" name="telefonNr" placeholder="" required="required">
+								<label for="patient_cpr">CPR-Nummer</label>
+								<input type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789" required="required">
+								<label for="patient_navn">Patient Navn</label>
+								<input type="text" id="patient_navn" name="patient_navn" placeholder="Navn"  required="required">
+								<label for="patient_adresse">Addresse</label>
+								<input type="text" id="patient_adresse" name="patient_adresse" placeholder="Adresse">
+								<label for="patient_tlf">Telefonnummer</label>
+								<input type="text" id="patient_tlf" name="patient_tlf" placeholder="">
+								<label for="paaroerende">Pårørende</label>
+								<input type="text" id="paaroerende" name="paaroerende" placeholder="forældre/værge/andet">
+								<label for="samtykke">Patientsamtykke</label>
+								<div id="samtykke">
+									<input type="radio" id="samtykke_ja" name="samtykke">Ja
+									<input type="radio" id="samtykke_nej" name="samtykke">Nej
+									<input type="radio" id="uden_samtykke" name="samtykke">Ikke i stand til samtykke
+								</div>
+								<label for="triage">Triage</label>
+								<input type="text" id="triage" name="triage" placeholder="evt. EWS">
+								<label for="cave">Cave</label>
+								<input type="text" id="cave" name="cave" placeholder="" required="required">
 							</div>
 						</li>
 						<li>
 							<div id="rekvirentData">
 								<h2>Rekvirent</h2>
 								<label for="rekvirent">Rekvirent</label>
-								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" required="required">
-								<label for="hendvisendeLæge">Henvisende læge</label>
-								<input type="text" id="hendvisendeLæge" name="hendvisendeLæge" placeholder="Hendvisende læge">
-								<label for="rekvirentTlf">Kontakt telefonnr</label>
-								<input type="text" id="rekvirentTlf" name="rekvirentTlf" placeholder="Telefonnummer">
-								<label for="afdeling">Afdeling</label>
-								<input type="text" id="afdeling" name="afdeling" placeholder="Afdeling">
+								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" readonly="readonly">
+								<label for="henv_afd">Rekvirerende Afdeling</label>
+								<input type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling" required="required">
+								<label for="henv_laege">Henvisende læge</label>
+								<input type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge">
+								<label for="kontakt_tlf">Kontakt telefonnr</label>
+								<input type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer" required="required">
+
 							</div>
 						</li>
 					</ul>
 				</div>
 				<hr />
 				<div id="undersøgelseData">
-					<label for="modalitet">Modalitet</label>
-					<select id="modalitet" >
-						<option value="røntgen" selected="selected">Røntgen</option>
-						<option value="ultralyd">Ultralyd</option>
-						<option value="invasivUltralyd">Invasiv Ultralyd</option>
-						<option value="mr">MR</option>
-						<option value="ct">CT</option>
-						<option value="ctMedKontrast">CT med kontrast</option>
-						<option value="pet">PET/CT</option>
-						<option value="andet">Anden US - Beskriv</option>
-					</select>
-					<label for="indikation">Indikation</label>
-					<textarea name="indikation"></textarea>
-					<label for="billedtype">Billedtype</label>
-					<select id="billedtype">
-						<option value="rgtthorax">RGT thorax</option>
-						<option value="2">dæk-tryk</option>
-						<option value="3">udstødningsrør</option>
-						<option value="4">venstre vinge</option>
-						<option value="5">motherboard</option>
-						<option value="6">bagben</option>
-						<option value="7">Andet</option>
-					</select>
-					<label for="henvisning">Henvist til</label>
-					<div id="henvisning">
-						<input type="radio" id="radiologiskAfs" name="henvisningRadioButton">Radiologisk Afsnit
-						<input type="radio" id="kliniskFysAfs" name="henvisningRadioButton">Klinisk Fysiologisk Afsnit
+					<label for="udf_indlagt">Udføres under indlæggelse</label>
+					<div id="udf_indlagt">
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required">Ambulant <br>
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required">Indlæggelse <br>
+					</div>
+					<label for="henvist_til">Henvist til</label>
+					<div id="henvist_til">
+						<input type="radio" id="radiologiskAfs" name="henvist_til" checked="checked" required="required">Radiologisk Afsnit
+						<input type="radio" id="kliniskFysAfs" name="henvist_til" required="required">Klinisk Fysiologisk Afsnit
 					</div>
 					<label for="hospitalsønske">Evt. Hospitalsønske</label>
 					<div id="hospitalsønske">
@@ -80,22 +75,42 @@
 					<label for="prioriteringsønske">Prioriteringsønske</label>
 					<div id="prioriteringsønske">
 						<input type="radio" id="haste" name="prioriteringsønskeRadioButton">Haste
-						<input type="radio" id="rutine" name="prioriteringsønskeRadioButton">Rutine <br>
 						<input type="radio" id="fremskyndet" name="prioriteringsønskeRadioButton">Fremskyndet
+						<input type="radio" id="rutine" name="prioriteringsønskeRadioButton">Rutine
 						<input type="radio" id="pakkeforløb" name="prioriteringsønskeRadioButton">Pakkeforløb
 					</div>
-					<label for="transportValg">Udføres under indlæggelse</label>
-					<div id="transportValg">
-						<input type="radio" onclick="javascript:transportCheck();" name="transport" id="ambulant" checked="checked">Ambulant <br>
-					<input type="radio" onclick="javascript:transportCheck();" name="transport" id="indlagt">Indlæggelse <br>
-					</div>
+					<label for="modalitet_navn">Modalitet</label>
+					<select id="modalitet_navn" >
+						<option value="RTG" selected="selected">Røntgen</option>
+						<option value="UL">Ultralyd</option>
+						<option value="invasiv_UL">Invasiv Ultralyd</option>
+						<option value="MR">MR</option>
+						<option value="CT">CT uden kontrast</option>
+						<option value="CT_kontrast">CT med kontrast</option>
+						<option value="PETCT">PET/CT</option>
+						<option value="andet">Anden US - Beskriv nedenfor</option>
+					</select>
+					<label for="undersøgelses_navn">Billedtype</label>
+					<select id="undersøgelses_navn">
+						<option value="undersoegelses_type_id">Do jsp stuff here</option>
+						<option value="2">dæk-tryk</option>
+						<option value="3">udstødningsrør</option>
+						<option value="4">venstre vinge</option>
+						<option value="5">motherboard</option>
+						<option value="6">bagben</option>
+						<option value="7">Andet</option>
+					</select>
+					<label for="klinisk_problemstilling">Klinisk Problemstilling</label>
+					<p>Anamnese - objektive fund - evt. medicin og laboratoriesvar relevant for undersøgelsen (Se kliniske vejledninger).<br>
+					Begrundelse for prioriteringsønske skal fremgå af den kliniske problemstilling.</p>
+					<textarea name="klinisk_problemstilling"></textarea>
 					<label for="transport">Transport</label>
 					<div id="transport">
 						<div id="ambulantTransport">
 							<input type="radio" id="ingenKørsel" name="ambulantRadioButton">Ingen Kørsel <br>
 							<input type="radio" id="siddendeKørsel" name="ambulantRadioButton">Siddende Kørsel <br>
 							<input type="radio" id="liggendeKørsel" name="ambulantRadioButton">Liggende Kørsel <br>
-							<label for="datoForslag">Forslag til dato</label>
+							<label for="datoForslag">Ønsket tidspunkt</label>
 							<input type="text" id="datoForslag" name="datoForslag">
 						</div>
 						<div id="indlagtTransport">
@@ -111,13 +126,12 @@
 					</div>
 					<label for="gravididtet">Mulighed for graviditet</label>
 					<div id="gravididtet">
-						<input type="radio" name="graviditet" id="jaGravid">Ja <br>
-						<input type="radio" name="graviditet" id="nejGravid">Nej <br>
+						<input type="radio" name="graviditet" id="jaGravid">Ja
+						<input type="radio" name="graviditet" id="nejGravid">Nej
 					</div>
-					<label for="cave">Cave</label>
-					<input type="text" id="cave" name="cave" placeholder="">
 					<label for="særligeForhold">"Særlige Forhold"</label>
 					<div id="særligeForhold">
+						<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold">Ingen særlige forhold <br>
 						<input type="checkbox" id="hørehæmmet" name="hørehæmmet">Hørehæmmet <br>
 						<input type="checkbox" id="synshæmmet" name="synshæmmet">Synshæmmet <br>
 						<input type="checkbox" id="amputeret" name="amputeret">Amputeret <br>
@@ -133,11 +147,12 @@
 						<label for="cytostatika">Cytostatika</label>
 						<input type="date" id="cytostatika" name="cytostatika">
 					</div>
-					<label for="kliniskPrb">Klinisk Problemstilling</label><br>
-					<label for="kliniskPrb">Anamnese - objektive fund - evt. medicin og laboratoriesvar relevant for undersøgelsen (Se kliniske vejledninger).<br>
-					Begrundelse for prioriteringsønske skal fremgå af den kliniske problemstilling.</label>
-					<textarea name="kliniskPrb"></textarea>
 				</div>
+				<label for=tidl_billed_diagnostik>Tidligere undersøgelse</label>
+					<p>Er patienten tidliger undersøgt i billeddiagnostisk regi indenfor hospitalerne i Nordsjælland
+					eller har patienten fået foretaget relevant undersøgelse udenfor Nordsjælland. Anfør undersøgelse, årstal og hvor.</p>
+					<textarea name="tidl_billed_diagnostik"></textarea>
+				<hr />
 				<div id="ctKontrolSkema">
 					<h2>CT Kontrolskema</h2>
 					<ul>
