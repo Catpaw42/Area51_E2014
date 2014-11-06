@@ -140,6 +140,9 @@ rekvisitionPage.jsp
 	padding: 0;
 	list-style-type: none;
 }
+#ctKontrolSkema ul {
+	list-style-type: none;
+}
 .centerAlign{
 		align-items: center;
 }
