@@ -21,6 +21,18 @@
 					<type max-length="30">String</type>
 					<not-null />
 				</column>
+				<column name="patient_navn">
+					<type max-length="100">String</type>
+					<not-null />
+				</column>
+				<column name="patient_adresse">
+					<type max-length="100">String</type>
+					<not-null />
+				</column>
+				<column name="patient_tlf">
+					<type max-length="100">String</type>
+					<not-null />
+				</column>
 				<column name="foedselsdag">
 					<type>Timestamp</type>
 					<not-null />
