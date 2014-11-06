@@ -7,8 +7,8 @@
 		</factory>
 	</config>
 	<tables>
-		<table name="requisition">
-			<edit-mode>column</edit-mode>
+		<table name="rekvisition">
+			<edit-mode>row</edit-mode>
 			<auto-find />
 			<columns>
 				<column name="rekvisition_id">
@@ -16,12 +16,46 @@
 					<not-null />
 					<pk />
 				</column>
+				<column name="MR_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="PETCT_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="CT_kontrast_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="invasiv_UL_kontrolskema_id">
+					<type>int</type>
+					<edit />
+				</column>
+				<column name="undersoegelses_type_id">
+					<type>int</type>
+					<not-null />
+					<edit />
+				</column>
+				<column name="rekvirent_id">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="visitator_id">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="patient_id">
+					<type>int</type>
+					<not-null />
+				</column>
 				<column name="henvist_til">
 					<type>short</type>
 					<enum>
 						<value>RADIOLOGISK</value>
 						<value>KLINISK</value>
 					</enum>
+					<not-null />
 					<edit />
 				</column>
 				<column name="hospital_oenske">
@@ -29,10 +63,11 @@
 					<enum>
 						<value>HILLEROED</value>
 						<value>FREDERIKSSUND</value>
+						<value>HELSINGOER</value>
 					</enum>
 					<edit />
 				</column>
-				<column name="pririotering">
+				<column name="prioritering">
 					<type>short</type>
 					<enum>
 						<value>HASTE</value>
@@ -40,6 +75,12 @@
 						<value>FREMSKYNDET</value>
 						<value>PAKKEFORLOEB</value>
 					</enum>
+					<not-null />
+					<edit />
+				</column>
+				<column name="udf_indlagt">
+					<type>boolean</type>
+					<not-null />
 					<edit />
 				</column>
 				<column name="ambulant_koersel">
@@ -54,15 +95,12 @@
 				<column name="indlaeggelse_transport">
 					<type>short</type>
 					<enum>
-						<value>GAA_MED_PORTOER</value>
 						<value>GAA_UDEN_PORTOER</value>
+						<value>GAA_MED_PORTOER</value>
 						<value>KOERESTOL</value>
 						<value>SENG</value>
 					</enum>
 					<edit />
-				</column>
-				<column name="modalitet_id">
-					<type>int</type>
 				</column>
 				<column name="status">
 					<type>short</type>
@@ -73,6 +111,7 @@
 						<value>DECLINED</value>
 						<value>BOOKED</value>
 					</enum>
+					<not-null />
 					<edit />
 				</column>
 				<column name="samtykke">
@@ -84,43 +123,9 @@
 					</enum>
 					<edit />
 				</column>
-				<column name="rekvirent_id">
-					<type>int</type>
-					<not-null />
-				</column>
-				<column name="visitator_id">
-					<type>int</type>
-					<not-null />
-				</column>
-				<column name="patient_cpr">
-					<type max-length="30">String</type>
-					<not-null />
-				</column>
 				<column name="patient_foedselsdag">
 					<type>Timestamp</type>
 					<not-null />
-				</column>
-				<column name="undersoegelses_type_id">
-					<type>int</type>
-					<not-null />
-					<edit />
-				</column>
-				<column name="MR_kontrolskema_id">
-					<type>int</type>
-					<edit />
-				</column>
-				<column name="PETCT_kontrolskema_id">
-					<type>int</type>
-					<edit />
-				</column>
-				<column name="CT_contrast_kontrolskema_id">
-					<type>int</type>
-					<edit />
-				</column>
-				<column name="undersoegelses_type_id">
-					<type>int</type>
-					<not-null />
-					<edit />
 				</column>
 				<column name="ambulant">
 					<type>boolean</type>
@@ -129,11 +134,6 @@
 				</column>
 				<column name="dato_forslag">
 					<type max-length="50">String</type>
-					<edit />
-				</column>
-				<column name="udf_indlagt">
-					<type>boolean</type>
-					<not-null />
 					<edit />
 				</column>
 				<column name="graviditet">
@@ -196,11 +196,6 @@
 					<type>Timestamp</type>
 					<edit />
 				</column>
-				<column name="undersoegelsestype">
-					<type max-length="50">String</type>
-					<not-null />
-					<edit />
-				</column>
 				<column name="tidl_billed_diagnostik">
 					<type max-length="50">String</type>
 					<edit />
@@ -211,11 +206,11 @@
 					<edit />
 				</column>
 				<column name="triage">
-					<type max-length="1000">String</type>
+					<type max-length="100">String</type>
 					<edit />
 				</column>
 				<column name="henv_laege">
-					<type max-length="500">String</type>
+					<type max-length="100">String</type>
 					<not-null />
 					<edit />
 				</column>

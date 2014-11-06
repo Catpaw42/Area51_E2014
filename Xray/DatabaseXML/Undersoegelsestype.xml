@@ -7,9 +7,8 @@
 		</factory>
 	</config>
 	<tables>
-
-		<table name="modalitet">
-			<edit-mode>column</edit-mode>
+		<table name="undersoegelses_type">
+			<edit-mode>row</edit-mode>
 			<auto-find />
 			<columns>
 				<column name="undersoegelses_type_id">
@@ -18,12 +17,14 @@
 					<pk />
 				</column>
 				<column name="undersoegelses_navn">
-					<type max-length="40">String</type>
+					<type max-length="100">String</type>
 					<not-null />
+					<edit />
 				</column>
 				<column name="modalitet_id">
 					<type>int</type>
 					<edit />
+					<not-null />
 				</column>
 			</columns>
 		</table>

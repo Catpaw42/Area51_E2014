@@ -9,7 +9,7 @@
 	<tables>
 
 		<table name="rettigheder">
-			<edit-mode>column</edit-mode>
+			<edit-mode>row</edit-mode>
 			<auto-find />
 			<columns>
 				<column name="rettigheds_id">

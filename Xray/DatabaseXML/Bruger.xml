@@ -9,7 +9,7 @@
 	<tables>
 
 		<table name="bruger">
-			<edit-mode>column</edit-mode>
+			<edit-mode>row</edit-mode>
 			<auto-find />
 			<columns>
 				<column name="bruger_id">
@@ -19,6 +19,12 @@
 				</column>
 				<column name="bruger_navn">
 					<type max-length="30">String</type>
+					<edit />
+					<not-null />
+				</column>
+				<column name="fuldt_navn">
+					<type max-length="100">String</type>
+					<edit />
 					<not-null />
 				</column>
 				<column name="er_aktiv">

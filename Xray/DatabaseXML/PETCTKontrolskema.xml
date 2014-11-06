@@ -7,11 +7,11 @@
 		</factory>
 	</config>
 	<tables>
-		<table name="petct_kontrolskema">
+		<table name="PETCT_kontrolskema">
 			<edit-mode>column</edit-mode>
 			<auto-find />
 			<columns>
-				<column name="petct_kontrolskema_id">
+				<column name="PETCT_kontrolskema_id">
 					<type>int</type>
 					<auto />
 					<pk />
@@ -24,20 +24,15 @@
 						<value>KONTROLREMISSION</value>
 						<value>KONTROLRECIDIV</value>
 					</enum>
+					<not-null />
 				</column>
-				<column name="formaal_behandlingsktrl_text">
-					<type max-length="50">String</type>
-				</column>
-				<column name="formaal_recidiv_text">
-					<type max-length="250">String</type>
-				</column>				
-				<column name="formaal_andet_text">
+				<column name="formaal_tekst">
 					<type max-length="250">String</type>
 				</column>
 				<column name="kanPtLiggeStille30">
 					<type>boolean</type>
 					<not-null />
-				</column>					
+				</column>
 				<column name="ptTaalerFaste">
 					<type>boolean</type>
 					<not-null />
@@ -46,8 +41,8 @@
 					<type>boolean</type>
 					<not-null />
 				</column>
-				<column name="DMBeh">
-					<type max-length="50">String</type>
+				<column name="DM_Beh">
+					<type max-length="100">String</type>
 				</column>
 				<column name="smerter">
 					<type>boolean</type>
@@ -61,45 +56,34 @@
 					<type>boolean</type>
 					<not-null />
 				</column>
-				<column name="preMed">
-					<type>boolean</type>
-				</column>
-				<column name="DMRegime">
-					<type>boolean</type>
-				</column>
-				<column name="datoForslag">
-					<type max-length="50">String</type>
-				</column>
 				<column name="allergi">
 					<type>boolean</type>
-					<not-null/>
+					<not-null />
 				</column>
-				<column name="allergi_text">
-					<type max-length="50">String</type>
-				</column>	
+				<column name="allergi_tekst">
+					<type max-length="100">String</type>
+				</column>
 				<column name="fedme">
 					<type>boolean</type>
-					<not-null/>
-				</column>			
+					<not-null />
+				</column>
 				<column name="vaegt">
 					<type>int</type>
-				</column>
-				<column name="tidlBilledDiagnostik">
-					<type max-length="250">String</type>
+					<not-null />
 				</column>
 				<column name="biopsi">
 					<type>boolean</type>
-					<not-null/>
+					<not-null />
 				</column>
-				<column name="biopsi_text">
-					<type max-length="50">String</type>
+				<column name="biopsi_tekst">
+					<type max-length="100">String</type>
 				</column>
 				<column name="operation">
 					<type>boolean</type>
-					<not-null/>
+					<not-null />
 				</column>
-				<column name="operation_text">
-					<type max-length="50">String</type>
+				<column name="operation_tekst">
+					<type max-length="100">String</type>
 				</column>
 				<column name="kemo_og_straale">
 					<type>short</type>
@@ -109,17 +93,18 @@
 						<value>STRAALETERAPI</value>
 						<value>KEMO_OG_STRAALE</value>
 					</enum>
+					<not-null />
 				</column>
-				<column name="relKontraIndCT">
+				<column name="kontrast_reaktion">
 					<type>boolean</type>
-					<not-null/>
+					<not-null />
 				</column>
-				<column name="relKontraIndCT_text">
-					<type max-length="50">String</type>
+				<column name="kontrast_reaktion_tekst">
+					<type max-length="100">String</type>
 				</column>
 				<column name="nedsatNyreFkt">
 					<type>boolean</type>
-					<not-null/>
+					<not-null />
 				</column>
 				<column name="SidstePKreatinin">
 					<type>int</type>
@@ -127,21 +112,33 @@
 				<column name="SidstePKreatTimestamp">
 					<type>Timestamp</type>
 				</column>
+				<column name="preMed">
+					<type>boolean</type>
+					<edit />
+				</column>
+				<column name="DMRegime">
+					<type>boolean</type>
+					<edit/>
+				</column>
 				<column name="POKontrast">
 					<type>boolean</type>
-				</column>	
+					<edit />
+				</column>
 				<column name="IVKontrast">
 					<type>boolean</type>
+					<edit />
 				</column>
 				<column name="AktuelPKreatinin">
 					<type>int</type>
-				</column>	
+					<edit />
+				</column>
 				<column name="AktuelPKreatTimestamp">
 					<type>Timestamp</type>
+					<edit />
 				</column>
-				<column name="AktuelPKreatAndet_text">
-					<type max-length="50">String</type>
-				</column>																								
+				<column name="Aktuel_andet_tekst">
+					<type max-length="100">String</type>
+				</column>
 			</columns>
 		</table>
 

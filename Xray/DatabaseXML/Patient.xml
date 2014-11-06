@@ -12,16 +12,20 @@
 			<edit-mode>column</edit-mode>
 			<auto-find />
 			<columns>
-				<column name="cpr">
-					<type max-length="30">String</type>
+				<column name="patient_id">
+					<type>int</type>
 					<not-null />
 					<pk />
+				</column>
+				<column name="patient_cpr">
+					<type max-length="30">String</type>
+					<not-null />
 				</column>
 				<column name="foedselsdag">
 					<type>Timestamp</type>
 					<not-null />
 				</column>
-				<column name="afdeling">
+				<column name="stamafdeling">
 					<type max-length="50">String</type>
 					<not-null />
 				</column>
