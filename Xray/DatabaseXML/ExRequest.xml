@@ -227,6 +227,10 @@
 					<type max-length="100">String</type>
 					<edit />
 				</column>
+				<column name="visitator_bemaerkning">
+					<type max-length="100">String</type>
+					<edit />
+				</column>
 				<column name="afsendt_dato">
 					<type>Timestamp</type>
 					<not-null />
