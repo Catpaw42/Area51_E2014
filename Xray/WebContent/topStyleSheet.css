@@ -1,16 +1,20 @@
 @charset "utf-8";
 #logo {
 	width: 120px;
-	position: absolute;
-	right: 0px;
+	position: relative;
+	vertical-align: middle;
+	display: table-cell;
+	text-align: right;
+	padding: 10px;
 }
 #mainmenu {
 	width: auto;
-	position: absolute;
-	left: 121px;
+	position: relative;
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
+	vertical-align: middle;
+	display: table-cell;
 }
 #mainmenu ul li {
 	display: inline;
@@ -26,9 +30,21 @@
 	background-color:#033;
 }
 #user {
-	position: absolute;
-	width: 120px;
-	left: 3px;
+	position: relative;
+	width: 150px;
+	padding: 10px;
+	vertical-align: middle;
+	display: table-cell;
+}
+#wrapper {
+	width: 100%;
+	height: 60px;
+	frameBorder: 0;
+	margin-left: auto;
+	margin-right: auto;
+	background-color:#ffc26b;
+	display: table;
+	
 }
 body {
 	background-color: #E2E2E2;
