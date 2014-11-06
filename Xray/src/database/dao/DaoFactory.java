@@ -7,6 +7,15 @@ package database.dao;
 
 import java.sql.Connection;
 
+import database.dao.mysql.BrugerDaoImpl;
+import database.dao.mysql.CtKontrastKontrolskemaDaoImpl;
+import database.dao.mysql.MRKontrolskemaDaoImpl;
+import database.dao.mysql.ModalitetDaoImpl;
+import database.dao.mysql.PETCTKontrolskemaDaoImpl;
+import database.dao.mysql.PatientDaoImpl;
+import database.dao.mysql.RekvisitionDaoImpl;
+import database.dao.mysql.RettighederDaoImpl;
+
 
 /**
  * This is the main class for obtaining DAO objects.
@@ -20,70 +29,72 @@ import java.sql.Connection;
  */
 public class DaoFactory {
 
-    private static Factory factory;
+	private static Factory factory;
 
-    static {
-        String pkgDao = DaoFactory.class.getPackage().getName();
-        String pkgImpl = pkgDao + '.' + System.getProperty( pkgDao + ".DB_TYPE", "mysql" );
-        try {
-            Class<?> aclazz = Class.forName( pkgImpl + ".DaoFactoryImpl" );
-            Class<? extends Factory> clazz = aclazz.asSubclass( Factory.class );
-            factory = clazz.newInstance();
-        }
-        catch (Exception e) {
-            throw new Error("A problem occurred when resolving DAO factory class", e);
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Static methods
-    ////////////////////////////////////////////////////////////////////////////
-
-    public static RequisitionDao createRequisitionDao( Connection conn ) {
-        return factory.createRequisitionDao( conn );
-    }
-	  public static BrugerDao createBrugerDao( Connection conn ) {
-        return factory.createBrugerDao( conn );
-    }
-	  public static CtKontrolDao createCtKontrolDao( Connection conn ) {
-	        return factory.createCtKontrolDao( conn );
-	    }
-	  public static MrKontrolDao createMrKontrolDao( Connection conn ) {
-	        return factory.createMrKontrolDao( conn );
-	    }
-	  public static PatientDao createPatientDao( Connection conn ) {
-	        return factory.createPatientDao( conn );
-	    }
-	  public static PetctKontrolskemaDao createPetctKontrolskemaDao( Connection conn ) {
-	        return factory.createPetctKontrolskemaDao( conn );
-	    }
-	  public static RettighederDao createRettighederDao( Connection conn ) {
-	        return factory.createRettighederDao( conn );
-	    }
-	  public static UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn ) {
-	        return factory.createUndersoegelsesTypeDao( conn );
-	    }
-	  public static RegisteredUserDao createRegisteredUserDao( Connection conn ) {
-	        return factory.createRegisteredUserDao( conn );
-	    }
+	static {
+		String pkgDao = DaoFactory.class.getPackage().getName();
+		String pkgImpl = pkgDao + '.' + System.getProperty( pkgDao + ".DB_TYPE", "mysql" );
+		try {
+			Class<?> aclazz = Class.forName( pkgImpl + ".DaoFactoryImpl" );
+			Class<? extends Factory> clazz = aclazz.asSubclass( Factory.class );
+			factory = clazz.newInstance();
+		}
+		catch (Exception e) {
+			throw new Error("A problem occurred when resolving DAO factory class", e);
+		}
+	}
 
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Inner classes
-    ////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	// Static methods
+	////////////////////////////////////////////////////////////////////////////
 
-    public static abstract class Factory {
+	public static UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn ) {
+		return factory.createUndersoegelsesTypeDao( conn );
+	}
 
-        public abstract RequisitionDao createRequisitionDao( Connection conn );
-        public abstract BrugerDao createBrugerDao( Connection conn );
-        public abstract CtKontrolDao createCtKontrolDao( Connection conn );
-        public abstract MrKontrolDao createMrKontrolDao( Connection conn );
-        public abstract PatientDao createPatientDao( Connection conn );
-        public abstract PetctKontrolskemaDao createPetctKontrolskemaDao( Connection conn );
-        public abstract RettighederDao createRettighederDao( Connection conn );
-        public abstract UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn );
-        public abstract RegisteredUserDao createRegisteredUserDao( Connection conn );
 
-    }
-	
+
+	public static BrugerDao createBrugerDao( Connection conn ) {
+		return new BrugerDaoImpl( conn );
+	}
+	public static CtKontrastKontrolskemaDao createCtKontrastKontrolskemaDao( Connection conn ) {
+		return factory.createCtKontrastKontrolskemaDao( conn );
+	}
+	public static ModalitetDao createModalitetDao( Connection conn ) {
+		return factory.createModalitetDao(conn);
+	}
+	public static MRKontrolskemaDao createMrKontrolskemaDao( Connection conn ) {
+		return factory.createMrKontrolskemaDao(conn);
+	}
+	public static PatientDao createPatientDao( Connection conn ) {
+		return factory.createPatientDao(conn);
+	}
+	public static PETCTKontrolskemaDao createPetctKontrolskemaDao( Connection conn ) {
+		return factory.createPetctKontrolskemaDao(conn);
+	}
+	public static RekvisitionDao createRekvisitionDao( Connection conn ) {
+		return factory.createRekvisitionDao(conn);
+	}
+	public static RettighederDao createRettighederDao( Connection conn ) {
+		return factory.createRettighederDao(conn);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	// Inner classes
+	////////////////////////////////////////////////////////////////////////////
+
+	public static abstract class Factory {
+
+		public abstract UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn );
+		public abstract BrugerDao createBrugerDao( Connection conn );
+		public abstract CtKontrastKontrolskemaDao createCtKontrastKontrolskemaDao( Connection conn );
+		public abstract ModalitetDao createModalitetDao( Connection conn );
+		public abstract MRKontrolskemaDao createMrKontrolskemaDao( Connection conn );
+		public abstract PatientDao createPatientDao( Connection conn );
+		public abstract PETCTKontrolskemaDao createPetctKontrolskemaDao( Connection conn );
+		public abstract RekvisitionDao createRekvisitionDao( Connection conn );
+		public abstract RettighederDao createRettighederDao( Connection conn );
+
+	}
 }

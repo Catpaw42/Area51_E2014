@@ -21,8 +21,8 @@ import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
 
 
-import database.dao.CtKontrolDao;
-import database.dto.CtKontrol;
+import database.dao.CtKontrastKontrolskemaDao;
+import database.dto.CtKontrastKontrolskema;
 
 
 /**
@@ -30,17 +30,17 @@ import database.dto.CtKontrol;
  *
  * @author generated
  */
-public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKontrolDao {
+public class CtKontrastKontrolskemaDaoImpl extends AbstractDaoImpl<CtKontrastKontrolskema> implements CtKontrastKontrolskemaDao {
 
-    private static final String TABLE_NAME = "mr_kontrol";
+    private static final String TABLE_NAME = "ct_kontrast_kontrolskema";
 
-    protected static final String SELECT_COLUMNS = "ct_kontrast_kontrolskema_id, diabetes, nyrefunktion, nyreopereret, hjertesygdom, myokarieinfarkt, proteinuri, urinsyregigt, over70, hypertension, nsaid_praeparat, aminoglykosider, allergi, kontraststofreaktion, astma, hyperthyreoidisme, metformin, interleukin2, beta_blokkere, p_kreatin_vaerdi, p_kreatin_timestamp, pt_hoejde, pt_vaegt";
+    protected static final String SELECT_COLUMNS = "ct_kontrast_kontrolskema_id, diabetes, nyrefunktion, nyreopereret, hjertesygdom, myokardieinfarkt, proteinuri, urinsyregigt, over70, hypertension, nsaid_praeparat, aminoglykosider, allergi, kontraststofreaktion, astma, hyperthyreoidisme, metformin, interleukin2, beta_blokkere, p_kreatinin_vaerdi, p_kreatinin_timestamp, pt_hoejde, pt_vaegt";
 
     protected static final String PK_CONDITION = "ct_kontrast_kontrolskema_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO mr_kontrol (diabetes,nyrefunktion,nyreopereret,hjertesygdom,myokarieinfarkt,proteinuri,urinsyregigt,over70,hypertension,nsaid_praeparat,aminoglykosider,allergi,kontraststofreaktion,astma,hyperthyreoidisme,metformin,interleukin2,beta_blokkere,p_kreatin_vaerdi,p_kreatin_timestamp,pt_hoejde,pt_vaegt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO ct_kontrast_kontrolskema (diabetes,nyrefunktion,nyreopereret,hjertesygdom,myokardieinfarkt,proteinuri,urinsyregigt,over70,hypertension,nsaid_praeparat,aminoglykosider,allergi,kontraststofreaktion,astma,hyperthyreoidisme,metformin,interleukin2,beta_blokkere,p_kreatinin_vaerdi,p_kreatinin_timestamp,pt_hoejde,pt_vaegt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    public CtKontrolDaoImpl( Connection conn ) {
+    public CtKontrastKontrolskemaDaoImpl( Connection conn ) {
         super( conn );
     }
 
@@ -48,7 +48,7 @@ public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKo
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public CtKontrol findByPrimaryKey( int ctKontrastKontrolskemaId ) {
+    public CtKontrastKontrolskema findByPrimaryKey( int ctKontrastKontrolskemaId ) {
         return findOne( PK_CONDITION, ctKontrastKontrolskemaId);
     }
 
@@ -56,7 +56,7 @@ public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKo
      * Inserts a new record.
      * @return the generated primary key - ctKontrastKontrolskemaId
      */
-    public int insert( CtKontrol dto ) throws DaoException {
+    public int insert( CtKontrastKontrolskema dto ) throws DaoException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -85,10 +85,10 @@ public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKo
             }
             stmt.setByte( 4, dto.getHjertesygdom() ? ((byte)1) : ((byte)0) );
 
-            if ( dto.getMyokarieinfarkt() == null ) {
-                throw new DaoException("Value of column 'myokarieinfarkt' cannot be null");
+            if ( dto.getMyokardieinfarkt() == null ) {
+                throw new DaoException("Value of column 'myokardieinfarkt' cannot be null");
             }
-            stmt.setByte( 5, dto.getMyokarieinfarkt() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 5, dto.getMyokardieinfarkt() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getProteinuri() == null ) {
                 throw new DaoException("Value of column 'proteinuri' cannot be null");
@@ -155,16 +155,16 @@ public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKo
             }
             stmt.setByte( 18, dto.getBetaBlokkere() ? ((byte)1) : ((byte)0) );
 
-            if ( dto.getPKreatinVaerdi() == null ) {
-                throw new DaoException("Value of column 'p_kreatin_vaerdi' cannot be null");
+            if ( dto.getPKreatininVaerdi() == null ) {
+                throw new DaoException("Value of column 'p_kreatinin_vaerdi' cannot be null");
             }
-            checkMaxLength( "p_kreatin_vaerdi", dto.getPKreatinVaerdi(), 50 );
-            stmt.setString( 19, dto.getPKreatinVaerdi() );
+            checkMaxLength( "p_kreatinin_vaerdi", dto.getPKreatininVaerdi(), 50 );
+            stmt.setString( 19, dto.getPKreatininVaerdi() );
 
-            if ( dto.getPKreatinTimestamp() == null ) {
-                throw new DaoException("Value of column 'p_kreatin_timestamp' cannot be null");
+            if ( dto.getPKreatininTimestamp() == null ) {
+                throw new DaoException("Value of column 'p_kreatinin_timestamp' cannot be null");
             }
-            stmt.setTimestamp( 20, dto.getPKreatinTimestamp() );
+            stmt.setTimestamp( 20, dto.getPKreatininTimestamp() );
 
             if ( dto.getPtHoejde() == null ) {
                 throw new DaoException("Value of column 'pt_hoejde' cannot be null");
@@ -207,14 +207,14 @@ public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKo
         return SELECT_COLUMNS;
     }
 
-    protected CtKontrol fetch( ResultSet rs ) throws SQLException {
-        CtKontrol dto = new CtKontrol();
+    protected CtKontrastKontrolskema fetch( ResultSet rs ) throws SQLException {
+        CtKontrastKontrolskema dto = new CtKontrastKontrolskema();
         dto.setCtKontrastKontrolskemaId( rs.getInt( 1 ));
         dto.setDiabetes( rs.getBoolean( 2 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setNyrefunktion( rs.getBoolean( 3 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setNyreopereret( rs.getBoolean( 4 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setHjertesygdom( rs.getBoolean( 5 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setMyokarieinfarkt( rs.getBoolean( 6 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setMyokardieinfarkt( rs.getBoolean( 6 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setProteinuri( rs.getBoolean( 7 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setUrinsyregigt( rs.getBoolean( 8 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setOver70( rs.getBoolean( 9 ) ? Boolean.TRUE : Boolean.FALSE );
@@ -228,16 +228,16 @@ public class CtKontrolDaoImpl extends AbstractDaoImpl<CtKontrol> implements CtKo
         dto.setMetformin( rs.getBoolean( 17 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setInterleukin2( rs.getBoolean( 18 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setBetaBlokkere( rs.getBoolean( 19 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setPKreatinVaerdi( rs.getString( 20 ));
-        dto.setPKreatinTimestamp( rs.getTimestamp( 21 ));
+        dto.setPKreatininVaerdi( rs.getString( 20 ));
+        dto.setPKreatininTimestamp( rs.getTimestamp( 21 ));
         dto.setPtHoejde( rs.getInt( 22 ));
         dto.setPtVaegt( rs.getInt( 23 ));
 
         return dto;
     }
 
-    protected CtKontrol[] toArray(ArrayList<CtKontrol> list ) {
-        CtKontrol[] ret = new CtKontrol[ list.size() ];
+    protected CtKontrastKontrolskema[] toArray(ArrayList<CtKontrastKontrolskema> list ) {
+        CtKontrastKontrolskema[] ret = new CtKontrastKontrolskema[ list.size() ];
         return list.toArray( ret );
     }
 

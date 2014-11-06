@@ -99,11 +99,32 @@ public class RettighederDaoImpl extends AbstractDaoImpl<Rettigheder> implements 
     }
 
     /**
-     * Updates column rettighed of one record found by primary key.
-     * @return true iff the record was really updated (=found)
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
      */
-    public boolean updateRettighed( int rettighedsId, Rettigheder.Rettighed rettighed ) throws DaoException {
-        return updateOne( ( rettighed != null ? "rettighed=?" : "rettighed=NULL"), PK_CONDITION, (rettighed != null ? rettighed.ordinal() + 1 : null), rettighedsId);
+    public boolean update( int rettighedsId, Rettigheder dto ) throws DaoException {
+        StringBuffer sb = new StringBuffer();
+        ArrayList<Object> params = new ArrayList<Object>();
+
+        if ( dto.isRettighedModified()) {
+            if ( dto.getRettighed() == null ) {
+                sb.append( "rettighed=NULL" );
+            }
+            else {
+                sb.append( "rettighed=?" );
+                params.add( dto.getRettighed().ordinal() + 1);
+            }
+        }
+
+        if (sb.length() == 0) {
+            return false;
+        }
+
+        params.add( rettighedsId );
+
+        Object[] oparams = new Object[ params.size() ];
+
+        return updateOne( sb.toString(), PK_CONDITION, params.toArray( oparams ));
     }
 
     /**

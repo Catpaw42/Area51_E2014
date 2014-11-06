@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.dto.CtKontrol;
+import database.dto.MRKontrolskema;
 
 
 /**
@@ -19,18 +19,24 @@ import database.dto.CtKontrol;
  *
  * @author generated
  */
-public interface CtKontrolDao extends AbstractDao {
+public interface MRKontrolskemaDao extends AbstractDao {
 
     /**
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public CtKontrol findByPrimaryKey( int ctKontrastKontrolskemaId );
+    public MRKontrolskema findByPrimaryKey( int mRKontrolskemaId );
 
     /**
      * Inserts a new record.
-     * @return the generated primary key - ctKontrastKontrolskemaId
+     * @return the generated primary key - mRKontrolskemaId
      */
-    public int insert( CtKontrol dto ) throws DaoException;
+    public int insert( MRKontrolskema dto ) throws DaoException;
+
+    /**
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
+     */
+    public boolean update( int mRKontrolskemaId, MRKontrolskema dto ) throws DaoException;
 
 }

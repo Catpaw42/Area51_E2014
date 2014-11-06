@@ -1,12 +1,12 @@
 package database.interfaces;
 
-import dto.DTOUser;
+import database.dto.Bruger;
 
 public interface IDataBaseController
 {
-	boolean validateUser(DTOUser loginUser) throws DatabaseException;
+	boolean validateUser(Bruger loginUser) throws DatabaseException;
 
-	DTOUser getUserFromUsername(String username) throws DatabaseException, UserNotFoundException;
+	Bruger getUserFromUsername(String username) throws DatabaseException, UserNotFoundException;
 	
 	public class DatabaseException extends Exception
 	{

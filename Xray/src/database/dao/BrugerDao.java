@@ -34,9 +34,9 @@ public interface BrugerDao extends AbstractDao {
     public int insert( Bruger dto ) throws DaoException;
 
     /**
-     * Updates column er_aktiv of one record found by primary key.
-     * @return true iff the record was really updated (=found)
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
      */
-    public boolean updateErAktiv( int brugerId, boolean erAktiv ) throws DaoException;
+    public boolean update( int brugerId, Bruger dto ) throws DaoException;
 
 }

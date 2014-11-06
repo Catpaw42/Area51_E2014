@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.dto.Patient;
+import database.dto.Rekvisition;
 
 
 /**
@@ -19,17 +19,23 @@ import database.dto.Patient;
  *
  * @author generated
  */
-public interface PatientDao extends AbstractDao {
+public interface RekvisitionDao extends AbstractDao {
 
     /**
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public Patient findByPrimaryKey( int patientId );
+    public Rekvisition findByPrimaryKey( int rekvisitionId );
 
     /**
      * Inserts a new record.
      */
-    public void insert( Patient dto ) throws DaoException;
+    public void insert( Rekvisition dto ) throws DaoException;
+
+    /**
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
+     */
+    public boolean update( int rekvisitionId, Rekvisition dto ) throws DaoException;
 
 }

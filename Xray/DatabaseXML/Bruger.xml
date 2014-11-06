@@ -19,13 +19,13 @@
 				</column>
 				<column name="bruger_navn">
 					<type max-length="30">String</type>
-					<edit />
 					<not-null />
+					<edit />
 				</column>
 				<column name="fuldt_navn">
 					<type max-length="100">String</type>
-					<edit />
 					<not-null />
+					<edit />
 				</column>
 				<column name="er_aktiv">
 					<type>boolean</type>

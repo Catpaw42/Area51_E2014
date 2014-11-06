@@ -74,13 +74,13 @@
 				</column>
 				<column name="hoejde">
 					<type>int</type>
-					<edit />
 					<not-null />
+					<edit />
 				</column>
 				<column name="vaegt">
 					<type>int</type>
-					<edit />
 					<not-null />
+					<edit />
 				</column>
 				<column name="MR_boern">
 					<type>short</type>

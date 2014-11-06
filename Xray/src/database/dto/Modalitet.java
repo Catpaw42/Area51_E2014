@@ -12,21 +12,20 @@ import com.spoledge.audao.db.dto.AbstractDto;
  *
  * @author generated
  */
-public class UndersoegelsesType extends AbstractDto {
+public class Modalitet extends AbstractDto {
 
     ////////////////////////////////////////////////////////////////////////////
     // Static
     ////////////////////////////////////////////////////////////////////////////
 
-    public static final String TABLE = "undersoegelses_type";
+    public static final String TABLE = "modalitet";
 
     ////////////////////////////////////////////////////////////////////////////
     // Attributes
     ////////////////////////////////////////////////////////////////////////////
 
-    private Integer undersoegelsesTypeId;
-    private String undersoegelsesNavn;
     private Integer modalitetId;
+    private String modalitetNavn;
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructors
@@ -35,28 +34,12 @@ public class UndersoegelsesType extends AbstractDto {
     /**
      * Creates a new empty DTO.
      */
-    public UndersoegelsesType() {
+    public Modalitet() {
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Public
     ////////////////////////////////////////////////////////////////////////////
-
-    public Integer getUndersoegelsesTypeId() {
-        return undersoegelsesTypeId;
-    }
-
-    public void setUndersoegelsesTypeId( Integer _val) {
-        this.undersoegelsesTypeId = _val;
-    }
-
-    public String getUndersoegelsesNavn() {
-        return undersoegelsesNavn;
-    }
-
-    public void setUndersoegelsesNavn( String _val) {
-        this.undersoegelsesNavn = _val;
-    }
 
     public Integer getModalitetId() {
         return modalitetId;
@@ -66,6 +49,14 @@ public class UndersoegelsesType extends AbstractDto {
         this.modalitetId = _val;
     }
 
+    public String getModalitetNavn() {
+        return modalitetNavn;
+    }
+
+    public void setModalitetNavn( String _val) {
+        this.modalitetNavn = _val;
+    }
+
     /**
      * Indicates whether some other object is "equal to" this one.
      * Uses 'columns' equality type.
@@ -73,24 +64,19 @@ public class UndersoegelsesType extends AbstractDto {
     @Override
     public boolean equals( Object _other ) {
         if (_other == this) return true;
-        if (_other == null || (!(_other instanceof UndersoegelsesType))) return false;
+        if (_other == null || (!(_other instanceof Modalitet))) return false;
 
-        UndersoegelsesType _o = (UndersoegelsesType) _other;
-
-        if ( undersoegelsesTypeId == null ) {
-            if ( _o.undersoegelsesTypeId != null ) return false;
-        }
-        else if ( _o.undersoegelsesTypeId == null || undersoegelsesTypeId.intValue() != _o.undersoegelsesTypeId.intValue()) return false;
-
-        if ( undersoegelsesNavn == null ) {
-            if ( _o.undersoegelsesNavn != null ) return false;
-        }
-        else if ( _o.undersoegelsesNavn == null || !undersoegelsesNavn.equals( _o.undersoegelsesNavn )) return false;
+        Modalitet _o = (Modalitet) _other;
 
         if ( modalitetId == null ) {
             if ( _o.modalitetId != null ) return false;
         }
         else if ( _o.modalitetId == null || modalitetId.intValue() != _o.modalitetId.intValue()) return false;
+
+        if ( modalitetNavn == null ) {
+            if ( _o.modalitetNavn != null ) return false;
+        }
+        else if ( _o.modalitetNavn == null || !modalitetNavn.equals( _o.modalitetNavn )) return false;
 
         return true;
     }
@@ -100,10 +86,9 @@ public class UndersoegelsesType extends AbstractDto {
      */
     @Override
     public int hashCode() {
-        int _ret = 1571283646; // = "UndersoegelsesType".hashCode()
-        _ret += undersoegelsesTypeId == null ? 0 : undersoegelsesTypeId;
-        _ret = 29 * _ret + (undersoegelsesNavn == null ? 0 : undersoegelsesNavn.hashCode());
-        _ret = 29 * _ret + (modalitetId == null ? 0 : modalitetId);
+        int _ret = -120555737; // = "Modalitet".hashCode()
+        _ret += modalitetId == null ? 0 : modalitetId;
+        _ret = 29 * _ret + (modalitetNavn == null ? 0 : modalitetNavn.hashCode());
 
         return _ret;
     }
@@ -117,8 +102,7 @@ public class UndersoegelsesType extends AbstractDto {
      * Constructs the content for the toString() method.
      */
     protected void contentToString(StringBuffer sb) {
-        append( sb, "undersoegelsesTypeId", undersoegelsesTypeId );
-        append( sb, "undersoegelsesNavn", undersoegelsesNavn );
         append( sb, "modalitetId", modalitetId );
+        append( sb, "modalitetNavn", modalitetNavn );
     }
 }

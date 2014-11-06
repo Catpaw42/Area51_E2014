@@ -35,6 +35,8 @@ public class Rettigheder extends AbstractDto {
     private Integer brugerId;
     private Rettigheder.Rettighed rettighed;
 
+    private boolean isRettighedModified;
+
     ////////////////////////////////////////////////////////////////////////////
     // Constructors
     ////////////////////////////////////////////////////////////////////////////
@@ -71,6 +73,11 @@ public class Rettigheder extends AbstractDto {
 
     public void setRettighed( Rettigheder.Rettighed _val) {
         this.rettighed = _val;
+        this.isRettighedModified = true;
+    }
+
+    public boolean isRettighedModified() {
+        return isRettighedModified;
     }
 
     /**

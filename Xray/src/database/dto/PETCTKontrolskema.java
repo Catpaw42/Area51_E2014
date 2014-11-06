@@ -14,7 +14,7 @@ import com.spoledge.audao.db.dto.AbstractDto;
  *
  * @author generated
  */
-public class PetctKontrolskema extends AbstractDto {
+public class PETCTKontrolskema extends AbstractDto {
 
     public enum Formaal {
         PRIMAERDIAG,
@@ -34,17 +34,15 @@ public class PetctKontrolskema extends AbstractDto {
     // Static
     ////////////////////////////////////////////////////////////////////////////
 
-    public static final String TABLE = "petct_kontrolskema";
+    public static final String TABLE = "PETCT_kontrolskema";
 
     ////////////////////////////////////////////////////////////////////////////
     // Attributes
     ////////////////////////////////////////////////////////////////////////////
 
-    private Integer petctKontrolskemaId;
-    private PetctKontrolskema.Formaal formaal;
-    private String formaalBehandlingsktrlText;
-    private String formaalRecidivText;
-    private String formaalAndetText;
+    private Integer pETCTKontrolskemaId;
+    private PETCTKontrolskema.Formaal formaal;
+    private String formaalTekst;
     private Boolean kanPtLiggeStille30;
     private Boolean ptTaalerFaste;
     private Boolean diabetes;
@@ -52,29 +50,27 @@ public class PetctKontrolskema extends AbstractDto {
     private Boolean smerter;
     private Boolean respInsuff;
     private Boolean klaustrofobi;
-    private Boolean preMed;
-    private Boolean dMRegime;
-    private String datoForslag;
     private Boolean allergi;
-    private String allergiText;
+    private String allergiTekst;
     private Boolean fedme;
     private Integer vaegt;
-    private String tidlBilledDiagnostik;
     private Boolean biopsi;
-    private String biopsiText;
+    private String biopsiTekst;
     private Boolean operation;
-    private String operationText;
-    private PetctKontrolskema.KemoOgStraale kemoOgStraale;
-    private Boolean relKontraIndCT;
-    private String relKontraIndCTText;
+    private String operationTekst;
+    private PETCTKontrolskema.KemoOgStraale kemoOgStraale;
+    private Boolean kontrastReaktion;
+    private String kontrastReaktionTekst;
     private Boolean nedsatNyreFkt;
     private Integer sidstePKreatinin;
     private Timestamp sidstePKreatTimestamp;
+    private Boolean preMed;
+    private Boolean dMRegime;
     private Boolean pOKontrast;
     private Boolean iVKontrast;
     private Integer aktuelPKreatinin;
     private Timestamp aktuelPKreatTimestamp;
-    private String aktuelPKreatAndetText;
+    private String aktuelAndetTekst;
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructors
@@ -83,51 +79,35 @@ public class PetctKontrolskema extends AbstractDto {
     /**
      * Creates a new empty DTO.
      */
-    public PetctKontrolskema() {
+    public PETCTKontrolskema() {
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Public
     ////////////////////////////////////////////////////////////////////////////
 
-    public Integer getPetctKontrolskemaId() {
-        return petctKontrolskemaId;
+    public Integer getPETCTKontrolskemaId() {
+        return pETCTKontrolskemaId;
     }
 
-    public void setPetctKontrolskemaId( Integer _val) {
-        this.petctKontrolskemaId = _val;
+    public void setPETCTKontrolskemaId( Integer _val) {
+        this.pETCTKontrolskemaId = _val;
     }
 
-    public PetctKontrolskema.Formaal getFormaal() {
+    public PETCTKontrolskema.Formaal getFormaal() {
         return formaal;
     }
 
-    public void setFormaal( PetctKontrolskema.Formaal _val) {
+    public void setFormaal( PETCTKontrolskema.Formaal _val) {
         this.formaal = _val;
     }
 
-    public String getFormaalBehandlingsktrlText() {
-        return formaalBehandlingsktrlText;
+    public String getFormaalTekst() {
+        return formaalTekst;
     }
 
-    public void setFormaalBehandlingsktrlText( String _val) {
-        this.formaalBehandlingsktrlText = _val;
-    }
-
-    public String getFormaalRecidivText() {
-        return formaalRecidivText;
-    }
-
-    public void setFormaalRecidivText( String _val) {
-        this.formaalRecidivText = _val;
-    }
-
-    public String getFormaalAndetText() {
-        return formaalAndetText;
-    }
-
-    public void setFormaalAndetText( String _val) {
-        this.formaalAndetText = _val;
+    public void setFormaalTekst( String _val) {
+        this.formaalTekst = _val;
     }
 
     public Boolean getKanPtLiggeStille30() {
@@ -186,30 +166,6 @@ public class PetctKontrolskema extends AbstractDto {
         this.klaustrofobi = _val;
     }
 
-    public Boolean getPreMed() {
-        return preMed;
-    }
-
-    public void setPreMed( Boolean _val) {
-        this.preMed = _val;
-    }
-
-    public Boolean getDMRegime() {
-        return dMRegime;
-    }
-
-    public void setDMRegime( Boolean _val) {
-        this.dMRegime = _val;
-    }
-
-    public String getDatoForslag() {
-        return datoForslag;
-    }
-
-    public void setDatoForslag( String _val) {
-        this.datoForslag = _val;
-    }
-
     public Boolean getAllergi() {
         return allergi;
     }
@@ -218,12 +174,12 @@ public class PetctKontrolskema extends AbstractDto {
         this.allergi = _val;
     }
 
-    public String getAllergiText() {
-        return allergiText;
+    public String getAllergiTekst() {
+        return allergiTekst;
     }
 
-    public void setAllergiText( String _val) {
-        this.allergiText = _val;
+    public void setAllergiTekst( String _val) {
+        this.allergiTekst = _val;
     }
 
     public Boolean getFedme() {
@@ -242,14 +198,6 @@ public class PetctKontrolskema extends AbstractDto {
         this.vaegt = _val;
     }
 
-    public String getTidlBilledDiagnostik() {
-        return tidlBilledDiagnostik;
-    }
-
-    public void setTidlBilledDiagnostik( String _val) {
-        this.tidlBilledDiagnostik = _val;
-    }
-
     public Boolean getBiopsi() {
         return biopsi;
     }
@@ -258,12 +206,12 @@ public class PetctKontrolskema extends AbstractDto {
         this.biopsi = _val;
     }
 
-    public String getBiopsiText() {
-        return biopsiText;
+    public String getBiopsiTekst() {
+        return biopsiTekst;
     }
 
-    public void setBiopsiText( String _val) {
-        this.biopsiText = _val;
+    public void setBiopsiTekst( String _val) {
+        this.biopsiTekst = _val;
     }
 
     public Boolean getOperation() {
@@ -274,36 +222,36 @@ public class PetctKontrolskema extends AbstractDto {
         this.operation = _val;
     }
 
-    public String getOperationText() {
-        return operationText;
+    public String getOperationTekst() {
+        return operationTekst;
     }
 
-    public void setOperationText( String _val) {
-        this.operationText = _val;
+    public void setOperationTekst( String _val) {
+        this.operationTekst = _val;
     }
 
-    public PetctKontrolskema.KemoOgStraale getKemoOgStraale() {
+    public PETCTKontrolskema.KemoOgStraale getKemoOgStraale() {
         return kemoOgStraale;
     }
 
-    public void setKemoOgStraale( PetctKontrolskema.KemoOgStraale _val) {
+    public void setKemoOgStraale( PETCTKontrolskema.KemoOgStraale _val) {
         this.kemoOgStraale = _val;
     }
 
-    public Boolean getRelKontraIndCT() {
-        return relKontraIndCT;
+    public Boolean getKontrastReaktion() {
+        return kontrastReaktion;
     }
 
-    public void setRelKontraIndCT( Boolean _val) {
-        this.relKontraIndCT = _val;
+    public void setKontrastReaktion( Boolean _val) {
+        this.kontrastReaktion = _val;
     }
 
-    public String getRelKontraIndCTText() {
-        return relKontraIndCTText;
+    public String getKontrastReaktionTekst() {
+        return kontrastReaktionTekst;
     }
 
-    public void setRelKontraIndCTText( String _val) {
-        this.relKontraIndCTText = _val;
+    public void setKontrastReaktionTekst( String _val) {
+        this.kontrastReaktionTekst = _val;
     }
 
     public Boolean getNedsatNyreFkt() {
@@ -332,6 +280,22 @@ public class PetctKontrolskema extends AbstractDto {
 
     public void setSidstePKreatTimestamp( Timestamp _val) {
         this.sidstePKreatTimestamp = _val;
+    }
+
+    public Boolean getPreMed() {
+        return preMed;
+    }
+
+    public void setPreMed( Boolean _val) {
+        this.preMed = _val;
+    }
+
+    public Boolean getDMRegime() {
+        return dMRegime;
+    }
+
+    public void setDMRegime( Boolean _val) {
+        this.dMRegime = _val;
     }
 
     public Boolean getPOKontrast() {
@@ -370,12 +334,12 @@ public class PetctKontrolskema extends AbstractDto {
         this.aktuelPKreatTimestamp = _val;
     }
 
-    public String getAktuelPKreatAndetText() {
-        return aktuelPKreatAndetText;
+    public String getAktuelAndetTekst() {
+        return aktuelAndetTekst;
     }
 
-    public void setAktuelPKreatAndetText( String _val) {
-        this.aktuelPKreatAndetText = _val;
+    public void setAktuelAndetTekst( String _val) {
+        this.aktuelAndetTekst = _val;
     }
 
     /**
@@ -385,31 +349,21 @@ public class PetctKontrolskema extends AbstractDto {
     @Override
     public boolean equals( Object _other ) {
         if (_other == this) return true;
-        if (_other == null || (!(_other instanceof PetctKontrolskema))) return false;
+        if (_other == null || (!(_other instanceof PETCTKontrolskema))) return false;
 
-        PetctKontrolskema _o = (PetctKontrolskema) _other;
+        PETCTKontrolskema _o = (PETCTKontrolskema) _other;
 
-        if ( petctKontrolskemaId == null ) {
-            if ( _o.petctKontrolskemaId != null ) return false;
+        if ( pETCTKontrolskemaId == null ) {
+            if ( _o.pETCTKontrolskemaId != null ) return false;
         }
-        else if ( _o.petctKontrolskemaId == null || petctKontrolskemaId.intValue() != _o.petctKontrolskemaId.intValue()) return false;
+        else if ( _o.pETCTKontrolskemaId == null || pETCTKontrolskemaId.intValue() != _o.pETCTKontrolskemaId.intValue()) return false;
 
         if ( formaal != _o.formaal ) return false;
 
-        if ( formaalBehandlingsktrlText == null ) {
-            if ( _o.formaalBehandlingsktrlText != null ) return false;
+        if ( formaalTekst == null ) {
+            if ( _o.formaalTekst != null ) return false;
         }
-        else if ( _o.formaalBehandlingsktrlText == null || !formaalBehandlingsktrlText.equals( _o.formaalBehandlingsktrlText )) return false;
-
-        if ( formaalRecidivText == null ) {
-            if ( _o.formaalRecidivText != null ) return false;
-        }
-        else if ( _o.formaalRecidivText == null || !formaalRecidivText.equals( _o.formaalRecidivText )) return false;
-
-        if ( formaalAndetText == null ) {
-            if ( _o.formaalAndetText != null ) return false;
-        }
-        else if ( _o.formaalAndetText == null || !formaalAndetText.equals( _o.formaalAndetText )) return false;
+        else if ( _o.formaalTekst == null || !formaalTekst.equals( _o.formaalTekst )) return false;
 
         if ( kanPtLiggeStille30 == null ) {
             if ( _o.kanPtLiggeStille30 != null ) return false;
@@ -446,30 +400,15 @@ public class PetctKontrolskema extends AbstractDto {
         }
         else if ( _o.klaustrofobi == null || klaustrofobi.booleanValue() != _o.klaustrofobi.booleanValue()) return false;
 
-        if ( preMed == null ) {
-            if ( _o.preMed != null ) return false;
-        }
-        else if ( _o.preMed == null || preMed.booleanValue() != _o.preMed.booleanValue()) return false;
-
-        if ( dMRegime == null ) {
-            if ( _o.dMRegime != null ) return false;
-        }
-        else if ( _o.dMRegime == null || dMRegime.booleanValue() != _o.dMRegime.booleanValue()) return false;
-
-        if ( datoForslag == null ) {
-            if ( _o.datoForslag != null ) return false;
-        }
-        else if ( _o.datoForslag == null || !datoForslag.equals( _o.datoForslag )) return false;
-
         if ( allergi == null ) {
             if ( _o.allergi != null ) return false;
         }
         else if ( _o.allergi == null || allergi.booleanValue() != _o.allergi.booleanValue()) return false;
 
-        if ( allergiText == null ) {
-            if ( _o.allergiText != null ) return false;
+        if ( allergiTekst == null ) {
+            if ( _o.allergiTekst != null ) return false;
         }
-        else if ( _o.allergiText == null || !allergiText.equals( _o.allergiText )) return false;
+        else if ( _o.allergiTekst == null || !allergiTekst.equals( _o.allergiTekst )) return false;
 
         if ( fedme == null ) {
             if ( _o.fedme != null ) return false;
@@ -481,42 +420,37 @@ public class PetctKontrolskema extends AbstractDto {
         }
         else if ( _o.vaegt == null || vaegt.intValue() != _o.vaegt.intValue()) return false;
 
-        if ( tidlBilledDiagnostik == null ) {
-            if ( _o.tidlBilledDiagnostik != null ) return false;
-        }
-        else if ( _o.tidlBilledDiagnostik == null || !tidlBilledDiagnostik.equals( _o.tidlBilledDiagnostik )) return false;
-
         if ( biopsi == null ) {
             if ( _o.biopsi != null ) return false;
         }
         else if ( _o.biopsi == null || biopsi.booleanValue() != _o.biopsi.booleanValue()) return false;
 
-        if ( biopsiText == null ) {
-            if ( _o.biopsiText != null ) return false;
+        if ( biopsiTekst == null ) {
+            if ( _o.biopsiTekst != null ) return false;
         }
-        else if ( _o.biopsiText == null || !biopsiText.equals( _o.biopsiText )) return false;
+        else if ( _o.biopsiTekst == null || !biopsiTekst.equals( _o.biopsiTekst )) return false;
 
         if ( operation == null ) {
             if ( _o.operation != null ) return false;
         }
         else if ( _o.operation == null || operation.booleanValue() != _o.operation.booleanValue()) return false;
 
-        if ( operationText == null ) {
-            if ( _o.operationText != null ) return false;
+        if ( operationTekst == null ) {
+            if ( _o.operationTekst != null ) return false;
         }
-        else if ( _o.operationText == null || !operationText.equals( _o.operationText )) return false;
+        else if ( _o.operationTekst == null || !operationTekst.equals( _o.operationTekst )) return false;
 
         if ( kemoOgStraale != _o.kemoOgStraale ) return false;
 
-        if ( relKontraIndCT == null ) {
-            if ( _o.relKontraIndCT != null ) return false;
+        if ( kontrastReaktion == null ) {
+            if ( _o.kontrastReaktion != null ) return false;
         }
-        else if ( _o.relKontraIndCT == null || relKontraIndCT.booleanValue() != _o.relKontraIndCT.booleanValue()) return false;
+        else if ( _o.kontrastReaktion == null || kontrastReaktion.booleanValue() != _o.kontrastReaktion.booleanValue()) return false;
 
-        if ( relKontraIndCTText == null ) {
-            if ( _o.relKontraIndCTText != null ) return false;
+        if ( kontrastReaktionTekst == null ) {
+            if ( _o.kontrastReaktionTekst != null ) return false;
         }
-        else if ( _o.relKontraIndCTText == null || !relKontraIndCTText.equals( _o.relKontraIndCTText )) return false;
+        else if ( _o.kontrastReaktionTekst == null || !kontrastReaktionTekst.equals( _o.kontrastReaktionTekst )) return false;
 
         if ( nedsatNyreFkt == null ) {
             if ( _o.nedsatNyreFkt != null ) return false;
@@ -532,6 +466,16 @@ public class PetctKontrolskema extends AbstractDto {
             if ( _o.sidstePKreatTimestamp != null ) return false;
         }
         else if ( _o.sidstePKreatTimestamp == null || sidstePKreatTimestamp.getTime() != _o.sidstePKreatTimestamp.getTime()) return false;
+
+        if ( preMed == null ) {
+            if ( _o.preMed != null ) return false;
+        }
+        else if ( _o.preMed == null || preMed.booleanValue() != _o.preMed.booleanValue()) return false;
+
+        if ( dMRegime == null ) {
+            if ( _o.dMRegime != null ) return false;
+        }
+        else if ( _o.dMRegime == null || dMRegime.booleanValue() != _o.dMRegime.booleanValue()) return false;
 
         if ( pOKontrast == null ) {
             if ( _o.pOKontrast != null ) return false;
@@ -553,10 +497,10 @@ public class PetctKontrolskema extends AbstractDto {
         }
         else if ( _o.aktuelPKreatTimestamp == null || aktuelPKreatTimestamp.getTime() != _o.aktuelPKreatTimestamp.getTime()) return false;
 
-        if ( aktuelPKreatAndetText == null ) {
-            if ( _o.aktuelPKreatAndetText != null ) return false;
+        if ( aktuelAndetTekst == null ) {
+            if ( _o.aktuelAndetTekst != null ) return false;
         }
-        else if ( _o.aktuelPKreatAndetText == null || !aktuelPKreatAndetText.equals( _o.aktuelPKreatAndetText )) return false;
+        else if ( _o.aktuelAndetTekst == null || !aktuelAndetTekst.equals( _o.aktuelAndetTekst )) return false;
 
         return true;
     }
@@ -566,12 +510,10 @@ public class PetctKontrolskema extends AbstractDto {
      */
     @Override
     public int hashCode() {
-        int _ret = 1055105260; // = "PetctKontrolskema".hashCode()
-        _ret += petctKontrolskemaId == null ? 0 : petctKontrolskemaId;
+        int _ret = -987719444; // = "PETCTKontrolskema".hashCode()
+        _ret += pETCTKontrolskemaId == null ? 0 : pETCTKontrolskemaId;
         _ret = 29 * _ret + (formaal == null ? 0 : formaal.hashCode());
-        _ret = 29 * _ret + (formaalBehandlingsktrlText == null ? 0 : formaalBehandlingsktrlText.hashCode());
-        _ret = 29 * _ret + (formaalRecidivText == null ? 0 : formaalRecidivText.hashCode());
-        _ret = 29 * _ret + (formaalAndetText == null ? 0 : formaalAndetText.hashCode());
+        _ret = 29 * _ret + (formaalTekst == null ? 0 : formaalTekst.hashCode());
         _ret = 29 * _ret + (kanPtLiggeStille30 == null ? 0 : (kanPtLiggeStille30 ? 1 : 0));
         _ret = 29 * _ret + (ptTaalerFaste == null ? 0 : (ptTaalerFaste ? 1 : 0));
         _ret = 29 * _ret + (diabetes == null ? 0 : (diabetes ? 1 : 0));
@@ -579,29 +521,27 @@ public class PetctKontrolskema extends AbstractDto {
         _ret = 29 * _ret + (smerter == null ? 0 : (smerter ? 1 : 0));
         _ret = 29 * _ret + (respInsuff == null ? 0 : (respInsuff ? 1 : 0));
         _ret = 29 * _ret + (klaustrofobi == null ? 0 : (klaustrofobi ? 1 : 0));
-        _ret = 29 * _ret + (preMed == null ? 0 : (preMed ? 1 : 0));
-        _ret = 29 * _ret + (dMRegime == null ? 0 : (dMRegime ? 1 : 0));
-        _ret = 29 * _ret + (datoForslag == null ? 0 : datoForslag.hashCode());
         _ret = 29 * _ret + (allergi == null ? 0 : (allergi ? 1 : 0));
-        _ret = 29 * _ret + (allergiText == null ? 0 : allergiText.hashCode());
+        _ret = 29 * _ret + (allergiTekst == null ? 0 : allergiTekst.hashCode());
         _ret = 29 * _ret + (fedme == null ? 0 : (fedme ? 1 : 0));
         _ret = 29 * _ret + (vaegt == null ? 0 : vaegt);
-        _ret = 29 * _ret + (tidlBilledDiagnostik == null ? 0 : tidlBilledDiagnostik.hashCode());
         _ret = 29 * _ret + (biopsi == null ? 0 : (biopsi ? 1 : 0));
-        _ret = 29 * _ret + (biopsiText == null ? 0 : biopsiText.hashCode());
+        _ret = 29 * _ret + (biopsiTekst == null ? 0 : biopsiTekst.hashCode());
         _ret = 29 * _ret + (operation == null ? 0 : (operation ? 1 : 0));
-        _ret = 29 * _ret + (operationText == null ? 0 : operationText.hashCode());
+        _ret = 29 * _ret + (operationTekst == null ? 0 : operationTekst.hashCode());
         _ret = 29 * _ret + (kemoOgStraale == null ? 0 : kemoOgStraale.hashCode());
-        _ret = 29 * _ret + (relKontraIndCT == null ? 0 : (relKontraIndCT ? 1 : 0));
-        _ret = 29 * _ret + (relKontraIndCTText == null ? 0 : relKontraIndCTText.hashCode());
+        _ret = 29 * _ret + (kontrastReaktion == null ? 0 : (kontrastReaktion ? 1 : 0));
+        _ret = 29 * _ret + (kontrastReaktionTekst == null ? 0 : kontrastReaktionTekst.hashCode());
         _ret = 29 * _ret + (nedsatNyreFkt == null ? 0 : (nedsatNyreFkt ? 1 : 0));
         _ret = 29 * _ret + (sidstePKreatinin == null ? 0 : sidstePKreatinin);
         _ret = 29 * _ret + (sidstePKreatTimestamp == null ? 0 : (int)sidstePKreatTimestamp.getTime());
+        _ret = 29 * _ret + (preMed == null ? 0 : (preMed ? 1 : 0));
+        _ret = 29 * _ret + (dMRegime == null ? 0 : (dMRegime ? 1 : 0));
         _ret = 29 * _ret + (pOKontrast == null ? 0 : (pOKontrast ? 1 : 0));
         _ret = 29 * _ret + (iVKontrast == null ? 0 : (iVKontrast ? 1 : 0));
         _ret = 29 * _ret + (aktuelPKreatinin == null ? 0 : aktuelPKreatinin);
         _ret = 29 * _ret + (aktuelPKreatTimestamp == null ? 0 : (int)aktuelPKreatTimestamp.getTime());
-        _ret = 29 * _ret + (aktuelPKreatAndetText == null ? 0 : aktuelPKreatAndetText.hashCode());
+        _ret = 29 * _ret + (aktuelAndetTekst == null ? 0 : aktuelAndetTekst.hashCode());
 
         return _ret;
     }
@@ -615,11 +555,9 @@ public class PetctKontrolskema extends AbstractDto {
      * Constructs the content for the toString() method.
      */
     protected void contentToString(StringBuffer sb) {
-        append( sb, "petctKontrolskemaId", petctKontrolskemaId );
+        append( sb, "pETCTKontrolskemaId", pETCTKontrolskemaId );
         append( sb, "formaal", formaal );
-        append( sb, "formaalBehandlingsktrlText", formaalBehandlingsktrlText );
-        append( sb, "formaalRecidivText", formaalRecidivText );
-        append( sb, "formaalAndetText", formaalAndetText );
+        append( sb, "formaalTekst", formaalTekst );
         append( sb, "kanPtLiggeStille30", kanPtLiggeStille30 );
         append( sb, "ptTaalerFaste", ptTaalerFaste );
         append( sb, "diabetes", diabetes );
@@ -627,28 +565,26 @@ public class PetctKontrolskema extends AbstractDto {
         append( sb, "smerter", smerter );
         append( sb, "respInsuff", respInsuff );
         append( sb, "klaustrofobi", klaustrofobi );
-        append( sb, "preMed", preMed );
-        append( sb, "dMRegime", dMRegime );
-        append( sb, "datoForslag", datoForslag );
         append( sb, "allergi", allergi );
-        append( sb, "allergiText", allergiText );
+        append( sb, "allergiTekst", allergiTekst );
         append( sb, "fedme", fedme );
         append( sb, "vaegt", vaegt );
-        append( sb, "tidlBilledDiagnostik", tidlBilledDiagnostik );
         append( sb, "biopsi", biopsi );
-        append( sb, "biopsiText", biopsiText );
+        append( sb, "biopsiTekst", biopsiTekst );
         append( sb, "operation", operation );
-        append( sb, "operationText", operationText );
+        append( sb, "operationTekst", operationTekst );
         append( sb, "kemoOgStraale", kemoOgStraale );
-        append( sb, "relKontraIndCT", relKontraIndCT );
-        append( sb, "relKontraIndCTText", relKontraIndCTText );
+        append( sb, "kontrastReaktion", kontrastReaktion );
+        append( sb, "kontrastReaktionTekst", kontrastReaktionTekst );
         append( sb, "nedsatNyreFkt", nedsatNyreFkt );
         append( sb, "sidstePKreatinin", sidstePKreatinin );
         append( sb, "sidstePKreatTimestamp", sidstePKreatTimestamp );
+        append( sb, "preMed", preMed );
+        append( sb, "dMRegime", dMRegime );
         append( sb, "pOKontrast", pOKontrast );
         append( sb, "iVKontrast", iVKontrast );
         append( sb, "aktuelPKreatinin", aktuelPKreatinin );
         append( sb, "aktuelPKreatTimestamp", aktuelPKreatTimestamp );
-        append( sb, "aktuelPKreatAndetText", aktuelPKreatAndetText );
+        append( sb, "aktuelAndetTekst", aktuelAndetTekst );
     }
 }
