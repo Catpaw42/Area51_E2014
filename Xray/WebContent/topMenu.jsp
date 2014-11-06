@@ -11,8 +11,8 @@
 	</head>
 	<body>
 		<div id="wrapper">
-			<div id="logo">
-				<h3>Area 51</h3>
+			<div id="user">
+				Brian Bjorn
 			</div>
 			<div id="mainmenu">
 				<ul>
@@ -22,9 +22,10 @@
 					<li> <a href="MainServlet?page=admin">Administrer Brugere</a> </li>
 				</ul>
 			</div>
-			<div id="user">
-				<p>Brian Bjorn</p>
+			<div id="logo">
+				<h3>Area 51</h3>
 			</div>
+
 		</div>
 	</body>
 </html>
