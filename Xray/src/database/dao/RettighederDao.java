@@ -34,9 +34,9 @@ public interface RettighederDao extends AbstractDao {
     public int insert( Rettigheder dto ) throws DaoException;
 
     /**
-     * Updates column rettighed of one record found by primary key.
-     * @return true iff the record was really updated (=found)
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
      */
-    public boolean updateRettighed( int rettighedsId, Rettigheder.Rettighed rettighed ) throws DaoException;
+    public boolean update( int rettighedsId, Rettigheder dto ) throws DaoException;
 
 }

@@ -33,4 +33,10 @@ public interface UndersoegelsesTypeDao extends AbstractDao {
      */
     public int insert( UndersoegelsesType dto ) throws DaoException;
 
+    /**
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
+     */
+    public boolean update( int undersoegelsesTypeId, UndersoegelsesType dto ) throws DaoException;
+
 }

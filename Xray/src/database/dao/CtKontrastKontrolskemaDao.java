@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.dto.Patient;
+import database.dto.CtKontrastKontrolskema;
 
 
 /**
@@ -19,17 +19,18 @@ import database.dto.Patient;
  *
  * @author generated
  */
-public interface PatientDao extends AbstractDao {
+public interface CtKontrastKontrolskemaDao extends AbstractDao {
 
     /**
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public Patient findByPrimaryKey( int patientId );
+    public CtKontrastKontrolskema findByPrimaryKey( int ctKontrastKontrolskemaId );
 
     /**
      * Inserts a new record.
+     * @return the generated primary key - ctKontrastKontrolskemaId
      */
-    public void insert( Patient dto ) throws DaoException;
+    public int insert( CtKontrastKontrolskema dto ) throws DaoException;
 
 }

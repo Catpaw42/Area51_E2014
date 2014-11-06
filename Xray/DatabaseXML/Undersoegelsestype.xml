@@ -23,8 +23,8 @@
 				</column>
 				<column name="modalitet_id">
 					<type>int</type>
-					<edit />
 					<not-null />
+					<edit />
 				</column>
 			</columns>
 		</table>

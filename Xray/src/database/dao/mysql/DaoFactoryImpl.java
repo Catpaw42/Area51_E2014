@@ -15,35 +15,35 @@ import database.dao.*;
  * @author generated
  */
 public class DaoFactoryImpl extends DaoFactory.Factory {
-    public RequisitionDao createRequisitionDao( Connection conn ) {
-        return new RequisitionDaoImpl( conn );
+   
+	public UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn ) {
+        return new UndersoegelsesTypeDaoImpl( conn );
+    }
+    public BrugerDao createBrugerDao( Connection conn ) {
+        return new BrugerDaoImpl( conn );
+    }
+    public CtKontrastKontrolskemaDao createCtKontrastKontrolskemaDao( Connection conn ) {
+        return new CtKontrastKontrolskemaDaoImpl( conn );
+    }
+    public ModalitetDao createModalitetDao( Connection conn ) {
+        return new ModalitetDaoImpl( conn );
+    }
+    public MRKontrolskemaDao createMrKontrolskemaDao( Connection conn ) {
+        return new MRKontrolskemaDaoImpl( conn );
+    }
+    public PatientDao createPatientDao( Connection conn ) {
+        return new PatientDaoImpl( conn );
+    }
+    public PETCTKontrolskemaDao createPetctKontrolskemaDao( Connection conn ) {
+        return new PETCTKontrolskemaDaoImpl( conn );
+    }
+    public RekvisitionDao createRekvisitionDao( Connection conn ) {
+        return new RekvisitionDaoImpl( conn );
+    }
+    public RettighederDao createRettighederDao( Connection conn ) {
+        return new RettighederDaoImpl( conn );
     }
 
-	@Override
-	public BrugerDao createBrugerDao(Connection conn) {
-		return new BrugerDaoImpl(conn);
-	}
-	
-	public CtKontrolDao createCtKontrolDao( Connection conn ) {
-        return new CtKontrolDaoImpl( conn );
-    }
-	 public MrKontrolDao createMrKontrolDao( Connection conn ) {
-	        return new MrKontrolDaoImpl( conn );
-	    }
-	 public PatientDao createPatientDao( Connection conn ) {
-	        return new PatientDaoImpl( conn );
-	    }
-	 public PetctKontrolskemaDao createPetctKontrolskemaDao( Connection conn ) {
-	        return new PetctKontrolskemaDaoImpl( conn );
-	    }
-	 public RettighederDao createRettighederDao( Connection conn ) {
-	        return new RettighederDaoImpl( conn );
-	    }
-	 public UndersoegelsesTypeDao createUndersoegelsesTypeDao( Connection conn ) {
-	        return new UndersoegelsesTypeDaoImpl( conn );
-	    }
-	 public RegisteredUserDao createRegisteredUserDao( Connection conn ) {
-	        return new RegisteredUserDaoImpl( conn );
-	    }
+
 
 }

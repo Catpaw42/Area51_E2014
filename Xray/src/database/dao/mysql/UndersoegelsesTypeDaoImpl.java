@@ -34,11 +34,11 @@ public class UndersoegelsesTypeDaoImpl extends AbstractDaoImpl<UndersoegelsesTyp
 
     private static final String TABLE_NAME = "undersoegelses_type";
 
-    protected static final String SELECT_COLUMNS = "undersoegelses_type_id, undersoegelses_navn";
+    protected static final String SELECT_COLUMNS = "undersoegelses_type_id, undersoegelses_navn, modalitet_id";
 
     protected static final String PK_CONDITION = "undersoegelses_type_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO undersoegelses_type (undersoegelses_navn) VALUES (?)";
+    private static final String SQL_INSERT = "INSERT INTO undersoegelses_type (undersoegelses_navn,modalitet_id) VALUES (?,?)";
 
     public UndersoegelsesTypeDaoImpl( Connection conn ) {
         super( conn );
@@ -68,8 +68,13 @@ public class UndersoegelsesTypeDaoImpl extends AbstractDaoImpl<UndersoegelsesTyp
             if ( dto.getUndersoegelsesNavn() == null ) {
                 throw new DaoException("Value of column 'undersoegelses_navn' cannot be null");
             }
-            checkMaxLength( "undersoegelses_navn", dto.getUndersoegelsesNavn(), 40 );
+            checkMaxLength( "undersoegelses_navn", dto.getUndersoegelsesNavn(), 100 );
             stmt.setString( 1, dto.getUndersoegelsesNavn() );
+
+            if ( dto.getModalitetId() == null ) {
+                throw new DaoException("Value of column 'modalitet_id' cannot be null");
+            }
+            stmt.setInt( 2, dto.getModalitetId() );
 
             int n = stmt.executeUpdate();
 
@@ -92,6 +97,40 @@ public class UndersoegelsesTypeDaoImpl extends AbstractDaoImpl<UndersoegelsesTyp
     }
 
     /**
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
+     */
+    public boolean update( int undersoegelsesTypeId, UndersoegelsesType dto ) throws DaoException {
+        StringBuffer sb = new StringBuffer();
+        ArrayList<Object> params = new ArrayList<Object>();
+
+        if ( dto.getUndersoegelsesNavn() != null ) {
+            checkMaxLength( "undersoegelses_navn", dto.getUndersoegelsesNavn(), 100 );
+            sb.append( "undersoegelses_navn=?" );
+            params.add( dto.getUndersoegelsesNavn());
+        }
+
+        if ( dto.getModalitetId() != null ) {
+            if (sb.length() > 0) {
+                sb.append( ", " );
+            }
+
+            sb.append( "modalitet_id=?" );
+            params.add( dto.getModalitetId());
+        }
+
+        if (sb.length() == 0) {
+            return false;
+        }
+
+        params.add( undersoegelsesTypeId );
+
+        Object[] oparams = new Object[ params.size() ];
+
+        return updateOne( sb.toString(), PK_CONDITION, params.toArray( oparams ));
+    }
+
+    /**
      * Returns the table name.
      */
     public String getTableName() {
@@ -106,6 +145,7 @@ public class UndersoegelsesTypeDaoImpl extends AbstractDaoImpl<UndersoegelsesTyp
         UndersoegelsesType dto = new UndersoegelsesType();
         dto.setUndersoegelsesTypeId( rs.getInt( 1 ));
         dto.setUndersoegelsesNavn( rs.getString( 2 ));
+        dto.setModalitetId( rs.getInt( 3 ));
 
         return dto;
     }

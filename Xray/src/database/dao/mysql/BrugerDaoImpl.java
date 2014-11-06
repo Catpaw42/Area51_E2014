@@ -13,12 +13,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+
 import java.util.ArrayList;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.spoledge.audao.db.dao.AbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
+
 
 import database.dao.BrugerDao;
 import database.dto.Bruger;
@@ -33,11 +34,11 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
 
     private static final String TABLE_NAME = "bruger";
 
-    protected static final String SELECT_COLUMNS = "bruger_id, bruger_navn, er_aktiv";
+    protected static final String SELECT_COLUMNS = "bruger_id, bruger_navn, fuldt_navn, er_aktiv";
 
     protected static final String PK_CONDITION = "bruger_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,er_aktiv) VALUES (?,?)";
+    private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,fuldt_navn,er_aktiv) VALUES (?,?,?)";
 
     public BrugerDaoImpl( Connection conn ) {
         super( conn );
@@ -70,19 +71,18 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
             checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
             stmt.setString( 1, dto.getBrugerNavn() );
 
+            if ( dto.getFuldtNavn() == null ) {
+                throw new DaoException("Value of column 'fuldt_navn' cannot be null");
+            }
+            checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
+            stmt.setString( 2, dto.getFuldtNavn() );
+
             if ( dto.getErAktiv() == null ) {
                 throw new DaoException("Value of column 'er_aktiv' cannot be null");
             }
-            stmt.setByte( 2, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
-            
-//            int n = stmt.executeUpdate();
-            //TODO update to handle constraints....
-            try {
-				int n = stmt.executeUpdate();
-			} catch (MySQLIntegrityConstraintViolationException e) {
-				System.err.println("Caught Duplicate user exception");
-            	throw new DuplicateEntryException("Username already exists");
-			}
+            stmt.setByte( 3, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
+
+            int n = stmt.executeUpdate();
 
             rs = stmt.getGeneratedKeys();
             rs.next();
@@ -103,11 +103,47 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     }
 
     /**
-     * Updates column er_aktiv of one record found by primary key.
-     * @return true iff the record was really updated (=found)
+     * Updates one record found by primary key.
+     * @return true iff the record was really updated (=found and any change was really saved)
      */
-    public boolean updateErAktiv( int brugerId, boolean erAktiv ) throws DaoException {
-        return updateOne( "er_aktiv=?", PK_CONDITION, (erAktiv ? ((byte)1) : ((byte)0)), brugerId);
+    public boolean update( int brugerId, Bruger dto ) throws DaoException {
+        StringBuffer sb = new StringBuffer();
+        ArrayList<Object> params = new ArrayList<Object>();
+
+        if ( dto.getBrugerNavn() != null ) {
+            checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
+            sb.append( "bruger_navn=?" );
+            params.add( dto.getBrugerNavn());
+        }
+
+        if ( dto.getFuldtNavn() != null ) {
+            if (sb.length() > 0) {
+                sb.append( ", " );
+            }
+
+            checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
+            sb.append( "fuldt_navn=?" );
+            params.add( dto.getFuldtNavn());
+        }
+
+        if ( dto.getErAktiv() != null ) {
+            if (sb.length() > 0) {
+                sb.append( ", " );
+            }
+
+            sb.append( "er_aktiv=?" );
+            params.add( (dto.getErAktiv() ? ((byte)1) : ((byte)0)));
+        }
+
+        if (sb.length() == 0) {
+            return false;
+        }
+
+        params.add( brugerId );
+
+        Object[] oparams = new Object[ params.size() ];
+
+        return updateOne( sb.toString(), PK_CONDITION, params.toArray( oparams ));
     }
 
     /**
@@ -125,7 +161,8 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
         Bruger dto = new Bruger();
         dto.setBrugerId( rs.getInt( 1 ));
         dto.setBrugerNavn( rs.getString( 2 ));
-        dto.setErAktiv( rs.getBoolean( 3 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setFuldtNavn( rs.getString( 3 ));
+        dto.setErAktiv( rs.getBoolean( 4 ) ? Boolean.TRUE : Boolean.FALSE );
 
         return dto;
     }

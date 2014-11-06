@@ -34,11 +34,11 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
 
     private static final String TABLE_NAME = "patient";
 
-    protected static final String SELECT_COLUMNS = "cpr, foedselsdag, afdeling";
+    protected static final String SELECT_COLUMNS = "patient_id, patient_cpr, foedselsdag, stamafdeling";
 
-    protected static final String PK_CONDITION = "cpr=?";
+    protected static final String PK_CONDITION = "patient_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO patient (cpr,foedselsdag,afdeling) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO patient (patient_id,patient_cpr,foedselsdag,stamafdeling) VALUES (?,?,?,?)";
 
     public PatientDaoImpl( Connection conn ) {
         super( conn );
@@ -48,8 +48,8 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public Patient findByPrimaryKey( String cpr ) {
-        return findOne( PK_CONDITION, cpr);
+    public Patient findByPrimaryKey( int patientId ) {
+        return findOne( PK_CONDITION, patientId);
     }
 
     /**
@@ -63,22 +63,27 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
         try {
             stmt = conn.prepareStatement( SQL_INSERT );
 
-            if ( dto.getCpr() == null ) {
-                throw new DaoException("Value of column 'cpr' cannot be null");
+            if ( dto.getPatientId() == null ) {
+                throw new DaoException("Value of column 'patient_id' cannot be null");
             }
-            checkMaxLength( "cpr", dto.getCpr(), 30 );
-            stmt.setString( 1, dto.getCpr() );
+            stmt.setInt( 1, dto.getPatientId() );
+
+            if ( dto.getPatientCpr() == null ) {
+                throw new DaoException("Value of column 'patient_cpr' cannot be null");
+            }
+            checkMaxLength( "patient_cpr", dto.getPatientCpr(), 30 );
+            stmt.setString( 2, dto.getPatientCpr() );
 
             if ( dto.getFoedselsdag() == null ) {
                 throw new DaoException("Value of column 'foedselsdag' cannot be null");
             }
-            stmt.setTimestamp( 2, dto.getFoedselsdag() );
+            stmt.setTimestamp( 3, dto.getFoedselsdag() );
 
-            if ( dto.getAfdeling() == null ) {
-                throw new DaoException("Value of column 'afdeling' cannot be null");
+            if ( dto.getStamafdeling() == null ) {
+                throw new DaoException("Value of column 'stamafdeling' cannot be null");
             }
-            checkMaxLength( "afdeling", dto.getAfdeling(), 50 );
-            stmt.setString( 3, dto.getAfdeling() );
+            checkMaxLength( "stamafdeling", dto.getStamafdeling(), 50 );
+            stmt.setString( 4, dto.getStamafdeling() );
 
             int n = stmt.executeUpdate();
         }
@@ -105,9 +110,10 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
 
     protected Patient fetch( ResultSet rs ) throws SQLException {
         Patient dto = new Patient();
-        dto.setCpr( rs.getString( 1 ));
-        dto.setFoedselsdag( rs.getTimestamp( 2 ));
-        dto.setAfdeling( rs.getString( 3 ));
+        dto.setPatientId( rs.getInt( 1 ));
+        dto.setPatientCpr( rs.getString( 2 ));
+        dto.setFoedselsdag( rs.getTimestamp( 3 ));
+        dto.setStamafdeling( rs.getString( 4 ));
 
         return dto;
     }

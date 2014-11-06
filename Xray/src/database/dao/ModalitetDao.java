@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.dto.PetctKontrolskema;
+import database.dto.Modalitet;
 
 
 /**
@@ -19,18 +19,18 @@ import database.dto.PetctKontrolskema;
  *
  * @author generated
  */
-public interface PetctKontrolskemaDao extends AbstractDao {
+public interface ModalitetDao extends AbstractDao {
 
     /**
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public PetctKontrolskema findByPrimaryKey( int petctKontrolskemaId );
+    public Modalitet findByPrimaryKey( int modalitetId );
 
     /**
      * Inserts a new record.
-     * @return the generated primary key - petctKontrolskemaId
+     * @return the generated primary key - modalitetId
      */
-    public int insert( PetctKontrolskema dto ) throws DaoException;
+    public int insert( Modalitet dto ) throws DaoException;
 
 }
