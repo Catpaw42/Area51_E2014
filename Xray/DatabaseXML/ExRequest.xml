@@ -123,9 +123,8 @@
 					</enum>
 					<edit />
 				</column>
-				<column name="patient_foedselsdag">
-					<type>Timestamp</type>
-					<not-null />
+				<column name="paaroerende">
+					<type max-length="100">String</type>
 				</column>
 				<column name="ambulant">
 					<type>boolean</type>
