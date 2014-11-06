@@ -20,29 +20,29 @@ import javax.sql.DataSource;
 
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.DAOUser;
 import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.DaoFactory;
-import database.dao.RequisitionDao;
-import database.dao.mysql.PetctKontrolskemaDaoImpl;
+import database.dao.PETCTKontrolskemaDao;
+import database.dao.RekvisitionDao;
+import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dto.Bruger;
-import database.dto.PetctKontrolskema;
-import database.dto.PetctKontrolskema.Formaal;
-import database.dto.PetctKontrolskema.KemoOgStraale;
-import database.dto.Requisition;
-import database.dto.Requisition.AmbulantKoersel;
-import database.dto.Requisition.HenvistTil;
-import database.dto.Requisition.HospitalOenske;
-import database.dto.Requisition.IndlaeggelseTransport;
-import database.dto.Requisition.Pririotering;
-import database.dto.Requisition.Status;
-import database.dto.Requisition.UndersoegelseModalitet;
+import database.dto.CtKontrastKontrolskema;
+import database.dto.MRKontrolskema;
+import database.dto.PETCTKontrolskema;
+import database.dto.PETCTKontrolskema.Formaal;
+import database.dto.PETCTKontrolskema.KemoOgStraale;
+import database.dto.Rekvisition;
+import database.dto.Rekvisition.AmbulantKoersel;
+import database.dto.Rekvisition.HenvistTil;
+import database.dto.Rekvisition.HospitalOenske;
+import database.dto.Rekvisition.IndlaeggelseTransport;
+import database.dto.Rekvisition.Prioritering;
+import database.dto.Rekvisition.Samtykke;
+import database.dto.Rekvisition.Status;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 //import dto.DTOexRequest;
 //import dto.DTOexRequest.Status;
-import dto.RequisitionTemplate.Prioritering;
-import dto.MrKontrol;
 
 /**
  * Servlet implementation class TestServlet
@@ -136,43 +136,37 @@ public class TestServlet extends HttpServlet {
 		KemoOgStraale setKemoOgStraale= null;
 		
 		
-		PetctKontrolskema dto = new PetctKontrolskema();
-		PetctKontrolskemaDaoImpl dao = new PetctKontrolskemaDaoImpl(conn);
+		PETCTKontrolskema dto = new PETCTKontrolskema();
+		PETCTKontrolskemaDao dao = new PETCTKontrolskemaDaoImpl(conn);
 		
-		dto.setAktuelPKreatAndetText(setAktuelPKreatAndetText);
+		dto.setAktuelAndetTekst(setAktuelPKreatAndetText);
 		dto.setAktuelPKreatinin(setAktuelPKreatinin);
 		dto.setAktuelPKreatTimestamp(setAktuelPKreatTimestamp);
 		dto.setAllergi(setAllergi);
-		dto.setAllergiText(setAllergiText);
+		dto.setAllergiTekst(setAllergiText);
 		dto.setBiopsi(setBiopsi);
-		dto.setBiopsiText(setBiopsiText);
-		dto.setDatoForslag(setDatoForslag);
+		dto.setBiopsiTekst(setBiopsiText);
 		dto.setDiabetes(setDiabetes);
 		dto.setDMBeh(setDMBeh);
 		dto.setDMRegime(setDMRegime);
 		dto.setFedme(setFedme);
 		dto.setFormaal(setFormaal);
-		dto.setFormaalAndetText(setFormaalAndetText);
-		dto.setFormaalBehandlingsktrlText(setFormaalBehandlingsktrlText);
-		dto.setFormaalRecidivText(setFormaalRecidivText);
+		dto.setFormaalTekst(setFormaalAndetText);
 		dto.setIVKontrast(setIVKontrast);
 		dto.setKanPtLiggeStille30(setKanPtLiggeStille30);
 		dto.setKemoOgStraale(setKemoOgStraale);
 		dto.setKlaustrofobi(setKlaustrofobi);
 		dto.setNedsatNyreFkt(setNedsatNyreFkt);
 		dto.setOperation(setOperation);
-		dto.setOperationText(setOperationText);
-		dto.setPetctKontrolskemaId(setPetctKontrolskemaId);
+		dto.setOperationTekst(setOperationText);
+		dto.setPETCTKontrolskemaId(setPetctKontrolskemaId);
 		dto.setPOKontrast(setPOKontrast);
 		dto.setPreMed(setPreMed);
 		dto.setPtTaalerFaste(setPtTaalerFaste);
-		dto.setRelKontraIndCT(setRelKontraIndCT);
-		dto.setRelKontraIndCTText(setRelKontraIndCTText);
 		dto.setRespInsuff(setRespInsuff);
 		dto.setSidstePKreatinin(setSidstePKreatinin);
 		dto.setSidstePKreatTimestamp(setSidstePKreatTimestamp);
 		dto.setSmerter(setSmerter);
-		dto.setTidlBilledDiagnostik(setTidlBilledDiagnostik);
 		dto.setVaegt(setVaegt);
 		
 		int pk = 0;
@@ -187,14 +181,14 @@ public class TestServlet extends HttpServlet {
 			System.out.println("########################################");
 		}
 		System.out.println("henter petctkontrolskema med pk: " + pk);
-		PetctKontrolskema fdto = dao.findByPrimaryKey(pk);
-		System.out.println("pk: " + fdto.getPetctKontrolskemaId());
-		System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatAndetText());
+		PETCTKontrolskema fdto = dao.findByPrimaryKey(pk);
+		System.out.println("pk: " + fdto.getPETCTKontrolskemaId());
+		System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatinin());
 		System.out.println("########################################");
 		System.out.println("henter ikke eksisterende objekt... pk: " + pk + 1000);
 		fdto = dao.findByPrimaryKey(pk+1000);
 		try{
-			System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatAndetText());
+			System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatinin());
 		} catch (NullPointerException e){
 			System.out.println("nullPointerException kastet - objektet er null");
 		}
@@ -202,7 +196,7 @@ public class TestServlet extends HttpServlet {
 	}
 
 	private void testMrKontrol(Statement statement, Connection connection) {
-		MrKontrol m = new MrKontrol();
+		CtKontrastKontrolskema m = new CtKontrastKontrolskema();
 		m.setAllergi(true);
 		m.setAminoglykosider(false);
 		m.setAstma(true);
@@ -215,13 +209,13 @@ public class TestServlet extends HttpServlet {
 		m.setInterleukin2(true);
 		m.setKontraststofreaktion(false);
 		m.setMetformin(null);
-		m.setMyokarieinfarkt(false);
+		m.setMyokardieinfarkt(false);
 		m.setNsaidPraeparat(true);
 //		m.setNyrefunktion(_val);
 		m.setNyreopereret(false);
 		m.setOver70(true);
-		m.setPKreatinTimestamp(new Date());
-		m.setPKreatinVaerdi("meget h�j");
+		m.setPKreatininTimestamp(new Date());
+		m.setPKreatininVaerdi("meget h�j");
 		m.setProteinuri(true);
 		m.setPtHoejde(198);
 		m.setPtVaegt(32);
@@ -292,7 +286,8 @@ public class TestServlet extends HttpServlet {
 			System.out.println("userid: " + id);
 			System.out.println("isActive: " + erAktiv);
 			System.out.println("################");
-			dao.updateErAktiv(id, erAktiv);
+			dto.setErAktiv(erAktiv);
+			dao.update(id, dto);
 			System.out.println("bruger opdateret");
 		}catch (DaoException e){
 			System.err.println("fejlede at opdatere bruger i database");
@@ -305,13 +300,13 @@ public class TestServlet extends HttpServlet {
 	}
 	
 	private void testExRequest(Connection conn){
-		Long primaryKey = new Long(2);
+		Integer primaryKey = new Integer(2);
 //		DTOexRequest dtod = new DTOexRequest(-1, 2, 1, 0, Status.PENDING, new Timestamp(new Date().getTime()), null, new Timestamp(new Date(0).getTime()), null);
 //		DaoFactory f = new DaoFactory();
 		System.err.println("trying to get dao \n");
-		RequisitionDao dao = DaoFactory.createRequisitionDao(conn);
+		RekvisitionDao dao = DaoFactory.createRekvisitionDao(conn);
 		System.err.println("dao aquired");
-		Requisition dto = new Requisition();
+		Rekvisition dto = new Rekvisition();
 		dto.setAmbulant(true);
 		dto.setAmbulantKoersel(AmbulantKoersel.LIGGENDE);
 		dto.setCave("utrolig farligt alts�");
@@ -320,12 +315,12 @@ public class TestServlet extends HttpServlet {
 		dto.setHenvistTil(HenvistTil.RADIOLOGISK);
 		dto.setHospitalOenske(HospitalOenske.FREDERIKSSUND);
 		dto.setIndlaeggelseTransport(IndlaeggelseTransport.GAA_MED_PORTOER);
-		dto.setPririotering(Pririotering.PAKKEFORLOEB);
+		dto.setPrioritering(Prioritering.PAKKEFORLOEB);
 		dto.setRekvisitionId(primaryKey); // primary key
-		dto.setSamtykke(true);
+		dto.setSamtykke(Samtykke.JA);
 		dto.setStatus(Status.APPROVED);
 		dto.setUdfIndlagt(false);
-		dto.setUndersoegelseModalitet(UndersoegelseModalitet.CT_KONTRAST);
+		dto.setUndersoegelsesTypeId(2);
 		
 		try {
 			// test insert
@@ -334,13 +329,14 @@ public class TestServlet extends HttpServlet {
 			System.out.println("dto inserted");
 			// test findByPrimary key by searching for previous inserted object
 			System.out.println("searching for inserted dto pr-key: " + dto.getRekvisitionId() + "...");
-			Requisition r =  dao.findByPrimaryKey(dto.getRekvisitionId());
+			Rekvisition r =  dao.findByPrimaryKey(dto.getRekvisitionId());
 			System.out.println("objects primary key: " + r.getRekvisitionId());
 			
 			//test update of status
 			System.out.println("updating status...");
 			System.out.println("current status: " + dto.getStatus().toString() + " vs " + r.getStatus() );
-			boolean success = dao.updateStatus(dto.getRekvisitionId(), Status.CANCELED);
+			dto.setStatus(Status.CANCELED);
+			boolean success = dao.update(dto.getRekvisitionId(), dto);
 			System.out.println("update was a success: " + success);
 			r = dao.findByPrimaryKey(primaryKey);
 			System.out.println("new status vs old: " + r.getStatus() + " vs " + dto.getStatus());
