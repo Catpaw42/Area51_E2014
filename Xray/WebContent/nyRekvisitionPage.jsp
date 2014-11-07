@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="js/Rekvisition.js"></script>
 	</head>
 	<body>
+	<img alt="" src="img/NSHospitallogo.png">
 		<section class="roentgenform">
 			<h1>Rekvisition til billeddiagnostisk undersøgelse</h1>
 			<form id="rekvisitionsForm" action=NyRekvisitionServlet method="post">
