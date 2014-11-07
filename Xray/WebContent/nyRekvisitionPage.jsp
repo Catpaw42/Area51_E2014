@@ -10,7 +10,7 @@
 	<body>
 		<section class="roentgenform">
 			<h1>Rekvisition til billeddiagnostisk undersøgelse</h1>
-			<form id="rekvisitionsForm" action=NyRekvisitionServlet>
+			<form id="rekvisitionsForm" action=NyRekvisitionServlet method="post">
 				<div  class="inline">
 					<ul>
 						<li>
@@ -55,7 +55,8 @@
 					</ul>
 				</div>
 				<hr />
-				<div id="undersøgelseData">
+				<div id="undersoegelsesData">
+					<h2>Undersøgelse</h2>
 					<label for="udf_indlagt">Udføres under indlæggelse</label>
 					<div id="udf_indlagt">
 						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required">Ambulant <br>
@@ -95,9 +96,9 @@
 						<option value="undersoegelses_type_id">Do jsp stuff here</option>
 						<option value="2">dæk-tryk</option>
 						<option value="3">udstødningsrør</option>
-						<option value="4">venstre vinge</option>
-						<option value="5">motherboard</option>
-						<option value="6">bagben</option>
+						<option value="4">MR af venstre vinge</option>
+						<option value="5">MR af hale</option>
+						<option value="6">MR af højre bagben</option>
 						<option value="7">Andet</option>
 					</select>
 					<label for="klinisk_problemstilling">Klinisk Problemstilling</label>

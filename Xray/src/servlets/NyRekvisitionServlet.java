@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +41,8 @@ public class NyRekvisitionServlet extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Rekvisition req = new Rekvisition();
+		PrintWriter out = response.getWriter();
+		out.println("Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten");
 		
 	}
 
