@@ -110,19 +110,16 @@
 							<input type="radio" id="ingenKørsel" name="ambulantRadioButton">Ingen Kørsel <br>
 							<input type="radio" id="siddendeKørsel" name="ambulantRadioButton">Siddende Kørsel <br>
 							<input type="radio" id="liggendeKørsel" name="ambulantRadioButton">Liggende Kørsel <br>
-							<label for="datoForslag">Ønsket tidspunkt</label>
-							<input type="text" id="datoForslag" name="datoForslag">
+
 						</div>
 						<div id="indlagtTransport">
 							<input type="radio" id="gårMedPortør" name="indlagtRadioButton">Går selv med portør <br>
 							<input type="radio" id="gårUdenPortør" name="indlagtRadioButton">Går selv uden portør <br>
 							<input type="radio" id="kørestolMedPortør" name="indlagtRadioButton">Kørestol med portør <br>
 							<input type="radio" id="seng" name="seng">Seng<br>
-							<label for="afdelingsKode">Afdelings Kode</label>
-							<input type="text" id="afdelingsKode" name="afdelingsKode" placeholder=""><br>
-							<label for="dato">Dato</label>
-							<input type="text" id="dato" name="dato">
 						</div>
+						<label for="datoForslag">Ønsket tidspunkt</label>
+						<input type="text" id="datoForslag" name="datoForslag">
 					</div>
 					<label for="gravididtet">Mulighed for graviditet</label>
 					<div id="gravididtet">
@@ -149,8 +146,9 @@
 					</div>
 				</div>
 				<label for=tidl_billed_diagnostik>Tidligere undersøgelse</label>
-					<p>Er patienten tidliger undersøgt i billeddiagnostisk regi indenfor hospitalerne i Nordsjælland
-					eller har patienten fået foretaget relevant undersøgelse udenfor Nordsjælland. Anfør undersøgelse, årstal og hvor.</p>
+					<p>Er patienten tidligere undersøgt i billeddiagnostisk regi indenfor hospitalerne i Nordsjælland?<BR/>
+					Eller har patienten fået foretaget relevant undersøgelse udenfor hospitalerne i Nordsjælland?<BR/>
+					Anfør undersøgelse, tidspunkt og hvor.</p>
 					<textarea name="tidl_billed_diagnostik"></textarea>
 				<hr />
 				<div id="ctKontrolSkema">
