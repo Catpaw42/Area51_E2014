@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import database.dto.Requisition;
+import database.dto.Rekvisition;
 
 /**
  * Servlet implementation class NyRekvisitionServlet
@@ -39,7 +39,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		Requisition req = new Requisition();
+		Rekvisition req = new Rekvisition();
 		
 	}
 
