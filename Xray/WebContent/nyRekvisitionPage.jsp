@@ -23,7 +23,7 @@
 								<input type="text" id="patient_navn" name="patient_navn" placeholder="Navn"  required="required">
 								<label for="patient_adresse">Addresse</label>
 								<input type="text" id="patient_adresse" name="patient_adresse" placeholder="Adresse">
-								<label for="patient_tlf">Telefonnummer</label>
+								<label for="patient_tlf">Patienttelefonnummer</label>
 								<input type="text" id="patient_tlf" name="patient_tlf" placeholder="">
 								<label for="paaroerende">Pårørende</label>
 								<input type="text" id="paaroerende" name="paaroerende" placeholder="forældre/værge/andet">
