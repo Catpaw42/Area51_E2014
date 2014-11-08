@@ -102,8 +102,9 @@
 						<option value="6">MR af højre bagben</option>
 						<option value="7">Andet</option>
 					</select>
-					<label for="klinisk_problemstilling">Klinisk Problemstilling</label>
-					<p>Anamnese - objektive fund - evt. medicin og laboratoriesvar relevant for undersøgelsen (Se kliniske vejledninger).<br>
+					
+					<p><label for="klinisk_problemstilling">Klinisk Problemstilling</label>
+					Anamnese - objektive fund - evt. medicin og laboratoriesvar relevant for undersøgelsen (Se kliniske vejledninger).<br>
 					Begrundelse for prioriteringsønske skal fremgå af den kliniske problemstilling.</p>
 					<textarea name="klinisk_problemstilling"></textarea>
 					<label for="transport">Transport</label>
