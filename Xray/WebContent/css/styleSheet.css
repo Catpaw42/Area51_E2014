@@ -8,30 +8,17 @@ rekvisition.jsp
 	border: 1px solid blue;
 	padding: 20px;
 }
-.roentgenform input:not([type="checkbox"]):not([type="radio"]) {
-	display: block;
-}
-.roentgenform select {
-	display: block;
-}
 .roentgenform textarea {
 	display: block;
 	width: 660px;
-	height: 120px;
-	
+	height: 120px;	
 }
 .roentgenform ul {
 	padding: 0;
 }
-
-.inline li {
-	display: inline;
-	float: left;
-}
 #undersoegelsesData {
 	clear: both;
 }
-
 #patientData {
 	width: 330px;
 }
@@ -41,7 +28,6 @@ rekvisition.jsp
 #indlagtTransport {
 	display: none;
 }
-
 /*------------------------------------------------------------------------------------
 loginScreen.jsp
 ------------------------------------------------------------------------------------*/
@@ -62,19 +48,16 @@ loginScreen.jsp
 	margin-left: auto;
 	margin-right: auto;
 }
-
 /*remove padding and margin from un-ordered lists in the form*/
 .loginform ul {
 	padding: 0;
 	margin: 0;
 }
-
 /*set the list items to display inline, and float to the left*/
 .loginform li {
     display: inline;
     float: left;
 }
-
 /*change the labes to block-display instead of inline, also sets a color*/
 label {
     display: block;
@@ -87,16 +70,13 @@ label {
 	content: "";
 	display: table;
 }
-
 .loginform :AFTER {
 	clear: both;
 }
-
 /*set the outline of focused items to 0*/
 :FOCUS {
 	outline: 0;
 }
-
 /*style input items on the form that have a type != submit, meaning the two textfield*/
 .loginform input:not([type=submit]) {  
     padding: 5px;  
@@ -106,7 +86,6 @@ label {
     box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.1),   
                 0px 1px 0px 0px rgba(250, 250, 250, 0.5) ;  
 }
-
 /*style the button*/
 .loginform input[type=submit] {  
     border: 1px solid rgba(0, 0, 0, 0.3);  

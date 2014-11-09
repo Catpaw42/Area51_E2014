@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link href="styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="js/mainPage.js"></script>
 		<title>Main Page</title>

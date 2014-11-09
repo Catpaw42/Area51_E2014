@@ -3,17 +3,17 @@
 	<head>
 		<title> Skriv Rekvisition </title>
 		<meta charset ="utf-8">
-		<link href="styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="js/Rekvisition.js"></script>
 	</head>
 	<body>
-	<img alt="" src="img/NSHospitallogo.png">
 		<section class="roentgenform">
+			<img alt="" src="img/NSHospitallogo.png">
 			<h1>Rekvisition til billeddiagnostisk undersøgelse</h1>
 			<form id="rekvisitionsForm" action=NyRekvisitionServlet method="post">
-				<div  class="inline">
-					<ul>
+				<div>
+					<ul class="showInline">
 						<li>
 							<div id="patientData">
 								<h2>Patient</h2>
@@ -50,7 +50,6 @@
 								<input type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge">
 								<label for="kontakt_tlf">Kontakt telefonnr</label>
 								<input type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer" required="required">
-
 							</div>
 						</li>
 					</ul>
@@ -102,7 +101,6 @@
 						<option value="6">MR af højre bagben</option>
 						<option value="7">Andet</option>
 					</select>
-					
 					<p><label for="klinisk_problemstilling">Klinisk Problemstilling</label>
 					Anamnese - objektive fund - evt. medicin og laboratoriesvar relevant for undersøgelsen (Se kliniske vejledninger).<br>
 					Begrundelse for prioriteringsønske skal fremgå af den kliniske problemstilling.</p>
@@ -129,7 +127,7 @@
 						<input type="radio" name="graviditet" id="jaGravid">Ja
 						<input type="radio" name="graviditet" id="nejGravid">Nej
 					</div>
-					<label for="særligeForhold">"Særlige Forhold"</label>
+					<label for="særligeForhold">Særlige Forhold</label>
 					<div id="særligeForhold">
 						<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold">Ingen særlige forhold <br>
 						<input type="checkbox" id="hørehæmmet" name="hørehæmmet">Hørehæmmet <br>
@@ -155,112 +153,13 @@
 					<textarea name="tidl_billed_diagnostik"></textarea>
 				<hr />
 				<div id="ctKontrolSkema">
-					<h2>CT Kontrolskema</h2>
-					<ul>
-						<li>
-							<p>Har patienten Diabetes?
-							Ja<input type = "radio" id="diabetesJa" name="diabetes">
-							Nej<input type = "radio" id="diabetesNej" name="diabetes"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt nedsat nyrefunktion?
-							Ja<input type = "radio" id="nyrefunktionJa" name="nyrefunktion">
-							Nej<input type = "radio" id="nyrefunktionNej" name="nyrefunktion"></p>
-						</li>
-						<li>
-							<p>Er patienten tidligere nyreopereret?
-							Ja<input type = "radio" id="nyreopereretJa" name="nyreopereret">
-							Nej<input type = "radio" id="nyreopereretNej" name="nyreopereret"></p>
-						</li>
-						<li>
-							<p>Har patienten inkompenseret hjertesygdom?
-							Ja<input type = "radio" id="hjertesygdomJa" name="hjertesygdom">
-							Nej<input type = "radio" id="hjertesygdomNej" name="hjertesygdom"></p>
-						</li>
-						<li>
-							<p>Har patienten nyt myokardieinfarkt(aktuelle indlæggelse)?
-							Ja<input type = "radio" id="myokardieinfarktJa" name="myokardieinfarkt">
-							Nej<input type = "radio" id="myokardieinfarktNej" name="myokardieinfarkt"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt proteinuri?
-							Ja<input type = "radio" id="proteinuriJa" name="proteinuri">
-							Nej<input type = "radio" id="proteinuriNej" name="proteinuri"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt urinsyregigt?
-							Ja<input type = "radio" id="urinsyregigtJa" name="urinsyregigt">
-							Nej<input type = "radio" id="urinsyregigtNej" name="urinsyregigt"></p>
-						</li>
-						<li>
-							<p>Er patienten over 70 på undersøgelsestidspunktet?
-							Ja<input type = "radio" id="over70Ja" name="over70">
-							Nej<input type = "radio" id="over70Nej" name="over70"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt hypertension?
-							Ja<input type = "radio" id="hypertensionJa" name="hypertension">
-							Nej<input type = "radio" id="hypertensionNej" name="hypertension"></p>
-						</li>
-						<li>
-							<p>Er patienten i behandling med NSAID-præparat?
-							Ja<input type = "radio" id="NSAIDpræparatJa" name="NSAIDpræparat">
-							Nej<input type = "radio" id="NSAIDpræparatNej" name="NSAIDpræparat"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt alergi?
-							Ja<input type = "radio" id="alergiJa" name="alergi">
-							Nej<input type = "radio" id="alergiNej" name="alergi"></p>
-						</li>
-						<li>
-							<p>Har patienten haft tidligere kontraststofreaktion?
-							Ja<input type = "radio" id="kontraststofreaktionJa" name="kontraststofreaktion">
-							Nej<input type = "radio" id="kontraststofreaktionNej" name="kontraststofreaktion"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt astma?
-							Ja<input type = "radio" id="astmaJa" name="astma">
-							Nej<input type = "radio" id="astmaNej" name="astma"></p>
-						</li>
-						<li>
-							<p>Har patienten kendt hyperthyreoidisme?
-							Ja<input type = "radio" id="hyperthyreoidismeJa" name="hyperthyreoidisme">
-							Nej<input type = "radio" id="hyperthyreoidismeNej" name="hyperthyreoidisme"></p>
-						</li>
-						<li>
-							<p>Er patienten i behandling med et præparat, som indeholder Metformin?
-							Ja<input type = "radio" id="metforminJa" name="metformin">
-							Nej<input type = "radio" id="metforminNej" name="metformin"></p>
-						</li>
-						<li>
-							<p>Er patienten i behandling med Interleukin 2?
-							Ja<input type = "radio" id="interleukinJa" name="interleukin">
-							Nej<input type = "radio" id="interleukinNej" name="interleukin"></p>
-						</li>
-						<li>
-							<p>Er patienten i behandling med Beta-blokkere?
-							Ja<input type = "radio" id="betaBlokkereJa" name="betaBlokkere">
-							Nej<input type = "radio" id="betaBlokkereNej" name="betaBlokkere"></p>
-						</li>
-						<li>
-							<label for="pKreatinin">P-Kreatinin</label>
-							<input type="text" id="pKreatinin" name="pKreatinin" placeholder="Værdi">
-							<label for="pKreatininDato">P-Kreatinin Dato</label>
-							<input type="date" id="pKreatininDato" name="pKreatininDato">
-						</li>
-						<li>
-							<label for="ptHøjde">Pt. Højde</label>
-							<input type="text" id="ptHøjde" name="ptHøjde" placeholder="Højde">
-						</li>
-						<li>
-							<label for="ptVægt">Pt. Vægt</label>
-							<input type="text" id="ptVægt" name="ptVægt" placeholder="Vægt">
-						</li>
-					</ul>
+					<%@include file="CTKontrolSkema.jsp" %>
 				</div>
 				<div id="mrKontrolSkema">
+					<%@include file="MRKontrolSkema.jsp" %>
 				</div>
 				<div id="petKontrolSkema">
+					<%@include file="PETCTKontrolSkema.jsp" %>
 				</div>
 				<input type="submit" id="submit" name="submit" value="submit">
 			</form>
