@@ -4,16 +4,16 @@
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/mainPage.js"></script>
+		<script type="text/javascript" src="js/rekvisitionPage.js"></script>
 		<title>Main Page</title>
 	</head>
 	
 	<body class="rekvisitionPage">
-		<iframe id="topMenuIframe" src="topMenu.jsp"></iframe>
+		<%@include file="topMenu.jsp" %>
 		<div id="mainpage">
 			<ul class="showInline centerAlign">
 				<li>
-					<a id="nyRekvisition" href="MainServlet?page=rekvisition">Skriv Ny Rekvisition</a>
+					<a id="nyRekvisition" href="javascript:showOverlay()">Skriv Ny Rekvisition</a>
 				</li>
 				<li>
 					<div id="search">
@@ -187,6 +187,10 @@
 					</div>
 				</li>
 			</ul>
+		</div>
+		<div id="overlay"></div>
+		<div id="overlayPanel">
+			<%@include file="nyRekvisitionPage.jsp" %>
 		</div>
 	</body>
 </html>

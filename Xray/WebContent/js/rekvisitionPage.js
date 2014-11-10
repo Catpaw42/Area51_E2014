@@ -25,3 +25,8 @@ $(document).ready(function()
         e.preventDefault(); return false; 
     });
 });
+function showOverlay()
+{
+	$("#overlay").css("display", "block");
+	$("#overlayPanel").css("display", "block");
+}
