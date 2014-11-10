@@ -100,6 +100,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		pt.setPatientTlf(request.getParameter("patient_tlf"));	
 		System.out.println(pt);
 		//Time to store patient
+		Integer ptId = null;
 		PatientDao ptDao = new PatientDaoImpl(connection);
 		try {
 			ptDao.insert(pt);
@@ -157,6 +158,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			rek.setCytostatikaDato(null);
 		}
 		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billeddiagnostik"));
+		rek.setPatientId(pt.getPatientId());//TODO change to ptID from DB call
 		System.out.println(rek);
 		//Time to store requisition
 		RekvisitionDao rekDao = new RekvisitionDaoImpl(connection);
