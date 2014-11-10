@@ -56,10 +56,10 @@
 								  		</select>
 								  	</td>
 								  	<td>
-								  		<input type="date" id="date" name="date">
+								  		<input id="date" name="date" type="date">
 								  	</td>
 									<td>
-										<select name="status" id="status">
+										<select id="status" name="status">
 											<option value="sendt">Sendt</option>
 											<option value="visiteret">Visiteret</option>
 											<option value="anulleret">Anulleret</option>
@@ -104,30 +104,30 @@
 									out.print("</td> </tr>");
 								}
 							%>
-							<tr>
-								<td>255255-5555</td>
-								<td>Den elskede leder Magnus</td>
-								<td>UL</td>
-								<td>O</td>
-								<td>251014</td>
-								<td>Sendt</td>
-							</tr>
-							<tr>
-								<td>050501-2222</td>
-								<td>Mickey Mouse</td>
-								<td>CT</td>
-								<td>O</td>
-								<td>300115</td>
-								<td>Visiteret</td>
-							</tr>
-							<tr>
-								<td>111100-1144</td>
-								<td>Marwin The Depressed Robot</td>
-								<td>RGT</td>
-								<td>M</td>
-								<td>011211</td>
-								<td>Anulleret</td>
-							</tr>
+<!-- 							<tr> -->
+<!-- 								<td>255255-5555</td> -->
+<!-- 								<td>Den elskede leder Magnus</td> -->
+<!-- 								<td>UL</td> -->
+<!-- 								<td>O</td> -->
+<!-- 								<td>251014</td> -->
+<!-- 								<td>Sendt</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>050501-2222</td> -->
+<!-- 								<td>Mickey Mouse</td> -->
+<!-- 								<td>CT</td> -->
+<!-- 								<td>O</td> -->
+<!-- 								<td>300115</td> -->
+<!-- 								<td>Visiteret</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>111100-1144</td> -->
+<!-- 								<td>Marwin The Depressed Robot</td> -->
+<!-- 								<td>RGT</td> -->
+<!-- 								<td>M</td> -->
+<!-- 								<td>011211</td> -->
+<!-- 								<td>Anulleret</td> -->
+<!-- 							</tr> -->
 							<tr>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>

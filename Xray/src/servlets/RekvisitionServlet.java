@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.sql.Connection;
 
 import javax.servlet.ServletException;
@@ -24,9 +23,10 @@ import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
+import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Patient;
+import database.dto.Rekvisition.Status;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-
 import database.DataSourceConnector;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.RekvisitionDaoImpl;
@@ -57,12 +57,18 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cond = null;
+		String cond = "status=?";
 		Rekvisition[] rekvlist;
-		RekvisitionDao rekvisitionDao = new RekvisitionDaoImpl(conn);
-		rekvlist = rekvisitionDao.findDynamic(cond, 0, -1, null);
-		
-		
+		RekvisitionDaoImplExt rekvisitionDao = new RekvisitionDaoImplExt(conn);
+		System.out.println("status options: " + Status.PENDING.ordinal());
+		rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, Status.PENDING, null, null); //(cond, 0, -1, new Object[]{Status.PENDING});
+		System.out.println("length: " + rekvlist.length);
+		for (Rekvisition rekvisition : rekvlist) {
+			
+			System.out.println("id: " + rekvisition.getRekvisitionId());
+			System.out.println("status: " + rekvisition.getStatus());
+		}
+		request.setAttribute("rekvisitionlist", null);
 		request.setAttribute("rekvisitionlist", rekvlist);
 		request.getRequestDispatcher("rekvisitionPage.jsp").forward(request, response);
 		
@@ -74,6 +80,19 @@ public class RekvisitionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Object> params = new ArrayList<>();
 		String cond = "";
+		// parameters
+		String cpr = request.getParameter("cpr");
+		String name = request.getParameter("name");
+		String modality = request.getParameter("modality");
+		String department = request.getParameter("department");
+		String date = request.getParameter("date");
+		String status = request.getParameter("status");
+		
+		// objekter
+		Rekvisition[] rekvDto;
+		//TODO dao'er. skal ændres til almindeligt interface senere
+		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
+		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, null, null, department);
 
 		//##############TEST######################
 		//		Patient p1 = new Patient();
@@ -102,14 +121,7 @@ public class RekvisitionServlet extends HttpServlet {
 //		String status = request.getParameter("status");
 		
 
-		String cpr = request.getParameter("cpr");
-		String name = request.getParameter("name");
-		String modality = request.getParameter("modality");
-		String department = request.getParameter("department");
-		String date = request.getParameter("date");
-		String status = request.getParameter("status");
-		PrintWriter out = response.getWriter();
-		RekvisitionDao rekvDao = new RekvisitionDaoImpl(conn);
+
 		
 		// sammensætter select statement til at finde patient
 
@@ -129,13 +141,13 @@ public class RekvisitionServlet extends HttpServlet {
 		
 		// sammensætter select statement til at finde rekvisition
 		if(modality != null){
-			rekvCond = "modalitet=?"
+//			rekvCond = "modalitet=?"
 		}
 
 		
-		out.print(cond);
+		System.out.print(cond);
 		for(Object pa : params){
-			out.println(pa.toString());
+			System.out.println(pa.toString());
 		}
 
 		//		cond = cond + modality
@@ -146,16 +158,16 @@ public class RekvisitionServlet extends HttpServlet {
 		PatientDao dao = new PatientDaoImpl(conn);
 		Patient[] p = dao.findDynamic(cond, 0, -1, params.toArray());
 		Patient[] p2 = dao.findDynamic(null, 0, -1, null);
-		out.println("p2 length: " + p2.length);
-		out.println("p2 test: " + p2[0].getPatientNavn() + "##########");
-		out.println("yay");
+		System.out.println("p2 length: " + p2.length);
+		System.out.println("p2 test: " + p2[0].getPatientNavn() + "##########");
+		System.out.println("yay");
 		if(p != null){
-			out.println(p.length);
-			//			out.println(p[0].getPatientAdresse());
-			out.println("lnyay2");
+			System.out.println(p.length);
+			//			System.out.println(p[0].getPatientAdresse());
+			System.out.println("lnyay2");
 			for (Patient patient : p) {
-				out.println("yay3");
-				out.println(patient.getPatientNavn());
+				System.out.println("yay3");
+				System.out.println(patient.getPatientNavn());
 			}
 		}
 

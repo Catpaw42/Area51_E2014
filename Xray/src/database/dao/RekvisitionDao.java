@@ -27,8 +27,6 @@ public interface RekvisitionDao extends AbstractDao {
      */
     public Rekvisition findByPrimaryKey( int rekvisitionId );
     
-    public Rekvisition[] findByAdvSearch(String cpr, String name, String modality, Rekvisition.Status status,Timestamp date, String department);
-
     /**
      * Finds records.
      */

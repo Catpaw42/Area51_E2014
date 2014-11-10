@@ -12,6 +12,7 @@ import database.DataBaseController;
 import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.mysql.BrugerDaoImpl;
+import database.dao.mysql.BrugerDaoImplExtended;
 import database.dto.Bruger;
 import database.interfaces.IDataBaseController;
 import database.interfaces.IDataBaseController.DatabaseException;
@@ -70,7 +71,8 @@ public class LoginServlet extends HttpServlet
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			BrugerDao b = new BrugerDaoImpl(conn);
+			//TODO skifte til interface når DAO og DTO er rigtige
+			BrugerDaoImplExtended b = new BrugerDaoImplExtended(conn);
 			
 			loginSuccess = b.validate(username, password);
 			System.out.println(loginSuccess);

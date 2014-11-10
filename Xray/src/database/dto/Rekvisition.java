@@ -147,7 +147,101 @@ public class Rekvisition extends AbstractDto {
     // Public
     ////////////////////////////////////////////////////////////////////////////
 
-    public Integer getRekvisitionId() {
+    public Rekvisition(Integer rekvisitionId, Integer mRKontrolskemaId,
+			Integer pETCTKontrolskemaId, Integer cTKontrastKontrolskemaId,
+			Integer invasivULKontrolskemaId, Integer undersoegelsesTypeId,
+			Integer rekvirentId, Integer visitatorId, Integer patientId,
+			HenvistTil henvistTil, HospitalOenske hospitalOenske,
+			Prioritering prioritering, Boolean udfIndlagt,
+			AmbulantKoersel ambulantKoersel,
+			IndlaeggelseTransport indlaeggelseTransport, Status status,
+			Samtykke samtykke, String paaroerende, Boolean ambulant,
+			String datoForslag, Boolean graviditet, Integer graviditetUge,
+			String cave, Boolean hoerehaemmet, Boolean synshaemmet,
+			Boolean amputeret, Boolean kanIkkeStaa, Short iltLiterPrmin,
+			String tolkSprog, Boolean dement, Boolean afasi, String isolation,
+			Timestamp cytostatikaDato, String tidlBilledDiagnostik,
+			String kliniskProblemstilling, String triage, String henvLaege,
+			String henvAfd, String kontaktTlf, String visitatorPrioritering,
+			String visitatorBemaerkning, Timestamp afsendtDato,
+			boolean isMRKontrolskemaIdModified,
+			boolean isPETCTKontrolskemaIdModified,
+			boolean isCTKontrastKontrolskemaIdModified,
+			boolean isInvasivULKontrolskemaIdModified,
+			boolean isHospitalOenskeModified,
+			boolean isAmbulantKoerselModified,
+			boolean isIndlaeggelseTransportModified,
+			boolean isSamtykkeModified, boolean isDatoForslagModified,
+			boolean isGraviditetModified, boolean isGraviditetUgeModified,
+			boolean isIltLiterPrminModified, boolean isTolkSprogModified,
+			boolean isCytostatikaDatoModified,
+			boolean isTidlBilledDiagnostikModified, boolean isTriageModified,
+			boolean isVisitatorPrioriteringModified,
+			boolean isVisitatorBemaerkningModified) {
+		super();
+		this.rekvisitionId = rekvisitionId;
+		this.mRKontrolskemaId = mRKontrolskemaId;
+		this.pETCTKontrolskemaId = pETCTKontrolskemaId;
+		this.cTKontrastKontrolskemaId = cTKontrastKontrolskemaId;
+		this.invasivULKontrolskemaId = invasivULKontrolskemaId;
+		this.undersoegelsesTypeId = undersoegelsesTypeId;
+		this.rekvirentId = rekvirentId;
+		this.visitatorId = visitatorId;
+		this.patientId = patientId;
+		this.henvistTil = henvistTil;
+		this.hospitalOenske = hospitalOenske;
+		this.prioritering = prioritering;
+		this.udfIndlagt = udfIndlagt;
+		this.ambulantKoersel = ambulantKoersel;
+		this.indlaeggelseTransport = indlaeggelseTransport;
+		this.status = status;
+		this.samtykke = samtykke;
+		this.paaroerende = paaroerende;
+		this.ambulant = ambulant;
+		this.datoForslag = datoForslag;
+		this.graviditet = graviditet;
+		this.graviditetUge = graviditetUge;
+		this.cave = cave;
+		this.hoerehaemmet = hoerehaemmet;
+		this.synshaemmet = synshaemmet;
+		this.amputeret = amputeret;
+		this.kanIkkeStaa = kanIkkeStaa;
+		this.iltLiterPrmin = iltLiterPrmin;
+		this.tolkSprog = tolkSprog;
+		this.dement = dement;
+		this.afasi = afasi;
+		this.isolation = isolation;
+		this.cytostatikaDato = cytostatikaDato;
+		this.tidlBilledDiagnostik = tidlBilledDiagnostik;
+		this.kliniskProblemstilling = kliniskProblemstilling;
+		this.triage = triage;
+		this.henvLaege = henvLaege;
+		this.henvAfd = henvAfd;
+		this.kontaktTlf = kontaktTlf;
+		this.visitatorPrioritering = visitatorPrioritering;
+		this.visitatorBemaerkning = visitatorBemaerkning;
+		this.afsendtDato = afsendtDato;
+		this.isMRKontrolskemaIdModified = isMRKontrolskemaIdModified;
+		this.isPETCTKontrolskemaIdModified = isPETCTKontrolskemaIdModified;
+		this.isCTKontrastKontrolskemaIdModified = isCTKontrastKontrolskemaIdModified;
+		this.isInvasivULKontrolskemaIdModified = isInvasivULKontrolskemaIdModified;
+		this.isHospitalOenskeModified = isHospitalOenskeModified;
+		this.isAmbulantKoerselModified = isAmbulantKoerselModified;
+		this.isIndlaeggelseTransportModified = isIndlaeggelseTransportModified;
+		this.isSamtykkeModified = isSamtykkeModified;
+		this.isDatoForslagModified = isDatoForslagModified;
+		this.isGraviditetModified = isGraviditetModified;
+		this.isGraviditetUgeModified = isGraviditetUgeModified;
+		this.isIltLiterPrminModified = isIltLiterPrminModified;
+		this.isTolkSprogModified = isTolkSprogModified;
+		this.isCytostatikaDatoModified = isCytostatikaDatoModified;
+		this.isTidlBilledDiagnostikModified = isTidlBilledDiagnostikModified;
+		this.isTriageModified = isTriageModified;
+		this.isVisitatorPrioriteringModified = isVisitatorPrioriteringModified;
+		this.isVisitatorBemaerkningModified = isVisitatorBemaerkningModified;
+	}
+
+	public Integer getRekvisitionId() {
         return rekvisitionId;
     }
 

@@ -26,6 +26,7 @@ import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
+import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
 import database.dto.Modalitet;
@@ -113,7 +114,7 @@ public class TestServlet extends HttpServlet {
 
 	private void testAdvSearch(Connection connection) {
 		Rekvisition[] r = null;
-		RekvisitionDao dao = new RekvisitionDaoImpl(connection);
+		RekvisitionDaoImplExt dao = new RekvisitionDaoImplExt(connection);
 		// test: "Røntgen"
 		r = dao.findByAdvSearch(null, null, null, null, null, null);
 		System.out.println("################ adv search########################");
@@ -122,6 +123,13 @@ public class TestServlet extends HttpServlet {
 			System.out.println(rekvisition.getRekvisitionId());
 		}
 		System.out.println(r.length + " funde rekvisitioner###################");
+		
+		System.out.println("############### dynamic search####################");
+		Rekvisition[] rek = dao.findDynamic("status=?", 0, -1, new Object[]{Status.PENDING});
+		for (Rekvisition rekvisition : rek) {
+			System.out.println("id: " + rekvisition.getRekvisitionId());
+			System.out.println("status: " + rekvisition.getStatus());
+		}
 		
 	}
 
