@@ -228,6 +228,7 @@
 				<column name="afsendt_dato">
 					<type>Timestamp</type>
 					<not-null />
+					<auto/>
 					<edit />
 				</column>
 			</columns>
