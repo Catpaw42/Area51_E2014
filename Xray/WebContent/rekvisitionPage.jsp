@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+<%@ page import="database.dto.Rekvisition" %>
 	<head>
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
@@ -89,6 +90,10 @@
 								for (Rekvisition r : rekv){
 									out.print("<tr> <td>");
 									out.print(r.getPatient().getCpr());
+									out.print("</td> <td>");
+									out.print(r.getPatient().getName());
+									out.print("</td> <td>");
+									out.print(r.getPatient().get);
 									
 								}
 							%>
