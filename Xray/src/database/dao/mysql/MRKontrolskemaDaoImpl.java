@@ -34,11 +34,11 @@ public class MRKontrolskemaDaoImpl extends AbstractDaoImpl<MRKontrolskema> imple
 
     private static final String TABLE_NAME = "MR_kontrolskema";
 
-    protected static final String SELECT_COLUMNS = "MR_kontrolskema_id, MR_kontrolant_id, tidl_billed_diagnostik, pacemaker, metal_implantater, metal_implantater_beskrivelse, andet_metalisk, andet_metalisk_beskrivelse, nyresygdom, nyresygdom_kreatinin, graviditet, graviditet_uge, klaustrofobi, praep_forsyn, hoejde, vaegt, MR_boern, MR_voksen";
+    protected static final String SELECT_COLUMNS = "MR_kontrolskema_id, MR_kontrolant_id, pacemaker, metal_implantater, metal_implantater_beskrivelse, andet_metalisk, andet_metalisk_beskrivelse, nyresygdom, nyresygdom_kreatinin, graviditet, graviditet_uge, klaustrofobi, praep_forsyn, hoejde, vaegt, MR_boern, MR_voksen";
 
     protected static final String PK_CONDITION = "MR_kontrolskema_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO MR_kontrolskema (MR_kontrolant_id,tidl_billed_diagnostik,pacemaker,metal_implantater,metal_implantater_beskrivelse,andet_metalisk,andet_metalisk_beskrivelse,nyresygdom,nyresygdom_kreatinin,graviditet,graviditet_uge,klaustrofobi,praep_forsyn,hoejde,vaegt,MR_boern,MR_voksen) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO MR_kontrolskema (MR_kontrolant_id,pacemaker,metal_implantater,metal_implantater_beskrivelse,andet_metalisk,andet_metalisk_beskrivelse,nyresygdom,nyresygdom_kreatinin,graviditet,graviditet_uge,klaustrofobi,praep_forsyn,hoejde,vaegt,MR_boern,MR_voksen) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final MRKontrolskema.MRBoern[] _MRKontrolskema_MRBoerns = { null, MRKontrolskema.MRBoern.UDEN_SEDERING, MRKontrolskema.MRBoern.I_GENEREL_ANAESTESI };
     private static final MRKontrolskema.MRVoksen[] _MRKontrolskema_MRVoksens = { null, MRKontrolskema.MRVoksen.UDEN_SEDERING, MRKontrolskema.MRVoksen.MED_SEDERING, MRKontrolskema.MRVoksen.I_GENEREL_ANAESTESI };
 
@@ -74,94 +74,89 @@ public class MRKontrolskemaDaoImpl extends AbstractDaoImpl<MRKontrolskema> imple
                 stmt.setInt( 1, dto.getMRKontrolantId() );
             }
 
-            if ( dto.getTidlBilledDiagnostik() != null ) {
-                checkMaxLength( "tidl_billed_diagnostik", dto.getTidlBilledDiagnostik(), 50 );
-            }
-            stmt.setString( 2, dto.getTidlBilledDiagnostik() );
-
             if ( dto.getPacemaker() == null ) {
                 throw new DaoException("Value of column 'pacemaker' cannot be null");
             }
-            stmt.setByte( 3, dto.getPacemaker() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 2, dto.getPacemaker() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getMetalImplantater() == null ) {
                 throw new DaoException("Value of column 'metal_implantater' cannot be null");
             }
-            stmt.setByte( 4, dto.getMetalImplantater() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 3, dto.getMetalImplantater() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getMetalImplantaterBeskrivelse() != null ) {
                 checkMaxLength( "metal_implantater_beskrivelse", dto.getMetalImplantaterBeskrivelse(), 100 );
             }
-            stmt.setString( 5, dto.getMetalImplantaterBeskrivelse() );
+            stmt.setString( 4, dto.getMetalImplantaterBeskrivelse() );
 
             if ( dto.getAndetMetalisk() == null ) {
                 throw new DaoException("Value of column 'andet_metalisk' cannot be null");
             }
-            stmt.setByte( 6, dto.getAndetMetalisk() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 5, dto.getAndetMetalisk() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getAndetMetaliskBeskrivelse() != null ) {
                 checkMaxLength( "andet_metalisk_beskrivelse", dto.getAndetMetaliskBeskrivelse(), 100 );
             }
-            stmt.setString( 7, dto.getAndetMetaliskBeskrivelse() );
+            stmt.setString( 6, dto.getAndetMetaliskBeskrivelse() );
 
             if ( dto.getNyresygdom() == null ) {
                 throw new DaoException("Value of column 'nyresygdom' cannot be null");
             }
-            stmt.setByte( 8, dto.getNyresygdom() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 7, dto.getNyresygdom() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getNyresygdomKreatinin() == null ) {
-                stmt.setNull( 9, Types.INTEGER );
+                stmt.setNull( 8, Types.INTEGER );
             }
             else {
-                stmt.setInt( 9, dto.getNyresygdomKreatinin() );
+                stmt.setInt( 8, dto.getNyresygdomKreatinin() );
             }
 
             if ( dto.getGraviditet() == null ) {
-                stmt.setNull( 10, Types.TINYINT );
+                stmt.setNull( 9, Types.TINYINT );
             }
             else {
-                stmt.setByte( 10, dto.getGraviditet() ? ((byte)1) : ((byte)0) );
+                stmt.setByte( 9, dto.getGraviditet() ? ((byte)1) : ((byte)0) );
             }
 
             if ( dto.getGraviditetUge() == null ) {
-                stmt.setNull( 11, Types.INTEGER );
+                stmt.setNull( 10, Types.INTEGER );
             }
             else {
-                stmt.setInt( 11, dto.getGraviditetUge() );
+                stmt.setInt( 10, dto.getGraviditetUge() );
             }
 
             if ( dto.getKlaustrofobi() == null ) {
                 throw new DaoException("Value of column 'klaustrofobi' cannot be null");
             }
-            stmt.setByte( 12, dto.getKlaustrofobi() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 11, dto.getKlaustrofobi() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getPraepForsyn() != null ) {
                 checkMaxLength( "praep_forsyn", dto.getPraepForsyn(), 100 );
             }
-            stmt.setString( 13, dto.getPraepForsyn() );
+            stmt.setString( 12, dto.getPraepForsyn() );
 
             if ( dto.getHoejde() == null ) {
                 throw new DaoException("Value of column 'hoejde' cannot be null");
             }
-            stmt.setInt( 14, dto.getHoejde() );
+            stmt.setInt( 13, dto.getHoejde() );
 
             if ( dto.getVaegt() == null ) {
                 throw new DaoException("Value of column 'vaegt' cannot be null");
             }
-            stmt.setInt( 15, dto.getVaegt() );
+            stmt.setInt( 14, dto.getVaegt() );
 
             if ( dto.getMRBoern() == null ) {
-                stmt.setNull( 16, Types.SMALLINT );
+                stmt.setNull( 15, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 16, (short) (dto.getMRBoern().ordinal() + 1) );
+                stmt.setShort( 15, (short) (dto.getMRBoern().ordinal() + 1) );
             }
 
             if ( dto.getMRVoksen() == null ) {
-                stmt.setNull( 17, Types.SMALLINT );
+                stmt.setNull( 16, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 17, (short) (dto.getMRVoksen().ordinal() + 1) );
+                stmt.setShort( 16, (short) (dto.getMRVoksen().ordinal() + 1) );
             }
 
             int n = stmt.executeUpdate();
@@ -192,22 +187,7 @@ public class MRKontrolskemaDaoImpl extends AbstractDaoImpl<MRKontrolskema> imple
         StringBuffer sb = new StringBuffer();
         ArrayList<Object> params = new ArrayList<Object>();
 
-        if ( dto.isTidlBilledDiagnostikModified()) {
-            if ( dto.getTidlBilledDiagnostik() == null ) {
-                sb.append( "tidl_billed_diagnostik=NULL" );
-            }
-            else {
-                checkMaxLength( "tidl_billed_diagnostik", dto.getTidlBilledDiagnostik(), 50 );
-                sb.append( "tidl_billed_diagnostik=?" );
-                params.add( dto.getTidlBilledDiagnostik());
-            }
-        }
-
         if ( dto.getPacemaker() != null ) {
-            if (sb.length() > 0) {
-                sb.append( ", " );
-            }
-
             sb.append( "pacemaker=?" );
             params.add( (dto.getPacemaker() ? ((byte)1) : ((byte)0)));
         }
@@ -403,42 +383,41 @@ public class MRKontrolskemaDaoImpl extends AbstractDaoImpl<MRKontrolskema> imple
             dto.setMRKontrolantId( null );
         }
 
-        dto.setTidlBilledDiagnostik( rs.getString( 3 ));
-        dto.setPacemaker( rs.getBoolean( 4 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setMetalImplantater( rs.getBoolean( 5 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setMetalImplantaterBeskrivelse( rs.getString( 6 ));
-        dto.setAndetMetalisk( rs.getBoolean( 7 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setAndetMetaliskBeskrivelse( rs.getString( 8 ));
-        dto.setNyresygdom( rs.getBoolean( 9 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setNyresygdomKreatinin( rs.getInt( 10 ));
+        dto.setPacemaker( rs.getBoolean( 3 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setMetalImplantater( rs.getBoolean( 4 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setMetalImplantaterBeskrivelse( rs.getString( 5 ));
+        dto.setAndetMetalisk( rs.getBoolean( 6 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setAndetMetaliskBeskrivelse( rs.getString( 7 ));
+        dto.setNyresygdom( rs.getBoolean( 8 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setNyresygdomKreatinin( rs.getInt( 9 ));
 
         if ( rs.wasNull()) {
             dto.setNyresygdomKreatinin( null );
         }
 
-        dto.setGraviditet( rs.getBoolean( 11 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setGraviditet( rs.getBoolean( 10 ) ? Boolean.TRUE : Boolean.FALSE );
 
         if ( rs.wasNull()) {
             dto.setGraviditet( null );
         }
 
-        dto.setGraviditetUge( rs.getInt( 12 ));
+        dto.setGraviditetUge( rs.getInt( 11 ));
 
         if ( rs.wasNull()) {
             dto.setGraviditetUge( null );
         }
 
-        dto.setKlaustrofobi( rs.getBoolean( 13 ) ? Boolean.TRUE : Boolean.FALSE );
-        dto.setPraepForsyn( rs.getString( 14 ));
-        dto.setHoejde( rs.getInt( 15 ));
-        dto.setVaegt( rs.getInt( 16 ));
-        dto.setMRBoern( _MRKontrolskema_MRBoerns[ rs.getShort( 17 ) ]);
+        dto.setKlaustrofobi( rs.getBoolean( 12 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setPraepForsyn( rs.getString( 13 ));
+        dto.setHoejde( rs.getInt( 14 ));
+        dto.setVaegt( rs.getInt( 15 ));
+        dto.setMRBoern( _MRKontrolskema_MRBoerns[ rs.getShort( 16 ) ]);
 
         if ( rs.wasNull()) {
             dto.setMRBoern( null );
         }
 
-        dto.setMRVoksen( _MRKontrolskema_MRVoksens[ rs.getShort( 18 ) ]);
+        dto.setMRVoksen( _MRKontrolskema_MRVoksens[ rs.getShort( 17 ) ]);
 
         if ( rs.wasNull()) {
             dto.setMRVoksen( null );

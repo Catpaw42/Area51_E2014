@@ -23,12 +23,15 @@ import com.spoledge.audao.db.dao.DaoException;
 import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.DaoFactory;
+import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.RekvisitionDao;
+import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
 import database.dto.MRKontrolskema;
+import database.dto.Modalitet;
 import database.dto.PETCTKontrolskema;
 import database.dto.PETCTKontrolskema.Formaal;
 import database.dto.PETCTKontrolskema.KemoOgStraale;
@@ -61,14 +64,21 @@ public class TestServlet extends HttpServlet {
 	}
 
 	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		Statement statement = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
-		
+
 		// Get Connection and Statement
 		try {
 			connection = DataSourceConnector.getConnection();
@@ -78,25 +88,35 @@ public class TestServlet extends HttpServlet {
 		}catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
-		
-//		testUser(statement, connection);
-		
-//		testMrKontrol(statement, connection);
-		
-//		testExRequest(connection);
+
+		//		testUser(statement, connection);
+
+		//		testMrKontrol(statement, connection);
+
+		//		testExRequest(connection);
 		System.out.println("##########tester bruger dto#############");
 		testBruger(connection);
-		System.out.println("#############tester petCtKontrolskema#########");
+		System.out.println("\n \n#############tester petCtKontrolskema#########");
 		testPetCtKontrolskema(connection);
+		System.out.println("\n \n#############test exrequest###################");
+		testExRequest(connection);
+		System.out.println("\n \n#############test modalitet###################");
+		testModalitet(connection);
+		System.out.println("\n \n#############test mrKontrol###################");
+		testMrKontrol(statement, connection);
+		System.out.println("\n \n#############test rettigheder#################");
+		testRettigheder(connection);
+
+
 
 	}
-	
+
 	private void testPetCtKontrolskema(Connection conn){
 		//kan være null
 		Boolean setDMRegime= null;
 		Boolean setPOKontrast= null; 
 		Boolean setPreMed= null;
-		
+
 		//kan ikke være null
 		Boolean setDiabetes= true;
 		Boolean setKanPtLiggeStille30= true;
@@ -111,7 +131,7 @@ public class TestServlet extends HttpServlet {
 		Boolean setRelKontraIndCT= true;
 		Boolean setRespInsuff= false;
 		Boolean setSmerter= true; 
-		
+
 		String setAktuelPKreatAndetText = "det ser ikke så godt ud";
 		String setAllergiText= null;
 		String setBiopsiText= null;
@@ -123,22 +143,22 @@ public class TestServlet extends HttpServlet {
 		String setOperationText= null;
 		String setRelKontraIndCTText= null;
 		String setTidlBilledDiagnostik= null;
-		
+
 		Integer setAktuelPKreatinin= null;
 		Integer setPetctKontrolskemaId= null;
 		Integer setSidstePKreatinin= null;
 		Integer setVaegt= null;
-		
+
 		Date setAktuelPKreatTimestamp= null;
 		Date setSidstePKreatTimestamp= null;
-		
+
 		Formaal setFormaal= null;
 		KemoOgStraale setKemoOgStraale= null;
-		
-		
+
+
 		PETCTKontrolskema dto = new PETCTKontrolskema();
 		PETCTKontrolskemaDao dao = new PETCTKontrolskemaDaoImpl(conn);
-		
+
 		dto.setAktuelAndetTekst(setAktuelPKreatAndetText);
 		dto.setAktuelPKreatinin(setAktuelPKreatinin);
 		dto.setAktuelPKreatTimestamp(setAktuelPKreatTimestamp);
@@ -168,7 +188,7 @@ public class TestServlet extends HttpServlet {
 		dto.setSidstePKreatTimestamp(setSidstePKreatTimestamp);
 		dto.setSmerter(setSmerter);
 		dto.setVaegt(setVaegt);
-		
+
 		int pk = 0;
 		try {
 			System.out.println("indsætter petctkontrol dto i database");
@@ -176,14 +196,15 @@ public class TestServlet extends HttpServlet {
 			System.out.println("###########dto indsat med#######");
 			System.out.println("pk: " + pk);
 		} catch (DaoException e) {
-			System.err.println("petCtKontrol dto blev ikke succesfuldt sat ind i database");
+			System.err.println("petCtKontrol dto blev ikke succesfuldt sat ind i database \n");
 			e.printStackTrace();
-			System.out.println("########################################");
+			System.out.println("\n ########################################");
 		}
 		System.out.println("henter petctkontrolskema med pk: " + pk);
 		PETCTKontrolskema fdto = dao.findByPrimaryKey(pk);
-		System.out.println("pk: " + fdto.getPETCTKontrolskemaId());
-		System.out.println("aktuelpkreatinandettekst: " + fdto.getAktuelPKreatinin());
+		System.out.println("fdto " + fdto);
+		System.out.println("pk: " + (fdto == null ? "no dto found" : fdto.getPETCTKontrolskemaId()));
+		System.out.println("aktuelpkreatinandettekst: " + (fdto == null ? "no dto found" : fdto.getAktuelPKreatinin()));
 		System.out.println("########################################");
 		System.out.println("henter ikke eksisterende objekt... pk: " + pk + 1000);
 		fdto = dao.findByPrimaryKey(pk+1000);
@@ -192,7 +213,7 @@ public class TestServlet extends HttpServlet {
 		} catch (NullPointerException e){
 			System.out.println("nullPointerException kastet - objektet er null");
 		}
-		
+
 	}
 
 	private void testMrKontrol(Statement statement, Connection connection) {
@@ -211,7 +232,7 @@ public class TestServlet extends HttpServlet {
 		m.setMetformin(null);
 		m.setMyokardieinfarkt(false);
 		m.setNsaidPraeparat(true);
-//		m.setNyrefunktion(_val);
+		//		m.setNyrefunktion(_val);
 		m.setNyreopereret(false);
 		m.setOver70(true);
 		m.setPKreatininTimestamp(new Date());
@@ -220,21 +241,23 @@ public class TestServlet extends HttpServlet {
 		m.setPtHoejde(198);
 		m.setPtVaegt(32);
 		m.setUrinsyregigt(true);
-		
-		
-		
-		
+
+
+
+
 	}
-	
+
 	private void testBruger(Connection conn){
 		int id = 2;
 		String brugernavn = "Hans";
+		String fuldtnavn = "Hans Hansen";
 		boolean erAktiv = true; 
-		
+
 		Bruger dto = new Bruger();
 		//dto.setBrugerId(id);
 		dto.setBrugerNavn(brugernavn);
 		dto.setErAktiv(erAktiv);
+		dto.setFuldtNavn(fuldtnavn);
 		BrugerDao dao = DaoFactory.createBrugerDao(conn);
 		try {
 			System.out.println("\n forsøger at inds�tte bruger i database");
@@ -244,7 +267,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("erAktiv: " + erAktiv);
 			System.out.println("################");
 			Bruger alreadyExist = dao.findByPrimaryKey(id);
-			
+
 			if(alreadyExist != null){
 				System.out.println("bruger findes allerede med id= " + id);
 				System.out.println("#########fundet bruger###########");
@@ -260,14 +283,14 @@ public class TestServlet extends HttpServlet {
 			System.out.println("brugerId: " + pk);
 		} catch (DaoException e) {
 			System.err.println("fejlede at tilføje bruger til database");
+			e.printStackTrace();
 		}
-		
+
 		try {
-			
+
 			System.out.println("\n forsøger at hente bruger fra database");
 			System.out.println("#######user#####");
 			System.out.println("brugerId: " + id);
-			System.out.println("################");
 			Bruger nDto = dao.findByPrimaryKey(id);
 			System.out.println("#####fundet bruger#######");
 			System.out.println("brugerId: " + nDto.getBrugerId());
@@ -276,9 +299,10 @@ public class TestServlet extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println("fejlede at hente bruger fra database");
 		}
-		
-		
-		
+		System.out.println("################");
+
+
+
 		erAktiv = !erAktiv;
 		try{
 			System.out.println("\n forsøger at opdatere erAktiv for bruger i database");
@@ -292,17 +316,19 @@ public class TestServlet extends HttpServlet {
 		}catch (DaoException e){
 			System.err.println("fejlede at opdatere bruger i database");
 		}
-		
+
 	}
-	
+
 	private void testBrugerInput(String message, Bruger dto, BrugerDao dao, int id, String brugernavn, boolean erAktiv){
-		
+
 	}
-	
+
+
+
 	private void testExRequest(Connection conn){
 		Integer primaryKey = new Integer(2);
-//		DTOexRequest dtod = new DTOexRequest(-1, 2, 1, 0, Status.PENDING, new Timestamp(new Date().getTime()), null, new Timestamp(new Date(0).getTime()), null);
-//		DaoFactory f = new DaoFactory();
+		//		DTOexRequest dtod = new DTOexRequest(-1, 2, 1, 0, Status.PENDING, new Timestamp(new Date().getTime()), null, new Timestamp(new Date(0).getTime()), null);
+		//		DaoFactory f = new DaoFactory();
 		System.err.println("trying to get dao \n");
 		RekvisitionDao dao = DaoFactory.createRekvisitionDao(conn);
 		System.err.println("dao aquired");
@@ -321,7 +347,7 @@ public class TestServlet extends HttpServlet {
 		dto.setStatus(Status.APPROVED);
 		dto.setUdfIndlagt(false);
 		dto.setUndersoegelsesTypeId(2);
-		
+
 		try {
 			// test insert
 			System.out.println("insert dto: pr-key: " + dto.getRekvisitionId() + "...");
@@ -331,7 +357,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("searching for inserted dto pr-key: " + dto.getRekvisitionId() + "...");
 			Rekvisition r =  dao.findByPrimaryKey(dto.getRekvisitionId());
 			System.out.println("objects primary key: " + r.getRekvisitionId());
-			
+
 			//test update of status
 			System.out.println("updating status...");
 			System.out.println("current status: " + dto.getStatus().toString() + " vs " + r.getStatus() );
@@ -340,40 +366,55 @@ public class TestServlet extends HttpServlet {
 			System.out.println("update was a success: " + success);
 			r = dao.findByPrimaryKey(primaryKey);
 			System.out.println("new status vs old: " + r.getStatus() + " vs " + dto.getStatus());
-			
-			
+
+
 		} catch (DaoException e) {
 			System.err.println("failed to insert row");
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	private void testUser(Statement statement, Connection connection) {
-		ResultSet resultSet = null;
+	private void testModalitet(Connection conn){
+		Modalitet dto = new Modalitet();
+		dto.setModalitetNavn("test modalitet");
+		ModalitetDao dao = new ModalitetDaoImpl(conn);
 		try {
-			String query = "SELECT * FROM users";
-			resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
-				System.out.println(resultSet.getString(1) + resultSet.getString(2) + resultSet.getString(3));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try { if(null!=resultSet)resultSet.close();} catch (SQLException e) 
-			{e.printStackTrace();}
-			try { if(null!=statement)statement.close();} catch (SQLException e) 
-			{e.printStackTrace();}
-			try { if(null!=connection)connection.close();} catch (SQLException e) 
-			{e.printStackTrace();}
+			System.out.println("indsætter Modalitetdto ind i database...");
+			System.out.println("#######Modalitet##########");
+			System.out.println("modalitetnavn: " + dto.getModalitetNavn());
+			System.out.println("##########################");
+			int id = dao.insert(dto);
+			System.out.println("dto indsat med id: " + id);
+		} catch (DaoException e) {
+			System.err.println("Failed to insert dto into database");
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	private void testRettigheder(Connection conn){
+
 	}
+
+	//	private void testUser(Statement statement, Connection connection) {
+	//		ResultSet resultSet = null;
+	//		try {
+	//			String query = "SELECT * FROM users";
+	//			resultSet = statement.executeQuery(query);
+	//			while (resultSet.next()) {
+	//				System.out.println(resultSet.getString(1) + resultSet.getString(2) + resultSet.getString(3));
+	//			}
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//		}finally {
+	//			try { if(null!=resultSet)resultSet.close();} catch (SQLException e) 
+	//			{e.printStackTrace();}
+	//			try { if(null!=statement)statement.close();} catch (SQLException e) 
+	//			{e.printStackTrace();}
+	//			try { if(null!=connection)connection.close();} catch (SQLException e) 
+	//			{e.printStackTrace();}
+	//		}
+	//	}
+
+
 
 }
