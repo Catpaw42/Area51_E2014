@@ -5,12 +5,14 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 
@@ -97,7 +99,8 @@ public class NyRekvisitionServlet extends HttpServlet
 		pt.setPatientCpr(request.getParameter("patient_cpr"));
 		pt.setPatientAdresse(request.getParameter("patient_adresse"));
 		pt.setPatientNavn(request.getParameter("patient_navn"));
-		pt.setPatientTlf(request.getParameter("patient_tlf"));	
+		pt.setPatientTlf(request.getParameter("patient_tlf"));
+		pt.setStamafdeling("TestAfdeling"); //TODO get from User
 		System.out.println(pt);
 		//Time to store patient
 		Integer ptId = null;
@@ -112,6 +115,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		//Making Rekvisition DTO
 		Rekvisition rek = new Rekvisition();
 		//Rekvisition.setPaaroerende TODO
+		rek.setPaaroerende(request.getParameter("paaroerende"));
 		rek.setSamtykke(convertSamtykke(request)); //TODO validate samtykke.
 		rek.setTriage(request.getParameter("triage"));
 		rek.setCave(request.getParameter("cave"));//TODO validate
@@ -121,10 +125,14 @@ public class NyRekvisitionServlet extends HttpServlet
 			//TODO handle missing rekvirent 
 			//returnToPage("Manglende RekvirentID);
 		}
+		rek.setRekvirentId(1); // TODO FIX!
+		rek.setHenvAfd("TestAfd"); //TODO get from user!
+		rek.setVisitatorId(-1); //Remove - Should be null
 		//TODO Rekvirerende afdeling findes ikke - bundet til brugeren?
 		rek.setHenvLaege(request.getParameter("henv_laege"));
 		rek.setKontaktTlf(request.getParameter("kontakt_tlf"));
 		rek.setUdfIndlagt(Boolean.valueOf(request.getParameter("udf_indlagt")));
+		rek.setAmbulant(!rek.getUdfIndlagt());
 		rek.setHenvistTil(convertHenvistTil(request));
 		rek.setHospitalOenske(convertHospitalOenske(request));
 		rek.setPrioritering(convertPrioritering(request));
@@ -133,6 +141,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (NumberFormatException e) {
 			//TODO meaningful handling of error
 		}
+		rek.setUndersoegelsesTypeId(1); //TODO FIXXX!!!
 		rek.setKliniskProblemstilling(request.getParameter("klinisk_problemstilling"));
 		rek.setAmbulantKoersel(convertAmbulantKoersel(request));
 		rek.setIndlaeggelseTransport(convertIndlaeggelseTransport(request));
@@ -157,8 +166,10 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (IllegalArgumentException e) {
 			rek.setCytostatikaDato(null);
 		}
-		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billeddiagnostik"));
+		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billed_diagnostik"));
 		rek.setPatientId(ptId);
+		rek.setStatus(Rekvisition.Status.PENDING);
+		rek.setAfsendtDato(new Date());
 		System.out.println(rek);
 		//Time to store requisition
 		RekvisitionDao rekDao = new RekvisitionDaoImpl(connection);
@@ -171,8 +182,8 @@ public class NyRekvisitionServlet extends HttpServlet
 		//HopeFully it went well ;)
 
 		PrintWriter out = response.getWriter();
-		out.println("Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>");
-		out.println("<A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A>");
+		out.println("<HTML><BODY>Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>");
+		out.println("<A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A></BODY><HTML>");
 
 	}
 
