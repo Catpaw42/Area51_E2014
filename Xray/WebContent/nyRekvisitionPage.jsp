@@ -29,9 +29,9 @@
 								<input type="text" id="paaroerende" name="paaroerende" placeholder="forældre/værge/andet">
 								<label for="samtykke">Patientsamtykke</label>
 								<div id="samtykke">
-									<input type="radio" id="samtykke_ja" name="samtykke">Ja
-									<input type="radio" id="samtykke_nej" name="samtykke">Nej
-									<input type="radio" id="uden_samtykke" name="samtykke">Ikke i stand til samtykke
+									<input type="radio" id="samtykke_ja" name="samtykke" value="ja">Ja
+									<input type="radio" id="samtykke_nej" name="samtykke" value="nej">Nej
+									<input type="radio" id="uden_samtykke" name="samtykke" value="uden">Ikke i stand til samtykke
 								</div>
 								<label for="triage">Triage</label>
 								<input type="text" id="triage" name="triage" placeholder="evt. EWS">
@@ -59,26 +59,26 @@
 					<h2>Undersøgelse</h2>
 					<label for="udf_indlagt">Udføres under indlæggelse</label>
 					<div id="udf_indlagt">
-						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required">Ambulant <br>
-						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required">Indlæggelse <br>
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required" value="false">Ambulant <br>
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required" value="true">Indlæggelse <br>
 					</div>
 					<label for="henvist_til">Henvist til</label>
 					<div id="henvist_til">
-						<input type="radio" id="radiologiskAfs" name="henvist_til" checked="checked" required="required">Radiologisk Afsnit
-						<input type="radio" id="kliniskFysAfs" name="henvist_til" required="required">Klinisk Fysiologisk Afsnit
+						<input type="radio" id="radiologiskAfs" name="henvist_til" checked="checked" required="required" value="radiologisk">Radiologisk Afsnit
+						<input type="radio" id="kliniskFysAfs" name="henvist_til" required="required" value="klinfys">Klinisk Fysiologisk Afsnit
 					</div>
 					<label for="hospitalsønske">Evt. Hospitalsønske</label>
 					<div id="hospitalsønske">
-						<input type="radio" id="hillerød" name="hospitalsønskeRadioButton">Hillerød
-						<input type="radio" id="frederikssund" name="hospitalsønskeRadioButton">Frederikssund
-						<input type="radio" id="helsingør" name="hospitalsønskeRadioButton">Helsingør
+						<input type="radio" id="hillerød" name="hospitals_oenske" value="hilleroed">Hillerød
+						<input type="radio" id="frederikssund" name="hospitals_oenske" value="frederikssund">Frederikssund
+						<input type="radio" id="helsingør" name="hospitals_oenske" value="helsingoer">Helsingør
 					</div>
-					<label for="prioriteringsønske">Prioriteringsønske</label>
-					<div id="prioriteringsønske">
-						<input type="radio" id="haste" name="prioriteringsønskeRadioButton">Haste
-						<input type="radio" id="fremskyndet" name="prioriteringsønskeRadioButton">Fremskyndet
-						<input type="radio" id="rutine" name="prioriteringsønskeRadioButton">Rutine
-						<input type="radio" id="pakkeforløb" name="prioriteringsønskeRadioButton">Pakkeforløb
+					<label for="prioriterings_oenske">Prioriteringsønske</label>
+					<div id="prioriterings_oenske">
+						<input type="radio" id="haste" name="prioriterings_oenske" value="haste">Haste
+						<input type="radio" id="fremskyndet" name="prioriterings_oenske" value="fremskyndet">Fremskyndet
+						<input type="radio" id="rutine" name="prioriterings_oenske" value="rutine">Rutine
+						<input type="radio" id="pakkeforloeb" name="prioriterings_oenske" value="pakke">Pakkeforløb
 					</div>
 					<label for="modalitet_navn">Modalitet</label>
 					<select id="modalitet_navn" >
@@ -91,9 +91,9 @@
 						<option value="PETCT">PET/CT</option>
 						<option value="andet">Anden US - Beskriv nedenfor</option>
 					</select>
-					<label for="undersøgelses_navn">Billedtype</label>
-					<select id="undersøgelses_navn">
-						<option value="undersoegelses_type_id">Do jsp stuff here</option>
+					<label for="undersoegelses_id">Billedtype</label>
+					<select id="undersoegelses_id">
+						<option value="1">Do jsp stuff here</option>
 						<option value="2">dæk-tryk</option>
 						<option value="3">udstødningsrør</option>
 						<option value="4">MR af venstre vinge</option>
@@ -107,25 +107,25 @@
 					<textarea name="klinisk_problemstilling"></textarea>
 					<label for="transport">Transport</label>
 					<div id="transport">
-						<div id="ambulantTransport">
-							<input type="radio" id="ingenKørsel" name="ambulantRadioButton">Ingen Kørsel <br>
-							<input type="radio" id="siddendeKørsel" name="ambulantRadioButton">Siddende Kørsel <br>
-							<input type="radio" id="liggendeKørsel" name="ambulantRadioButton">Liggende Kørsel <br>
+						<div id="ambulant_transport">
+							<input type="radio" id="ingenKørsel" name="ambulant_transport" value="ingen">Ingen Kørsel <br>
+							<input type="radio" id="siddendeKørsel" name="ambulant_transport" value="siddende">Siddende Kørsel <br>
+							<input type="radio" id="liggendeKørsel" name="ambulant_transport" value="liggende">Liggende Kørsel <br>
 
 						</div>
-						<div id="indlagtTransport">
-							<input type="radio" id="gårMedPortør" name="indlagtRadioButton">Går selv med portør <br>
-							<input type="radio" id="gårUdenPortør" name="indlagtRadioButton">Går selv uden portør <br>
-							<input type="radio" id="kørestolMedPortør" name="indlagtRadioButton">Kørestol med portør <br>
-							<input type="radio" id="seng" name="seng">Seng<br>
+						<div id="indlagt_transport">
+							<input type="radio" id="gårUdenPortør" name="indlagt_transport" value="selv">Går selv uden portør <br>
+							<input type="radio" id="gårMedPortør" name="indlagt_transport" value="portoer">Går selv med portør <br>
+							<input type="radio" id="kørestolMedPortør" name="indlagt_transport" value="koerestol">Kørestol med portør <br>
+							<input type="radio" id="seng" name="indlagt_transport" value="seng">Seng<br>
 						</div>
 						<label for="datoForslag">Ønsket tidspunkt</label>
-						<input type="text" id="datoForslag" name="datoForslag">
+						<input type="text" id="dato_forslag" name="datoForslag">
 					</div>
 					<label for="gravididtet">Mulighed for graviditet</label>
 					<div id="gravididtet">
-						<input type="radio" name="graviditet" id="jaGravid">Ja
-						<input type="radio" name="graviditet" id="nejGravid">Nej
+						<input type="radio" name="graviditet" id="jaGravid" value="true">Ja
+						<input type="radio" name="graviditet" id="nejGravid" value="false">Nej
 					</div>
 					<label for="særligeForhold">Særlige Forhold</label>
 					<div id="særligeForhold">

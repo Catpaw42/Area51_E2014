@@ -5,13 +5,15 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import java.sql.Connection;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
-import com.mysql.jdbc.Connection;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataBaseController;
@@ -24,6 +26,11 @@ import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
 import database.dto.Patient;
 import database.interfaces.IDataSourceConnector.ConnectionException;
+
+import database.DataSourceConnector;
+import database.dao.RekvisitionDao;
+import database.dao.mysql.RekvisitionDaoImpl;
+import database.dto.Rekvisition;
 
 /**
  * Servlet implementation class RekvisitionServlet

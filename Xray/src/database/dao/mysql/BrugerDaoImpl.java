@@ -39,6 +39,8 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     protected static final String PK_CONDITION = "bruger_id=?";
 
     private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,kodeord,fuldt_navn,er_aktiv) VALUES (?,?,?,?)";
+    
+    protected static final String VALIDATE_USER_CONDITION = "bruger_navn=? AND kodeord=?";
 
     public BrugerDaoImpl( Connection conn ) {
         super( conn );
@@ -55,9 +57,20 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     /**
      * Finds records.
      */
+
     public Bruger[] findDynamic( String cond, int offset, int count, Object... params ) {
         return findManyArray( cond, offset, count, params);
     }
+    
+    public boolean validate(String brugernavn, String kodeord){
+
+    	Bruger[] br = findDynamic(VALIDATE_USER_CONDITION, 0, -1, new Object[]{brugernavn, kodeord});
+    	if(br.length != 0) return true;
+    	
+    	return false;
+    }
+    
+  
 
     /**
      * Inserts a new record.
