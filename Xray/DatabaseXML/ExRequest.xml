@@ -37,16 +37,6 @@
 					<not-null />
 					<edit />
 				</column>
-				<column name="us_side">
-					<type>short</type>
-					<enum>
-						<value>HOEJRE</value>
-						<value>VENSTRE</value>
-						<value>EJ_RELEVANT</value>
-					</enum>
-					<not-null />
-					<edit />
-				</column>
 				<column name="rekvirent_id">
 					<type>int</type>
 					<not-null />
