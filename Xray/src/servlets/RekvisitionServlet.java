@@ -87,27 +87,23 @@ public class RekvisitionServlet extends HttpServlet {
 		
 
 		//#########################################
-		Rekvisition[] rekv;
-		String modalitet = request.getParameter("modality");
-		String afdeling = request.getParameter("department");
-		String dato = request.getParameter("date");
-		String status = request.getParameter("status");
+//		Rekvisition[] rekv;
+//		String modalitet = request.getParameter("modality");
+//		String afdeling = request.getParameter("department");
+//		String dato = request.getParameter("date");
+//		String status = request.getParameter("status");
 		
-		
-		
-		RekvisitionDao rkdao= new RekvisitionDaoImpl(conn);
 //		rkdao.findDynamic;
 		String cpr = request.getParameter("cpr");
 		String name = request.getParameter("name");
 		String modality = request.getParameter("modality");
 		String department = request.getParameter("department");
 		String date = request.getParameter("date");
-//		String status = request.getParameter("status");
+		String status = request.getParameter("status");
 		PrintWriter out = response.getWriter();
-		out.println(cpr);
-		out.println(name);
-		RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
-
+		RekvisitionDao rekvDao = new RekvisitionDaoImpl(conn);
+		
+		// sammensætter select statement til at finde patient
 		if(cpr != null){
 			cond = "patient_cpr=?";
 			params.add(cpr);
@@ -117,9 +113,16 @@ public class RekvisitionServlet extends HttpServlet {
 			params.add(name);
 		}
 		if(department != null){
-//			cond = cond + (name != null || cpr != null ? "AND stamafdeling=?" : "stamafdeling=?");
-//			params.add(department);
+			cond = cond + (name != null || cpr != null ? "AND stamafdeling=?" : "stamafdeling=?");
+			params.add(department);
 		}
+		
+		
+		// sammensætter select statement til at finde rekvisition
+		if(modality != null){
+			rekvCond = "modalitet=?"
+		}
+		
 		
 		out.print(cond);
 		for(Object pa : params){
