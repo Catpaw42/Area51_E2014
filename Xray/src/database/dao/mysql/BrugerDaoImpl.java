@@ -61,7 +61,7 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     public boolean validate(String brugernavn, String kodeord){
     	boolean brugernavnOk = false;
     	
-    	Bruger br = findOne(SELECT_COLUMNS,null, brugernavn);
+    	Bruger br = findByUsername(brugernavn);
     	brugernavnOk = br.getBrugerNavn().equals(brugernavn);
     	
     	if(brugernavnOk){

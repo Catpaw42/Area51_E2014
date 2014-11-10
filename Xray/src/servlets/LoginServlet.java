@@ -75,7 +75,7 @@ public class LoginServlet extends HttpServlet
 			}
 			BrugerDao b = new BrugerDaoImpl(conn);
 			
-			loginSuccess = b.validate(bruger.getBrugerNavn(), bruger.getKodeord());
+			loginSuccess = b.validate(username, password);
 			System.out.println(loginSuccess);
 			if (loginSuccess)
 			{
