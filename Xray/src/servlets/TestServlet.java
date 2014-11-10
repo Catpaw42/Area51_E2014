@@ -22,6 +22,7 @@ import database.dao.DaoFactory;
 import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.RekvisitionDao;
+import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dto.Bruger;
@@ -101,6 +102,7 @@ public class TestServlet extends HttpServlet {
 		testMrKontrol(statement, connection);
 		System.out.println("\n \n#############test rettigheder#################");
 		testRettigheder(connection);
+//		testBrugerValidering(connection);
 
 
 
@@ -238,14 +240,16 @@ public class TestServlet extends HttpServlet {
 		m.setUrinsyregigt(true);
 
 
-
+		
 
 	}
 
+	
 	private void testBruger(Connection conn){
 		int id = 2;
-		String brugernavn = "Hans";
-		String fuldtnavn = "Hans Hansen";
+		String brugernavn = "mumming";
+		String fuldtnavn = "Martin Nielsen";
+		String kodeord = "1234";
 		boolean erAktiv = true; 
 
 		Bruger dto = new Bruger();
@@ -253,6 +257,7 @@ public class TestServlet extends HttpServlet {
 		dto.setBrugerNavn(brugernavn);
 		dto.setErAktiv(erAktiv);
 		dto.setFuldtNavn(fuldtnavn);
+		dto.setKodeord(kodeord);
 		BrugerDao dao = DaoFactory.createBrugerDao(conn);
 		try {
 			System.out.println("\n forsøger at inds�tte bruger i database");
@@ -313,6 +318,20 @@ public class TestServlet extends HttpServlet {
 			System.err.println(e.getMessage());
 		}
 
+	}
+	
+	private void testBrugerValidering(Connection conn){
+		String brugernavn = "mumming";
+		String kodeord = "1234";
+		BrugerDao brugerDao = null;
+		brugerDao = new BrugerDaoImpl(conn);
+		System.out.println("######VALIDERING AF BRUGER######");
+		if(brugerDao.validate(brugernavn, kodeord)){
+			System.out.println("User was validated.");
+		} else{
+			System.out.println("User was NOT validated.");
+		}
+		System.out.println("################");
 	}
 
 	private void testBrugerInput(String message, Bruger dto, BrugerDao dao, int id, String brugernavn, boolean erAktiv){

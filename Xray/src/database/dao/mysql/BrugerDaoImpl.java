@@ -39,6 +39,8 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     protected static final String PK_CONDITION = "bruger_id=?";
 
     private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,kodeord,fuldt_navn,er_aktiv) VALUES (?,?,?,?)";
+    
+    protected static final String VALIDATE_USER = "bruger_navn, kodeord";
 
     public BrugerDaoImpl( Connection conn ) {
         super( conn );
