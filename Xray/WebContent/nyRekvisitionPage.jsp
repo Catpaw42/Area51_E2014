@@ -21,7 +21,7 @@
 								<input type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789" required="required">
 								<label for="patient_navn">Patient Navn</label>
 								<input type="text" id="patient_navn" name="patient_navn" placeholder="Navn"  required="required">
-								<label for="patient_adresse">Addresse</label>
+								<label for="patient_adresse">Adresse</label>
 								<input type="text" id="patient_adresse" name="patient_adresse" placeholder="Adresse">
 								<label for="patient_tlf">Patienttelefonnummer</label>
 								<input type="text" id="patient_tlf" name="patient_tlf" placeholder="">
@@ -130,10 +130,10 @@
 					<label for="særligeForhold">Særlige Forhold</label>
 					<div id="særligeForhold">
 						<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold">Ingen særlige forhold <br>
-						<input type="checkbox" id="hørehæmmet" name="hørehæmmet">Hørehæmmet <br>
-						<input type="checkbox" id="synshæmmet" name="synshæmmet">Synshæmmet <br>
+						<input type="checkbox" id="hoerehaemmet" name="hoerehaemmet">Hørehæmmet <br>
+						<input type="checkbox" id="synshaemmet" name="synshaemmet">Synshæmmet <br>
 						<input type="checkbox" id="amputeret" name="amputeret">Amputeret <br>
-						<input type="checkbox" id="kanIkkeStå" name="kanIkkeStå">Kan ikke selv stå <br>
+						<input type="checkbox" id="kan_ikke_staa" name="kan_ikke_staa">Kan ikke selv stå <br>
 						<input type="checkbox" id="dement" name="dement">Dement <br>
 						<input type="checkbox" id="afasi" name="afasi">Afasi <br>
 						<label for="ilt">Ilt</label>
