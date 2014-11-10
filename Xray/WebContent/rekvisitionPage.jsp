@@ -39,7 +39,7 @@
 										<select id="modality" name="modality">
 											<option value="ul">UL - radiograf</option>
 											<option value="ct">CT</option>
-											<option value="rg">Pet/CT</option>
+											<option value="petct">Pet/CT</option>
 											<option value="rtg">Rtg.</option>
 										</select>
 									</td>
