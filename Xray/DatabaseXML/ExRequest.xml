@@ -125,11 +125,6 @@
 				<column name="paaroerende">
 					<type max-length="100">String</type>
 				</column>
-				<column name="ambulant">
-					<type>boolean</type>
-					<not-null />
-					<edit />
-				</column>
 				<column name="dato_forslag">
 					<type max-length="50">String</type>
 					<edit />
