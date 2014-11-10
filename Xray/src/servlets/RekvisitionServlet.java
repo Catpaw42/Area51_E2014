@@ -57,7 +57,15 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String cond = null;
+		Rekvisition[] rekvlist;
+		RekvisitionDao rekvisitionDao = new RekvisitionDaoImpl(conn);
+		rekvlist = rekvisitionDao.findDynamic(cond, 0, -1, null);
+		
+		
+		request.setAttribute("rekvisitionlist", rekvlist);
 		request.getRequestDispatcher("rekvisitionPage.jsp").forward(request, response);
+		
 	}
 
 	/**
@@ -68,38 +76,38 @@ public class RekvisitionServlet extends HttpServlet {
 		String cond = "";
 
 		//##############TEST######################
-//		Patient p1 = new Patient();
-//		p1.setPatientId(1);
-//		p1.setPatientNavn("nansy");
-//		p1.setPatientCpr("1234");
-//		p1.setStamafdeling("gsdf");
-//		p1.setPatientAdresse("test");
-//		p1.setPatientTlf("sdfsgf");
-//		p1.setFoedselsdag(new Date());
-//		
-//		PatientDao dao1 = new PatientDaoImpl(conn);
-//		try {
-//			dao1.insert(p1);
-//		} catch (DaoException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
+		//		Patient p1 = new Patient();
+		//		p1.setPatientId(1);
+		//		p1.setPatientNavn("nansy");
+		//		p1.setPatientCpr("1234");
+		//		p1.setStamafdeling("gsdf");
+		//		p1.setPatientAdresse("test");
+		//		p1.setPatientTlf("sdfsgf");
+		//		p1.setFoedselsdag(new Date());
+		//		
+		//		PatientDao dao1 = new PatientDaoImpl(conn);
+		//		try {
+		//			dao1.insert(p1);
+		//		} catch (DaoException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+
 
 		//#########################################
-		
+
 		RekvisitionDao rkdao= new RekvisitionDaoImpl(conn);
-		rkdao.findDynamic(cond, offset, count, params);
+
 		String cpr = request.getParameter("cpr");
 		String name = request.getParameter("name");
 		String modality = request.getParameter("modality");
 		String department = request.getParameter("department");
 		String date = request.getParameter("date");
-//		String status = request.getParameter("status");
+		//		String status = request.getParameter("status");
 		PrintWriter out = response.getWriter();
 		out.println(cpr);
 		out.println(name);
-		RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
+
 
 		if(cpr != null){
 			cond = "patient_cpr=?";
@@ -110,10 +118,10 @@ public class RekvisitionServlet extends HttpServlet {
 			params.add(name);
 		}
 		if(department != null){
-//			cond = cond + (name != null || cpr != null ? "AND stamafdeling=?" : "stamafdeling=?");
-//			params.add(department);
+			//			cond = cond + (name != null || cpr != null ? "AND stamafdeling=?" : "stamafdeling=?");
+			//			params.add(department);
 		}
-		
+
 		out.print(cond);
 		for(Object pa : params){
 			out.println(pa.toString());
@@ -132,12 +140,12 @@ public class RekvisitionServlet extends HttpServlet {
 		out.println("yay");
 		if(p != null){
 			out.println(p.length);
-//			out.println(p[0].getPatientAdresse());
+			//			out.println(p[0].getPatientAdresse());
 			out.println("lnyay2");
-		for (Patient patient : p) {
-			out.println("yay3");
-			out.println(patient.getPatientNavn());
-		}
+			for (Patient patient : p) {
+				out.println("yay3");
+				out.println(patient.getPatientNavn());
+			}
 		}
 
 	}
