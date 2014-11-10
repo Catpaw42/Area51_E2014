@@ -26,6 +26,7 @@ public class Bruger extends AbstractDto {
 
     private Integer brugerId;
     private String brugerNavn;
+    private String kodeord;
     private String fuldtNavn;
     private Boolean erAktiv;
 
@@ -57,6 +58,14 @@ public class Bruger extends AbstractDto {
 
     public void setBrugerNavn( String _val) {
         this.brugerNavn = _val;
+    }
+
+    public String getKodeord() {
+        return kodeord;
+    }
+
+    public void setKodeord( String _val) {
+        this.kodeord = _val;
     }
 
     public String getFuldtNavn() {
@@ -96,6 +105,11 @@ public class Bruger extends AbstractDto {
         }
         else if ( _o.brugerNavn == null || !brugerNavn.equals( _o.brugerNavn )) return false;
 
+        if ( kodeord == null ) {
+            if ( _o.kodeord != null ) return false;
+        }
+        else if ( _o.kodeord == null || !kodeord.equals( _o.kodeord )) return false;
+
         if ( fuldtNavn == null ) {
             if ( _o.fuldtNavn != null ) return false;
         }
@@ -117,6 +131,7 @@ public class Bruger extends AbstractDto {
         int _ret = 1998393135; // = "Bruger".hashCode()
         _ret += brugerId == null ? 0 : brugerId;
         _ret = 29 * _ret + (brugerNavn == null ? 0 : brugerNavn.hashCode());
+        _ret = 29 * _ret + (kodeord == null ? 0 : kodeord.hashCode());
         _ret = 29 * _ret + (fuldtNavn == null ? 0 : fuldtNavn.hashCode());
         _ret = 29 * _ret + (erAktiv == null ? 0 : (erAktiv ? 1 : 0));
 
@@ -134,6 +149,7 @@ public class Bruger extends AbstractDto {
     protected void contentToString(StringBuffer sb) {
         append( sb, "brugerId", brugerId );
         append( sb, "brugerNavn", brugerNavn );
+        append( sb, "kodeord", kodeord );
         append( sb, "fuldtNavn", fuldtNavn );
         append( sb, "erAktiv", erAktiv );
     }
