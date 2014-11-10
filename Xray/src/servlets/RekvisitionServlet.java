@@ -85,15 +85,24 @@ public class RekvisitionServlet extends HttpServlet {
 //			e.printStackTrace();
 //		}
 		
+
 		//#########################################
+		Rekvisition[] rekv;
+		String modalitet = request.getParameter("modality");
+		String afdeling = request.getParameter("department");
+		String dato = request.getParameter("date");
+		String status = request.getParameter("status");
 		
 		
+		
+		RekvisitionDao rkdao= new RekvisitionDaoImpl(conn);
+//		rkdao.findDynamic;
 		String cpr = request.getParameter("cpr");
 		String name = request.getParameter("name");
 		String modality = request.getParameter("modality");
 		String department = request.getParameter("department");
 		String date = request.getParameter("date");
-		String status = request.getParameter("status");
+//		String status = request.getParameter("status");
 		PrintWriter out = response.getWriter();
 		out.println(cpr);
 		out.println(name);

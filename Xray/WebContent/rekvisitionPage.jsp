@@ -37,10 +37,13 @@
 									</td>
 									<td>
 										<select id="modality" name="modality">
-											<option value="ul">UL - radiograf</option>
-											<option value="ct">CT</option>
-											<option value="petct">Pet/CT</option>
-											<option value="rtg">Rtg.</option>
+											<option value="1">Rtg.</option>
+											<option value="2">UL - non invasiv</option>
+											<option value="3">UL - invasiv</option>
+											<option value="4">CT - uden kontrast</option>
+											<option value="5">CT - med kontrast</option>
+											<option value="6">PET/CT</option>
+											<option value="7">Anden undersøgelse</option>
 										</select>
 									</td>
 									<td>
@@ -82,6 +85,13 @@
 								<th>Dato</th>
 								<th>Status</th>
 							</tr>
+							<% Rekvisition[] rekv = request.getAttribute("rekvisitionliste");
+								for (Rekvisition r : rekv){
+									out.print("<tr> <td>");
+									out.print(r.getPatient().getCpr());
+									
+								}
+							%>
 							<tr>
 								<td>255255-5555</td>
 								<td>Den elskede leder Magnus</td>

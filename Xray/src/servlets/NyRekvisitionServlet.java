@@ -24,13 +24,27 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+
+
+
+
+
+import com.spoledge.audao.db.dao.DaoException;
+
 import database.DataSourceConnector;
 import database.dao.DaoFactory;
 import database.dao.DaoFactory.Factory;
+import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.DaoFactoryImpl;
+import database.dao.mysql.PatientDaoImpl;
+import database.dao.mysql.RekvisitionDaoImpl;
 import database.dto.Bruger;
+import database.dto.Patient;
 import database.dto.Rekvisition;
 import database.dto.Rekvisition.AmbulantKoersel;
 import database.dto.Rekvisition.HenvistTil;
@@ -70,7 +84,31 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		//Making DTO
+		//Getting a database connection....
+		Connection connection = null;
+		try {
+			connection = DataSourceConnector.getConnection();
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+		}
+		//making patient object...
+		Patient pt = new Patient();		
+		pt.setFoedselsdag(java.sql.Date.valueOf(parseCprBirthday(request)));
+		pt.setPatientCpr(request.getParameter("patient_cpr"));
+		pt.setPatientAdresse(request.getParameter("patient_adresse"));
+		pt.setPatientNavn(request.getParameter("patient_navn"));
+		pt.setPatientTlf(request.getParameter("patient_tlf"));	
+		System.out.println(pt);
+		//Time to store patient
+		PatientDao ptDao = new PatientDaoImpl(connection);
+		try {
+			ptDao.insert(pt);
+		} catch (DaoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//Making Rekvisition DTO
 		Rekvisition rek = new Rekvisition();
 		//Rekvisition.setPaaroerende TODO
 		rek.setSamtykke(convertSamtykke(request)); //TODO validate samtykke.
@@ -89,36 +127,81 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setHenvistTil(convertHenvistTil(request));
 		rek.setHospitalOenske(convertHospitalOenske(request));
 		rek.setPrioritering(convertPrioritering(request));
-		rek.setUndersoegelsesTypeId(Integer.valueOf(request.getParameter("undersoegelses_id")));
+		try {
+			rek.setUndersoegelsesTypeId(Integer.valueOf(request.getParameter("undersoegelses_id")));
+		} catch (NumberFormatException e) {
+			//TODO meaningful handling of error
+		}
 		rek.setKliniskProblemstilling(request.getParameter("klinisk_problemstilling"));
 		rek.setAmbulantKoersel(convertAmbulantKoersel(request));
 		rek.setIndlaeggelseTransport(convertIndlaeggelseTransport(request));
 		rek.setDatoForslag(request.getParameter("dato_forslag"));
 		rek.setGraviditet(Boolean.valueOf(request.getParameter("graviditet")));
-		
-		
-		System.out.println(rek);
-		//rek.setSamtykke();
-
-		Connection connection = null;
-		// Get Connection and Statement
+		rek.setHoerehaemmet(getBoolFromCheckbox(request,"hoerehaemmet"));
+		rek.setSynshaemmet(getBoolFromCheckbox(request, "synshaemmet"));
+		rek.setAmputeret(getBoolFromCheckbox(request, "amputeret"));
+		rek.setKanIkkeStaa(getBoolFromCheckbox(request, "kan_ikke_staa"));
+		rek.setDement(getBoolFromCheckbox(request, "dement"));
+		rek.setAfasi(getBoolFromCheckbox(request, "afasi"));
 		try {
-			connection = DataSourceConnector.getConnection();
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
+			rek.setIltLiterPrmin(Integer.valueOf(request.getParameter("ilt")));
+		} catch (NumberFormatException e){
+			rek.setIltLiterPrmin(null);
 		}
-		//RekvisitionDao rekvisitionDao = DaoFactory.createRekvisitionDao(connection);
-
+		rek.setTolkSprog(request.getParameter("tolk"));
+		rek.setIsolation(request.getParameter("isolation"));
+		try {
+			rek.setCytostatikaDato(java.sql.Date.valueOf(request.getParameter("cytostatika")));
+			System.out.println(rek.getCytostatikaDato());
+		} catch (IllegalArgumentException e) {
+			rek.setCytostatikaDato(null);
+		}
+		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billeddiagnostik"));
+		System.out.println(rek);
+		//Time to store requisition
+		RekvisitionDao rekDao = new RekvisitionDaoImpl(connection);
+		try {
+			rekDao.insert(rek);
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//HopeFully it went well ;)
 
 		PrintWriter out = response.getWriter();
-		out.println("Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten");
+		out.println("Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>");
+		out.println("<A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A>");
 
+	}
+
+	private String parseCprBirthday(HttpServletRequest request) {
+		String foedselsdagString = request.getParameter("patient_cpr");
+		Integer foedeaar = Integer.valueOf(foedselsdagString.substring(4, 6));
+		if (new java.util.Date().getYear() - foedeaar >= 100 ){
+			foedeaar = 2000 + foedeaar;
+		} else {
+			foedeaar = 1900 + foedeaar;
+		}
+		foedselsdagString = String.valueOf(foedeaar) + "-" + foedselsdagString.substring(2,4)+"-"+foedselsdagString.substring(0, 2);
+		return foedselsdagString;
+	}
+
+	private Boolean getBoolFromCheckbox(HttpServletRequest request,
+			String boxname) {
+		if("on".equals(request.getParameter(boxname))){
+			// check box is selected
+			return true;
+		} else{
+			// check box is not selected
+			return false;
+		}
 	}
 
 	private IndlaeggelseTransport convertIndlaeggelseTransport(
 			HttpServletRequest request) {
 		IndlaeggelseTransport indlTrans;
 		String transString = request.getParameter("indlagt_transport");
+		if (transString==null) return null;
 		switch (transString) {
 		case "selv":
 			indlTrans = Rekvisition.IndlaeggelseTransport.GAA_UDEN_PORTOER;
@@ -142,6 +225,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	private AmbulantKoersel convertAmbulantKoersel(HttpServletRequest request) {
 		AmbulantKoersel ambuTrans;
 		String transString = request.getParameter("ambulant_transport");
+		if (transString==null) return null;
 		switch (transString) {
 		case "ingen":
 			ambuTrans = Rekvisition.AmbulantKoersel.INGEN;
@@ -187,6 +271,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	private HospitalOenske convertHospitalOenske(HttpServletRequest request) {
 		HospitalOenske hospOensk;
 		String hospOenskString = request.getParameter("hospitals_oenske");
+		if (hospOenskString==null) return null;
 		switch (hospOenskString) {
 		case "hilleroed":
 			hospOensk = Rekvisition.HospitalOenske.HILLEROED;
