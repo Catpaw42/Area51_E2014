@@ -93,7 +93,10 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setKliniskProblemstilling(request.getParameter("klinisk_problemstilling"));
 		rek.setAmbulantKoersel(convertAmbulantKoersel(request));
 		rek.setIndlaeggelseTransport(convertIndlaeggelseTransport(request));
-
+		rek.setDatoForslag(request.getParameter("dato_forslag"));
+		rek.setGraviditet(Boolean.valueOf(request.getParameter("graviditet")));
+		
+		
 		System.out.println(rek);
 		//rek.setSamtykke();
 

@@ -120,12 +120,12 @@
 							<input type="radio" id="seng" name="indlagt_transport" value="seng">Seng<br>
 						</div>
 						<label for="datoForslag">Ønsket tidspunkt</label>
-						<input type="text" id="datoForslag" name="datoForslag">
+						<input type="text" id="dato_forslag" name="datoForslag">
 					</div>
 					<label for="gravididtet">Mulighed for graviditet</label>
 					<div id="gravididtet">
-						<input type="radio" name="graviditet" id="jaGravid">Ja
-						<input type="radio" name="graviditet" id="nejGravid">Nej
+						<input type="radio" name="graviditet" id="jaGravid" value="true">Ja
+						<input type="radio" name="graviditet" id="nejGravid" value="false">Nej
 					</div>
 					<label for="særligeForhold">Særlige Forhold</label>
 					<div id="særligeForhold">
