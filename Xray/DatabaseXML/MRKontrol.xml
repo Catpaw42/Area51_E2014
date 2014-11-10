@@ -20,10 +20,6 @@
 				<column name="MR_kontrolant_id">
 					<type>int</type>
 				</column>
-				<column name="tidl_billed_diagnostik">
-					<type max-length="50">String</type>
-					<edit />
-				</column>
 				<column name="pacemaker">
 					<type>boolean</type>
 					<not-null />
