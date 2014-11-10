@@ -43,7 +43,6 @@
 				</column>
 				<column name="visitator_id">
 					<type>int</type>
-					<not-null />
 				</column>
 				<column name="patient_id">
 					<type>int</type>
@@ -125,11 +124,6 @@
 				</column>
 				<column name="paaroerende">
 					<type max-length="100">String</type>
-				</column>
-				<column name="ambulant">
-					<type>boolean</type>
-					<not-null />
-					<edit />
 				</column>
 				<column name="dato_forslag">
 					<type max-length="50">String</type>
@@ -234,6 +228,7 @@
 				<column name="afsendt_dato">
 					<type>Timestamp</type>
 					<not-null />
+					<auto/>
 					<edit />
 				</column>
 			</columns>

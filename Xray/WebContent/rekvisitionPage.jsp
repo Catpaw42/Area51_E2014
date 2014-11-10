@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <%@ page import="database.dto.Rekvisition" %>
+<%@ page import="java.util.ArrayList" %>
 	<head>
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
@@ -76,7 +77,7 @@
 			<hr />
 			<ul class=showInline>
 				<li>
-					<div id="rekvisitionList">
+					<div id="rekvisitionlist">
 						<table>
 							<tr>
 								<th>Cpr</th>
@@ -86,15 +87,21 @@
 								<th>Dato</th>
 								<th>Status</th>
 							</tr>
-							<% Rekvisition[] rekv = request.getAttribute("rekvisitionliste");
+							<% Rekvisition[] rekv =(Rekvisition[]) request.getAttribute("rekvisitionlist");
 								for (Rekvisition r : rekv){
 									out.print("<tr> <td>");
-									out.print(r.getPatient().getCpr());
+									out.print(r.getPatientId());
 									out.print("</td> <td>");
-									out.print(r.getPatient().getName());
+									out.print(r.getPatientId());
 									out.print("</td> <td>");
-									out.print(r.getPatient().get);
-									
+									out.print(r.getUndersoegelsesTypeId());
+									out.print("</td> <td>");
+									out.print(r.getHenvAfd());
+									out.print("</td> <td>");
+									out.print(r.getAfsendtDato());
+									out.print("</td> <td>");
+									out.print(r.getStatus());
+									out.print("</td> </tr>");
 								}
 							%>
 							<tr>
