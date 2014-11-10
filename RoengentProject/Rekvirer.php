@@ -10,9 +10,9 @@
   <table width="1000" border="1">
     <tr>
       <td>Area51</td>
-      <td><a href="main.php">Rekvirer</a></td>
-      <td><a href="main.php">Visiter</a></td>
-      <td><a href="main.php">Book</a></td>
+      <td><a href="rekvirer.php">Rekvirer</a></td>
+      <td><a href="visiter.php">Visiter</a></td>
+      <td><a href="book.php">Book</a></td>
       <td><p>Brian Bjørn</p>
       <p>Visitator</p></td>
     </tr>
