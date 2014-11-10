@@ -34,11 +34,13 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
 
     private static final String TABLE_NAME = "bruger";
 
-    protected static final String SELECT_COLUMNS = "bruger_id, bruger_navn, fuldt_navn, er_aktiv";
+    protected static final String SELECT_COLUMNS = "bruger_id, bruger_navn, kodeord, fuldt_navn, er_aktiv";
 
     protected static final String PK_CONDITION = "bruger_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,fuldt_navn,er_aktiv) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,kodeord,fuldt_navn,er_aktiv) VALUES (?,?,?,?)";
+    
+    protected static final String VALIDATE_USER = "bruger_navn, kodeord";
 
     public BrugerDaoImpl( Connection conn ) {
         super( conn );
@@ -52,6 +54,24 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
         return findOne( PK_CONDITION, brugerId);
     }
 
+    /**
+     * Validates username and password
+     */
+    
+    public boolean validate(String brugernavn, String kodeord){
+    	boolean brugernavnOk = false;
+    	
+    	Bruger br = findOne(SELECT_COLUMNS,null, brugernavn);
+    	brugernavnOk = br.getBrugerNavn().equals(brugernavn);
+    	
+    	if(brugernavnOk){
+    		return br.getKodeord().equals(kodeord);
+    	}
+    	
+    	return false;
+    }
+    
+    
     /**
      * Inserts a new record.
      * @return the generated primary key - brugerId
@@ -71,16 +91,22 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
             checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
             stmt.setString( 1, dto.getBrugerNavn() );
 
+            if ( dto.getKodeord() == null ) {
+                throw new DaoException("Value of column 'kodeord' cannot be null");
+            }
+            checkMaxLength( "kodeord", dto.getKodeord(), 30 );
+            stmt.setString( 2, dto.getKodeord() );
+
             if ( dto.getFuldtNavn() == null ) {
                 throw new DaoException("Value of column 'fuldt_navn' cannot be null");
             }
             checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
-            stmt.setString( 2, dto.getFuldtNavn() );
+            stmt.setString( 3, dto.getFuldtNavn() );
 
             if ( dto.getErAktiv() == null ) {
                 throw new DaoException("Value of column 'er_aktiv' cannot be null");
             }
-            stmt.setByte( 3, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 4, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
 
             int n = stmt.executeUpdate();
 
@@ -114,6 +140,16 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
             checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
             sb.append( "bruger_navn=?" );
             params.add( dto.getBrugerNavn());
+        }
+
+        if ( dto.getKodeord() != null ) {
+            if (sb.length() > 0) {
+                sb.append( ", " );
+            }
+
+            checkMaxLength( "kodeord", dto.getKodeord(), 30 );
+            sb.append( "kodeord=?" );
+            params.add( dto.getKodeord());
         }
 
         if ( dto.getFuldtNavn() != null ) {
@@ -161,8 +197,9 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
         Bruger dto = new Bruger();
         dto.setBrugerId( rs.getInt( 1 ));
         dto.setBrugerNavn( rs.getString( 2 ));
-        dto.setFuldtNavn( rs.getString( 3 ));
-        dto.setErAktiv( rs.getBoolean( 4 ) ? Boolean.TRUE : Boolean.FALSE );
+        dto.setKodeord( rs.getString( 3 ));
+        dto.setFuldtNavn( rs.getString( 4 ));
+        dto.setErAktiv( rs.getBoolean( 5 ) ? Boolean.TRUE : Boolean.FALSE );
 
         return dto;
     }
