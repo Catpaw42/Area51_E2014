@@ -88,7 +88,7 @@ public class Rekvisition extends AbstractDto {
     private Rekvisition.IndlaeggelseTransport indlaeggelseTransport;
     private Rekvisition.Status status;
     private Rekvisition.Samtykke samtykke;
-    private Timestamp patientFoedselsdag;
+    private String paaroerende;
     private Boolean ambulant;
     private String datoForslag;
     private Boolean graviditet;
@@ -111,6 +111,7 @@ public class Rekvisition extends AbstractDto {
     private String henvAfd;
     private String kontaktTlf;
     private String visitatorPrioritering;
+    private String visitatorBemaerkning;
     private Timestamp afsendtDato;
 
     private boolean isMRKontrolskemaIdModified;
@@ -130,6 +131,7 @@ public class Rekvisition extends AbstractDto {
     private boolean isTidlBilledDiagnostikModified;
     private boolean isTriageModified;
     private boolean isVisitatorPrioriteringModified;
+    private boolean isVisitatorBemaerkningModified;
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructors
@@ -321,16 +323,12 @@ public class Rekvisition extends AbstractDto {
         return isSamtykkeModified;
     }
 
-    public Timestamp getPatientFoedselsdag() {
-        return patientFoedselsdag;
+    public String getPaaroerende() {
+        return paaroerende;
     }
 
-    public void setPatientFoedselsdag( java.util.Date _val ) {
-        setPatientFoedselsdag((Timestamp)( _val != null ? new Timestamp( _val.getTime()) : null ));
-    }
-
-    public void setPatientFoedselsdag( Timestamp _val) {
-        this.patientFoedselsdag = _val;
+    public void setPaaroerende( String _val) {
+        this.paaroerende = _val;
     }
 
     public Boolean getAmbulant() {
@@ -562,6 +560,19 @@ public class Rekvisition extends AbstractDto {
         return isVisitatorPrioriteringModified;
     }
 
+    public String getVisitatorBemaerkning() {
+        return visitatorBemaerkning;
+    }
+
+    public void setVisitatorBemaerkning( String _val) {
+        this.visitatorBemaerkning = _val;
+        this.isVisitatorBemaerkningModified = true;
+    }
+
+    public boolean isVisitatorBemaerkningModified() {
+        return isVisitatorBemaerkningModified;
+    }
+
     public Timestamp getAfsendtDato() {
         return afsendtDato;
     }
@@ -649,10 +660,10 @@ public class Rekvisition extends AbstractDto {
 
         if ( samtykke != _o.samtykke ) return false;
 
-        if ( patientFoedselsdag == null ) {
-            if ( _o.patientFoedselsdag != null ) return false;
+        if ( paaroerende == null ) {
+            if ( _o.paaroerende != null ) return false;
         }
-        else if ( _o.patientFoedselsdag == null || patientFoedselsdag.getTime() != _o.patientFoedselsdag.getTime()) return false;
+        else if ( _o.paaroerende == null || !paaroerende.equals( _o.paaroerende )) return false;
 
         if ( ambulant == null ) {
             if ( _o.ambulant != null ) return false;
@@ -764,6 +775,11 @@ public class Rekvisition extends AbstractDto {
         }
         else if ( _o.visitatorPrioritering == null || !visitatorPrioritering.equals( _o.visitatorPrioritering )) return false;
 
+        if ( visitatorBemaerkning == null ) {
+            if ( _o.visitatorBemaerkning != null ) return false;
+        }
+        else if ( _o.visitatorBemaerkning == null || !visitatorBemaerkning.equals( _o.visitatorBemaerkning )) return false;
+
         if ( afsendtDato == null ) {
             if ( _o.afsendtDato != null ) return false;
         }
@@ -795,7 +811,7 @@ public class Rekvisition extends AbstractDto {
         _ret = 29 * _ret + (indlaeggelseTransport == null ? 0 : indlaeggelseTransport.hashCode());
         _ret = 29 * _ret + (status == null ? 0 : status.hashCode());
         _ret = 29 * _ret + (samtykke == null ? 0 : samtykke.hashCode());
-        _ret = 29 * _ret + (patientFoedselsdag == null ? 0 : (int)patientFoedselsdag.getTime());
+        _ret = 29 * _ret + (paaroerende == null ? 0 : paaroerende.hashCode());
         _ret = 29 * _ret + (ambulant == null ? 0 : (ambulant ? 1 : 0));
         _ret = 29 * _ret + (datoForslag == null ? 0 : datoForslag.hashCode());
         _ret = 29 * _ret + (graviditet == null ? 0 : (graviditet ? 1 : 0));
@@ -818,6 +834,7 @@ public class Rekvisition extends AbstractDto {
         _ret = 29 * _ret + (henvAfd == null ? 0 : henvAfd.hashCode());
         _ret = 29 * _ret + (kontaktTlf == null ? 0 : kontaktTlf.hashCode());
         _ret = 29 * _ret + (visitatorPrioritering == null ? 0 : visitatorPrioritering.hashCode());
+        _ret = 29 * _ret + (visitatorBemaerkning == null ? 0 : visitatorBemaerkning.hashCode());
         _ret = 29 * _ret + (afsendtDato == null ? 0 : (int)afsendtDato.getTime());
 
         return _ret;
@@ -849,7 +866,7 @@ public class Rekvisition extends AbstractDto {
         append( sb, "indlaeggelseTransport", indlaeggelseTransport );
         append( sb, "status", status );
         append( sb, "samtykke", samtykke );
-        append( sb, "patientFoedselsdag", patientFoedselsdag );
+        append( sb, "paaroerende", paaroerende );
         append( sb, "ambulant", ambulant );
         append( sb, "datoForslag", datoForslag );
         append( sb, "graviditet", graviditet );
@@ -872,6 +889,7 @@ public class Rekvisition extends AbstractDto {
         append( sb, "henvAfd", henvAfd );
         append( sb, "kontaktTlf", kontaktTlf );
         append( sb, "visitatorPrioritering", visitatorPrioritering );
+        append( sb, "visitatorBemaerkning", visitatorBemaerkning );
         append( sb, "afsendtDato", afsendtDato );
     }
 }

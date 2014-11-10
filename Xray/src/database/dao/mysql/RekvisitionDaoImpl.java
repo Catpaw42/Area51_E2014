@@ -34,11 +34,11 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 
     private static final String TABLE_NAME = "rekvisition";
 
-    protected static final String SELECT_COLUMNS = "rekvisition_id, MR_kontrolskema_id, PETCT_kontrolskema_id, CT_kontrast_kontrolskema_id, invasiv_UL_kontrolskema_id, undersoegelses_type_id, rekvirent_id, visitator_id, patient_id, henvist_til, hospital_oenske, prioritering, udf_indlagt, ambulant_koersel, indlaeggelse_transport, status, samtykke, patient_foedselsdag, ambulant, dato_forslag, graviditet, graviditet_uge, cave, hoerehaemmet, synshaemmet, amputeret, kan_ikke_staa, ilt_liter_prmin, tolk_sprog, dement, afasi, isolation, cytostatika_dato, tidl_billed_diagnostik, klinisk_problemstilling, triage, henv_laege, henv_afd, kontakt_tlf, visitator_prioritering, afsendt_dato";
+    protected static final String SELECT_COLUMNS = "rekvisition_id, MR_kontrolskema_id, PETCT_kontrolskema_id, CT_kontrast_kontrolskema_id, invasiv_UL_kontrolskema_id, undersoegelses_type_id, rekvirent_id, visitator_id, patient_id, henvist_til, hospital_oenske, prioritering, udf_indlagt, ambulant_koersel, indlaeggelse_transport, status, samtykke, paaroerende, ambulant, dato_forslag, graviditet, graviditet_uge, cave, hoerehaemmet, synshaemmet, amputeret, kan_ikke_staa, ilt_liter_prmin, tolk_sprog, dement, afasi, isolation, cytostatika_dato, tidl_billed_diagnostik, klinisk_problemstilling, triage, henv_laege, henv_afd, kontakt_tlf, visitator_prioritering, visitator_bemaerkning, afsendt_dato";
 
     protected static final String PK_CONDITION = "rekvisition_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO rekvisition (rekvisition_id,MR_kontrolskema_id,PETCT_kontrolskema_id,CT_kontrast_kontrolskema_id,invasiv_UL_kontrolskema_id,undersoegelses_type_id,rekvirent_id,visitator_id,patient_id,henvist_til,hospital_oenske,prioritering,udf_indlagt,ambulant_koersel,indlaeggelse_transport,status,samtykke,patient_foedselsdag,ambulant,dato_forslag,graviditet,graviditet_uge,cave,hoerehaemmet,synshaemmet,amputeret,kan_ikke_staa,ilt_liter_prmin,tolk_sprog,dement,afasi,isolation,cytostatika_dato,tidl_billed_diagnostik,klinisk_problemstilling,triage,henv_laege,henv_afd,kontakt_tlf,visitator_prioritering,afsendt_dato) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO rekvisition (rekvisition_id,MR_kontrolskema_id,PETCT_kontrolskema_id,CT_kontrast_kontrolskema_id,invasiv_UL_kontrolskema_id,undersoegelses_type_id,rekvirent_id,visitator_id,patient_id,henvist_til,hospital_oenske,prioritering,udf_indlagt,ambulant_koersel,indlaeggelse_transport,status,samtykke,paaroerende,ambulant,dato_forslag,graviditet,graviditet_uge,cave,hoerehaemmet,synshaemmet,amputeret,kan_ikke_staa,ilt_liter_prmin,tolk_sprog,dement,afasi,isolation,cytostatika_dato,tidl_billed_diagnostik,klinisk_problemstilling,triage,henv_laege,henv_afd,kontakt_tlf,visitator_prioritering,visitator_bemaerkning,afsendt_dato) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final Rekvisition.HenvistTil[] _Rekvisition_HenvistTils = { null, Rekvisition.HenvistTil.RADIOLOGISK, Rekvisition.HenvistTil.KLINISK };
     private static final Rekvisition.HospitalOenske[] _Rekvisition_HospitalOenskes = { null, Rekvisition.HospitalOenske.HILLEROED, Rekvisition.HospitalOenske.FREDERIKSSUND, Rekvisition.HospitalOenske.HELSINGOER };
     private static final Rekvisition.Prioritering[] _Rekvisition_Prioriterings = { null, Rekvisition.Prioritering.HASTE, Rekvisition.Prioritering.RUTINE, Rekvisition.Prioritering.FREMSKYNDET, Rekvisition.Prioritering.PAKKEFORLOEB };
@@ -171,10 +171,10 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
                 stmt.setShort( 17, (short) (dto.getSamtykke().ordinal() + 1) );
             }
 
-            if ( dto.getPatientFoedselsdag() == null ) {
-                throw new DaoException("Value of column 'patient_foedselsdag' cannot be null");
+            if ( dto.getPaaroerende() != null ) {
+                checkMaxLength( "paaroerende", dto.getPaaroerende(), 100 );
             }
-            stmt.setTimestamp( 18, dto.getPatientFoedselsdag() );
+            stmt.setString( 18, dto.getPaaroerende() );
 
             if ( dto.getAmbulant() == null ) {
                 throw new DaoException("Value of column 'ambulant' cannot be null");
@@ -294,10 +294,15 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
             }
             stmt.setString( 40, dto.getVisitatorPrioritering() );
 
+            if ( dto.getVisitatorBemaerkning() != null ) {
+                checkMaxLength( "visitator_bemaerkning", dto.getVisitatorBemaerkning(), 100 );
+            }
+            stmt.setString( 41, dto.getVisitatorBemaerkning() );
+
             if ( dto.getAfsendtDato() == null ) {
                 throw new DaoException("Value of column 'afsendt_dato' cannot be null");
             }
-            stmt.setTimestamp( 41, dto.getAfsendtDato() );
+            stmt.setTimestamp( 42, dto.getAfsendtDato() );
 
             int n = stmt.executeUpdate();
         }
@@ -726,6 +731,21 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
             }
         }
 
+        if ( dto.isVisitatorBemaerkningModified()) {
+            if (sb.length() > 0) {
+                sb.append( ", " );
+            }
+
+            if ( dto.getVisitatorBemaerkning() == null ) {
+                sb.append( "visitator_bemaerkning=NULL" );
+            }
+            else {
+                checkMaxLength( "visitator_bemaerkning", dto.getVisitatorBemaerkning(), 100 );
+                sb.append( "visitator_bemaerkning=?" );
+                params.add( dto.getVisitatorBemaerkning());
+            }
+        }
+
         if ( dto.getAfsendtDato() != null ) {
             if (sb.length() > 0) {
                 sb.append( ", " );
@@ -816,7 +836,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
             dto.setSamtykke( null );
         }
 
-        dto.setPatientFoedselsdag( rs.getTimestamp( 18 ));
+        dto.setPaaroerende( rs.getString( 18 ));
         dto.setAmbulant( rs.getBoolean( 19 ) ? Boolean.TRUE : Boolean.FALSE );
         dto.setDatoForslag( rs.getString( 20 ));
         dto.setGraviditet( rs.getBoolean( 21 ) ? Boolean.TRUE : Boolean.FALSE );
@@ -854,7 +874,8 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
         dto.setHenvAfd( rs.getString( 38 ));
         dto.setKontaktTlf( rs.getString( 39 ));
         dto.setVisitatorPrioritering( rs.getString( 40 ));
-        dto.setAfsendtDato( rs.getTimestamp( 41 ));
+        dto.setVisitatorBemaerkning( rs.getString( 41 ));
+        dto.setAfsendtDato( rs.getTimestamp( 42 ));
 
         return dto;
     }

@@ -37,7 +37,6 @@ public class MRKontrolskema extends AbstractDto {
 
     private Integer mRKontrolskemaId;
     private Integer mRKontrolantId;
-    private String tidlBilledDiagnostik;
     private Boolean pacemaker;
     private Boolean metalImplantater;
     private String metalImplantaterBeskrivelse;
@@ -54,7 +53,6 @@ public class MRKontrolskema extends AbstractDto {
     private MRKontrolskema.MRBoern mRBoern;
     private MRKontrolskema.MRVoksen mRVoksen;
 
-    private boolean isTidlBilledDiagnostikModified;
     private boolean isMetalImplantaterBeskrivelseModified;
     private boolean isAndetMetaliskBeskrivelseModified;
     private boolean isNyresygdomKreatininModified;
@@ -92,19 +90,6 @@ public class MRKontrolskema extends AbstractDto {
 
     public void setMRKontrolantId( Integer _val) {
         this.mRKontrolantId = _val;
-    }
-
-    public String getTidlBilledDiagnostik() {
-        return tidlBilledDiagnostik;
-    }
-
-    public void setTidlBilledDiagnostik( String _val) {
-        this.tidlBilledDiagnostik = _val;
-        this.isTidlBilledDiagnostikModified = true;
-    }
-
-    public boolean isTidlBilledDiagnostikModified() {
-        return isTidlBilledDiagnostikModified;
     }
 
     public Boolean getPacemaker() {
@@ -288,11 +273,6 @@ public class MRKontrolskema extends AbstractDto {
         }
         else if ( _o.mRKontrolantId == null || mRKontrolantId.intValue() != _o.mRKontrolantId.intValue()) return false;
 
-        if ( tidlBilledDiagnostik == null ) {
-            if ( _o.tidlBilledDiagnostik != null ) return false;
-        }
-        else if ( _o.tidlBilledDiagnostik == null || !tidlBilledDiagnostik.equals( _o.tidlBilledDiagnostik )) return false;
-
         if ( pacemaker == null ) {
             if ( _o.pacemaker != null ) return false;
         }
@@ -373,7 +353,6 @@ public class MRKontrolskema extends AbstractDto {
         int _ret = 1029661025; // = "MRKontrolskema".hashCode()
         _ret += mRKontrolskemaId == null ? 0 : mRKontrolskemaId;
         _ret = 29 * _ret + (mRKontrolantId == null ? 0 : mRKontrolantId);
-        _ret = 29 * _ret + (tidlBilledDiagnostik == null ? 0 : tidlBilledDiagnostik.hashCode());
         _ret = 29 * _ret + (pacemaker == null ? 0 : (pacemaker ? 1 : 0));
         _ret = 29 * _ret + (metalImplantater == null ? 0 : (metalImplantater ? 1 : 0));
         _ret = 29 * _ret + (metalImplantaterBeskrivelse == null ? 0 : metalImplantaterBeskrivelse.hashCode());
@@ -404,7 +383,6 @@ public class MRKontrolskema extends AbstractDto {
     protected void contentToString(StringBuffer sb) {
         append( sb, "mRKontrolskemaId", mRKontrolskemaId );
         append( sb, "mRKontrolantId", mRKontrolantId );
-        append( sb, "tidlBilledDiagnostik", tidlBilledDiagnostik );
         append( sb, "pacemaker", pacemaker );
         append( sb, "metalImplantater", metalImplantater );
         append( sb, "metalImplantaterBeskrivelse", metalImplantaterBeskrivelse );

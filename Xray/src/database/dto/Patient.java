@@ -28,6 +28,9 @@ public class Patient extends AbstractDto {
 
     private Integer patientId;
     private String patientCpr;
+    private String patientNavn;
+    private String patientAdresse;
+    private String patientTlf;
     private Timestamp foedselsdag;
     private String stamafdeling;
 
@@ -59,6 +62,30 @@ public class Patient extends AbstractDto {
 
     public void setPatientCpr( String _val) {
         this.patientCpr = _val;
+    }
+
+    public String getPatientNavn() {
+        return patientNavn;
+    }
+
+    public void setPatientNavn( String _val) {
+        this.patientNavn = _val;
+    }
+
+    public String getPatientAdresse() {
+        return patientAdresse;
+    }
+
+    public void setPatientAdresse( String _val) {
+        this.patientAdresse = _val;
+    }
+
+    public String getPatientTlf() {
+        return patientTlf;
+    }
+
+    public void setPatientTlf( String _val) {
+        this.patientTlf = _val;
     }
 
     public Timestamp getFoedselsdag() {
@@ -102,6 +129,21 @@ public class Patient extends AbstractDto {
         }
         else if ( _o.patientCpr == null || !patientCpr.equals( _o.patientCpr )) return false;
 
+        if ( patientNavn == null ) {
+            if ( _o.patientNavn != null ) return false;
+        }
+        else if ( _o.patientNavn == null || !patientNavn.equals( _o.patientNavn )) return false;
+
+        if ( patientAdresse == null ) {
+            if ( _o.patientAdresse != null ) return false;
+        }
+        else if ( _o.patientAdresse == null || !patientAdresse.equals( _o.patientAdresse )) return false;
+
+        if ( patientTlf == null ) {
+            if ( _o.patientTlf != null ) return false;
+        }
+        else if ( _o.patientTlf == null || !patientTlf.equals( _o.patientTlf )) return false;
+
         if ( foedselsdag == null ) {
             if ( _o.foedselsdag != null ) return false;
         }
@@ -123,6 +165,9 @@ public class Patient extends AbstractDto {
         int _ret = 873235173; // = "Patient".hashCode()
         _ret += patientId == null ? 0 : patientId;
         _ret = 29 * _ret + (patientCpr == null ? 0 : patientCpr.hashCode());
+        _ret = 29 * _ret + (patientNavn == null ? 0 : patientNavn.hashCode());
+        _ret = 29 * _ret + (patientAdresse == null ? 0 : patientAdresse.hashCode());
+        _ret = 29 * _ret + (patientTlf == null ? 0 : patientTlf.hashCode());
         _ret = 29 * _ret + (foedselsdag == null ? 0 : (int)foedselsdag.getTime());
         _ret = 29 * _ret + (stamafdeling == null ? 0 : stamafdeling.hashCode());
 
@@ -140,6 +185,9 @@ public class Patient extends AbstractDto {
     protected void contentToString(StringBuffer sb) {
         append( sb, "patientId", patientId );
         append( sb, "patientCpr", patientCpr );
+        append( sb, "patientNavn", patientNavn );
+        append( sb, "patientAdresse", patientAdresse );
+        append( sb, "patientTlf", patientTlf );
         append( sb, "foedselsdag", foedselsdag );
         append( sb, "stamafdeling", stamafdeling );
     }
