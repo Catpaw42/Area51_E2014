@@ -22,6 +22,11 @@
 					<not-null />
 					<edit />
 				</column>
+				<column name="kodeord">
+					<type max-length="30">String</type>
+					<not-null />
+					<edit />
+				</column>
 				<column name="fuldt_navn">
 					<type max-length="100">String</type>
 					<not-null />
