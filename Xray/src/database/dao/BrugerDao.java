@@ -28,6 +28,11 @@ public interface BrugerDao extends AbstractDao {
     public Bruger findByPrimaryKey( int brugerId );
 
     /**
+     * Finds records.
+     */
+    public Bruger[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - brugerId
      */
@@ -38,11 +43,5 @@ public interface BrugerDao extends AbstractDao {
      * @return true iff the record was really updated (=found and any change was really saved)
      */
     public boolean update( int brugerId, Bruger dto ) throws DaoException;
-    
-    /**
-     * Validates user
-     */
-    
-    public boolean validate(String brugernavn, String kodeord);
 
 }

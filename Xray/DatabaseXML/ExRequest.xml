@@ -13,7 +13,7 @@
 			<columns>
 				<column name="rekvisition_id">
 					<type>int</type>
-					<not-null />
+					<auto />
 					<pk />
 				</column>
 				<column name="MR_kontrolskema_id">
@@ -237,6 +237,12 @@
 					<edit />
 				</column>
 			</columns>
+			<methods>
+				<find name="dynamic">
+					<dynamic />
+				</find>
+			</methods>
+
 		</table>
 	</tables>
 </database>

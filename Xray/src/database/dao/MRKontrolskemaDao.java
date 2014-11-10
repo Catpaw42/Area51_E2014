@@ -28,6 +28,11 @@ public interface MRKontrolskemaDao extends AbstractDao {
     public MRKontrolskema findByPrimaryKey( int mRKontrolskemaId );
 
     /**
+     * Finds records.
+     */
+    public MRKontrolskema[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - mRKontrolskemaId
      */

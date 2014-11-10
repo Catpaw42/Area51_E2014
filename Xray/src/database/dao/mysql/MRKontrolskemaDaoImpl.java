@@ -55,6 +55,13 @@ public class MRKontrolskemaDaoImpl extends AbstractDaoImpl<MRKontrolskema> imple
     }
 
     /**
+     * Finds records.
+     */
+    public MRKontrolskema[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
+    }
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - mRKontrolskemaId
      */

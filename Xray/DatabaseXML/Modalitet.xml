@@ -21,6 +21,12 @@
 					<not-null />
 				</column>
 			</columns>
+			<methods>
+				<find name="dynamic">
+					<dynamic />
+				</find>
+			</methods>
+
 		</table>
 	</tables>
 </database>

@@ -28,6 +28,11 @@ public interface UndersoegelsesTypeDao extends AbstractDao {
     public UndersoegelsesType findByPrimaryKey( int undersoegelsesTypeId );
 
     /**
+     * Finds records.
+     */
+    public UndersoegelsesType[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - undersoegelsesTypeId
      */

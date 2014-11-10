@@ -28,6 +28,11 @@ public interface CtKontrastKontrolskemaDao extends AbstractDao {
     public CtKontrastKontrolskema findByPrimaryKey( int ctKontrastKontrolskemaId );
 
     /**
+     * Finds records.
+     */
+    public CtKontrastKontrolskema[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - ctKontrastKontrolskemaId
      */

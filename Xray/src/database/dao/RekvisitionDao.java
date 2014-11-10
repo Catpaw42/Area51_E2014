@@ -28,9 +28,15 @@ public interface RekvisitionDao extends AbstractDao {
     public Rekvisition findByPrimaryKey( int rekvisitionId );
 
     /**
-     * Inserts a new record.
+     * Finds records.
      */
-    public void insert( Rekvisition dto ) throws DaoException;
+    public Rekvisition[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
+     * Inserts a new record.
+     * @return the generated primary key - rekvisitionId
+     */
+    public int insert( Rekvisition dto ) throws DaoException;
 
     /**
      * Updates one record found by primary key.

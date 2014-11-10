@@ -38,7 +38,7 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
 
     protected static final String PK_CONDITION = "patient_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO patient (patient_id,patient_cpr,patient_navn,patient_adresse,patient_tlf,foedselsdag,stamafdeling) VALUES (?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO patient (patient_cpr,patient_navn,patient_adresse,patient_tlf,foedselsdag,stamafdeling) VALUES (?,?,?,?,?,?)";
 
     public PatientDaoImpl( Connection conn ) {
         super( conn );
@@ -53,57 +53,68 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
     }
 
     /**
-     * Inserts a new record.
+     * Finds records.
      */
-    public void insert( Patient dto ) throws DaoException {
+    public Patient[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
+    }
+
+    /**
+     * Inserts a new record.
+     * @return the generated primary key - patientId
+     */
+    public int insert( Patient dto ) throws DaoException {
         PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         debugSql( SQL_INSERT, dto );
 
         try {
-            stmt = conn.prepareStatement( SQL_INSERT );
-
-            if ( dto.getPatientId() == null ) {
-                throw new DaoException("Value of column 'patient_id' cannot be null");
-            }
-            stmt.setInt( 1, dto.getPatientId() );
+            stmt = conn.prepareStatement( SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS );
 
             if ( dto.getPatientCpr() == null ) {
                 throw new DaoException("Value of column 'patient_cpr' cannot be null");
             }
             checkMaxLength( "patient_cpr", dto.getPatientCpr(), 30 );
-            stmt.setString( 2, dto.getPatientCpr() );
+            stmt.setString( 1, dto.getPatientCpr() );
 
             if ( dto.getPatientNavn() == null ) {
                 throw new DaoException("Value of column 'patient_navn' cannot be null");
             }
             checkMaxLength( "patient_navn", dto.getPatientNavn(), 100 );
-            stmt.setString( 3, dto.getPatientNavn() );
+            stmt.setString( 2, dto.getPatientNavn() );
 
             if ( dto.getPatientAdresse() == null ) {
                 throw new DaoException("Value of column 'patient_adresse' cannot be null");
             }
             checkMaxLength( "patient_adresse", dto.getPatientAdresse(), 100 );
-            stmt.setString( 4, dto.getPatientAdresse() );
+            stmt.setString( 3, dto.getPatientAdresse() );
 
             if ( dto.getPatientTlf() == null ) {
                 throw new DaoException("Value of column 'patient_tlf' cannot be null");
             }
             checkMaxLength( "patient_tlf", dto.getPatientTlf(), 100 );
-            stmt.setString( 5, dto.getPatientTlf() );
+            stmt.setString( 4, dto.getPatientTlf() );
 
             if ( dto.getFoedselsdag() == null ) {
                 throw new DaoException("Value of column 'foedselsdag' cannot be null");
             }
-            stmt.setTimestamp( 6, dto.getFoedselsdag() );
+            stmt.setTimestamp( 5, dto.getFoedselsdag() );
 
             if ( dto.getStamafdeling() == null ) {
                 throw new DaoException("Value of column 'stamafdeling' cannot be null");
             }
             checkMaxLength( "stamafdeling", dto.getStamafdeling(), 50 );
-            stmt.setString( 7, dto.getStamafdeling() );
+            stmt.setString( 6, dto.getStamafdeling() );
 
             int n = stmt.executeUpdate();
+
+            rs = stmt.getGeneratedKeys();
+            rs.next();
+
+            dto.setPatientId( rs.getInt( 1 ));
+
+            return dto.getPatientId();
         }
         catch (SQLException e) {
             errorSql( e, SQL_INSERT, dto );
@@ -111,6 +122,7 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
             throw new DBException( e );
         }
         finally {
+            if (rs != null) try { rs.close(); } catch (SQLException e) {}
             if (stmt != null) try { stmt.close(); } catch (SQLException e) {}
         }
     }

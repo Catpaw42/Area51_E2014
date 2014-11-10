@@ -6,8 +6,8 @@
 			<create-params default="false" direct="true" />
 		</factory>
 	</config>
-	<tables>
 
+	<tables>
 		<table name="bruger">
 			<edit-mode>row</edit-mode>
 			<auto-find />
@@ -38,6 +38,13 @@
 					<edit />
 				</column>
 			</columns>
+			<methods>
+				<find name="dynamic">
+					<dynamic />
+				</find>
+			</methods>
+
 		</table>
 	</tables>
+
 </database>

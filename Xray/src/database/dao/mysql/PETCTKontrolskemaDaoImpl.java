@@ -55,6 +55,13 @@ public class PETCTKontrolskemaDaoImpl extends AbstractDaoImpl<PETCTKontrolskema>
     }
 
     /**
+     * Finds records.
+     */
+    public PETCTKontrolskema[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
+    }
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - pETCTKontrolskemaId
      */

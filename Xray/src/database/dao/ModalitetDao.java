@@ -28,6 +28,11 @@ public interface ModalitetDao extends AbstractDao {
     public Modalitet findByPrimaryKey( int modalitetId );
 
     /**
+     * Finds records.
+     */
+    public Modalitet[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - modalitetId
      */

@@ -53,6 +53,13 @@ public class ModalitetDaoImpl extends AbstractDaoImpl<Modalitet> implements Moda
     }
 
     /**
+     * Finds records.
+     */
+    public Modalitet[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
+    }
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - modalitetId
      */

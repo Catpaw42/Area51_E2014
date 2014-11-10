@@ -28,6 +28,11 @@ public interface PETCTKontrolskemaDao extends AbstractDao {
     public PETCTKontrolskema findByPrimaryKey( int pETCTKontrolskemaId );
 
     /**
+     * Finds records.
+     */
+    public PETCTKontrolskema[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - pETCTKontrolskemaId
      */

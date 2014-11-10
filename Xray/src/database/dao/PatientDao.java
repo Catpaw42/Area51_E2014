@@ -28,8 +28,14 @@ public interface PatientDao extends AbstractDao {
     public Patient findByPrimaryKey( int patientId );
 
     /**
-     * Inserts a new record.
+     * Finds records.
      */
-    public void insert( Patient dto ) throws DaoException;
+    public Patient[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
+     * Inserts a new record.
+     * @return the generated primary key - patientId
+     */
+    public int insert( Patient dto ) throws DaoException;
 
 }

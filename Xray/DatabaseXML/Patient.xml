@@ -14,7 +14,7 @@
 			<columns>
 				<column name="patient_id">
 					<type>int</type>
-					<not-null />
+					<auto />
 					<pk />
 				</column>
 				<column name="patient_cpr">
@@ -42,6 +42,11 @@
 					<not-null />
 				</column>
 			</columns>
+			<methods>
+				<find name="dynamic">
+					<dynamic />
+				</find>
+			</methods>
 		</table>
 	</tables>
 </database>

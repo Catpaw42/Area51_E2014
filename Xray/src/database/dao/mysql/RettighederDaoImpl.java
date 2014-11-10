@@ -54,6 +54,13 @@ public class RettighederDaoImpl extends AbstractDaoImpl<Rettigheder> implements 
     }
 
     /**
+     * Finds records.
+     */
+    public Rettigheder[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
+    }
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - rettighedsId
      */

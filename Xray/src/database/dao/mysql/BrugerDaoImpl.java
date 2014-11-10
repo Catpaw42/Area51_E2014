@@ -53,23 +53,12 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     }
 
     /**
-     * Validates username and password
+     * Finds records.
      */
-    
-    public boolean validate(String brugernavn, String kodeord){
-    	boolean brugernavnOk = false;
-    	
-    	Bruger br = findOne(SELECT_COLUMNS,null, brugernavn);
-    	brugernavnOk = br.getBrugerNavn().equals(brugernavn);
-    	
-    	if(brugernavnOk){
-    		return br.getKodeord().equals(kodeord);
-    	}
-    	
-    	return false;
+    public Bruger[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
     }
-    
-    
+
     /**
      * Inserts a new record.
      * @return the generated primary key - brugerId

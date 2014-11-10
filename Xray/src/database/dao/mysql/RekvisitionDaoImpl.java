@@ -38,7 +38,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 
     protected static final String PK_CONDITION = "rekvisition_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO rekvisition (rekvisition_id,MR_kontrolskema_id,PETCT_kontrolskema_id,CT_kontrast_kontrolskema_id,invasiv_UL_kontrolskema_id,undersoegelses_type_id,rekvirent_id,visitator_id,patient_id,henvist_til,hospital_oenske,prioritering,udf_indlagt,ambulant_koersel,indlaeggelse_transport,status,samtykke,paaroerende,ambulant,dato_forslag,graviditet,graviditet_uge,cave,hoerehaemmet,synshaemmet,amputeret,kan_ikke_staa,ilt_liter_prmin,tolk_sprog,dement,afasi,isolation,cytostatika_dato,tidl_billed_diagnostik,klinisk_problemstilling,triage,henv_laege,henv_afd,kontakt_tlf,visitator_prioritering,visitator_bemaerkning,afsendt_dato) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO rekvisition (MR_kontrolskema_id,PETCT_kontrolskema_id,CT_kontrast_kontrolskema_id,invasiv_UL_kontrolskema_id,undersoegelses_type_id,rekvirent_id,visitator_id,patient_id,henvist_til,hospital_oenske,prioritering,udf_indlagt,ambulant_koersel,indlaeggelse_transport,status,samtykke,paaroerende,ambulant,dato_forslag,graviditet,graviditet_uge,cave,hoerehaemmet,synshaemmet,amputeret,kan_ikke_staa,ilt_liter_prmin,tolk_sprog,dement,afasi,isolation,cytostatika_dato,tidl_billed_diagnostik,klinisk_problemstilling,triage,henv_laege,henv_afd,kontakt_tlf,visitator_prioritering,visitator_bemaerkning,afsendt_dato) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final Rekvisition.HenvistTil[] _Rekvisition_HenvistTils = { null, Rekvisition.HenvistTil.RADIOLOGISK, Rekvisition.HenvistTil.KLINISK };
     private static final Rekvisition.HospitalOenske[] _Rekvisition_HospitalOenskes = { null, Rekvisition.HospitalOenske.HILLEROED, Rekvisition.HospitalOenske.FREDERIKSSUND, Rekvisition.HospitalOenske.HELSINGOER };
     private static final Rekvisition.Prioritering[] _Rekvisition_Prioriterings = { null, Rekvisition.Prioritering.HASTE, Rekvisition.Prioritering.RUTINE, Rekvisition.Prioritering.FREMSKYNDET, Rekvisition.Prioritering.PAKKEFORLOEB };
@@ -60,251 +60,262 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
     }
 
     /**
-     * Inserts a new record.
+     * Finds records.
      */
-    public void insert( Rekvisition dto ) throws DaoException {
+    public Rekvisition[] findDynamic( String cond, int offset, int count, Object... params ) {
+        return findManyArray( cond, offset, count, params);
+    }
+
+    /**
+     * Inserts a new record.
+     * @return the generated primary key - rekvisitionId
+     */
+    public int insert( Rekvisition dto ) throws DaoException {
         PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         debugSql( SQL_INSERT, dto );
 
         try {
-            stmt = conn.prepareStatement( SQL_INSERT );
-
-            if ( dto.getRekvisitionId() == null ) {
-                throw new DaoException("Value of column 'rekvisition_id' cannot be null");
-            }
-            stmt.setInt( 1, dto.getRekvisitionId() );
+            stmt = conn.prepareStatement( SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS );
 
             if ( dto.getMRKontrolskemaId() == null ) {
-                stmt.setNull( 2, Types.INTEGER );
+                stmt.setNull( 1, Types.INTEGER );
             }
             else {
-                stmt.setInt( 2, dto.getMRKontrolskemaId() );
+                stmt.setInt( 1, dto.getMRKontrolskemaId() );
             }
 
             if ( dto.getPETCTKontrolskemaId() == null ) {
-                stmt.setNull( 3, Types.INTEGER );
+                stmt.setNull( 2, Types.INTEGER );
             }
             else {
-                stmt.setInt( 3, dto.getPETCTKontrolskemaId() );
+                stmt.setInt( 2, dto.getPETCTKontrolskemaId() );
             }
 
             if ( dto.getCTKontrastKontrolskemaId() == null ) {
-                stmt.setNull( 4, Types.INTEGER );
+                stmt.setNull( 3, Types.INTEGER );
             }
             else {
-                stmt.setInt( 4, dto.getCTKontrastKontrolskemaId() );
+                stmt.setInt( 3, dto.getCTKontrastKontrolskemaId() );
             }
 
             if ( dto.getInvasivULKontrolskemaId() == null ) {
-                stmt.setNull( 5, Types.INTEGER );
+                stmt.setNull( 4, Types.INTEGER );
             }
             else {
-                stmt.setInt( 5, dto.getInvasivULKontrolskemaId() );
+                stmt.setInt( 4, dto.getInvasivULKontrolskemaId() );
             }
 
             if ( dto.getUndersoegelsesTypeId() == null ) {
                 throw new DaoException("Value of column 'undersoegelses_type_id' cannot be null");
             }
-            stmt.setInt( 6, dto.getUndersoegelsesTypeId() );
+            stmt.setInt( 5, dto.getUndersoegelsesTypeId() );
 
             if ( dto.getRekvirentId() == null ) {
                 throw new DaoException("Value of column 'rekvirent_id' cannot be null");
             }
-            stmt.setInt( 7, dto.getRekvirentId() );
+            stmt.setInt( 6, dto.getRekvirentId() );
 
             if ( dto.getVisitatorId() == null ) {
                 throw new DaoException("Value of column 'visitator_id' cannot be null");
             }
-            stmt.setInt( 8, dto.getVisitatorId() );
+            stmt.setInt( 7, dto.getVisitatorId() );
 
             if ( dto.getPatientId() == null ) {
                 throw new DaoException("Value of column 'patient_id' cannot be null");
             }
-            stmt.setInt( 9, dto.getPatientId() );
+            stmt.setInt( 8, dto.getPatientId() );
 
             if ( dto.getHenvistTil() == null ) {
                 throw new DaoException("Value of column 'henvist_til' cannot be null");
             }
-            stmt.setShort( 10, (short) (dto.getHenvistTil().ordinal() + 1) );
+            stmt.setShort( 9, (short) (dto.getHenvistTil().ordinal() + 1) );
 
             if ( dto.getHospitalOenske() == null ) {
-                stmt.setNull( 11, Types.SMALLINT );
+                stmt.setNull( 10, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 11, (short) (dto.getHospitalOenske().ordinal() + 1) );
+                stmt.setShort( 10, (short) (dto.getHospitalOenske().ordinal() + 1) );
             }
 
             if ( dto.getPrioritering() == null ) {
                 throw new DaoException("Value of column 'prioritering' cannot be null");
             }
-            stmt.setShort( 12, (short) (dto.getPrioritering().ordinal() + 1) );
+            stmt.setShort( 11, (short) (dto.getPrioritering().ordinal() + 1) );
 
             if ( dto.getUdfIndlagt() == null ) {
                 throw new DaoException("Value of column 'udf_indlagt' cannot be null");
             }
-            stmt.setByte( 13, dto.getUdfIndlagt() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 12, dto.getUdfIndlagt() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getAmbulantKoersel() == null ) {
-                stmt.setNull( 14, Types.SMALLINT );
+                stmt.setNull( 13, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 14, (short) (dto.getAmbulantKoersel().ordinal() + 1) );
+                stmt.setShort( 13, (short) (dto.getAmbulantKoersel().ordinal() + 1) );
             }
 
             if ( dto.getIndlaeggelseTransport() == null ) {
-                stmt.setNull( 15, Types.SMALLINT );
+                stmt.setNull( 14, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 15, (short) (dto.getIndlaeggelseTransport().ordinal() + 1) );
+                stmt.setShort( 14, (short) (dto.getIndlaeggelseTransport().ordinal() + 1) );
             }
 
             if ( dto.getStatus() == null ) {
                 throw new DaoException("Value of column 'status' cannot be null");
             }
-            stmt.setShort( 16, (short) (dto.getStatus().ordinal() + 1) );
+            stmt.setShort( 15, (short) (dto.getStatus().ordinal() + 1) );
 
             if ( dto.getSamtykke() == null ) {
-                stmt.setNull( 17, Types.SMALLINT );
+                stmt.setNull( 16, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 17, (short) (dto.getSamtykke().ordinal() + 1) );
+                stmt.setShort( 16, (short) (dto.getSamtykke().ordinal() + 1) );
             }
 
             if ( dto.getPaaroerende() != null ) {
                 checkMaxLength( "paaroerende", dto.getPaaroerende(), 100 );
             }
-            stmt.setString( 18, dto.getPaaroerende() );
+            stmt.setString( 17, dto.getPaaroerende() );
 
             if ( dto.getAmbulant() == null ) {
                 throw new DaoException("Value of column 'ambulant' cannot be null");
             }
-            stmt.setByte( 19, dto.getAmbulant() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 18, dto.getAmbulant() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getDatoForslag() != null ) {
                 checkMaxLength( "dato_forslag", dto.getDatoForslag(), 50 );
             }
-            stmt.setString( 20, dto.getDatoForslag() );
+            stmt.setString( 19, dto.getDatoForslag() );
 
             if ( dto.getGraviditet() == null ) {
-                stmt.setNull( 21, Types.TINYINT );
+                stmt.setNull( 20, Types.TINYINT );
             }
             else {
-                stmt.setByte( 21, dto.getGraviditet() ? ((byte)1) : ((byte)0) );
+                stmt.setByte( 20, dto.getGraviditet() ? ((byte)1) : ((byte)0) );
             }
 
             if ( dto.getGraviditetUge() == null ) {
-                stmt.setNull( 22, Types.INTEGER );
+                stmt.setNull( 21, Types.INTEGER );
             }
             else {
-                stmt.setInt( 22, dto.getGraviditetUge() );
+                stmt.setInt( 21, dto.getGraviditetUge() );
             }
 
             if ( dto.getCave() == null ) {
                 throw new DaoException("Value of column 'cave' cannot be null");
             }
             checkMaxLength( "cave", dto.getCave(), 500 );
-            stmt.setString( 23, dto.getCave() );
+            stmt.setString( 22, dto.getCave() );
 
             if ( dto.getHoerehaemmet() == null ) {
                 throw new DaoException("Value of column 'hoerehaemmet' cannot be null");
             }
-            stmt.setByte( 24, dto.getHoerehaemmet() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 23, dto.getHoerehaemmet() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getSynshaemmet() == null ) {
                 throw new DaoException("Value of column 'synshaemmet' cannot be null");
             }
-            stmt.setByte( 25, dto.getSynshaemmet() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 24, dto.getSynshaemmet() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getAmputeret() == null ) {
                 throw new DaoException("Value of column 'amputeret' cannot be null");
             }
-            stmt.setByte( 26, dto.getAmputeret() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 25, dto.getAmputeret() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getKanIkkeStaa() == null ) {
                 throw new DaoException("Value of column 'kan_ikke_staa' cannot be null");
             }
-            stmt.setByte( 27, dto.getKanIkkeStaa() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 26, dto.getKanIkkeStaa() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getIltLiterPrmin() == null ) {
-                stmt.setNull( 28, Types.SMALLINT );
+                stmt.setNull( 27, Types.SMALLINT );
             }
             else {
-                stmt.setShort( 28, dto.getIltLiterPrmin() );
+                stmt.setShort( 27, dto.getIltLiterPrmin() );
             }
 
             if ( dto.getTolkSprog() != null ) {
                 checkMaxLength( "tolk_sprog", dto.getTolkSprog(), 50 );
             }
-            stmt.setString( 29, dto.getTolkSprog() );
+            stmt.setString( 28, dto.getTolkSprog() );
 
             if ( dto.getDement() == null ) {
                 throw new DaoException("Value of column 'dement' cannot be null");
             }
-            stmt.setByte( 30, dto.getDement() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 29, dto.getDement() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getAfasi() == null ) {
                 throw new DaoException("Value of column 'afasi' cannot be null");
             }
-            stmt.setByte( 31, dto.getAfasi() ? ((byte)1) : ((byte)0) );
+            stmt.setByte( 30, dto.getAfasi() ? ((byte)1) : ((byte)0) );
 
             if ( dto.getIsolation() == null ) {
                 throw new DaoException("Value of column 'isolation' cannot be null");
             }
             checkMaxLength( "isolation", dto.getIsolation(), 50 );
-            stmt.setString( 32, dto.getIsolation() );
-            stmt.setTimestamp( 33, dto.getCytostatikaDato() );
+            stmt.setString( 31, dto.getIsolation() );
+            stmt.setTimestamp( 32, dto.getCytostatikaDato() );
 
             if ( dto.getTidlBilledDiagnostik() != null ) {
                 checkMaxLength( "tidl_billed_diagnostik", dto.getTidlBilledDiagnostik(), 50 );
             }
-            stmt.setString( 34, dto.getTidlBilledDiagnostik() );
+            stmt.setString( 33, dto.getTidlBilledDiagnostik() );
 
             if ( dto.getKliniskProblemstilling() == null ) {
                 throw new DaoException("Value of column 'klinisk_problemstilling' cannot be null");
             }
             checkMaxLength( "klinisk_problemstilling", dto.getKliniskProblemstilling(), 1000 );
-            stmt.setString( 35, dto.getKliniskProblemstilling() );
+            stmt.setString( 34, dto.getKliniskProblemstilling() );
 
             if ( dto.getTriage() != null ) {
                 checkMaxLength( "triage", dto.getTriage(), 100 );
             }
-            stmt.setString( 36, dto.getTriage() );
+            stmt.setString( 35, dto.getTriage() );
 
             if ( dto.getHenvLaege() == null ) {
                 throw new DaoException("Value of column 'henv_laege' cannot be null");
             }
             checkMaxLength( "henv_laege", dto.getHenvLaege(), 100 );
-            stmt.setString( 37, dto.getHenvLaege() );
+            stmt.setString( 36, dto.getHenvLaege() );
 
             if ( dto.getHenvAfd() == null ) {
                 throw new DaoException("Value of column 'henv_afd' cannot be null");
             }
             checkMaxLength( "henv_afd", dto.getHenvAfd(), 100 );
-            stmt.setString( 38, dto.getHenvAfd() );
+            stmt.setString( 37, dto.getHenvAfd() );
 
             if ( dto.getKontaktTlf() == null ) {
                 throw new DaoException("Value of column 'kontakt_tlf' cannot be null");
             }
             checkMaxLength( "kontakt_tlf", dto.getKontaktTlf(), 50 );
-            stmt.setString( 39, dto.getKontaktTlf() );
+            stmt.setString( 38, dto.getKontaktTlf() );
 
             if ( dto.getVisitatorPrioritering() != null ) {
                 checkMaxLength( "visitator_prioritering", dto.getVisitatorPrioritering(), 100 );
             }
-            stmt.setString( 40, dto.getVisitatorPrioritering() );
+            stmt.setString( 39, dto.getVisitatorPrioritering() );
 
             if ( dto.getVisitatorBemaerkning() != null ) {
                 checkMaxLength( "visitator_bemaerkning", dto.getVisitatorBemaerkning(), 100 );
             }
-            stmt.setString( 41, dto.getVisitatorBemaerkning() );
+            stmt.setString( 40, dto.getVisitatorBemaerkning() );
 
             if ( dto.getAfsendtDato() == null ) {
                 throw new DaoException("Value of column 'afsendt_dato' cannot be null");
             }
-            stmt.setTimestamp( 42, dto.getAfsendtDato() );
+            stmt.setTimestamp( 41, dto.getAfsendtDato() );
 
             int n = stmt.executeUpdate();
+
+            rs = stmt.getGeneratedKeys();
+            rs.next();
+
+            dto.setRekvisitionId( rs.getInt( 1 ));
+
+            return dto.getRekvisitionId();
         }
         catch (SQLException e) {
             errorSql( e, SQL_INSERT, dto );
@@ -312,6 +323,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
             throw new DBException( e );
         }
         finally {
+            if (rs != null) try { rs.close(); } catch (SQLException e) {}
             if (stmt != null) try { stmt.close(); } catch (SQLException e) {}
         }
     }

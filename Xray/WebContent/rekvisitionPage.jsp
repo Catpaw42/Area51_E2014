@@ -18,7 +18,7 @@
 				<li>
 					<div id="search">
 						<label for="search">Søg</label>
-				    	<form id="search" name="search" method="post" action="">
+				    	<form id="search" name="search" method="post" action="RekvisitionServlet">
 				    		<table>
 								<tr>
 									<th>Cpr</th>

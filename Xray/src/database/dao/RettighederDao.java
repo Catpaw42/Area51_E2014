@@ -28,6 +28,11 @@ public interface RettighederDao extends AbstractDao {
     public Rettigheder findByPrimaryKey( int rettighedsId );
 
     /**
+     * Finds records.
+     */
+    public Rettigheder[] findDynamic( String cond, int offset, int count, Object... params );
+
+    /**
      * Inserts a new record.
      * @return the generated primary key - rettighedsId
      */
