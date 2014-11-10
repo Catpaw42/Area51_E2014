@@ -75,17 +75,7 @@ public class LoginServlet extends HttpServlet
 			}
 			BrugerDao b = new BrugerDaoImpl(conn);
 			
-			//Validating user
-			try 
-			{
-				loginSuccess = dbctrl.validateUser(bruger);
-			}
-			catch (DatabaseException e)
-			{	
-				e.printStackTrace();
-				System.err.println(e.getMessage());
-				System.err.println("failed to validate User in loginServlet");
-			}
+			loginSuccess = b.validate(bruger.getBrugerNavn(), bruger.getKodeord());
 			System.out.println(loginSuccess);
 			if (loginSuccess)
 			{
