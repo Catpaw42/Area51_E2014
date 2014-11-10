@@ -5,12 +5,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.Date;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +26,6 @@ import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
-import database.dto.MRKontrolskema;
 import database.dto.Modalitet;
 import database.dto.PETCTKontrolskema;
 import database.dto.PETCTKontrolskema.Formaal;
@@ -197,7 +192,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("pk: " + pk);
 		} catch (DaoException e) {
 			System.err.println("petCtKontrol dto blev ikke succesfuldt sat ind i database \n");
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			System.out.println("\n ########################################");
 		}
 		System.out.println("henter petctkontrolskema med pk: " + pk);
@@ -283,7 +278,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("brugerId: " + pk);
 		} catch (DaoException e) {
 			System.err.println("fejlede at tilføje bruger til database");
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 		try {
@@ -315,6 +310,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("bruger opdateret");
 		}catch (DaoException e){
 			System.err.println("fejlede at opdatere bruger i database");
+			System.err.println(e.getMessage());
 		}
 
 	}
@@ -370,7 +366,7 @@ public class TestServlet extends HttpServlet {
 
 		} catch (DaoException e) {
 			System.err.println("failed to insert row");
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 	}
@@ -388,6 +384,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("dto indsat med id: " + id);
 		} catch (DaoException e) {
 			System.err.println("Failed to insert dto into database");
+			System.err.println(e.getMessage());
 		}
 	}
 
