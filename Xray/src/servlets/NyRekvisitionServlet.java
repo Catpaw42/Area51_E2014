@@ -103,7 +103,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		Integer ptId = null;
 		PatientDao ptDao = new PatientDaoImpl(connection);
 		try {
-			ptDao.insert(pt);
+			ptId = ptDao.insert(pt);
 		} catch (DaoException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -158,7 +158,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			rek.setCytostatikaDato(null);
 		}
 		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billeddiagnostik"));
-		rek.setPatientId(pt.getPatientId());//TODO change to ptID from DB call
+		rek.setPatientId(ptId);
 		System.out.println(rek);
 		//Time to store requisition
 		RekvisitionDao rekDao = new RekvisitionDaoImpl(connection);
