@@ -1,11 +1,19 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import database.DataSourceConnector;
+import database.dao.RekvisitionDao;
+import database.dao.mysql.RekvisitionDaoImpl;
+import database.dto.Rekvisition;
 
 /**
  * Servlet implementation class RekvisitionServlet
@@ -33,7 +41,24 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		Connection conn;
+		conn = DataSourceConnector.getConnection();
+		
+		Rekvisition[] rekv;
+		String modalitet = request.getParameter("modality");
+		String afdeling = request.getParameter("department");
+		String dato = request.getParameter("date");
+		String status = request.getParameter("status");
+		
+		
+		
+		RekvisitionDao rkdao= new RekvisitionDaoImpl(conn);
+		rkdao.findDynamic;
+		
+		//send data back
+		request.setAttribute("rekvisitionliste", rekv );
+		request.getRequestDispatcher("rekvisitionPage.jsp").forward(request, response);
+	
 	}
 
 }

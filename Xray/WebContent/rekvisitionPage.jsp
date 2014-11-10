@@ -4,16 +4,16 @@
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/mainPage.js"></script>
+		<script type="text/javascript" src="js/rekvisitionPage.js"></script>
 		<title>Main Page</title>
 	</head>
 	
 	<body class="rekvisitionPage">
-		<iframe id="topMenuIframe" src="topMenu.jsp"></iframe>
+		<%@include file="topMenu.jsp" %>
 		<div id="mainpage">
 			<ul class="showInline centerAlign">
 				<li>
-					<a id="nyRekvisition" href="MainServlet?page=rekvisition">Skriv Ny Rekvisition</a>
+					<a id="nyRekvisition" href="javascript:showOverlay()">Skriv Ny Rekvisition</a>
 				</li>
 				<li>
 					<div id="search">
@@ -37,10 +37,13 @@
 									</td>
 									<td>
 										<select id="modality" name="modality">
-											<option value="ul">UL - radiograf</option>
-											<option value="ct">CT</option>
-											<option value="rg">Pet/CT</option>
-											<option value="rtg">Rtg.</option>
+											<option value="1">Rtg.</option>
+											<option value="2">UL - non invasiv</option>
+											<option value="3">UL - invasiv</option>
+											<option value="4">CT - uden kontrast</option>
+											<option value="5">CT - med kontrast</option>
+											<option value="6">PET/CT</option>
+											<option value="7">Anden undersøgelse</option>
 										</select>
 									</td>
 									<td>
@@ -82,6 +85,13 @@
 								<th>Dato</th>
 								<th>Status</th>
 							</tr>
+							<% Rekvisition[] rekv = request.getAttribute("rekvisitionliste");
+								for (Rekvisition r : rekv){
+									out.print("<tr> <td>");
+									out.print(r.getPatient().getCpr());
+									
+								}
+							%>
 							<tr>
 								<td>255255-5555</td>
 								<td>Den elskede leder Magnus</td>
@@ -187,6 +197,10 @@
 					</div>
 				</li>
 			</ul>
+		</div>
+		<div id="overlay"></div>
+		<div id="overlayPanel">
+			<%@include file="nyRekvisitionPage.jsp" %>
 		</div>
 	</body>
 </html>
