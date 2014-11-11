@@ -71,9 +71,8 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 			first = true;
 		}
 		if(date != null){
-			long day = 60*60*24*1000;
-			long remainder = date.getTime()%day;
-			lowBound = new Timestamp(date.getTime()-remainder);
+			long day = 60*60*24*1000-1;
+			lowBound = new Timestamp(date.getTime());
 			upperBound = new Timestamp(date.getTime()+day);
 			System.out.println("########LOWER BOUND############");
 			System.out.println(lowBound);
