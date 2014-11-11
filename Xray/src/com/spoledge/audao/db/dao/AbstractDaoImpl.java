@@ -300,9 +300,6 @@ public abstract class AbstractDaoImpl<T> extends RootDaoImpl {
         }
 
         if (count < 1) {
-        	System.out.println("Count: " + count);
-        	System.out.println("rs: " + rs.getInt("rekvisition_id"));
-        	System.out.println("status: " + rs.getInt("status"));
             count = Integer.MAX_VALUE;
         }
 

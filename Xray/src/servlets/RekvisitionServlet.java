@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Connection;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +19,17 @@ import com.spoledge.audao.db.dao.DaoException;
 import database.DataBaseController;
 import database.DataSourceConnector;
 import database.dao.BrugerDao;
+import database.dao.ModalitetDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImpl;
+import database.dao.mysql.BrugerDaoImplExtended;
+import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
+import database.dto.Bruger;
+import database.dto.Modalitet;
 import database.dto.Patient;
 import database.dto.Rekvisition.Status;
 import database.interfaces.IDataSourceConnector.ConnectionException;
@@ -38,8 +44,16 @@ import database.dto.Rekvisition;
 @WebServlet("/RekvisitionServlet")
 public class RekvisitionServlet extends HttpServlet {
 	private java.sql.Connection conn = null;
-	private static final long serialVersionUID = 1L;
-
+	public static final long serialVersionUID = 1L;
+	public static final String REKVISITION_LIST = "rekvisitionList";
+	public static final String ACTIVE_USER = "activeUser";
+	public static final String REKVISITION_PAGE = "rekvisitionPage.jsp";
+	public static final String MODALITY = "modalitet";
+	public static final String STATUS_LIST = "statusList";
+	
+	private BrugerDaoImplExtended  userDao;
+	private RekvisitionDaoImplExt rekvisitionDao;
+	private ModalitetDao modDao;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -50,6 +64,9 @@ public class RekvisitionServlet extends HttpServlet {
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
+		this.userDao = new BrugerDaoImplExtended(conn);
+		this.rekvisitionDao = new RekvisitionDaoImplExt(conn);
+		this.modDao = new ModalitetDaoImpl(conn);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -57,21 +74,48 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		Bruger activeUser = (Bruger) request.getAttribute(ACTIVE_USER);
+		
+		if(activeUser == null){
+			activeUser = userDao.findByPrimaryKey(1);
+		}
 		String cond = "status=?";
+		String rekvCondName = "bruger_navn=?";
+		String rekvCondId = "rekvirent_id=?";
+
 		Rekvisition[] rekvlist;
-		RekvisitionDaoImplExt rekvisitionDao = new RekvisitionDaoImplExt(conn);
+
 		System.out.println("status options: " + Status.PENDING.ordinal());
-		rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, Status.PENDING, null, null); //(cond, 0, -1, new Object[]{Status.PENDING});
+		rekvlist = rekvisitionDao.findDynamic(rekvCondId, 0, -1, activeUser.getBrugerId());
+		// rekvlist = rekvisitionDao.findDynamic(cond, 0, -1, new Object[]{Status.PENDING}); //(cond, 0, -1, new Object[]{Status.PENDING});
 		System.out.println("length: " + rekvlist.length);
+		// for test
 		for (Rekvisition rekvisition : rekvlist) {
 			
 			System.out.println("id: " + rekvisition.getRekvisitionId());
 			System.out.println("status: " + rekvisition.getStatus());
 		}
-		request.setAttribute("rekvisitionlist", null);
-		request.setAttribute("rekvisitionlist", rekvlist);
-		request.getRequestDispatcher("rekvisitionPage.jsp").forward(request, response);
 		
+		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
+		
+		for (Modalitet modalitet : modList) {
+			System.out.println(modalitet.getModalitetNavn());
+		}
+		for (Status s : Status.values()) {
+			System.out.println(s.name());
+		}
+		
+		request.setAttribute(REKVISITION_LIST, rekvlist);
+		
+		request.getRequestDispatcher(REKVISITION_PAGE).forward(request, response);
+		
+	}
+	
+	private init(Request request){
+		request.setAttribute(MODALITY, modList);
+		request.setAttribute(STATUS_LIST, Status.values());
 	}
 
 	/**
@@ -86,13 +130,31 @@ public class RekvisitionServlet extends HttpServlet {
 		String modality = request.getParameter("modality");
 		String department = request.getParameter("department");
 		String date = request.getParameter("date");
+		Timestamp dateObj;
+		try{
+			dateObj = (!date.equals("") ? new Timestamp(Long.valueOf(date)) : null);
+		} catch(Exception e){
+			System.out.println("wrong date format");
+			dateObj = null;
+		}
+
 		String status = request.getParameter("status");
+		Status statusObj = null;
+		
+		System.out.println("status: " + status);
+			for(int i = 0; i < Status.values().length; i++){
+				System.out.println("values: " + Status.values()[i]);
+				if(status.equalsIgnoreCase(Status.values()[i].name())){
+					System.out.println("values: " + Status.values()[i]);
+					statusObj = Status.values()[i];
+				}
+			}
 		
 		// objekter
 		Rekvisition[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
 		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
-		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, null, null, department);
+		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, dateObj, department);
 
 		//##############TEST######################
 		//		Patient p1 = new Patient();
@@ -170,6 +232,10 @@ public class RekvisitionServlet extends HttpServlet {
 				System.out.println(patient.getPatientNavn());
 			}
 		}
+		request.setAttribute(REKVISITION_LIST, rekvDto);
+		
+		System.out.println();
+		request.getRequestDispatcher(REKVISITION_PAGE).forward(request, response);
 
 	}
 

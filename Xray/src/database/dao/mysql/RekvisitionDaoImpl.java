@@ -64,12 +64,11 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	 * Finds records.
 	 */
 	public Rekvisition[] findDynamic( String cond, int offset, int count, Object... params ) {
-		Status s = null;
-		if (params[0] instanceof Status) {
-			s = (Status) params[0];	
+		for(int i = 0; i < params.length; i++){
+			if(params[i].getClass().isEnum()){
+				params[i] = ((Enum<?>) params[i]).ordinal() +1;
+			}
 		}
-		System.out.println("findDynamic: \t cond \t offset \t count \t params" );
-		System.out.println("\t" + cond + "\t" + offset + "\t" + count + "\t" + s);
 		return findManyArray( cond, offset, count, params);
 	}
 
