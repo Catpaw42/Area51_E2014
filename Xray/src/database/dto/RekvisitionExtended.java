@@ -17,6 +17,7 @@ public class RekvisitionExtended extends Rekvisition {
 	private Bruger rekvirent;
 	private Bruger visitator;
 	private Patient patient;
+	private Modalitet modalitet;
 	
 	public RekvisitionExtended(){
 		
@@ -115,6 +116,12 @@ public class RekvisitionExtended extends Rekvisition {
 	}
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+	public Modalitet getModalitet() {
+		return modalitet;
+	}
+	public void setModalitet(Modalitet modalitet) {
+		this.modalitet = modalitet;
 	}
 	
 	

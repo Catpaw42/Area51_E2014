@@ -70,6 +70,16 @@ public class Rekvisition extends AbstractDto {
     ////////////////////////////////////////////////////////////////////////////
     // Attributes
     ////////////////////////////////////////////////////////////////////////////
+    
+	private MRKontrolskema mrMkontroKontrolskema;
+	private PETCTKontrolskema petctKontrolskema;
+	private CtKontrastKontrolskema ctKontrastKontrolskema;
+//	private invasiv_UL_kontrolskema ??
+	private UndersoegelsesType undersoegelsesType;
+	private Bruger rekvirent;
+	private Bruger visitator;
+	private Patient patient;
+	private Modalitet modalitet;
 
     private Integer rekvisitionId;
     private Integer mRKontrolskemaId;
@@ -986,4 +996,57 @@ public class Rekvisition extends AbstractDto {
         append( sb, "visitatorBemaerkning", visitatorBemaerkning );
         append( sb, "afsendtDato", afsendtDato );
     }
+    
+	public MRKontrolskema getMrMkontroKontrolskema() {
+		return mrMkontroKontrolskema;
+	}
+	public void setMrMkontroKontrolskema(MRKontrolskema mrMkontroKontrolskema) {
+		this.mrMkontroKontrolskema = mrMkontroKontrolskema;
+	}
+	public PETCTKontrolskema getPetctKontrolskema() {
+		return petctKontrolskema;
+	}
+	public void setPetctKontrolskema(PETCTKontrolskema petctKontrolskema) {
+		this.petctKontrolskema = petctKontrolskema;
+	}
+	public CtKontrastKontrolskema getCtKontrastKontrolskema() {
+		return ctKontrastKontrolskema;
+	}
+	public void setCtKontrastKontrolskema(
+			CtKontrastKontrolskema ctKontrastKontrolskema) {
+		this.ctKontrastKontrolskema = ctKontrastKontrolskema;
+	}
+	public UndersoegelsesType getUndersoegelsesType() {
+		return undersoegelsesType;
+	}
+	public void setUndersoegelsesType(UndersoegelsesType undersoegelsesType) {
+		this.undersoegelsesType = undersoegelsesType;
+	}
+	public Bruger getRekvirent() {
+		return rekvirent;
+	}
+	public void setRekvirent(Bruger rekvirent) {
+		this.rekvirent = rekvirent;
+	}
+	public Bruger getVisitator() {
+		return visitator;
+	}
+	public void setVisitator(Bruger visitator) {
+		this.visitator = visitator;
+	}
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Modalitet getModalitet() {
+		return modalitet;
+	}
+
+	public void setModalitet(Modalitet modalitet) {
+		this.modalitet = modalitet;
+	}
+    
 }

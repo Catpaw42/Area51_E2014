@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<%@page import="database.dto.RekvisitionExtended"%>
 <%@page import="database.dto.Modalitet"%>
 <%@page import="servlets.RekvisitionServlet"%>
 <%@page import="database.dto.Rekvisition.Status"%>
@@ -18,8 +19,9 @@
 <%
 	Modalitet[] modList = null;
 	Status[] statusList = null;
+	
 	try{
-		modList = (Modalitet[]) request.getAttribute(RekvisitionServlet.MODALITY);
+		modList = (Modalitet[]) request.getAttribute(RekvisitionServlet.MODALITY_LIST);
 	} catch(Exception e){}
 	try{
 		statusList = (Status[]) request.getAttribute(RekvisitionServlet.STATUS_LIST);
@@ -55,7 +57,7 @@
 								</td>
 								<td><select id="modality" name="modality">
 										<%
-
+										if(modList != null)
 										for(int i = 0; i < modList.length; i++){
 											%><option value=<%out.println(String.valueOf(i)); %>>
 											<% out.println(modList[i].getModalitetNavn()); 
@@ -72,7 +74,9 @@
 								</select></td>
 								<td><input id="date" name="date" type="date"></td>
 								<td><select id="status" name="status">
-										<% for(int i = 0; i < statusList.length; i++){
+										<% 
+										if(statusList != null)
+										for(int i = 0; i < statusList.length; i++){
 											%><option value=<%out.println(statusList[i].name());%>>
 											<% out.println(statusList[i].name().toLowerCase()); %>
 										</option>
@@ -98,55 +102,26 @@
 							<th>Dato</th>
 							<th>Status</th>
 						</tr>
-<!-- // 								for (Rekvisition r : rekv){ -->
-<!-- // 									out.print("<tr> <td>"); -->
-<!-- // 									out.print(r.getPatientId()); -->
-<!-- // 									out.print("</td> <td>"); -->
-<!-- // 									out.print(r.getPatientId()); -->
-<!-- // 									out.print("</td> <td>"); -->
-<!-- // 									out.print(r.getUndersoegelsesTypeId()); -->
-<!-- // 									out.print("</td> <td>"); -->
-<!-- // 									out.print(r.getHenvAfd()); -->
-<!-- // 									out.print("</td> <td>"); -->
-<!-- // 									out.print(r.getAfsendtDato()); -->
-<!-- // 									out.print("</td> <td>"); -->
-<!-- // 									out.print(r.getStatus()); -->
-<!-- // 									out.print("</td> </tr>"); -->
-<!-- // 								} -->
-						
+ 						<%		
+ 						if(rekv != null)
+ 						for (Rekvisition r : rekv){
+									out.print("<tr> <td>");
+									out.print(r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
+									out.print("</td> <td>");
+									out.print(r.getPatient().getPatientNavn() != null ? r.getPatient().getPatientNavn() : "intet patient navn fundet");
+									out.print("</td> <td>");
+									out.print(r.getModalitet().getModalitetNavn() != null ? r.getModalitet().getModalitetNavn() : "intet modalitet navn fundet" );
+									out.print("</td> <td>");
+									out.print(r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
+									out.print("</td> <td>");
+									out.print(r.getAfsendtDato());
+									out.print("</td> <td>");
+									out.print(r.getStatus());
+									out.print("</td> </tr>");
+								}
+						%>
 							
-						<!-- 							<tr> -->
-						<!-- 								<td>255255-5555</td> -->
-						<!-- 								<td>Den elskede leder Magnus</td> -->
-						<!-- 								<td>UL</td> -->
-						<!-- 								<td>O</td> -->
-						<!-- 								<td>251014</td> -->
-						<!-- 								<td>Sendt</td> -->
-						<!-- 							</tr> -->
-						<!-- 							<tr> -->
-						<!-- 								<td>050501-2222</td> -->
-						<!-- 								<td>Mickey Mouse</td> -->
-						<!-- 								<td>CT</td> -->
-						<!-- 								<td>O</td> -->
-						<!-- 								<td>300115</td> -->
-						<!-- 								<td>Visiteret</td> -->
-						<!-- 							</tr> -->
-						<!-- 							<tr> -->
-						<!-- 								<td>111100-1144</td> -->
-						<!-- 								<td>Marwin The Depressed Robot</td> -->
-						<!-- 								<td>RGT</td> -->
-						<!-- 								<td>M</td> -->
-						<!-- 								<td>011211</td> -->
-						<!-- 								<td>Anulleret</td> -->
-						<!-- 							</tr> -->
-						<tr>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-						</tr>
+				
 						<tr>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
