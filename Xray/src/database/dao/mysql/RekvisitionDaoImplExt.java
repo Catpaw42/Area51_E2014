@@ -33,7 +33,9 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 				params[i] = ((Enum<?>) params[i]).ordinal() +1;
 			}
 		}
-		return findManyArray( cond, offset, count, params);
+		Rekvisition[] rekv = findManyArray( cond, offset, count, params);
+		return addObjectsToRekvisition(rekv);
+		
 	}
 
 	public Rekvisition[] findByAdvSearch(String cpr, String name, String modality, Rekvisition.Status status,Timestamp date, String department){ 	
@@ -144,29 +146,37 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 				} catch (SQLException e) {
 					System.err.println(e.getSQLState());
 				}
-				
-				MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);
-				PETCTKontrolskemaDao petctDao = new PETCTKontrolskemaDaoImpl(conn);
-				CtKontrastKontrolskemaDao ctKontrDao = new CtKontrastKontrolskemaDaoImpl(conn);
-				BrugerDao brugerDao = new BrugerDaoImpl(conn);
-				PatientDao ptDao = new PatientDaoImpl(conn);
-				ModalitetDao modDao = new ModalitetDaoImpl(conn);
-				UndersoegelsesTypeDao undDao = new UndersoegelsesTypeDaoImpl(conn);
-				
+						
 				Rekvisition[] ret = new Rekvisition[rekv.size()];
 				for(int i = 0; i < rekv.size(); i++){
-					rekv.get(i).setMrMkontroKontrolskema(mrDao.findByPrimaryKey(rekv.get(i).getMRKontrolskemaId() != null ? rekv.get(i).getMRKontrolskemaId() : -1));
-					rekv.get(i).setPetctKontrolskema(petctDao.findByPrimaryKey(rekv.get(i).getPETCTKontrolskemaId() != null ? rekv.get(i).getPETCTKontrolskemaId() : -1));
-					rekv.get(i).setCtKontrastKontrolskema(ctKontrDao.findByPrimaryKey(rekv.get(i).getCTKontrastKontrolskemaId() != null ? rekv.get(i).getCTKontrastKontrolskemaId() : -1));
-					rekv.get(i).setRekvirent(brugerDao.findByPrimaryKey(rekv.get(i).getRekvirentId() != null ? rekv.get(i).getRekvirentId() : -1));
-					rekv.get(i).setVisitator(brugerDao.findByPrimaryKey(rekv.get(i).getVisitatorId() != null ? rekv.get(i).getVisitatorId() : -1));
-					rekv.get(i).setPatient(ptDao.findByPrimaryKey(rekv.get(i).getPatientId() != null ? rekv.get(i).getPatientId() : -1));
-					rekv.get(i).setModalitet(modDao.findByPrimaryKey(undDao.findByPrimaryKey(rekv.get(i).getUndersoegelsesTypeId() != null ? rekv.get(i).getUndersoegelsesTypeId() : -1).getModalitetId()));
 					ret[i] = rekv.get(i);
 				}
 				
 				
 				
-		return ret;
+		return addObjectsToRekvisition(ret);
+		
+		
+	}
+	private Rekvisition[] addObjectsToRekvisition(Rekvisition[] rekv){
+		if(rekv == null || rekv.length <= 0) return null;
+		MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);
+		PETCTKontrolskemaDao petctDao = new PETCTKontrolskemaDaoImpl(conn);
+		CtKontrastKontrolskemaDao ctKontrDao = new CtKontrastKontrolskemaDaoImpl(conn);
+		BrugerDao brugerDao = new BrugerDaoImpl(conn);
+		PatientDao ptDao = new PatientDaoImpl(conn);
+		ModalitetDao modDao = new ModalitetDaoImpl(conn);
+		UndersoegelsesTypeDao undDao = new UndersoegelsesTypeDaoImpl(conn);
+		
+		for(int i = 0; i < rekv.length; i++){
+			rekv[i].setMrMkontroKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
+			rekv[i].setPetctKontrolskema(petctDao.findByPrimaryKey(rekv[i].getPETCTKontrolskemaId() != null ? rekv[i].getPETCTKontrolskemaId() : -1));
+			rekv[i].setCtKontrastKontrolskema(ctKontrDao.findByPrimaryKey(rekv[i].getCTKontrastKontrolskemaId() != null ? rekv[i].getCTKontrastKontrolskemaId() : -1));
+			rekv[i].setRekvirent(brugerDao.findByPrimaryKey(rekv[i].getRekvirentId() != null ? rekv[i].getRekvirentId() : -1));
+			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));
+			rekv[i].setPatient(ptDao.findByPrimaryKey(rekv[i].getPatientId() != null ? rekv[i].getPatientId() : -1));
+			rekv[i].setModalitet(modDao.findByPrimaryKey(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId() != null ? rekv[i].getUndersoegelsesTypeId() : -1).getModalitetId()));
+		}
+		return rekv;
 	}
 }

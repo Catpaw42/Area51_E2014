@@ -20,7 +20,14 @@ import com.spoledge.audao.db.dao.AbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
 
+import database.dao.BrugerDao;
+import database.dao.CtKontrastKontrolskemaDao;
+import database.dao.MRKontrolskemaDao;
+import database.dao.ModalitetDao;
+import database.dao.PETCTKontrolskemaDao;
+import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
+import database.dao.UndersoegelsesTypeDao;
 import database.dto.Rekvisition;
 import database.dto.Rekvisition.Status;
 
@@ -57,7 +64,33 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	 * @return the record found or null
 	 */
 	public Rekvisition findByPrimaryKey( int rekvisitionId ) {
-		return findOne( PK_CONDITION, rekvisitionId);
+		Rekvisition find = findOne( PK_CONDITION, rekvisitionId);
+		if(find == null) return null;
+		Rekvisition[] rekv = new Rekvisition[]{find};
+		rekv = addObjectsToRekvisition(rekv);
+		return rekv[0];
+	}
+	
+	private Rekvisition[] addObjectsToRekvisition(Rekvisition[] rekv){
+		if(rekv == null || rekv.length <= 0) return null;
+		MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);
+		PETCTKontrolskemaDao petctDao = new PETCTKontrolskemaDaoImpl(conn);
+		CtKontrastKontrolskemaDao ctKontrDao = new CtKontrastKontrolskemaDaoImpl(conn);
+		BrugerDao brugerDao = new BrugerDaoImpl(conn);
+		PatientDao ptDao = new PatientDaoImpl(conn);
+		ModalitetDao modDao = new ModalitetDaoImpl(conn);
+		UndersoegelsesTypeDao undDao = new UndersoegelsesTypeDaoImpl(conn);
+		
+		for(int i = 0; i < rekv.length; i++){
+			rekv[i].setMrMkontroKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
+			rekv[i].setPetctKontrolskema(petctDao.findByPrimaryKey(rekv[i].getPETCTKontrolskemaId() != null ? rekv[i].getPETCTKontrolskemaId() : -1));
+			rekv[i].setCtKontrastKontrolskema(ctKontrDao.findByPrimaryKey(rekv[i].getCTKontrastKontrolskemaId() != null ? rekv[i].getCTKontrastKontrolskemaId() : -1));
+			rekv[i].setRekvirent(brugerDao.findByPrimaryKey(rekv[i].getRekvirentId() != null ? rekv[i].getRekvirentId() : -1));
+			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));
+			rekv[i].setPatient(ptDao.findByPrimaryKey(rekv[i].getPatientId() != null ? rekv[i].getPatientId() : -1));
+			rekv[i].setModalitet(modDao.findByPrimaryKey(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId() != null ? rekv[i].getUndersoegelsesTypeId() : -1).getModalitetId()));
+		}
+		return rekv;
 	}
 
 	/**

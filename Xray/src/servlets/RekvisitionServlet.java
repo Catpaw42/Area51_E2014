@@ -235,7 +235,7 @@ public class RekvisitionServlet extends HttpServlet {
 		}
 		request.setAttribute(REKVISITION_LIST, rekvDto);
 
-		System.out.println();
+
 		request.getRequestDispatcher(REKVISITION_PAGE).forward(request, response);
 
 	}
