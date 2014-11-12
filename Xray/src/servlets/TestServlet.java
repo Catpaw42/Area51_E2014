@@ -25,6 +25,8 @@ import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
+import database.dao.mysql.RekvisitionDaoImpl;
+import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
 import database.dto.Modalitet;
@@ -102,10 +104,33 @@ public class TestServlet extends HttpServlet {
 		testMrKontrol(statement, connection);
 		System.out.println("\n \n#############test rettigheder#################");
 		testRettigheder(connection);
+		System.out.println("\n \n############# test adv search#################");
+		testAdvSearch(connection);
 //		testBrugerValidering(connection);
 
 
 
+	}
+
+	private void testAdvSearch(Connection connection) {
+		Rekvisition[] r = null;
+		RekvisitionDaoImplExt dao = new RekvisitionDaoImplExt(connection);
+		// test: "Røntgen"
+		r = dao.findByAdvSearch(null, null, null, null, null, null);
+		System.out.println("################ adv search########################");
+		System.out.println("arrayStørrelse: " + r.length);
+		for (Rekvisition rekvisition : r) {
+			System.out.println(rekvisition.getRekvisitionId());
+		}
+		System.out.println(r.length + " funde rekvisitioner###################");
+		
+		System.out.println("############### dynamic search####################");
+		Rekvisition[] rek = dao.findDynamic("status=?", 0, -1, new Object[]{Status.PENDING});
+		for (Rekvisition rekvisition : rek) {
+			System.out.println("id: " + rekvisition.getRekvisitionId());
+			System.out.println("status: " + rekvisition.getStatus());
+		}
+		
 	}
 
 	private void testPetCtKontrolskema(Connection conn){
@@ -326,11 +351,11 @@ public class TestServlet extends HttpServlet {
 		BrugerDao brugerDao = null;
 		brugerDao = new BrugerDaoImpl(conn);
 		System.out.println("######VALIDERING AF BRUGER######");
-		if(brugerDao.validate(brugernavn, kodeord)){
+//		if(brugerDao.validate(brugernavn, kodeord)){
 			System.out.println("User was validated.");
-		} else{
+//		} else{
 			System.out.println("User was NOT validated.");
-		}
+//		}
 		System.out.println("################");
 	}
 

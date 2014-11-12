@@ -47,7 +47,5 @@ public interface BrugerDao extends AbstractDao {
     /**
      * Method for validating userlogin
      */
-    
-    public boolean validate(String brugernavn, String kodeord);
 
 }

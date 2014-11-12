@@ -26,7 +26,7 @@ public interface RekvisitionDao extends AbstractDao {
      * @return the record found or null
      */
     public Rekvisition findByPrimaryKey( int rekvisitionId );
-
+    
     /**
      * Finds records.
      */
