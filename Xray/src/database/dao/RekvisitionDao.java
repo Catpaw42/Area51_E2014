@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.dto.Rekvisition;
+import database.dto.RekvisitionExtended;
 
 
 /**
@@ -25,23 +25,23 @@ public interface RekvisitionDao extends AbstractDao {
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public Rekvisition findByPrimaryKey( int rekvisitionId );
+    public RekvisitionExtended findByPrimaryKey( int rekvisitionId );
     
     /**
      * Finds records.
      */
-    public Rekvisition[] findDynamic( String cond, int offset, int count, Object... params );
+    public RekvisitionExtended[] findDynamic( String cond, int offset, int count, Object... params );
 
     /**
      * Inserts a new record.
      * @return the generated primary key - rekvisitionId
      */
-    public int insert( Rekvisition dto ) throws DaoException;
+    public int insert( RekvisitionExtended dto ) throws DaoException;
 
     /**
      * Updates one record found by primary key.
      * @return true iff the record was really updated (=found and any change was really saved)
      */
-    public boolean update( int rekvisitionId, Rekvisition dto ) throws DaoException;
+    public boolean update( int rekvisitionId, RekvisitionExtended dto ) throws DaoException;
 
 }

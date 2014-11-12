@@ -14,7 +14,7 @@ import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.PatientDao;
 import database.dao.UndersoegelsesTypeDao;
-import database.dto.Rekvisition;
+import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended;
 
 public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
@@ -27,18 +27,18 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 	}
 	
 	//TODO skal flyttes ind i sin superclass senere
-	public Rekvisition[] findDynamic( String cond, int offset, int count, Object... params ) {
+	public RekvisitionExtended[] findDynamic( String cond, int offset, int count, Object... params ) {
 		for(int i = 0; i < params.length; i++){
 			if(params[i].getClass().isEnum()){
 				params[i] = ((Enum<?>) params[i]).ordinal() +1;
 			}
 		}
-		Rekvisition[] rekv = findManyArray( cond, offset, count, params);
+		RekvisitionExtended[] rekv = findManyArray( cond, offset, count, params);
 		return addObjectsToRekvisition(rekv);
 		
 	}
 
-	public Rekvisition[] findByAdvSearch(String cpr, String name, String modality, Rekvisition.Status status,Timestamp date, String department){ 	
+	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department){ 	
 		Timestamp lowBound = null;
 		Timestamp upperBound = null;
 		System.out.println("##############ARGS#############");
@@ -51,7 +51,7 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 		System.out.println("###############################");
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		ArrayList<Rekvisition> rekv = new ArrayList<>();
+		ArrayList<RekvisitionExtended> rekv = new ArrayList<>();
 		String query = ADV_SEARCH;
 		boolean first = false;
 
@@ -147,7 +147,7 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 					System.err.println(e.getSQLState());
 				}
 						
-				Rekvisition[] ret = new Rekvisition[rekv.size()];
+				RekvisitionExtended[] ret = new RekvisitionExtended[rekv.size()];
 				for(int i = 0; i < rekv.size(); i++){
 					ret[i] = rekv.get(i);
 				}
@@ -158,7 +158,7 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 		
 		
 	}
-	private Rekvisition[] addObjectsToRekvisition(Rekvisition[] rekv){
+	private RekvisitionExtended[] addObjectsToRekvisition(RekvisitionExtended[] rekv){
 		if(rekv == null || rekv.length <= 0) return null;
 		MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);
 		PETCTKontrolskemaDao petctDao = new PETCTKontrolskemaDaoImpl(conn);

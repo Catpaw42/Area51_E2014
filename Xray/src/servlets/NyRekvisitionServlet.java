@@ -47,13 +47,13 @@ import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
 import database.dto.Bruger;
 import database.dto.Patient;
-import database.dto.Rekvisition;
-import database.dto.Rekvisition.AmbulantKoersel;
-import database.dto.Rekvisition.HenvistTil;
-import database.dto.Rekvisition.HospitalOenske;
-import database.dto.Rekvisition.IndlaeggelseTransport;
-import database.dto.Rekvisition.Prioritering;
-import database.dto.Rekvisition.Samtykke;
+import database.dto.RekvisitionExtended;
+import database.dto.RekvisitionExtended.AmbulantKoersel;
+import database.dto.RekvisitionExtended.HenvistTil;
+import database.dto.RekvisitionExtended.HospitalOenske;
+import database.dto.RekvisitionExtended.IndlaeggelseTransport;
+import database.dto.RekvisitionExtended.Prioritering;
+import database.dto.RekvisitionExtended.Samtykke;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 
 /**
@@ -86,6 +86,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		request.setCharacterEncoding("UTF-8");
 		//Getting a database connection....
 		Connection connection = null;
 		try {
@@ -113,7 +114,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		}
 		
 		//Making Rekvisition DTO
-		Rekvisition rek = new Rekvisition();
+		RekvisitionExtended rek = new RekvisitionExtended();
 		//Rekvisition.setPaaroerende TODO
 		rek.setPaaroerende(request.getParameter("paaroerende"));
 		rek.setSamtykke(convertSamtykke(request)); //TODO validate samtykke.
@@ -168,7 +169,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		}
 		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billed_diagnostik"));
 		rek.setPatientId(ptId);
-		rek.setStatus(Rekvisition.Status.PENDING);
+		rek.setStatus(RekvisitionExtended.Status.PENDING);
 		rek.setAfsendtDato(new Date());
 		System.out.println(rek);
 		//Time to store requisition
@@ -217,16 +218,16 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (transString==null) return null;
 		switch (transString) {
 		case "selv":
-			indlTrans = Rekvisition.IndlaeggelseTransport.GAA_UDEN_PORTOER;
+			indlTrans = RekvisitionExtended.IndlaeggelseTransport.GAA_UDEN_PORTOER;
 			break;
 		case "portoer":
-			indlTrans = Rekvisition.IndlaeggelseTransport.GAA_MED_PORTOER;
+			indlTrans = RekvisitionExtended.IndlaeggelseTransport.GAA_MED_PORTOER;
 			break;
 		case "koerestol":
-			indlTrans = Rekvisition.IndlaeggelseTransport.KOERESTOL;
+			indlTrans = RekvisitionExtended.IndlaeggelseTransport.KOERESTOL;
 			break;
 		case "seng":
-			indlTrans = Rekvisition.IndlaeggelseTransport.SENG;
+			indlTrans = RekvisitionExtended.IndlaeggelseTransport.SENG;
 			break;
 		default:
 			indlTrans=null;
@@ -241,13 +242,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (transString==null) return null;
 		switch (transString) {
 		case "ingen":
-			ambuTrans = Rekvisition.AmbulantKoersel.INGEN;
+			ambuTrans = RekvisitionExtended.AmbulantKoersel.INGEN;
 			break;
 		case "siddende":
-			ambuTrans = Rekvisition.AmbulantKoersel.SIDDENDE;
+			ambuTrans = RekvisitionExtended.AmbulantKoersel.SIDDENDE;
 			break;
 		case "liggende":
-			ambuTrans = Rekvisition.AmbulantKoersel.LIGGENDE;
+			ambuTrans = RekvisitionExtended.AmbulantKoersel.LIGGENDE;
 			break;
 		default:
 			ambuTrans = null;
@@ -262,16 +263,16 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (prioString==null)return null;
 		switch (prioString) {
 		case "haste":
-			prio = Rekvisition.Prioritering.HASTE; 
+			prio = RekvisitionExtended.Prioritering.HASTE; 
 			break;
 		case "fremskyndet":
-			prio = Rekvisition.Prioritering.FREMSKYNDET; 
+			prio = RekvisitionExtended.Prioritering.FREMSKYNDET; 
 			break;
 		case "rutine":
-			prio = Rekvisition.Prioritering.RUTINE; 
+			prio = RekvisitionExtended.Prioritering.RUTINE; 
 			break;
 		case "pakke":
-			prio = Rekvisition.Prioritering.PAKKEFORLOEB; 
+			prio = RekvisitionExtended.Prioritering.PAKKEFORLOEB; 
 			break;
 		default:
 			prio = null;
@@ -287,13 +288,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (hospOenskString==null) return null;
 		switch (hospOenskString) {
 		case "hilleroed":
-			hospOensk = Rekvisition.HospitalOenske.HILLEROED;
+			hospOensk = RekvisitionExtended.HospitalOenske.HILLEROED;
 			break;
 		case "frederikssund":
-			hospOensk = Rekvisition.HospitalOenske.FREDERIKSSUND;
+			hospOensk = RekvisitionExtended.HospitalOenske.FREDERIKSSUND;
 			break;
 		case "helsingoer":
-			hospOensk = Rekvisition.HospitalOenske.HELSINGOER;
+			hospOensk = RekvisitionExtended.HospitalOenske.HELSINGOER;
 			break;
 		default:
 			hospOensk=null;
@@ -308,10 +309,10 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (henvString==null) return null;
 		switch (henvString) {
 		case "radiologisk":
-			henv = Rekvisition.HenvistTil.RADIOLOGISK;
+			henv = RekvisitionExtended.HenvistTil.RADIOLOGISK;
 			break;
 		case "klinfys":
-			henv = Rekvisition.HenvistTil.KLINISK;
+			henv = RekvisitionExtended.HenvistTil.KLINISK;
 			break;
 		default:
 			henv = null;
@@ -326,13 +327,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (samtykkeString == null) return null;
 		switch (samtykkeString) {
 		case "ja":
-			samtykke = Rekvisition.Samtykke.JA;
+			samtykke = RekvisitionExtended.Samtykke.JA;
 			break;
 		case "nej":
-			samtykke = Rekvisition.Samtykke.NEJ;
+			samtykke = RekvisitionExtended.Samtykke.NEJ;
 			break;
 		default:
-			samtykke = Rekvisition.Samtykke.UDEN_SAMTYKKE;
+			samtykke = RekvisitionExtended.Samtykke.UDEN_SAMTYKKE;
 			break;
 		}
 		return samtykke;

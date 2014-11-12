@@ -33,14 +33,14 @@ import database.dto.Modalitet;
 import database.dto.PETCTKontrolskema;
 import database.dto.PETCTKontrolskema.Formaal;
 import database.dto.PETCTKontrolskema.KemoOgStraale;
-import database.dto.Rekvisition;
-import database.dto.Rekvisition.AmbulantKoersel;
-import database.dto.Rekvisition.HenvistTil;
-import database.dto.Rekvisition.HospitalOenske;
-import database.dto.Rekvisition.IndlaeggelseTransport;
-import database.dto.Rekvisition.Prioritering;
-import database.dto.Rekvisition.Samtykke;
-import database.dto.Rekvisition.Status;
+import database.dto.RekvisitionExtended;
+import database.dto.RekvisitionExtended.AmbulantKoersel;
+import database.dto.RekvisitionExtended.HenvistTil;
+import database.dto.RekvisitionExtended.HospitalOenske;
+import database.dto.RekvisitionExtended.IndlaeggelseTransport;
+import database.dto.RekvisitionExtended.Prioritering;
+import database.dto.RekvisitionExtended.Samtykke;
+import database.dto.RekvisitionExtended.Status;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 //import dto.DTOexRequest;
 //import dto.DTOexRequest.Status;
@@ -113,20 +113,20 @@ public class TestServlet extends HttpServlet {
 	}
 
 	private void testAdvSearch(Connection connection) {
-		Rekvisition[] r = null;
+		RekvisitionExtended[] r = null;
 		RekvisitionDaoImplExt dao = new RekvisitionDaoImplExt(connection);
 		// test: "Røntgen"
 		r = dao.findByAdvSearch(null, null, null, null, null, null);
 		System.out.println("################ adv search########################");
 		System.out.println("arrayStørrelse: " + r.length);
-		for (Rekvisition rekvisition : r) {
+		for (RekvisitionExtended rekvisition : r) {
 			System.out.println(rekvisition.getRekvisitionId());
 		}
 		System.out.println(r.length + " funde rekvisitioner###################");
 		
 		System.out.println("############### dynamic search####################");
-		Rekvisition[] rek = dao.findDynamic("status=?", 0, -1, new Object[]{Status.PENDING});
-		for (Rekvisition rekvisition : rek) {
+		RekvisitionExtended[] rek = dao.findDynamic("status=?", 0, -1, new Object[]{Status.PENDING});
+		for (RekvisitionExtended rekvisition : rek) {
 			System.out.println("id: " + rekvisition.getRekvisitionId());
 			System.out.println("status: " + rekvisition.getStatus());
 		}
@@ -372,7 +372,7 @@ public class TestServlet extends HttpServlet {
 		System.err.println("trying to get dao \n");
 		RekvisitionDao dao = DaoFactory.createRekvisitionDao(conn);
 		System.err.println("dao aquired");
-		Rekvisition dto = new Rekvisition();
+		RekvisitionExtended dto = new RekvisitionExtended();
 		dto.setAmbulant(true);
 		dto.setAmbulantKoersel(AmbulantKoersel.LIGGENDE);
 		dto.setCave("utrolig farligt alts�");
@@ -395,7 +395,7 @@ public class TestServlet extends HttpServlet {
 			System.out.println("dto inserted");
 			// test findByPrimary key by searching for previous inserted object
 			System.out.println("searching for inserted dto pr-key: " + dto.getRekvisitionId() + "...");
-			Rekvisition r =  dao.findByPrimaryKey(dto.getRekvisitionId());
+			RekvisitionExtended r =  dao.findByPrimaryKey(dto.getRekvisitionId());
 			System.out.println("objects primary key: " + r.getRekvisitionId());
 
 			//test update of status

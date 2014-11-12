@@ -35,13 +35,13 @@ import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
 import database.dto.Patient;
-import database.dto.Rekvisition.Status;
+import database.dto.RekvisitionExtended.Status;
 import database.dto.RekvisitionExtended;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 import database.DataSourceConnector;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.RekvisitionDaoImpl;
-import database.dto.Rekvisition;
+import database.dto.RekvisitionExtended;
 
 /**
  * Servlet implementation class RekvisitionServlet
@@ -103,7 +103,7 @@ public class RekvisitionServlet extends HttpServlet {
 		}
 
 
-		Rekvisition[] rekvlist;
+		RekvisitionExtended[] rekvlist;
 		// gets list of the active user
 		rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
 		// rekvlist = rekvisitionDao.findDynamic(cond, 0, -1, new Object[]{Status.PENDING}); //(cond, 0, -1, new Object[]{Status.PENDING});
@@ -152,7 +152,7 @@ public class RekvisitionServlet extends HttpServlet {
 		}
 
 		// objekter
-		Rekvisition[] rekvDto;
+		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
 		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
 		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);

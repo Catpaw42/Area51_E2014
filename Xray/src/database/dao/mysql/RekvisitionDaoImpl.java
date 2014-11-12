@@ -28,8 +28,8 @@ import database.dao.PETCTKontrolskemaDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.UndersoegelsesTypeDao;
-import database.dto.Rekvisition;
-import database.dto.Rekvisition.Status;
+import database.dto.RekvisitionExtended;
+import database.dto.RekvisitionExtended.Status;
 
 
 /**
@@ -37,7 +37,7 @@ import database.dto.Rekvisition.Status;
  *
  * @author generated
  */
-public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements RekvisitionDao {
+public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> implements RekvisitionDao {
 
 	private static final String TABLE_NAME = "rekvisition";
 
@@ -46,13 +46,13 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	protected static final String PK_CONDITION = "rekvisition_id=?";
 
 	private static final String SQL_INSERT = "INSERT INTO rekvisition (MR_kontrolskema_id,PETCT_kontrolskema_id,CT_kontrast_kontrolskema_id,invasiv_UL_kontrolskema_id,undersoegelses_type_id,rekvirent_id,visitator_id,patient_id,henvist_til,hospital_oenske,prioritering,udf_indlagt,ambulant_koersel,indlaeggelse_transport,status,samtykke,paaroerende,ambulant,dato_forslag,graviditet,graviditet_uge,cave,hoerehaemmet,synshaemmet,amputeret,kan_ikke_staa,ilt_liter_prmin,tolk_sprog,dement,afasi,isolation,cytostatika_dato,tidl_billed_diagnostik,klinisk_problemstilling,triage,henv_laege,henv_afd,kontakt_tlf,visitator_prioritering,visitator_bemaerkning,afsendt_dato) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private static final Rekvisition.HenvistTil[] _Rekvisition_HenvistTils = { null, Rekvisition.HenvistTil.RADIOLOGISK, Rekvisition.HenvistTil.KLINISK };
-	private static final Rekvisition.HospitalOenske[] _Rekvisition_HospitalOenskes = { null, Rekvisition.HospitalOenske.HILLEROED, Rekvisition.HospitalOenske.FREDERIKSSUND, Rekvisition.HospitalOenske.HELSINGOER };
-	private static final Rekvisition.Prioritering[] _Rekvisition_Prioriterings = { null, Rekvisition.Prioritering.HASTE, Rekvisition.Prioritering.RUTINE, Rekvisition.Prioritering.FREMSKYNDET, Rekvisition.Prioritering.PAKKEFORLOEB };
-	private static final Rekvisition.AmbulantKoersel[] _Rekvisition_AmbulantKoersels = { null, Rekvisition.AmbulantKoersel.INGEN, Rekvisition.AmbulantKoersel.SIDDENDE, Rekvisition.AmbulantKoersel.LIGGENDE };
-	private static final Rekvisition.IndlaeggelseTransport[] _Rekvisition_IndlaeggelseTransports = { null, Rekvisition.IndlaeggelseTransport.GAA_UDEN_PORTOER, Rekvisition.IndlaeggelseTransport.GAA_MED_PORTOER, Rekvisition.IndlaeggelseTransport.KOERESTOL, Rekvisition.IndlaeggelseTransport.SENG };
-	private static final Rekvisition.Status[] _Rekvisition_Statuss = { null, Rekvisition.Status.PENDING, Rekvisition.Status.CANCELED, Rekvisition.Status.APPROVED, Rekvisition.Status.DECLINED, Rekvisition.Status.BOOKED };
-	private static final Rekvisition.Samtykke[] _Rekvisition_Samtykkes = { null, Rekvisition.Samtykke.JA, Rekvisition.Samtykke.NEJ, Rekvisition.Samtykke.UDEN_SAMTYKKE };
+	private static final RekvisitionExtended.HenvistTil[] _Rekvisition_HenvistTils = { null, RekvisitionExtended.HenvistTil.RADIOLOGISK, RekvisitionExtended.HenvistTil.KLINISK };
+	private static final RekvisitionExtended.HospitalOenske[] _Rekvisition_HospitalOenskes = { null, RekvisitionExtended.HospitalOenske.HILLEROED, RekvisitionExtended.HospitalOenske.FREDERIKSSUND, RekvisitionExtended.HospitalOenske.HELSINGOER };
+	private static final RekvisitionExtended.Prioritering[] _Rekvisition_Prioriterings = { null, RekvisitionExtended.Prioritering.HASTE, RekvisitionExtended.Prioritering.RUTINE, RekvisitionExtended.Prioritering.FREMSKYNDET, RekvisitionExtended.Prioritering.PAKKEFORLOEB };
+	private static final RekvisitionExtended.AmbulantKoersel[] _Rekvisition_AmbulantKoersels = { null, RekvisitionExtended.AmbulantKoersel.INGEN, RekvisitionExtended.AmbulantKoersel.SIDDENDE, RekvisitionExtended.AmbulantKoersel.LIGGENDE };
+	private static final RekvisitionExtended.IndlaeggelseTransport[] _Rekvisition_IndlaeggelseTransports = { null, RekvisitionExtended.IndlaeggelseTransport.GAA_UDEN_PORTOER, RekvisitionExtended.IndlaeggelseTransport.GAA_MED_PORTOER, RekvisitionExtended.IndlaeggelseTransport.KOERESTOL, RekvisitionExtended.IndlaeggelseTransport.SENG };
+	private static final RekvisitionExtended.Status[] _Rekvisition_Statuss = { null, RekvisitionExtended.Status.PENDING, RekvisitionExtended.Status.CANCELED, RekvisitionExtended.Status.APPROVED, RekvisitionExtended.Status.DECLINED, RekvisitionExtended.Status.BOOKED };
+	private static final RekvisitionExtended.Samtykke[] _Rekvisition_Samtykkes = { null, RekvisitionExtended.Samtykke.JA, RekvisitionExtended.Samtykke.NEJ, RekvisitionExtended.Samtykke.UDEN_SAMTYKKE };
 
 	
 	public RekvisitionDaoImpl( Connection conn ) {
@@ -63,15 +63,15 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	 * Finds a record identified by its primary key.
 	 * @return the record found or null
 	 */
-	public Rekvisition findByPrimaryKey( int rekvisitionId ) {
-		Rekvisition find = findOne( PK_CONDITION, rekvisitionId);
+	public RekvisitionExtended findByPrimaryKey( int rekvisitionId ) {
+		RekvisitionExtended find = findOne( PK_CONDITION, rekvisitionId);
 		if(find == null) return null;
-		Rekvisition[] rekv = new Rekvisition[]{find};
+		RekvisitionExtended[] rekv = new RekvisitionExtended[]{find};
 		rekv = addObjectsToRekvisition(rekv);
 		return rekv[0];
 	}
 	
-	private Rekvisition[] addObjectsToRekvisition(Rekvisition[] rekv){
+	private RekvisitionExtended[] addObjectsToRekvisition(RekvisitionExtended[] rekv){
 		if(rekv == null || rekv.length <= 0) return null;
 		MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);
 		PETCTKontrolskemaDao petctDao = new PETCTKontrolskemaDaoImpl(conn);
@@ -96,7 +96,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	/**
 	 * Finds records.
 	 */
-	public Rekvisition[] findDynamic( String cond, int offset, int count, Object... params ) {
+	public RekvisitionExtended[] findDynamic( String cond, int offset, int count, Object... params ) {
 		for(int i = 0; i < params.length; i++){
 			if(params[i].getClass().isEnum()){
 				params[i] = ((Enum<?>) params[i]).ordinal() +1;
@@ -109,7 +109,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	 * Inserts a new record.
 	 * @return the generated primary key - rekvisitionId
 	 */
-	public int insert( Rekvisition dto ) throws DaoException {
+	public int insert( RekvisitionExtended dto ) throws DaoException {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
@@ -371,7 +371,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 	 * Updates one record found by primary key.
 	 * @return true iff the record was really updated (=found and any change was really saved)
 	 */
-	public boolean update( int rekvisitionId, Rekvisition dto ) throws DaoException {
+	public boolean update( int rekvisitionId, RekvisitionExtended dto ) throws DaoException {
 		StringBuffer sb = new StringBuffer();
 		ArrayList<Object> params = new ArrayList<Object>();
 
@@ -828,8 +828,8 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 		return SELECT_COLUMNS;
 	}
 
-	protected Rekvisition fetch( ResultSet rs ) throws SQLException {
-		Rekvisition dto = new Rekvisition();
+	protected RekvisitionExtended fetch( ResultSet rs ) throws SQLException {
+		RekvisitionExtended dto = new RekvisitionExtended();
 		dto.setRekvisitionId( rs.getInt( 1 ));
 		dto.setMRKontrolskemaId( rs.getInt( 2 ));
 
@@ -931,8 +931,8 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<Rekvisition> implements 
 		return dto;
 	}
 
-	protected Rekvisition[] toArray(ArrayList<Rekvisition> list ) {
-		Rekvisition[] ret = new Rekvisition[ list.size() ];
+	protected RekvisitionExtended[] toArray(ArrayList<RekvisitionExtended> list ) {
+		RekvisitionExtended[] ret = new RekvisitionExtended[ list.size() ];
 		return list.toArray( ret );
 	}
 
