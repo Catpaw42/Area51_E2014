@@ -190,10 +190,22 @@ public class NyRekvisitionServlet extends HttpServlet
 	private String parseCprBirthday(HttpServletRequest request) {
 		String foedselsdagString = request.getParameter("patient_cpr");
 		Integer foedeaar = Integer.valueOf(foedselsdagString.substring(4, 6));
-		if (new java.util.Date().getYear() - foedeaar >= 100 ){
-			foedeaar = 2000 + foedeaar;
-		} else {
+		String digit7String = foedselsdagString.substring(7,8);
+		if (digit7String.equalsIgnoreCase("-") ) digit7String = foedselsdagString.substring(8, 9);
+		Integer digit7 = Integer.valueOf(digit7String);				
+		if (digit7 <= 3  ){
 			foedeaar = 1900 + foedeaar;
+		} else {
+			if ((digit7 == 4 || digit7 == 9) && foedeaar >=37){
+				foedeaar = 1900 + foedeaar;	
+			} else {
+				if (foedeaar >=58){
+					foedeaar = 1800 + foedeaar;
+				} else {
+					foedeaar = 2000 + foedeaar;
+				}
+			}
+			
 		}
 		foedselsdagString = String.valueOf(foedeaar) + "-" + foedselsdagString.substring(2,4)+"-"+foedselsdagString.substring(0, 2);
 		return foedselsdagString;
