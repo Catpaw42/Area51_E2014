@@ -199,7 +199,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			if ((digit7 == 4 || digit7 == 9) && foedeaar >=37){
 				foedeaar = 1900 + foedeaar;	
 			} else {
-				if (foedeaar >=58){
+				if (foedeaar >=58 && (digit7 !=4||digit7!=9)){
 					foedeaar = 1800 + foedeaar;
 				} else {
 					foedeaar = 2000 + foedeaar;
