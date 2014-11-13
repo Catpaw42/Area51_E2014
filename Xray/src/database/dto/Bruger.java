@@ -97,7 +97,7 @@ public class Bruger extends AbstractDto {
 		this.rettigheder = rettigheder;
 	}
 
-	public boolean harRettighed(Rettigheder.Rettighed rettighedEnum, Bruger b){
+	public boolean harRettighed(Rettigheder.Rettighed rettighedEnum){
 		for(Rettigheder ret : rettigheder){
 			if(ret.getRettighed().equals(rettighedEnum)){
 				return true;
