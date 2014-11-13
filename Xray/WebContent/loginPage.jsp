@@ -1,17 +1,25 @@
 <!DOCTYPE HTML>
-	<html>
+	<%@page import="helperClasses.Const"%>
+<html>
 		<head>
 			<title>Login</title>
 			<meta charset="utf-8">
 			<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 			<link href="css/loginPage.css.css" rel="stylesheet" type="text/css" media="screen">
+			<% Boolean loginFailed = (Boolean) request.getAttribute(Const.LOGIN_FAILED); %>
 		</head>
 		
 		<body>
 			<section class="loginform" >
 			<h1>Login</h1>
 				<form id="login" action=LoginServlet method="post" accept-charset="utf-8">
+				<div>-<% if (loginFailed !=null && loginFailed==true){
+							out.print("Brugernavn eller kodeord forkert!!");
+						}
+							
+							%></div>
 					<ul>
+						
 						<li>
 						<label for="username">Brugernavn:</label>
 						<input type="text" id="username" name="username" placeholder="Brugernavn" required="required">
