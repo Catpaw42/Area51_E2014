@@ -27,7 +27,7 @@
 			<ul>
 				<%
 					if (aUser.harRettighed(Rettighed.REQUEST))
-						out.print("<li> <a href='MainServlet?page=rekvirer'>Rekvirer</a> </li>");
+						out.print("<li> <a href='MainServlet?page=rekvirer'>Rekvirer</a></li>");
 					if (aUser.harRettighed(Rettighed.ASSESSOR))
 						out.print("<li><a href='MainServlet?page=visiter'>Visitér</a></li>");
 					if (aUser.harRettighed(Rettighed.BOOKING))
