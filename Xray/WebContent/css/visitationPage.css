@@ -49,11 +49,11 @@
 	height: 400px;
 	border: 1px solid black;
 }
-#visitationList table, #visitationList th {
+.visitationList table, .visitationList th {
 	border: 2px solid black;
 	border-collapse: collapse;
 }
-#visitationList td {
+.visitationList td {
 	border: 1px solid black;
 	border-collapse: collapse;
 }

@@ -1,6 +1,11 @@
 package database.dto;
 
+import java.sql.Connection;
+
+import database.DataSourceConnector;
 import database.dao.RettighederDao;
+import database.dao.mysql.RettighederDaoImpl;
+import database.interfaces.IDataSourceConnector.ConnectionException;
 
 
 
@@ -11,28 +16,22 @@ import database.dao.RettighederDao;
  */
 public class RettighedsBruger extends Bruger {
 	
-	private Bruger rettighedsBruger;
 	private Rettigheder[] rettigheder;
-	private RettighederDao retDao;
 	protected static final String GET_RETTIGHEDER = "bruger_id=?";
-    
+
 	
 	public RettighedsBruger(Bruger bruger) {
-		this.rettighedsBruger = bruger;
+		Connection conn = null;
+		try {
+			conn = DataSourceConnector.getConnection();
+		} catch (ConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		RettighederDao retDao = new RettighederDaoImpl(conn);
 		this.rettigheder = retDao.findDynamic(GET_RETTIGHEDER, 0, -1, new Object[]{bruger.getBrugerId()});
 		
 	}
-
-
-	public Bruger getBruger() {
-		return rettighedsBruger;
-	}
-
-
-	public void setBruger(Bruger bruger) {
-		this.rettighedsBruger = bruger;
-	}
-
 
 	public Rettigheder[] getRettigheder() {
 		return rettigheder;

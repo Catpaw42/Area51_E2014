@@ -10,10 +10,16 @@
 			<ul class="showInline">
 				<li>
 					<div id="stamdata">
+					<% 
+					if(request.getParameter("rekvisition_Id").equalsIgnoreCase("test1")){
+						out.print("test");
+					}
+					%>
 					</div>
 				</li>
 				<li>
 					<div id="supplerendeData">
+					
 					</div>
 				</li>
 			</ul>
