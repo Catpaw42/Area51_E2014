@@ -57,6 +57,7 @@ public class MainServlet extends HttpServlet {
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		switch ( request.getParameter("page")) {
 		case "loggingIn":
+			//TODO redirect on permissions
 			forward("/RekvisitionServlet",request,response);
 			break;
 		case "login":
