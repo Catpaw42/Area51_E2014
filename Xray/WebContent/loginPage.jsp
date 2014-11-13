@@ -4,6 +4,7 @@
 			<title>Login</title>
 			<meta charset="utf-8">
 			<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+			<link href="css/loginPage.css.css" rel="stylesheet" type="text/css" media="screen">
 		</head>
 		
 		<body>
