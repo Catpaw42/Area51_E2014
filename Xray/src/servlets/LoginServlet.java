@@ -88,7 +88,8 @@ public class LoginServlet extends HttpServlet
 						request.getSession().setAttribute(Const.ACTIVE_USER, loggedInUser );
 					
 //						request.getSession().setAttribute(Const.DATABASE, dbctrl);
-						response.sendRedirect(Const.REKVISITION_SERVLET);
+						
+						response.sendRedirect(Const.MAIN_SERVLET + "?page=loggingIn");
 						System.out.println("forward finished");
 					}
 					else

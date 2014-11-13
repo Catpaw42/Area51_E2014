@@ -147,11 +147,7 @@
 					</table>
 				</div>
 			</li>
-			<li>
-				<div id="embededSite">
-					<iframe id="embededSiteFrame" src="visiter.jsp"></iframe>
-				</div>
-			</li>
+		
 		</ul>
 	</div>
 	<div id="overlay"></div>

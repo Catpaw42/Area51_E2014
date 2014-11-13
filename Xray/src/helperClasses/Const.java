@@ -18,8 +18,8 @@ public final class Const {
 	public static final String STATUS_LIST = "statusList";
 	
 
-	public static final String MENU_SERVLET = "menuServlet";
-	public static final String MAIN_SERVLET = "mainServlet";
+	public static final String MENU_SERVLET = "MenuServlet";
+	public static final String MAIN_SERVLET = "MainServlet";
 	public static final String REKVISITION_SERVLET = "RekvisitionServlet";
 	public static final String DATABASE = "database";
 	
