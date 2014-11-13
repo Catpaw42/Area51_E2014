@@ -1,7 +1,8 @@
 /*change the labes to block-display instead of inline, also sets a color*/
 label {
     display: block;
-    color: #999;
+    color: #000000;
+    font-weight: bold;
 }
 
 .highlight {
@@ -12,4 +13,10 @@ label {
 	flex-direction: row;
 	padding: 0;
 	list-style-type: none;
+}
+body {
+	background-color: #E2E2E2;
+	font-family: Verdana, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: normal;
 }
