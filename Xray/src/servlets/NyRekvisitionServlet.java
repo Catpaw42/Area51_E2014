@@ -118,7 +118,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			request.getSession().setAttribute(Const.ACTIVE_USER, bruger);
 		}
 		
-		request.getRequestDispatcher(NyRekPage).forward(request, response);
+		request.getRequestDispatcher(Const.NEW_REKVISITION_PAGE).forward(request, response);
 	}
 
 	/**

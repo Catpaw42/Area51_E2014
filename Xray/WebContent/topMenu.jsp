@@ -13,7 +13,9 @@
 <link href="css/topStyleSheet.css" rel="stylesheet" type="text/css"
 	media="screen">
 <title>Insert title here</title>
-<%	Bruger aUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);%>
+<%
+	Bruger aUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+%>
 </head>
 <body>
 	<div id="wrapper">

@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet
 		//Check for login
 		if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
 			//TODO determine main user role and redirect to relevant page
-			response.sendRedirect("MainServlet?page=rekvirer");
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + "loggingIn");
 		else
 			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
 	}

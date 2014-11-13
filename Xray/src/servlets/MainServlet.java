@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.dto.Bruger;
+import database.dto.Rettigheder;
+
 /**
  * Main Servlet - delegates responsibilities to relevant sub Servlet
  */
@@ -55,26 +58,51 @@ public class MainServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String page = request.getParameter("page");
+		
 		switch ( request.getParameter("page")) {
 		case "loggingIn":
-			//TODO redirect on permissions
-			forward("/RekvisitionServlet",request,response);
+			Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+			Rettigheder[] rettigheder = activeUser.getRettigheder();
+			String gotoPage = Const.REKVISITION_SERVLET;
+			int pr = 0;
+			for (Rettigheder r : rettigheder) {
+				switch (r.getRettighed()){
+				case ADMIN:
+					pr = 0;
+					gotoPage = Const.ADMIN_SERVLET;
+					break;
+				case ASSESSOR:
+					pr = 3;
+					gotoPage = Const.VISITATION_SERVLET;
+					break;
+				case BOOKING:
+					pr = 1;
+					gotoPage = Const.BOOKING_SERVLET;
+					break;
+				case REQUEST:
+					pr = 1;
+					gotoPage = Const.REKVISITION_SERVLET;
+					break;
+				}
+			}
+			forward("/" + gotoPage,request,response);
 			break;
-		case "login":
-			forward("/LoginServlet",request,response);
-			break;
-		case "rekvirer":
-			forward("/RekvisitionServlet",request,response);
-			break;
-		case "visiter":
-			forward("/VisitationServlet", request, response);
-			break;
-		case "book":
-			forward("/BookingServlet", request, response);
-			break;
-		case "admin":
-			forward("/AdminServlet",request,response);
-			break;
+//		case "login":
+//			forward("/LoginServlet",request,response);
+//			break;
+//		case "rekvirer":
+//			forward("/RekvisitionServlet",request,response);
+//			break;
+//		case "visiter":
+//			forward("/VisitationServlet", request, response);
+//			break;
+//		case "book":
+//			forward("/BookingServlet", request, response);
+//			break;
+//		case "admin":
+//			forward("/AdminServlet",request,response);
+//			break;
 		default:
 			//If no corresponding Servlet is found tries to redirect to Servlet
 			forward("/"+ request.getParameter("page"),request,response);

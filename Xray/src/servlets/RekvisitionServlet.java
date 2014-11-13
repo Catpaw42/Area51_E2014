@@ -1,11 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
@@ -17,21 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
 import database.DataSourceConnector;
 import database.dao.ModalitetDao;
-import database.dao.PatientDao;
-import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
-import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
-import database.dto.Patient;
 import database.dto.RekvisitionExtended.Status;
 import database.dto.RekvisitionExtended;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 import helperClasses.Const;
-import helperClasses.Const.*;
+import helperClasses.Validator;
 
 
 /**
@@ -39,6 +33,11 @@ import helperClasses.Const.*;
  */
 @WebServlet("/RekvisitionServlet")
 public class RekvisitionServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private java.sql.Connection conn = null;
 
 	// used for the search boxes in rekvisitionPage.jsp
@@ -46,7 +45,6 @@ public class RekvisitionServlet extends HttpServlet {
 	public Status[] statusList = null;		
 	////////////////////////////////////////////////////	
 
-	private BrugerDaoImplExtended  userDao;
 	private RekvisitionDaoImplExt rekvisitionDao;
 	private ModalitetDao modDao;
 	/**
@@ -59,7 +57,6 @@ public class RekvisitionServlet extends HttpServlet {
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
-		this.userDao = new BrugerDaoImplExtended(conn);
 		this.rekvisitionDao = new RekvisitionDaoImplExt(conn);
 		this.modDao = new ModalitetDaoImpl(conn);
 
@@ -74,14 +71,12 @@ public class RekvisitionServlet extends HttpServlet {
 
 
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-		//Getting Dummy user
+		// forwards to mainServlet with LoginPage as parameter
 		if(activeUser == null){ 
-//			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
-			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix! // kun af test grunde
-			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
-			setDefaultTable(request, response);
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
+//			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);
 		}else{
-			setDefaultTable(request, response);
+			setDefaultTable(activeUser, request, response);
 		}
 		
 
@@ -96,15 +91,10 @@ public class RekvisitionServlet extends HttpServlet {
 		
 		
 		//Getting Dummy user
-		if(activeUser == null){ // kun af test grunde
-			activeUser = userDao.findByPrimaryKey(1);
-//					userDao.findByPrimaryKey(1);//TODO remove or fix! // kun af test grunde
-			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
-			searchRekvisition(request, response); // for test as long login is not working
-//			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
-			
+		if(activeUser == null){
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
+//			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);		
 		}else{
-			System.out.println("##Active user: " + activeUser);
 			searchRekvisition(request, response);
 		}
 		
@@ -116,14 +106,12 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @param request
 	 */
 	private void createSearchDropdowns(HttpServletRequest request){
-		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, null));
+		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 	
 	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-		ArrayList<Object> params = new ArrayList<>();
-		String cond = "";
 		// parameters
 		String cpr = request.getParameter(Const.PARAM_CPR);
 		String name = request.getParameter(Const.PARAM_NAME);
@@ -131,12 +119,13 @@ public class RekvisitionServlet extends HttpServlet {
 		String department = request.getParameter(Const.PARAM_DEPARTMENT);
 		department = (department.equals("-1") ? null : department);
 		String date = request.getParameter(Const.PARAM_DATE).replace(" ", "");
-		Timestamp timestamp = null;
-
-		timestamp = (validateDate(date) ? stringToTimestamp(date) : null);
 		
+		Timestamp timestamp = null;
+		timestamp = (Validator.validateDate(date) ? Validator.stringToTimestamp(date) : null);
+	
+		String status = request.getParameter(Const.PARAM_STATUS);
+	
 
-		String status = request.getParameter("status");
 		Status statusObj = null;
 
 		for(int i = 0; i < Status.values().length; i++){
@@ -146,6 +135,14 @@ public class RekvisitionServlet extends HttpServlet {
 			}
 		}
 
+		System.out.println("############SEARCH###############");
+		System.out.println("cpr: " + cpr);
+		System.out.println("name: " + name);
+		System.out.println("modality: " + modality);
+		System.out.println("department: " + department);
+		System.out.println("date: " + timestamp);
+		System.out.println("status: " + status);
+		
 		// objekter
 		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
@@ -153,50 +150,21 @@ public class RekvisitionServlet extends HttpServlet {
 		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
 
 
-
-
-
-		// sammensætter select statement til at finde patient
-
-		if(cpr != null){
-			cond = "patient_cpr=?";
-			params.add(cpr);
-		}
-		if(name != null){
-			cond = cond + (cpr != null ? "AND patient_navn=?": "patient_navn=?");
-			params.add(name);
-		}
-		if(department != null){
-			cond = cond + (name != null || cpr != null ? "AND stamafdeling=?" : "stamafdeling=?");
-			params.add(department);
-		}
-
-
-		// sammensætter select statement til at finde rekvisition
-		if(modality != null){
-			//			rekvCond = "modalitet=?"
-		}
+		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
+		System.out.println("##################################");
 		
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
 		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
 
 	}
 	
-	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		//Strings for ?
-				String condStatus = "status=?";
-				String condRekvUserName = "bruger_navn=?";
-				String condRekvirentId = "rekvirent_id=?";
-				//Testing user.
-
-
-				Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 				
 				//Rekvisition list to show user.
 				RekvisitionExtended[] rekvlist = null;
 				// gets list of the active user - default behavior
 				if(activeUser != null){
-				rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
+				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
 				}
 				//Stitch rekvisition[] to request object.
 				request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
@@ -204,42 +172,6 @@ public class RekvisitionServlet extends HttpServlet {
 	}
 
 	
-	private boolean validateCpr(String cpr){
-		return cpr.matches("(\\d{6}-\\w{4})");
-	}
-	/**
-	 * 
-	 * @param date formats accepted are: yyyy-mm-dd or yyyymmdd.
-	 * constraints have been set so it is not possible to hava mm > 12 and dd > 39
-	 * @return true if string matches format
-	 */
-	private boolean validateDate(String date){
-		return date.matches("(\\d{4}-[0-1][0-2]-[0-3]\\d)");
-//		return date.matches("([0-3]\\d-[0-1][0-2]-\\d{4})|(\\d{8})");
-	}
-	/**
-	 * 
-	 * @param timestamp String which can be transformed to timestamp. Should pass the validator method to make sure it passes 
-	 * @return if format is not correct null will be returned
-	 * Date can have two formats therefore check is made to find out which one
-	 */
-	private Timestamp stringToTimestamp(String timestamp){
-		if(!validateDate(timestamp)) return null;
 
-		DateFormat dateFormat = new SimpleDateFormat((timestamp.contains("-") ? "yyyy-MM-dd" : "yyyyMMdd"));
-
-		//		if(!timestamp.contains("-")){
-		//			dateFormat = new SimpleDateFormat("ddMMyyyy");
-		//		}
-		Date date = null;
-		try {
-			date = dateFormat.parse(timestamp);
-		} catch (ParseException e) {
-			System.err.println("failed to parse timestamp");
-		}
-
-		return new Timestamp(date.getTime());
-
-	}
 
 }
