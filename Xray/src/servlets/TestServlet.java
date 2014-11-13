@@ -23,6 +23,7 @@ import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImpl;
+import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
@@ -324,8 +325,17 @@ public class TestServlet extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println("fejlede at hente bruger fra database");
 		}
+		
+		try {
+		System.out.println("#######findByUserName#####");
+		BrugerDaoImplExtended bdie = null;
+		bdie = new BrugerDaoImplExtended(conn);
+		Bruger b = bdie.findByUserName(brugernavn, kodeord);
+		System.out.println(b.getBrugerNavn());
 		System.out.println("################");
-
+		}	catch(Exception e){
+			System.out.println("Fejlede i at finde bruger efter brugernavn");
+		}
 
 
 		erAktiv = !erAktiv;
