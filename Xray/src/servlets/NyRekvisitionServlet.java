@@ -1,5 +1,7 @@
 package servlets;
 
+import helperClasses.Const;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -34,18 +36,32 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+
+
+
+
+
+
+
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
+import database.dao.BrugerDao;
 import database.dao.DaoFactory;
 import database.dao.DaoFactory.Factory;
+import database.dao.ModalitetDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.DaoFactoryImpl;
+import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
 import database.dto.Bruger;
+import database.dto.Modalitet;
 import database.dto.Patient;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.AmbulantKoersel;
@@ -62,7 +78,14 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 @SuppressWarnings("serial")
 @WebServlet("/NyRekvisitionServlet")
 public class NyRekvisitionServlet extends HttpServlet
-{       
+{      
+	private static final String HENV_AFD = "henv_afd";
+	private static final String PATIENT_TLF = "patient_tlf";
+	private static final String PATIENT_NAVN = "patient_navn";
+	private static final String PATIENT_ADRESSE = "patient_adresse";
+	private static final String PATIENT_CPR = "patient_cpr";
+	private static String NyRekPage = "nyRekvisitionPage.jsp";
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -76,9 +99,17 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		//request.setAttribute("modaliteter", arg1); TODO send list of modalities
-		//request.setAttribute("Undersoegelses_typer", Object[][] ); TODO send list of types
-		request.getRequestDispatcher("nyRekvisitionPage.jsp").forward(request, response);
+		Connection conn = null;
+		try {
+			conn = DataSourceConnector.getConnection();
+		} catch (ConnectionException e) {
+			//Connection Fails
+			e.printStackTrace();
+		}
+		ModalitetDao modDao = new ModalitetDaoImpl(conn);
+		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
+		request.setAttribute(Const.MODALITY_LIST, modList);
+		request.getRequestDispatcher(NyRekPage).forward(request, response);
 	}
 
 	/**
@@ -86,30 +117,38 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		
 		request.setCharacterEncoding("UTF-8");
 		//Getting a database connection....
-		Connection connection = null;
+		Connection conn = null;
 		try {
-			connection = DataSourceConnector.getConnection();
+			conn = DataSourceConnector.getConnection();
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
+		//TODO remove
+				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
+					BrugerDao bDao = new BrugerDaoImpl(conn);
+					Bruger abruger = bDao.findByPrimaryKey(1);
+					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
+				}
+		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		
 		//making patient object...
 		Patient pt = new Patient();		
 		pt.setFoedselsdag(java.sql.Date.valueOf(parseCprBirthday(request)));
-		pt.setPatientCpr(request.getParameter("patient_cpr"));
-		pt.setPatientAdresse(request.getParameter("patient_adresse"));
-		pt.setPatientNavn(request.getParameter("patient_navn"));
-		pt.setPatientTlf(request.getParameter("patient_tlf"));
-		pt.setStamafdeling("TestAfdeling"); //TODO get from User
+		pt.setPatientCpr(request.getParameter(PATIENT_CPR));
+		pt.setPatientAdresse(request.getParameter(PATIENT_ADRESSE));
+		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
+		pt.setPatientTlf(request.getParameter(PATIENT_TLF));
+		pt.setStamafdeling(activeBruger.getBrugerNavn());
 		System.out.println(pt);
 		//Time to store patient
 		Integer ptId = null;
-		PatientDao ptDao = new PatientDaoImpl(connection);
+		PatientDao ptDao = new PatientDaoImpl(conn);
 		try {
 			ptId = ptDao.insert(pt);
 		} catch (DaoException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -126,10 +165,8 @@ public class NyRekvisitionServlet extends HttpServlet
 			//TODO handle missing rekvirent 
 			//returnToPage("Manglende RekvirentID);
 		}
-		rek.setRekvirentId(1); // TODO FIX!
-		rek.setHenvAfd("TestAfd"); //TODO get from user!
-		rek.setVisitatorId(-1); //Remove - Should be null
-		//TODO Rekvirerende afdeling findes ikke - bundet til brugeren?
+		rek.setRekvirentId(activeBruger.getBrugerId()); 
+		rek.setHenvAfd(request.getParameter(HENV_AFD));
 		rek.setHenvLaege(request.getParameter("henv_laege"));
 		rek.setKontaktTlf(request.getParameter("kontakt_tlf"));
 		rek.setUdfIndlagt(Boolean.valueOf(request.getParameter("udf_indlagt")));
@@ -173,7 +210,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setAfsendtDato(new Date());
 		System.out.println(rek);
 		//Time to store requisition
-		RekvisitionDao rekDao = new RekvisitionDaoImpl(connection);
+		RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
 		try {
 			rekDao.insert(rek);
 		} catch (DaoException e) {
@@ -189,7 +226,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	}
 
 	private String parseCprBirthday(HttpServletRequest request) {
-		String foedselsdagString = request.getParameter("patient_cpr");
+		String foedselsdagString = request.getParameter(PATIENT_CPR);
 		Integer foedeaar = Integer.valueOf(foedselsdagString.substring(4, 6));
 		String digit7String = foedselsdagString.substring(7,8);
 		if (digit7String.equalsIgnoreCase("-") ) digit7String = foedselsdagString.substring(8, 9);
