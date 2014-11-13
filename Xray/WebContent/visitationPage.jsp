@@ -4,7 +4,8 @@
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/mainPage.js"></script>
+		<script type="text/javascript" src="js/rekvisitionPage.js"></script>
+<!-- 		todo fix names -->
 		<title>Main Page</title>
 	</head>
 	

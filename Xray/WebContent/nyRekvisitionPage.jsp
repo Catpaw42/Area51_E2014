@@ -59,8 +59,8 @@
 					<h2>Undersøgelse</h2>
 					<label for="udf_indlagt">Udføres under indlæggelse</label>
 					<div id="udf_indlagt">
-						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required" value="false">Ambulant <br>
-						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required" value="true">Indlæggelse <br>
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required" value="false">Ambulant
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required" value="true">Indlæggelse
 					</div>
 					<label for="henvist_til">Henvist til</label>
 					<div id="henvist_til">
