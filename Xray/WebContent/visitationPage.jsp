@@ -3,13 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/visitationPage.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/rekvisitionPage.js"></script>
+		<script type="text/javascript" src="js/visitationPage.js"></script>
 <!-- 		todo fix names -->
-		<title>Main Page</title>
+		<title>Visitation</title>
 	</head>
 	
-	<body class="rekvisitionPage">
+	<body class="visitationPage">
 		<div class="topMenuIframe">
 		 <%@include file="topMenu.jsp" %>
 		 </div>
@@ -72,7 +73,7 @@
 			<hr />
 			<ul class=showInline>
 				<li>
-					<div id="visitationList">
+					<div class="visitationList">
 						<table>
 							<tr>
 								<th>Cpr</th>
@@ -104,7 +105,7 @@
 								<td id="test3">RGT</td>
 								<td id="test3">M</td>
 								<td id="test3">011211</td>
-								<td id="test3">Anulleret</td>
+								<td id="test3">Annulleret</td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>
@@ -183,7 +184,7 @@
 				</li>
 				<li>
 					<div id="embededSite">
-						<iframe id="embededSiteFrame" src="visiter.jsp"></iframe>
+<!-- 						<iframe id="embededSiteFrame" src="visiter.jsp"></iframe> -->
 					</div>
 				</li>
 			</ul>
