@@ -18,6 +18,8 @@ import database.interfaces.IDataBaseController;
 import database.interfaces.IDataBaseController.DatabaseException;
 import database.interfaces.IDataBaseController.UserNotFoundException;
 import database.interfaces.IDataSourceConnector.ConnectionException;
+import helperClasses.Const;
+import helperClasses.Const.*;
 
 /**
  * Servlet implementation class LoginServlet
@@ -28,14 +30,7 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 public class LoginServlet extends HttpServlet
 {
 	IDataBaseController dbctrl = new DataBaseController();
-	public static final String LOGIN_PAGE = "loginPage.jsp";
-	public static final String PASSWORD = "password";
-	public static final String USERNAME = "username";
-	public static final String ACTIVE_USER = "activeUser";
-	public static final String MAIN_SERVLET = "mainServlet";
-	public static final String DATABASE = "database";
-	public static final String MENU_SERVLET = "menuServlet";
-	public static final String LOGIN_FAILED = "loginFailed";
+
 
 	public LoginServlet()
 	{
@@ -49,11 +44,11 @@ public class LoginServlet extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		//Check for login
-		if (request.getSession().getAttribute(ACTIVE_USER)!= null)
+		if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
 			//TODO determine main user role and redirect to relevant page
 			response.sendRedirect("MainServlet?page=rekvirer");
 		else
-			request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
 	}
 
 	/**
@@ -63,8 +58,8 @@ public class LoginServlet extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		//User posts login data
-		String username = request.getParameter(USERNAME);
-		String password = request.getParameter(PASSWORD);
+		String username = request.getParameter(Const.USERNAME);
+		String password = request.getParameter(Const.PASSWORD);
 		System.out.println("username: " + username);
 		System.out.println("password: " + password);
 		
@@ -93,16 +88,16 @@ public class LoginServlet extends HttpServlet
 					if(loggedInUser.getErAktiv())
 					{
 						System.out.println("Login success, forwarding");
-						request.getSession().setAttribute(ACTIVE_USER, loggedInUser );
+						request.getSession().setAttribute(Const.ACTIVE_USER, loggedInUser );
 					
-						request.getSession().setAttribute(DATABASE, dbctrl);
-						response.sendRedirect(MENU_SERVLET);
+						request.getSession().setAttribute(Const.DATABASE, dbctrl);
+						response.sendRedirect(Const.MENU_SERVLET);
 						System.out.println("forward finished");
 					}
 					else
 					{
-						request.setAttribute(LOGIN_FAILED, true);
-						request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- stod som argument, men må være forkert??
+						request.setAttribute(Const.LOGIN_FAILED, true);
+						request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- stod som argument, men må være forkert??
 					}
 				
 				}
@@ -117,17 +112,17 @@ public class LoginServlet extends HttpServlet
 			}
 			else
 			{
-				request.setAttribute(LOGIN_FAILED, true);
-				request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); // "WEB-INF/loginScreen.jsp" -- må også være forkert??
+				request.setAttribute(Const.LOGIN_FAILED, true);
+				request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/loginScreen.jsp" -- må også være forkert??
 			}
 				
 			
 		}
 		else
 		{
-			if (request.getParameter(USERNAME) != null)
-				request.setAttribute(LOGIN_FAILED, true);
-			request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- må være forkert??
+			if (request.getParameter(Const.USERNAME) != null)
+				request.setAttribute(Const.LOGIN_FAILED, true);
+			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- må være forkert??
 		}
 	}
 }

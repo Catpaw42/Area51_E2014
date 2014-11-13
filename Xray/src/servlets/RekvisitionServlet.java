@@ -1,36 +1,27 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.sql.Connection;
 import java.sql.Timestamp;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
-import com.spoledge.audao.db.dao.DaoException;
 
-import database.DataBaseController;
+
 import database.DataSourceConnector;
-import database.dao.BrugerDao;
 import database.dao.ModalitetDao;
 import database.dao.PatientDao;
-import database.dao.RekvisitionDao;
-import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
-import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
@@ -38,10 +29,9 @@ import database.dto.Patient;
 import database.dto.RekvisitionExtended.Status;
 import database.dto.RekvisitionExtended;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-import database.DataSourceConnector;
-import database.dao.RekvisitionDao;
-import database.dao.mysql.RekvisitionDaoImpl;
-import database.dto.RekvisitionExtended;
+import helperClasses.Const;
+import helperClasses.Const.*;
+
 
 /**
  * Servlet implementation class RekvisitionServlet
@@ -49,20 +39,8 @@ import database.dto.RekvisitionExtended;
 @WebServlet("/RekvisitionServlet")
 public class RekvisitionServlet extends HttpServlet {
 	private java.sql.Connection conn = null;
-	public static final long serialVersionUID = 1L;
-	public static final String REKVISITION_LIST = "rekvisitionList";
-	public static final String ACTIVE_USER = "activeUser";
-	public static final String REKVISITION_PAGE = "rekvisitionPage.jsp";
-
-	private static final String PARAM_CPR = "cpr";
-	private static final String PARAM_NAME = "name";
-	private static final String PARAM_MODALITY = "modality";
-	private static final String PARAM_DEPARTMENT = "department";
-	private static final String PARAM_DATE = "date";
 
 	// used for the search boxes in rekvisitionPage.jsp
-	public static final String MODALITY_LIST = "modalityList";
-	public static final String STATUS_LIST = "statusList";
 	public Modalitet[] modList = null;
 	public Status[] statusList = null;		
 	////////////////////////////////////////////////////	
@@ -97,18 +75,23 @@ public class RekvisitionServlet extends HttpServlet {
 		String condRekvUserName = "bruger_navn=?";
 		String condRekvirentId = "rekvirent_id=?";
 		//Testing user.
-		Bruger activeUser = (Bruger) request.getAttribute(ACTIVE_USER);
+
+		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		
+		
 		//Getting Dummy user
 		if(activeUser == null){ // kun af test grunde
+			response.sendRedirect(Const.LOGIN_PAGE);
 			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix!
+			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
 		}
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist;
 		// gets list of the active user - default behavior
 		rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
 		//Stitch rekvisition[] to request object.
-		request.setAttribute(REKVISITION_LIST, rekvlist);	
-		request.getRequestDispatcher(REKVISITION_PAGE).forward(request, response);
+		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
+		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
 
 	}
 	/**
@@ -116,8 +99,8 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @param request
 	 */
 	private void createSearchDropdowns(HttpServletRequest request){
-		request.setAttribute(MODALITY_LIST, modDao.findDynamic(null, 0, -1, null));
-		request.setAttribute(STATUS_LIST, Status.values());
+		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, null));
+		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 
 	/**
@@ -128,25 +111,24 @@ public class RekvisitionServlet extends HttpServlet {
 		ArrayList<Object> params = new ArrayList<>();
 		String cond = "";
 		// parameters
-		String cpr = request.getParameter(PARAM_CPR);
-		String name = request.getParameter(PARAM_NAME);
-		String modality = request.getParameter(PARAM_MODALITY);
-		String department = request.getParameter(PARAM_DEPARTMENT);
-		String date = request.getParameter(PARAM_DATE).replace(" ", "");
+		String cpr = request.getParameter(Const.PARAM_CPR);
+		String name = request.getParameter(Const.PARAM_NAME);
+		String modality = request.getParameter(Const.PARAM_MODALITY);
+		String department = request.getParameter(Const.PARAM_DEPARTMENT);
+		department = (department.equals("-1") ? null : department);
+		String date = request.getParameter(Const.PARAM_DATE).replace(" ", "");
 		Timestamp timestamp = null;
 
-		System.out.println("#######DATE: " + date);
 		timestamp = (validateDate(date) ? stringToTimestamp(date) : null);
-		System.out.println("#####TIMESTAMP: " + timestamp);
+		
 
 		String status = request.getParameter("status");
 		Status statusObj = null;
 
 		for(int i = 0; i < Status.values().length; i++){
-			System.out.println("values: " + Status.values()[i]);
 			if(status.equalsIgnoreCase(Status.values()[i].name())){
-				System.out.println("values: " + Status.values()[i]);
 				statusObj = Status.values()[i];
+				System.out.println("Selected status in search: " + statusObj.name());
 			}
 		}
 
@@ -156,31 +138,6 @@ public class RekvisitionServlet extends HttpServlet {
 		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
 		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
 
-		//##############TEST######################
-		//		Patient p1 = new Patient();
-		//		p1.setPatientId(1);
-		//		p1.setPatientNavn("nansy");
-		//		p1.setPatientCpr("1234");
-		//		p1.setStamafdeling("gsdf");
-		//		p1.setPatientAdresse("test");
-		//		p1.setPatientTlf("sdfsgf");
-		//		p1.setFoedselsdag(new Date());
-		//		
-		//		PatientDao dao1 = new PatientDaoImpl(conn);
-		//		try {
-		//			dao1.insert(p1);
-		//		} catch (DaoException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-
-
-		//#########################################
-		//		Rekvisition[] rekv;
-		//		String modalitet = request.getParameter("modality");
-		//		String afdeling = request.getParameter("department");
-		//		String dato = request.getParameter("date");
-		//		String status = request.getParameter("status");
 
 
 
@@ -205,37 +162,9 @@ public class RekvisitionServlet extends HttpServlet {
 		if(modality != null){
 			//			rekvCond = "modalitet=?"
 		}
-
-
-		System.out.print(cond);
-		for(Object pa : params){
-			System.out.println(pa.toString());
-		}
-
-		//		cond = cond + modality
-		//		cond = cond + department
-		//		cond = cond + date
-		//		cond = 
-
-		PatientDao dao = new PatientDaoImpl(conn);
-		Patient[] p = dao.findDynamic(cond, 0, -1, params.toArray());
-		Patient[] p2 = dao.findDynamic(null, 0, -1, null);
-		System.out.println("p2 length: " + p2.length);
-		System.out.println("p2 test: " + p2[0].getPatientNavn() + "##########");
-		System.out.println("yay");
-		if(p != null){
-			System.out.println(p.length);
-			//			System.out.println(p[0].getPatientAdresse());
-			System.out.println("lnyay2");
-			for (Patient patient : p) {
-				System.out.println("yay3");
-				System.out.println(patient.getPatientNavn());
-			}
-		}
-		request.setAttribute(REKVISITION_LIST, rekvDto);
-
-
-		request.getRequestDispatcher(REKVISITION_PAGE).forward(request, response);
+		
+		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
+		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
 
 	}
 
