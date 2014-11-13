@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
@@ -110,10 +111,11 @@ public class NyRekvisitionServlet extends HttpServlet
 		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
 		request.setAttribute(Const.MODALITY_LIST, modList);
 		System.out.println(modList);
+		//TODO remove
 		if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
 			BrugerDao bDao = new BrugerDaoImpl(conn);
-			Bruger abruger = bDao.findByPrimaryKey(1);
-			request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
+			Bruger bruger = bDao.findByPrimaryKey(1); //TODO CLEAN UP
+			request.getSession().setAttribute(Const.ACTIVE_USER, bruger);
 		}
 		
 		request.getRequestDispatcher(NyRekPage).forward(request, response);
