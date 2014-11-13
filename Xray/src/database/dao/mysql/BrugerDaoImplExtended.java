@@ -5,7 +5,6 @@ import java.sql.Connection;
 import database.dao.RettighederDao;
 import database.dto.Bruger;
 import database.dto.Rettigheder;
-import database.dto.RettighedsBruger;
 
 public class BrugerDaoImplExtended extends BrugerDaoImpl {
 
