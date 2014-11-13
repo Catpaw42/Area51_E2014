@@ -13,20 +13,20 @@
 <link href="css/topStyleSheet.css" rel="stylesheet" type="text/css"
 	media="screen">
 <title>Insert title here</title>
-<% Bruger activeUser = (Bruger)request.getSession().getAttribute(Const.ACTIVE_USER); %>
+<% Bruger aUser = (Bruger)request.getSession().getAttribute(Const.ACTIVE_USER); %>
 </head>
 <body>
 	<div id="wrapper">
 		<div id="user">Brian Bjorn</div>
 		<div id="mainmenu">
 			<ul>
-				<% if (activeUser.harRettighed(Rettighed.REQUEST)) 
+				<% if (aUser.harRettighed(Rettighed.REQUEST)) 
 						out.print("<li> <a href='MainServlet?page=rekvirer'>Rekvirer</a> </li>");
-				if (activeUser.harRettighed(Rettighed.ASSESSOR))
+				if (aUser.harRettighed(Rettighed.ASSESSOR))
 					out.print("<li><a href='MainServlet?page=visiter'>Visitér</a></li>");
-				if (activeUser.harRettighed(Rettighed.BOOKING))
+				if (aUser.harRettighed(Rettighed.BOOKING))
 					out.print("<li><a href='MainServlet?page=book'>Book</a></li>");
-				if (activeUser.harRettighed(Rettighed.ADMIN))
+				if (aUser.harRettighed(Rettighed.ADMIN))
 					out.print("<li><a href='MainServlet?page=admin'>Administrer Brugere</a></li>");
 				%>
 
