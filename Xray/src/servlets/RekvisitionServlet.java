@@ -1,36 +1,26 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.sql.Connection;
 import java.sql.Timestamp;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
-import com.spoledge.audao.db.dao.DaoException;
 
-import database.DataBaseController;
 import database.DataSourceConnector;
-import database.dao.BrugerDao;
 import database.dao.ModalitetDao;
 import database.dao.PatientDao;
-import database.dao.RekvisitionDao;
-import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
-import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
@@ -38,10 +28,6 @@ import database.dto.Patient;
 import database.dto.RekvisitionExtended.Status;
 import database.dto.RekvisitionExtended;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-import database.DataSourceConnector;
-import database.dao.RekvisitionDao;
-import database.dao.mysql.RekvisitionDaoImpl;
-import database.dto.RekvisitionExtended;
 
 /**
  * Servlet implementation class RekvisitionServlet
