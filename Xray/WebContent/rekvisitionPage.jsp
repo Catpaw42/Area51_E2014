@@ -3,13 +3,16 @@
 <%@page import="database.dto.Modalitet"%>
 <%@page import="servlets.RekvisitionServlet"%>
 <%@page import="database.dto.RekvisitionExtended.Status"%>
+<%@page import="database.dto.Bruger" %>
 <html>
 <%@ page import="database.dto.RekvisitionExtended"%>
 <%@ page import="java.util.ArrayList"%>
 <head>
 <meta charset="UTF-8">
-<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
-<link href="css/rekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
+<link href="css/styleSheet.css" rel="stylesheet" type="text/css"
+	media="screen">
+<link href="css/rekvisitionPage.css" rel="stylesheet" type="text/css"
+	media="screen">
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/rekvisitionPage.js"></script>
@@ -19,15 +22,20 @@
 <%
 	Modalitet[] modList = null;
 	Status[] statusList = null;
+	Bruger activeUser = null;
 	
 	try{
-		modList = (Modalitet[]) request.getAttribute(RekvisitionServlet.MODALITY_LIST);
+		activeUser = (Bruger) request.getSession().getAttribute(RekvisitionServlet.ACTIVE_USER);
+	}catch(Exception e){}
+	
+	try{
+		modList = (Modalitet[]) request.getSession().getAttribute(RekvisitionServlet.MODALITY_LIST);
 	} catch(Exception e){}
 	try{
-		statusList = (Status[]) request.getAttribute(RekvisitionServlet.STATUS_LIST);
+		statusList = (Status[]) request.getSession().getAttribute(RekvisitionServlet.STATUS_LIST);
 	} catch(Exception e1){}
 	
-	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getAttribute(RekvisitionServlet.REKVISITION_LIST);
+	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(RekvisitionServlet.REKVISITION_LIST);
 %>
 <body class="rekvisitionPage">
 	<%@include file="topMenu.jsp"%>
@@ -57,7 +65,7 @@
 								<td><select id="modality" name="modality">
 										<%
 											if(modList != null)
-																		for(int i = 0; i < modList.length; i++){
+												for(int i = 0; i < modList.length; i++){
 										%><option value=<%out.println(String.valueOf(i));%>>
 											<%
 												out.println(modList[i].getModalitetNavn());
@@ -69,9 +77,12 @@
 
 								</select></td>
 								<td><select name="department" id="department">
-										<option value="o">O</option>
-										<option value="m" selected="selected">M</option>
-										<option>Alle</option>
+									<%
+									if(activeUser != null){
+									%>	<option value="<% out.println(activeUser.getBrugerId()); %>"><%out.println(activeUser.getFuldtNavn());%> </option>
+									<% }
+									%>
+										<option value="-1">Alle</option>
 								</select></td>
 								<td><input id="date" name="date" type="date"></td>
 								<td><select id="status" name="status">
@@ -107,8 +118,7 @@
 							<th>Dato</th>
 							<th>Status</th>
 						</tr>
- 						<%
- 							if(rekv != null)
+						<%				if(rekv != null)
  						 						for (RekvisitionExtended r : rekv){
  													out.print("<tr> <td>");
  													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
@@ -124,10 +134,11 @@
  													out.print(r.getStatus());
  													out.print("</td> </tr>");
  												}
+ 							
  						%>
-							
-				
-						
+
+
+
 					</table>
 				</div>
 			</li>
