@@ -1,4 +1,6 @@
 package servlets;
+import helperClasses.Const;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -38,7 +40,7 @@ public class MainServlet extends HttpServlet {
 	private void processReq(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//Checks whether user is logged in
-		if (request.getSession().getAttribute("user") != null){ 
+		if (request.getSession().getAttribute(Const.ACTIVE_USER) != null){ 
 			delegate(request, response);
 		} else { //user not logged in
 			response.sendRedirect("LoginServlet");
@@ -54,6 +56,9 @@ public class MainServlet extends HttpServlet {
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		switch ( request.getParameter("page")) {
+		case "loggingIn":
+			forward("/RekvisitionServlet",request,response);
+			break;
 		case "login":
 			forward("/LoginServlet",request,response);
 			break;
