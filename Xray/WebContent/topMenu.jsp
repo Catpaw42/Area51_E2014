@@ -13,24 +13,30 @@
 <link href="css/topStyleSheet.css" rel="stylesheet" type="text/css"
 	media="screen">
 <title>Insert title here</title>
-<% Bruger aUser = (Bruger)request.getSession().getAttribute(Const.ACTIVE_USER); %>
+<%	Bruger aUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);%>
 </head>
 <body>
 	<div id="wrapper">
-		<div id="user">Brian Bjorn</div>
+		<div id="user">
+			<%
+				out.print(aUser.getBrugerNavn()+"<BR>");
+				out.print(aUser.getFuldtNavn()+"<BR>");
+			%>
+		</div>
 		<div id="mainmenu">
 			<ul>
-				<% if (aUser.harRettighed(Rettighed.REQUEST)) 
+				<%
+					if (aUser.harRettighed(Rettighed.REQUEST))
 						out.print("<li> <a href='MainServlet?page=rekvirer'>Rekvirer</a> </li>");
-				if (aUser.harRettighed(Rettighed.ASSESSOR))
-					out.print("<li><a href='MainServlet?page=visiter'>Visitér</a></li>");
-				if (aUser.harRettighed(Rettighed.BOOKING))
-					out.print("<li><a href='MainServlet?page=book'>Book</a></li>");
-				if (aUser.harRettighed(Rettighed.ADMIN))
-					out.print("<li><a href='MainServlet?page=admin'>Administrer Brugere</a></li>");
+					if (aUser.harRettighed(Rettighed.ASSESSOR))
+						out.print("<li><a href='MainServlet?page=visiter'>Visitér</a></li>");
+					if (aUser.harRettighed(Rettighed.BOOKING))
+						out.print("<li><a href='MainServlet?page=book'>Book</a></li>");
+					if (aUser.harRettighed(Rettighed.ADMIN))
+						out.print("<li><a href='MainServlet?page=admin'>Administrer Brugere</a></li>");
 				%>
 
-				
+
 				<li><a href='MainServlet?page=admin'>Administrer Brugere</a></li>
 			</ul>
 		</div>
