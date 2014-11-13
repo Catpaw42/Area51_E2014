@@ -1,3 +1,15 @@
+body {
+	background-color: #FFFFFF;
+}
+div {
+	padding-bottom: 10px;
+}
+.hover:HOVER {
+	border: 1px solid black;
+}
+.hover {
+	border:1px solid transparent;
+}
 .roentgenform {
 	width: 665px;
 	margin-left: auto;
@@ -6,7 +18,7 @@
 }
 .roentgenform textarea {
 	display: block;
-	width: 660px;
+	width: 99%;
 	height: 120px;	
 }
 .roentgenform ul {
@@ -24,3 +36,20 @@
 #indlagt_transport {
 	display: none;
 }
+#dato_forslag {
+	width: 99%;
+}
+#undersoegelses_type {
+	width: 99%;
+}
+input[type=submit] {  
+    border: 1px solid rgba(0, 0, 0, 0.3);  
+    background: -webkit-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%); /* Chrome10+,Safari5.1+ */  
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64c8ef', endColorstr='#00a2e2',GradientType=0 ); /* IE6-9 */  
+    color: #fff;  
+    padding: 5px 15px;  
+    margin-right: 0;  
+    margin-top: 18px;  
+    border-radius: 3px;  
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);  
+} 

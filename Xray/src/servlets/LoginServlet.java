@@ -14,6 +14,7 @@ import database.dao.BrugerDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dto.Bruger;
+import database.dto.RettighedsBruger;
 import database.interfaces.IDataBaseController;
 import database.interfaces.IDataBaseController.DatabaseException;
 import database.interfaces.IDataBaseController.UserNotFoundException;
@@ -83,7 +84,7 @@ public class LoginServlet extends HttpServlet
 			{
 				try
 				{
-					Bruger loggedInUser=dbctrl.getUserFromUsername(username);
+					RettighedsBruger loggedInUser= b.findDynamic(cond, offset, count, params);
 					
 					if(loggedInUser.getErAktiv())
 					{
