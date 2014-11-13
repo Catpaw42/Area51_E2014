@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet
 			{
 				try
 				{
-					RettighedsBruger loggedInUser= b.findDynamic(cond, offset, count, params);
+					RettighedsBruger loggedInUser= b.findByUserName(username, password);
 					
 					if(loggedInUser.getErAktiv())
 					{

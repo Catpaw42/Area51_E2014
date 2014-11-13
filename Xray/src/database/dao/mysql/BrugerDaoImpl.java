@@ -51,6 +51,7 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     public Bruger findByPrimaryKey( int brugerId ) {
         return findOne( PK_CONDITION, brugerId);
     }
+    
 
     /**
      * Finds records.
