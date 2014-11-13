@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import database.DataSourceConnector;
 import database.dao.ModalitetDao;
 import database.dao.PatientDao;
@@ -70,32 +71,46 @@ public class RekvisitionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		createSearchDropdowns(request);
-		//Strings for ?
-		String condStatus = "status=?";
-		String condRekvUserName = "bruger_navn=?";
-		String condRekvirentId = "rekvirent_id=?";
-		//Testing user.
 
+
+		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		//Getting Dummy user
+		if(activeUser == null){ 
+//			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
+			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix! // kun af test grunde
+			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
+			setDefaultTable(request, response);
+		}else{
+			setDefaultTable(request, response);
+		}
+		
+
+	}
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		createSearchDropdowns(request);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		
 		
 		//Getting Dummy user
-		if(activeUser == null){ 
+		if(activeUser == null){ // kun af test grunde
+			activeUser = userDao.findByPrimaryKey(1);
+//					userDao.findByPrimaryKey(1);//TODO remove or fix! // kun af test grunde
+			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
+			searchRekvisition(request, response); // for test as long login is not working
 //			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
-//			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix! // kun af test grunde
-//			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
+			
+		}else{
+			System.out.println("##Active user: " + activeUser);
+			searchRekvisition(request, response);
 		}
-		//Rekvisition list to show user.
-		RekvisitionExtended[] rekvlist = null;
-		// gets list of the active user - default behavior
-		if(activeUser != null){
-		rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
-		}
-		//Stitch rekvisition[] to request object.
-		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
-		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
-
+		
+		
 	}
+
 	/**
 	 * have to be called so the dropdowns in rekvisitionPage are filled
 	 * @param request
@@ -105,28 +120,8 @@ public class RekvisitionServlet extends HttpServlet {
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 	
-	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response){
-		
-	}
+	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response){
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		createSearchDropdowns(request);
-	Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-		
-		
-		//Getting Dummy user
-		if(activeUser == null){ // kun af test grunde
-			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
-		}
-		System.out.println("##Active user: " + activeUser);
-		
 		ArrayList<Object> params = new ArrayList<>();
 		String cond = "";
 		// parameters
@@ -186,7 +181,29 @@ public class RekvisitionServlet extends HttpServlet {
 		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
 
 	}
+	
+	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		//Strings for ?
+				String condStatus = "status=?";
+				String condRekvUserName = "bruger_navn=?";
+				String condRekvirentId = "rekvirent_id=?";
+				//Testing user.
 
+
+				Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+				
+				//Rekvisition list to show user.
+				RekvisitionExtended[] rekvlist = null;
+				// gets list of the active user - default behavior
+				if(activeUser != null){
+				rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
+				}
+				//Stitch rekvisition[] to request object.
+				request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
+				request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
+	}
+
+	
 	private boolean validateCpr(String cpr){
 		return cpr.matches("(\\d{6}-\\w{4})");
 	}
