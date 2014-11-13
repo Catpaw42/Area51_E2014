@@ -4,6 +4,7 @@
 		<title> Skriv Rekvisition </title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/nyRekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="js/Rekvisition.js"></script>
 	</head>

@@ -78,22 +78,21 @@ public class RekvisitionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		createSearchDropdowns(request);
+		//Strings for ?
 		String condStatus = "status=?";
 		String condRekvUserName = "bruger_navn=?";
 		String condRekvirentId = "rekvirent_id=?";
-
+		//Testing user.
 		Bruger activeUser = (Bruger) request.getAttribute(ACTIVE_USER);
-
+		//Getting Dummy user
 		if(activeUser == null){ // kun af test grunde
-			activeUser = userDao.findByPrimaryKey(1);
+			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix!
 		}
-
-
+		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist;
-		// gets list of the active user
+		// gets list of the active user - default behavior
 		rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
-		// rekvlist = rekvisitionDao.findDynamic(cond, 0, -1, new Object[]{Status.PENDING}); //(cond, 0, -1, new Object[]{Status.PENDING});
-
+		//Stitch rekvisition[] to request object.
 		request.setAttribute(REKVISITION_LIST, rekvlist);	
 		request.getRequestDispatcher(REKVISITION_PAGE).forward(request, response);
 
