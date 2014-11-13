@@ -123,9 +123,10 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 					e.printStackTrace();
 				}
 				try {
-					PatientDaoImpl ptDao = new PatientDaoImpl(conn); // not right but workaround
-					ModalitetDaoImpl modDao = new ModalitetDaoImpl(conn);
-					UndersoegelsesTypeDaoImpl undDao = new UndersoegelsesTypeDaoImpl(conn);
+					// til workaround
+//					PatientDaoImpl ptDao = new PatientDaoImpl(conn); // not right but workaround
+//					ModalitetDaoImpl modDao = new ModalitetDaoImpl(conn);
+//					UndersoegelsesTypeDaoImpl undDao = new UndersoegelsesTypeDaoImpl(conn); 
 					
 					rs = stmt.executeQuery();
 					RekvisitionExtended rekvRsRow = new RekvisitionExtended(); 
