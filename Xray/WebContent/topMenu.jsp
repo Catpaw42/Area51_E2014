@@ -37,7 +37,6 @@
 				%>
 
 
-				<li><a href='MainServlet?page=admin'>Administrer Brugere</a></li>
 			</ul>
 		</div>
 		<div id="logo">
