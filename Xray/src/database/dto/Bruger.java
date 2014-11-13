@@ -7,6 +7,8 @@ package database.dto;
 
 import com.spoledge.audao.db.dto.AbstractDto;
 
+import database.dto.Rettigheder.Rettighed;
+
 /**
  * This is a DTO class.
  *
@@ -14,143 +16,163 @@ import com.spoledge.audao.db.dto.AbstractDto;
  */
 public class Bruger extends AbstractDto {
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Static
-    ////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	// Static
+	////////////////////////////////////////////////////////////////////////////
 
-    public static final String TABLE = "bruger";
+	public static final String TABLE = "bruger";
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Attributes
-    ////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	// Attributes
+	////////////////////////////////////////////////////////////////////////////
 
-    private Integer brugerId;
-    private String brugerNavn;
-    private String kodeord;
-    private String fuldtNavn;
-    private Boolean erAktiv;
+	private Integer brugerId;
+	private String brugerNavn;
+	private String kodeord;
+	private String fuldtNavn;
+	private Boolean erAktiv;
+	private Rettigheder[] rettigheder;
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Constructors
-    ////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Creates a new empty DTO.
-     */
-    public Bruger() {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Public
-    ////////////////////////////////////////////////////////////////////////////
-
-    public Integer getBrugerId() {
-        return brugerId;
-    }
-
-    public void setBrugerId( Integer _val) {
-        this.brugerId = _val;
-    }
-
-    public String getBrugerNavn() {
-        return brugerNavn;
-    }
-
-    public void setBrugerNavn( String _val) {
-        this.brugerNavn = _val;
-    }
-
-    public String getKodeord() {
-        return kodeord;
-    }
-
-    public void setKodeord( String _val) {
-        this.kodeord = _val;
-    }
-
-    public String getFuldtNavn() {
-        return fuldtNavn;
-    }
-
-    public void setFuldtNavn( String _val) {
-        this.fuldtNavn = _val;
-    }
-
-    public Boolean getErAktiv() {
-        return erAktiv;
-    }
-
-    public void setErAktiv( Boolean _val) {
-        this.erAktiv = _val;
-    }
-
-    /**
-     * Indicates whether some other object is "equal to" this one.
-     * Uses 'columns' equality type.
-     */
-    @Override
-    public boolean equals( Object _other ) {
-        if (_other == this) return true;
-        if (_other == null || (!(_other instanceof Bruger))) return false;
-
-        Bruger _o = (Bruger) _other;
-
-        if ( brugerId == null ) {
-            if ( _o.brugerId != null ) return false;
-        }
-        else if ( _o.brugerId == null || brugerId.intValue() != _o.brugerId.intValue()) return false;
-
-        if ( brugerNavn == null ) {
-            if ( _o.brugerNavn != null ) return false;
-        }
-        else if ( _o.brugerNavn == null || !brugerNavn.equals( _o.brugerNavn )) return false;
-
-        if ( kodeord == null ) {
-            if ( _o.kodeord != null ) return false;
-        }
-        else if ( _o.kodeord == null || !kodeord.equals( _o.kodeord )) return false;
-
-        if ( fuldtNavn == null ) {
-            if ( _o.fuldtNavn != null ) return false;
-        }
-        else if ( _o.fuldtNavn == null || !fuldtNavn.equals( _o.fuldtNavn )) return false;
-
-        if ( erAktiv == null ) {
-            if ( _o.erAktiv != null ) return false;
-        }
-        else if ( _o.erAktiv == null || erAktiv.booleanValue() != _o.erAktiv.booleanValue()) return false;
-
-        return true;
-    }
-
-    /**
-     * Returns a hash code value for the object.
-     */
-    @Override
-    public int hashCode() {
-        int _ret = 1998393135; // = "Bruger".hashCode()
-        _ret += brugerId == null ? 0 : brugerId;
-        _ret = 29 * _ret + (brugerNavn == null ? 0 : brugerNavn.hashCode());
-        _ret = 29 * _ret + (kodeord == null ? 0 : kodeord.hashCode());
-        _ret = 29 * _ret + (fuldtNavn == null ? 0 : fuldtNavn.hashCode());
-        _ret = 29 * _ret + (erAktiv == null ? 0 : (erAktiv ? 1 : 0));
-
-        return _ret;
-    }
+	////////////////////////////////////////////////////////////////////////////
+	// Constructors
+	////////////////////////////////////////////////////////////////////////////
 
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Protected
-    ////////////////////////////////////////////////////////////////////////////
-		
-    /**
-     * Constructs the content for the toString() method.
-     */
-    protected void contentToString(StringBuffer sb) {
-        append( sb, "brugerId", brugerId );
-        append( sb, "brugerNavn", brugerNavn );
-        append( sb, "kodeord", kodeord );
-        append( sb, "fuldtNavn", fuldtNavn );
-        append( sb, "erAktiv", erAktiv );
-    }
+
+	/**
+	 * Creates a new empty DTO.
+	 */
+	public Bruger() {
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	// Public
+	////////////////////////////////////////////////////////////////////////////
+
+	public Integer getBrugerId() {
+		return brugerId;
+	}
+
+	public void setBrugerId( Integer _val) {
+		this.brugerId = _val;
+	}
+
+	public String getBrugerNavn() {
+		return brugerNavn;
+	}
+
+	public void setBrugerNavn( String _val) {
+		this.brugerNavn = _val;
+	}
+
+	public String getKodeord() {
+		return kodeord;
+	}
+
+	public void setKodeord( String _val) {
+		this.kodeord = _val;
+	}
+
+	public String getFuldtNavn() {
+		return fuldtNavn;
+	}
+
+	public void setFuldtNavn( String _val) {
+		this.fuldtNavn = _val;
+	}
+
+	public Boolean getErAktiv() {
+		return erAktiv;
+	}
+
+	public void setErAktiv( Boolean _val) {
+		this.erAktiv = _val;
+	}
+
+	public Rettigheder[] getRettigheder() {
+		return rettigheder;
+	}
+
+	public void setRettigheder(Rettigheder[] rettigheder) {
+		this.rettigheder = rettigheder;
+	}
+
+	public boolean harRettighed(Rettigheder.Rettighed rettighedEnum, Bruger b){
+		for(Rettigheder ret : rettigheder){
+			if(ret.getRettighed().equals(rettighedEnum)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Indicates whether some other object is "equal to" this one.
+	 * Uses 'columns' equality type.
+	 */
+	@Override
+	public boolean equals( Object _other ) {
+		if (_other == this) return true;
+		if (_other == null || (!(_other instanceof Bruger))) return false;
+
+		Bruger _o = (Bruger) _other;
+
+		if ( brugerId == null ) {
+			if ( _o.brugerId != null ) return false;
+		}
+		else if ( _o.brugerId == null || brugerId.intValue() != _o.brugerId.intValue()) return false;
+
+		if ( brugerNavn == null ) {
+			if ( _o.brugerNavn != null ) return false;
+		}
+		else if ( _o.brugerNavn == null || !brugerNavn.equals( _o.brugerNavn )) return false;
+
+		if ( kodeord == null ) {
+			if ( _o.kodeord != null ) return false;
+		}
+		else if ( _o.kodeord == null || !kodeord.equals( _o.kodeord )) return false;
+
+		if ( fuldtNavn == null ) {
+			if ( _o.fuldtNavn != null ) return false;
+		}
+		else if ( _o.fuldtNavn == null || !fuldtNavn.equals( _o.fuldtNavn )) return false;
+
+		if ( erAktiv == null ) {
+			if ( _o.erAktiv != null ) return false;
+		}
+		else if ( _o.erAktiv == null || erAktiv.booleanValue() != _o.erAktiv.booleanValue()) return false;
+
+		return true;
+	}
+
+	/**
+	 * Returns a hash code value for the object.
+	 */
+	@Override
+	public int hashCode() {
+		int _ret = 1998393135; // = "Bruger".hashCode()
+		_ret += brugerId == null ? 0 : brugerId;
+		_ret = 29 * _ret + (brugerNavn == null ? 0 : brugerNavn.hashCode());
+		_ret = 29 * _ret + (kodeord == null ? 0 : kodeord.hashCode());
+		_ret = 29 * _ret + (fuldtNavn == null ? 0 : fuldtNavn.hashCode());
+		_ret = 29 * _ret + (erAktiv == null ? 0 : (erAktiv ? 1 : 0));
+
+		return _ret;
+	}
+
+
+	////////////////////////////////////////////////////////////////////////////
+	// Protected
+	////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Constructs the content for the toString() method.
+	 */
+	protected void contentToString(StringBuffer sb) {
+		append( sb, "brugerId", brugerId );
+		append( sb, "brugerNavn", brugerNavn );
+		append( sb, "kodeord", kodeord );
+		append( sb, "fuldtNavn", fuldtNavn );
+		append( sb, "erAktiv", erAktiv );
+	}
 }
