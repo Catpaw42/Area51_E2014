@@ -109,6 +109,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		ModalitetDao modDao = new ModalitetDaoImpl(conn);
 		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
 		request.setAttribute(Const.MODALITY_LIST, modList);
+		System.out.println(modList);
+		if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
+			BrugerDao bDao = new BrugerDaoImpl(conn);
+			Bruger abruger = bDao.findByPrimaryKey(1);
+			request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
+		}
+		
 		request.getRequestDispatcher(NyRekPage).forward(request, response);
 	}
 
