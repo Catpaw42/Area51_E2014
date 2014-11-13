@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<%@page import="database.dto.RettighedsBruger"%>
+<%@page import="database.dto.Bruger"%>
 <%@page import="helperClasses.Const"%>
 <%@page import="servlets.LoginServlet"%>
 <html>
@@ -47,7 +47,7 @@
 							<div id="rekvirentData" class="hover">
 								<h2>Rekvirent</h2>
 								<label for="rekvirent">Rekvirent</label>
-								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" readonly="readonly" value=<%= ((RettighedsBruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerNavn() %>>
+								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" readonly="readonly" value=<%= ((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerNavn() %>>
 								<label for="henv_afd">Rekvirerende Afdeling</label>
 								<input type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling" required="required">
 								<label for="henv_laege">Henvisende læge</label>
