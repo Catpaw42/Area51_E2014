@@ -80,15 +80,17 @@ public class RekvisitionServlet extends HttpServlet {
 		
 		
 		//Getting Dummy user
-		if(activeUser == null){ // kun af test grunde
-			response.sendRedirect(Const.LOGIN_PAGE);
-			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix!
-			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
+		if(activeUser == null){ 
+//			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
+//			activeUser = userDao.findByPrimaryKey(1);//TODO remove or fix! // kun af test grunde
+//			request.getSession().setAttribute(Const.ACTIVE_USER, activeUser);
 		}
 		//Rekvisition list to show user.
-		RekvisitionExtended[] rekvlist;
+		RekvisitionExtended[] rekvlist = null;
 		// gets list of the active user - default behavior
+		if(activeUser != null){
 		rekvlist = rekvisitionDao.findDynamic(condRekvirentId, 0, -1, activeUser.getBrugerId());
+		}
 		//Stitch rekvisition[] to request object.
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
 		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
@@ -102,12 +104,29 @@ public class RekvisitionServlet extends HttpServlet {
 		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, null));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
+	
+	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response){
+		
+	}
+	
+	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response){
+		
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		createSearchDropdowns(request);
+	Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		
+		
+		//Getting Dummy user
+		if(activeUser == null){ // kun af test grunde
+			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
+		}
+		System.out.println("##Active user: " + activeUser);
+		
 		ArrayList<Object> params = new ArrayList<>();
 		String cond = "";
 		// parameters

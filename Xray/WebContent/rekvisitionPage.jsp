@@ -4,9 +4,10 @@
 <%@page import="servlets.RekvisitionServlet"%>
 <%@page import="database.dto.RekvisitionExtended.Status"%>
 <%@page import="database.dto.Bruger" %>
-<html>
+<%@page import="helperClasses.Const" %>
 <%@ page import="database.dto.RekvisitionExtended"%>
 <%@ page import="java.util.ArrayList"%>
+<html>
 <head>
 <meta charset="UTF-8">
 <link href="css/styleSheet.css" rel="stylesheet" type="text/css"
@@ -25,17 +26,20 @@
 	Bruger activeUser = null;
 	
 	try{
-		activeUser = (Bruger) request.getSession().getAttribute(RekvisitionServlet.ACTIVE_USER);
+		activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+// 		if(activeUser == null){
+// 			response.sendRedirect(Const.LOGIN_PAGE);
+// 		}
 	}catch(Exception e){}
 	
 	try{
-		modList = (Modalitet[]) request.getSession().getAttribute(RekvisitionServlet.MODALITY_LIST);
+		modList = (Modalitet[]) request.getSession().getAttribute(Const.MODALITY_LIST);
 	} catch(Exception e){}
 	try{
-		statusList = (Status[]) request.getSession().getAttribute(RekvisitionServlet.STATUS_LIST);
+		statusList = (Status[]) request.getSession().getAttribute(Const.STATUS_LIST);
 	} catch(Exception e1){}
 	
-	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(RekvisitionServlet.REKVISITION_LIST);
+	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(Const.REKVISITION_LIST);
 %>
 <body class="rekvisitionPage">
 	<%@include file="topMenu.jsp"%>
@@ -118,7 +122,8 @@
 							<th>Dato</th>
 							<th>Status</th>
 						</tr>
-						<%				if(rekv != null)
+						<%				
+						if(rekv != null)
  						 						for (RekvisitionExtended r : rekv){
  													out.print("<tr> <td>");
  													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
