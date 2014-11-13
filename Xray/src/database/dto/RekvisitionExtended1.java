@@ -53,25 +53,7 @@ public class RekvisitionExtended1 extends RekvisitionExtended {
 			boolean isTidlBilledDiagnostikModified, boolean isTriageModified,
 			boolean isVisitatorPrioriteringModified,
 			boolean isVisitatorBemaerkningModified) {
-		super(rekvisitionId, mRKontrolskemaId, pETCTKontrolskemaId,
-				cTKontrastKontrolskemaId, invasivULKontrolskemaId,
-				undersoegelsesTypeId, rekvirentId, visitatorId, patientId, henvistTil,
-				hospitalOenske, prioritering, udfIndlagt, ambulantKoersel,
-				indlaeggelseTransport, status, samtykke, paaroerende, ambulant,
-				datoForslag, graviditet, graviditetUge, cave, hoerehaemmet,
-				synshaemmet, amputeret, kanIkkeStaa, iltLiterPrmin, tolkSprog, dement,
-				afasi, isolation, cytostatikaDato, tidlBilledDiagnostik,
-				kliniskProblemstilling, triage, henvLaege, henvAfd, kontaktTlf,
-				visitatorPrioritering, visitatorBemaerkning, afsendtDato,
-				isMRKontrolskemaIdModified, isPETCTKontrolskemaIdModified,
-				isCTKontrastKontrolskemaIdModified, isInvasivULKontrolskemaIdModified,
-				isHospitalOenskeModified, isAmbulantKoerselModified,
-				isIndlaeggelseTransportModified, isSamtykkeModified,
-				isDatoForslagModified, isGraviditetModified, isGraviditetUgeModified,
-				isIltLiterPrminModified, isTolkSprogModified,
-				isCytostatikaDatoModified, isTidlBilledDiagnostikModified,
-				isTriageModified, isVisitatorPrioriteringModified,
-				isVisitatorBemaerkningModified);
+		
 
 	}
 	public MRKontrolskema getMrMkontroKontrolskema() {

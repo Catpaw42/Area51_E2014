@@ -14,8 +14,11 @@ import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.PatientDao;
 import database.dao.UndersoegelsesTypeDao;
+import database.dto.Modalitet;
+import database.dto.Patient;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended;
+import database.dto.RekvisitionExtended.Status;
 
 public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 	
@@ -41,14 +44,6 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department){ 	
 		Timestamp lowBound = null;
 		Timestamp upperBound = null;
-		System.out.println("##############ARGS#############");
-		System.out.println("cpr: "+ cpr);
-		System.out.println("name: " + name);
-		System.out.println("modality: " + modality);
-		System.out.println("status: " + status);
-		System.out.println("date: " + date);
-		System.out.println("department: " + department);
-		System.out.println("###############################");
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		ArrayList<RekvisitionExtended> rekv = new ArrayList<>();
@@ -76,10 +71,6 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 			long day = 60*60*24*1000-1;
 			lowBound = new Timestamp(date.getTime());
 			upperBound = new Timestamp(date.getTime()+day);
-			System.out.println("########LOWER BOUND############");
-			System.out.println(lowBound);
-			System.out.println("########UPPER BOUND############");
-			System.out.println(upperBound);
 			query = query + (first ? " AND  " : " ") + "afsendt_dato>? AND afsendt_dato<? ";
 			first = true;
 		}
@@ -90,8 +81,6 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 		
 		if(!first){
 			query = GET_ALL_REKV;
-		
-		System.out.println("GET ALL");
 		}
 		//    	modalitet_navn
 		//    	patient_cpr
@@ -134,14 +123,38 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 					e.printStackTrace();
 				}
 				try {
-					System.out.println("##################END##################");
-					System.out.println(stmt.toString());
-					rs = stmt.executeQuery();
+					PatientDaoImpl ptDao = new PatientDaoImpl(conn); // not right but workaround
+					ModalitetDaoImpl modDao = new ModalitetDaoImpl(conn);
+					UndersoegelsesTypeDaoImpl undDao = new UndersoegelsesTypeDaoImpl(conn);
 					
+					rs = stmt.executeQuery();
+					RekvisitionExtended rekvRsRow = new RekvisitionExtended(); 
+					String pt_cpr = "patient_cpr";
+					String pt_name = "patient_navn";
+					String mod_name = "modalitet_navn";
+					String stam_afdeling = "stamafdeling";
+					String afs_dato = "afsendt_dato";
+					String rekv_status = "status";
+					String rekv_id = "rekvisition_id";
 					while (rs.next()){
-						System.out.println("##### TEST: " + rs.getInt("rekvisition_id"));
-						rekv.add(findByPrimaryKey(rs.getInt("rekvisition_id")));
-						System.out.println(rekv.size());
+						rekvRsRow.setPatient(new Patient());
+						rekvRsRow.setModalitet(new Modalitet());
+						rekvRsRow.getPatient().setPatientCpr(rs.getString(pt_cpr));
+						rekvRsRow.getPatient().setPatientNavn(rs.getString(pt_name));
+						rekvRsRow.getModalitet().setModalitetNavn(rs.getString(mod_name));
+						rekvRsRow.getPatient().setStamafdeling(rs.getString(stam_afdeling));
+						rekvRsRow.setAfsendtDato(rs.getTimestamp(afs_dato));
+						rekvRsRow.setStatus(_Rekvisition_Statuss[ rs.getShort( rekv_status) ]);
+						rekvRsRow.setRekvisitionId(rs.getInt(rekv_id));
+						rekv.add(rekvRsRow);
+						
+						//to get rekvisition with all attributes
+//						rekvRsRow = fetch(rs);
+//						rekvRsRow.setPatient(ptDao.fetch(rs));
+//						rekvRsRow.setModalitet(modDao.fetch(rs));
+//						rekvRsRow.setUndersoegelsesType(undDao.fetch(rs));
+//						rekv.add(rekvRsRow);
+//						rekv.add(findByPrimaryKey(rs.getInt("rekvisition_id")));
 					}
 				} catch (SQLException e) {
 					System.err.println(e.getSQLState());
@@ -153,8 +166,9 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 				}
 				
 				
-				
-		return addObjectsToRekvisition(ret);
+				// to add all attributes
+//		return addObjectsToRekvisition(ret);
+				return ret;
 		
 		
 	}
@@ -164,18 +178,13 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 		PETCTKontrolskemaDao petctDao = new PETCTKontrolskemaDaoImpl(conn);
 		CtKontrastKontrolskemaDao ctKontrDao = new CtKontrastKontrolskemaDaoImpl(conn);
 		BrugerDao brugerDao = new BrugerDaoImpl(conn);
-		PatientDao ptDao = new PatientDaoImpl(conn);
-		ModalitetDao modDao = new ModalitetDaoImpl(conn);
-		UndersoegelsesTypeDao undDao = new UndersoegelsesTypeDaoImpl(conn);
-		
+	
 		for(int i = 0; i < rekv.length; i++){
 			rekv[i].setMrMkontroKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
 			rekv[i].setPetctKontrolskema(petctDao.findByPrimaryKey(rekv[i].getPETCTKontrolskemaId() != null ? rekv[i].getPETCTKontrolskemaId() : -1));
 			rekv[i].setCtKontrastKontrolskema(ctKontrDao.findByPrimaryKey(rekv[i].getCTKontrastKontrolskemaId() != null ? rekv[i].getCTKontrastKontrolskemaId() : -1));
 			rekv[i].setRekvirent(brugerDao.findByPrimaryKey(rekv[i].getRekvirentId() != null ? rekv[i].getRekvirentId() : -1));
 			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));
-			rekv[i].setPatient(ptDao.findByPrimaryKey(rekv[i].getPatientId() != null ? rekv[i].getPatientId() : -1));
-			rekv[i].setModalitet(modDao.findByPrimaryKey(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId() != null ? rekv[i].getUndersoegelsesTypeId() : -1).getModalitetId()));
 		}
 		return rekv;
 	}

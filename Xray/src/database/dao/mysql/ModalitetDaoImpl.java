@@ -110,9 +110,10 @@ public class ModalitetDaoImpl extends AbstractDaoImpl<Modalitet> implements Moda
     }
 
     protected Modalitet fetch( ResultSet rs ) throws SQLException {
+    	String[] cn = SELECT_COLUMNS.split(", ");
         Modalitet dto = new Modalitet();
-        dto.setModalitetId( rs.getInt( 1 ));
-        dto.setModalitetNavn( rs.getString( 2 ));
+        dto.setModalitetId( rs.getInt( cn[0] ));
+        dto.setModalitetNavn( rs.getString( cn[1] ));
 
         return dto;
     }

@@ -51,7 +51,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 	private static final RekvisitionExtended.Prioritering[] _Rekvisition_Prioriterings = { null, RekvisitionExtended.Prioritering.HASTE, RekvisitionExtended.Prioritering.RUTINE, RekvisitionExtended.Prioritering.FREMSKYNDET, RekvisitionExtended.Prioritering.PAKKEFORLOEB };
 	private static final RekvisitionExtended.AmbulantKoersel[] _Rekvisition_AmbulantKoersels = { null, RekvisitionExtended.AmbulantKoersel.INGEN, RekvisitionExtended.AmbulantKoersel.SIDDENDE, RekvisitionExtended.AmbulantKoersel.LIGGENDE };
 	private static final RekvisitionExtended.IndlaeggelseTransport[] _Rekvisition_IndlaeggelseTransports = { null, RekvisitionExtended.IndlaeggelseTransport.GAA_UDEN_PORTOER, RekvisitionExtended.IndlaeggelseTransport.GAA_MED_PORTOER, RekvisitionExtended.IndlaeggelseTransport.KOERESTOL, RekvisitionExtended.IndlaeggelseTransport.SENG };
-	private static final RekvisitionExtended.Status[] _Rekvisition_Statuss = { null, RekvisitionExtended.Status.PENDING, RekvisitionExtended.Status.CANCELED, RekvisitionExtended.Status.APPROVED, RekvisitionExtended.Status.DECLINED, RekvisitionExtended.Status.BOOKED };
+	protected static final RekvisitionExtended.Status[] _Rekvisition_Statuss = { null, RekvisitionExtended.Status.PENDING, RekvisitionExtended.Status.CANCELED, RekvisitionExtended.Status.APPROVED, RekvisitionExtended.Status.DECLINED, RekvisitionExtended.Status.BOOKED };
 	private static final RekvisitionExtended.Samtykke[] _Rekvisition_Samtykkes = { null, RekvisitionExtended.Samtykke.JA, RekvisitionExtended.Samtykke.NEJ, RekvisitionExtended.Samtykke.UDEN_SAMTYKKE };
 
 	
@@ -829,104 +829,111 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 	}
 
 	protected RekvisitionExtended fetch( ResultSet rs ) throws SQLException {
+		String[] colNames = SELECT_COLUMNS.split(", ");
+		String[] cn = new String[colNames.length+1];	
+		int i = 1;
+		for(String s : colNames){
+			cn[i] = s;
+			i++;
+		}
 		RekvisitionExtended dto = new RekvisitionExtended();
-		dto.setRekvisitionId( rs.getInt( 1 ));
-		dto.setMRKontrolskemaId( rs.getInt( 2 ));
+		dto.setRekvisitionId( rs.getInt( cn[1] ));
+		dto.setMRKontrolskemaId( rs.getInt( cn[2] ));
 
 		if ( rs.wasNull()) {
 			dto.setMRKontrolskemaId( null );
 		}
 
-		dto.setPETCTKontrolskemaId( rs.getInt( 3 ));
+		dto.setPETCTKontrolskemaId( rs.getInt( cn[3]));
 
 		if ( rs.wasNull()) {
 			dto.setPETCTKontrolskemaId( null );
 		}
 
-		dto.setCTKontrastKontrolskemaId( rs.getInt( 4 ));
+		dto.setCTKontrastKontrolskemaId( rs.getInt( cn[4] ));
 
 		if ( rs.wasNull()) {
 			dto.setCTKontrastKontrolskemaId( null );
 		}
 
-		dto.setInvasivULKontrolskemaId( rs.getInt( 5 ));
+		dto.setInvasivULKontrolskemaId( rs.getInt( cn[5] ));
 
 		if ( rs.wasNull()) {
 			dto.setInvasivULKontrolskemaId( null );
 		}
 
-		dto.setUndersoegelsesTypeId( rs.getInt( 6 ));
-		dto.setRekvirentId( rs.getInt( 7 ));
-		dto.setVisitatorId( rs.getInt( 8 ));
-		dto.setPatientId( rs.getInt( 9 ));
-		dto.setHenvistTil( _Rekvisition_HenvistTils[ rs.getShort( 10 ) ]);
-		dto.setHospitalOenske( _Rekvisition_HospitalOenskes[ rs.getShort( 11 ) ]);
+		dto.setUndersoegelsesTypeId( rs.getInt( cn[6] ));
+		dto.setRekvirentId( rs.getInt( cn[7] ));
+		dto.setVisitatorId( rs.getInt( cn[8] ));
+		dto.setPatientId( rs.getInt( cn[9] ));
+		dto.setHenvistTil( _Rekvisition_HenvistTils[ rs.getShort( cn[10] ) ]);
+		dto.setHospitalOenske( _Rekvisition_HospitalOenskes[ rs.getShort( cn[11] ) ]);
 
 		if ( rs.wasNull()) {
 			dto.setHospitalOenske( null );
 		}
 
-		dto.setPrioritering( _Rekvisition_Prioriterings[ rs.getShort( 12 ) ]);
-		dto.setUdfIndlagt( rs.getBoolean( 13 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setAmbulantKoersel( _Rekvisition_AmbulantKoersels[ rs.getShort( 14 ) ]);
+		dto.setPrioritering( _Rekvisition_Prioriterings[ rs.getShort( cn[12] ) ]);
+		dto.setUdfIndlagt( rs.getBoolean( cn[13] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setAmbulantKoersel( _Rekvisition_AmbulantKoersels[ rs.getShort( cn[14] ) ]);
 
 		if ( rs.wasNull()) {
 			dto.setAmbulantKoersel( null );
 		}
 
-		dto.setIndlaeggelseTransport( _Rekvisition_IndlaeggelseTransports[ rs.getShort( 15 ) ]);
+		dto.setIndlaeggelseTransport( _Rekvisition_IndlaeggelseTransports[ rs.getShort( cn[15] ) ]);
 
 		if ( rs.wasNull()) {
 			dto.setIndlaeggelseTransport( null );
 		}
 
-		dto.setStatus( _Rekvisition_Statuss[ rs.getShort( 16 ) ]);
-		dto.setSamtykke( _Rekvisition_Samtykkes[ rs.getShort( 17 ) ]);
+		dto.setStatus( _Rekvisition_Statuss[ rs.getShort( cn[16] ) ]);
+		dto.setSamtykke( _Rekvisition_Samtykkes[ rs.getShort( cn[17] ) ]);
 
 		if ( rs.wasNull()) {
 			dto.setSamtykke( null );
 		}
 
-		dto.setPaaroerende( rs.getString( 18 ));
-		dto.setAmbulant( rs.getBoolean( 19 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setDatoForslag( rs.getString( 20 ));
-		dto.setGraviditet( rs.getBoolean( 21 ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setPaaroerende( rs.getString( cn[18] ));
+		dto.setAmbulant( rs.getBoolean( cn[19] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setDatoForslag( rs.getString( cn[20] ));
+		dto.setGraviditet( rs.getBoolean( cn[21] ) ? Boolean.TRUE : Boolean.FALSE );
 
 		if ( rs.wasNull()) {
 			dto.setGraviditet( null );
 		}
 
-		dto.setGraviditetUge( rs.getInt( 22 ));
+		dto.setGraviditetUge( rs.getInt( cn[22] ));
 
 		if ( rs.wasNull()) {
 			dto.setGraviditetUge( null );
 		}
 
-		dto.setCave( rs.getString( 23 ));
-		dto.setHoerehaemmet( rs.getBoolean( 24 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setSynshaemmet( rs.getBoolean( 25 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setAmputeret( rs.getBoolean( 26 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setKanIkkeStaa( rs.getBoolean( 27 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setIltLiterPrmin( rs.getShort( 28 ));
+		dto.setCave( rs.getString( cn[23] ));
+		dto.setHoerehaemmet( rs.getBoolean( cn[24] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setSynshaemmet( rs.getBoolean( cn[25] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setAmputeret( rs.getBoolean( cn[26] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setKanIkkeStaa( rs.getBoolean( cn[27] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setIltLiterPrmin( rs.getShort( cn[28] ));
 
 		if ( rs.wasNull()) {
 			dto.setIltLiterPrmin( null );
 		}
 
-		dto.setTolkSprog( rs.getString( 29 ));
-		dto.setDement( rs.getBoolean( 30 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setAfasi( rs.getBoolean( 31 ) ? Boolean.TRUE : Boolean.FALSE );
-		dto.setIsolation( rs.getString( 32 ));
-		dto.setCytostatikaDato( rs.getTimestamp( 33 ));
-		dto.setTidlBilledDiagnostik( rs.getString( 34 ));
-		dto.setKliniskProblemstilling( rs.getString( 35 ));
-		dto.setTriage( rs.getString( 36 ));
-		dto.setHenvLaege( rs.getString( 37 ));
-		dto.setHenvAfd( rs.getString( 38 ));
-		dto.setKontaktTlf( rs.getString( 39 ));
-		dto.setVisitatorPrioritering( rs.getString( 40 ));
-		dto.setVisitatorBemaerkning( rs.getString( 41 ));
-		dto.setAfsendtDato( rs.getTimestamp( 42 ));
+		dto.setTolkSprog( rs.getString( cn[29] ));
+		dto.setDement( rs.getBoolean( cn[30] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setAfasi( rs.getBoolean( cn[31] ) ? Boolean.TRUE : Boolean.FALSE );
+		dto.setIsolation( rs.getString( cn[32] ));
+		dto.setCytostatikaDato( rs.getTimestamp( cn[33] ));
+		dto.setTidlBilledDiagnostik( rs.getString( cn[34] ));
+		dto.setKliniskProblemstilling( rs.getString( cn[35] ));
+		dto.setTriage( rs.getString( cn[36] ));
+		dto.setHenvLaege( rs.getString( cn[37] ));
+		dto.setHenvAfd( rs.getString( cn[38] ));
+		dto.setKontaktTlf( rs.getString( cn[39] ));
+		dto.setVisitatorPrioritering( rs.getString( cn[40] ));
+		dto.setVisitatorBemaerkning( rs.getString( cn[41] ));
+		dto.setAfsendtDato( rs.getTimestamp( cn[42] ));
 
 		return dto;
 	}

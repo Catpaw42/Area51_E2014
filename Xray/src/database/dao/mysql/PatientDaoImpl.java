@@ -139,14 +139,15 @@ public class PatientDaoImpl extends AbstractDaoImpl<Patient> implements PatientD
     }
 
     protected Patient fetch( ResultSet rs ) throws SQLException {
+    	String[] cn = SELECT_COLUMNS.split(", ");
         Patient dto = new Patient();
-        dto.setPatientId( rs.getInt( 1 ));
-        dto.setPatientCpr( rs.getString( 2 ));
-        dto.setPatientNavn( rs.getString( 3 ));
-        dto.setPatientAdresse( rs.getString( 4 ));
-        dto.setPatientTlf( rs.getString( 5 ));
-        dto.setFoedselsdag( rs.getTimestamp( 6 ));
-        dto.setStamafdeling( rs.getString( 7 ));
+        dto.setPatientId( rs.getInt( cn[0] ));
+        dto.setPatientCpr( rs.getString( cn[1] ));
+        dto.setPatientNavn( rs.getString( cn[2] ));
+        dto.setPatientAdresse( rs.getString( cn[3] ));
+        dto.setPatientTlf( rs.getString( cn[4] ));
+        dto.setFoedselsdag( rs.getTimestamp( cn[5] ));
+        dto.setStamafdeling( rs.getString( cn[6] ));
 
         return dto;
     }

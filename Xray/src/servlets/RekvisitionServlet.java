@@ -2,12 +2,14 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 
@@ -146,11 +148,13 @@ public class RekvisitionServlet extends HttpServlet {
 		// objekter
 		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
+		Date d1 = new Date();
 		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
 		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
-
+		Date d2 = new Date();
 
 		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
+		System.out.println("in " + (d2.getTime()- d1.getTime()) + " ms");
 		System.out.println("##################################");
 		
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);

@@ -7,12 +7,9 @@ package database.dao.mysql;
 
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
 
 import java.util.ArrayList;
 
@@ -149,10 +146,11 @@ public class UndersoegelsesTypeDaoImpl extends AbstractDaoImpl<UndersoegelsesTyp
     }
 
     protected UndersoegelsesType fetch( ResultSet rs ) throws SQLException {
+    	String[] cn = SELECT_COLUMNS.split(", ");
         UndersoegelsesType dto = new UndersoegelsesType();
-        dto.setUndersoegelsesTypeId( rs.getInt( 1 ));
-        dto.setUndersoegelsesNavn( rs.getString( 2 ));
-        dto.setModalitetId( rs.getInt( 3 ));
+        dto.setUndersoegelsesTypeId( rs.getInt( cn[0] ));
+        dto.setUndersoegelsesNavn( rs.getString( cn[1] ));
+        dto.setModalitetId( rs.getInt( cn[2] ));
 
         return dto;
     }

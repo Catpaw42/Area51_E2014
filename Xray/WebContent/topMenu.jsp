@@ -2,6 +2,7 @@
 <%@page import="database.dto.Rettigheder.Rettighed"%>
 <%@page import="servlets.LoginServlet"%>
 <%@page import="database.dto.Bruger"%>
+<%@page import="helperClasses.Const" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
@@ -29,13 +30,13 @@
 			<ul>
 				<%
 					if (aUser.harRettighed(Rettighed.REQUEST))
-						out.print("<li> <a href='MainServlet?page=rekvirer'>Rekvirer</a></li>");
+						out.print("<li> <a href='MainServlet?page="+Const.REKVISITION_SERVLET+"'>Rekvirer</a></li>");
 					if (aUser.harRettighed(Rettighed.ASSESSOR))
-						out.print("<li><a href='MainServlet?page=visiter'>Visitér</a></li>");
+						out.print("<li><a href='MainServlet?page="+ Const.VISITATION_SERVLET + "'>Visitér</a></li>");
 					if (aUser.harRettighed(Rettighed.BOOKING))
-						out.print("<li><a href='MainServlet?page=book'>Book</a></li>");
+						out.print("<li><a href='MainServlet?page=" + Const.BOOKING_SERVLET + "'>Book</a></li>");
 					if (aUser.harRettighed(Rettighed.ADMIN))
-						out.print("<li><a href='MainServlet?page=admin'>Administrer Brugere</a></li>");
+						out.print("<li><a href='MainServlet?page=" + Const.ADMIN_SERVLET + "'>Administrer Brugere</a></li>");
 				%>
 
 

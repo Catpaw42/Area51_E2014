@@ -403,7 +403,6 @@ public abstract class AbstractDaoImpl<T> extends RootDaoImpl {
 
     private ResultSet query( PreparedStatement pstmt, Object[] params) throws SQLException {
         params( pstmt, params );
-
         return pstmt.executeQuery();
     }
 
