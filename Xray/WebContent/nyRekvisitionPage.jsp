@@ -4,6 +4,7 @@
 		<title> Skriv Rekvisition </title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/nyRekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="js/Rekvisition.js"></script>
 	</head>
@@ -59,8 +60,8 @@
 					<h2>Undersøgelse</h2>
 					<label for="udf_indlagt">Udføres under indlæggelse</label>
 					<div id="udf_indlagt">
-						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required" value="false">Ambulant <br>
-						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required" value="true">Indlæggelse <br>
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required" value="false">Ambulant
+						<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required" value="true">Indlæggelse
 					</div>
 					<label for="henvist_til">Henvist til</label>
 					<div id="henvist_til">

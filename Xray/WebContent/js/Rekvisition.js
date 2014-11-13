@@ -2,13 +2,13 @@ function udfIndlagt()
 {
 	if($("#ambulant").is(":checked"))
 	{
-		$("#indlagtTransport").css("display","none");
-		$("#ambulantTransport").css("display","block");
+		$("#indlagt_transport").css("display","none");
+		$("#ambulant_transport").css("display","block");
 	}
 	else
 	{
-		$("#indlagtTransport").css("display","block");
-		$("#ambulantTransport").css("display","none");
+		$("#indlagt_transport").css("display","block");
+		$("#ambulant_transport").css("display","none");
 		//todo minus hospitalsønske
 	}
 }

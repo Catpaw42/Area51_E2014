@@ -4,7 +4,8 @@
 		<meta charset="utf-8">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/mainPage.js"></script>
+		<script type="text/javascript" src="js/rekvisitionPage.js"></script>
+<!-- 		todo fix names -->
 		<title>Main Page</title>
 	</head>
 	
@@ -54,11 +55,11 @@
 								  	</td>
 									<td>
 										<select name="status" id="status">
-											<option value="sendt">Sendt</option>
-											<option value="visiteret">Visiteret</option>
-											<option value="anulleret">Anulleret</option>
-											<option value="afvist">Afvist</option>
-											<option value="booket">Booket</option>
+											<option value="PENDING">Sendt</option>
+											<option value="APPROVED">Visiteret</option>
+											<option value="CANCELED">Annulleret</option>
+											<option value="DECLINED">Afvist</option>
+											<option value="BOOKED">Booket</option>
 								  		</select>
 								  	</td>
 								</tr>
@@ -71,7 +72,7 @@
 			<hr />
 			<ul class=showInline>
 				<li>
-					<div id="rekvisitionList">
+					<div id="visitationList">
 						<table>
 							<tr>
 								<th>Cpr</th>
@@ -82,28 +83,28 @@
 								<th>Status</th>
 							</tr>
 							<tr>
-								<td>255255-5555</td>
-								<td>Den elskede leder Magnus</td>
-								<td>UL</td>
-								<td>O</td>
-								<td>251014</td>
-								<td>Sendt</td>
+								<td id="test1">255255-5555</td>
+								<td id="test1">Den elskede leder Magnus</td>
+								<td id="test1">UL</td>
+								<td id="test1">O</td>
+								<td id="test1">251014</td>
+								<td id="test1">Sendt</td>
 							</tr>
 							<tr>
-								<td>050501-2222</td>
-								<td>Mickey Mouse</td>
-								<td>CT</td>
-								<td>O</td>
-								<td>300115</td>
-								<td>Visiteret</td>
+								<td id="test2">050501-2222</td>
+								<td id="test2">Mickey Mouse</td>
+								<td id="test2">CT</td>
+								<td id="test2">O</td>
+								<td id="test2">300115</td>
+								<td id="test2">Visiteret</td>
 							</tr>
 							<tr>
-								<td>111100-1144</td>
-								<td>Marwin The Depressed Robot</td>
-								<td>RGT</td>
-								<td>M</td>
-								<td>011211</td>
-								<td>Anulleret</td>
+								<td id="test3">111100-1144</td>
+								<td id="test3">Marwin The Depressed Robot</td>
+								<td id="test3">RGT</td>
+								<td id="test3">M</td>
+								<td id="test3">011211</td>
+								<td id="test3">Anulleret</td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>
