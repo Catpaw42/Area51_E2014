@@ -6,6 +6,7 @@ import database.dao.RettighederDao;
 import database.dto.Bruger;
 import database.dto.Rettigheder;
 
+
 public class BrugerDaoImplExtended extends BrugerDaoImpl {
 
 	protected static final String USER_LOGIN_CONDITION = "bruger_navn=? AND kodeord=?";

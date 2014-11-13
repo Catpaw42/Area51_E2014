@@ -14,7 +14,6 @@ import database.dao.BrugerDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dto.Bruger;
-import database.dto.RettighedsBruger;
 import database.interfaces.IDataBaseController;
 import database.interfaces.IDataBaseController.DatabaseException;
 import database.interfaces.IDataBaseController.UserNotFoundException;
@@ -72,7 +71,6 @@ public class LoginServlet extends HttpServlet
 			try {
 				conn = DataSourceConnector.getConnection();
 			} catch (ConnectionException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//TODO skifte til interface når DAO og DTO er rigtige
@@ -82,17 +80,15 @@ public class LoginServlet extends HttpServlet
 			System.out.println(loginSuccess);
 			if (loginSuccess)
 			{
-				try
-				{
-					RettighedsBruger loggedInUser= b.findByUserName(username, password);
+					Bruger loggedInUser= b.findByUserName(username, password);
 					
 					if(loggedInUser.getErAktiv())
 					{
 						System.out.println("Login success, forwarding");
 						request.getSession().setAttribute(Const.ACTIVE_USER, loggedInUser );
 					
-						request.getSession().setAttribute(Const.DATABASE, dbctrl);
-						response.sendRedirect(Const.MENU_SERVLET);
+//						request.getSession().setAttribute(Const.DATABASE, dbctrl);
+						response.sendRedirect(Const.REKVISITION_SERVLET);
 						System.out.println("forward finished");
 					}
 					else
@@ -100,16 +96,6 @@ public class LoginServlet extends HttpServlet
 						request.setAttribute(Const.LOGIN_FAILED, true);
 						request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- stod som argument, men må være forkert??
 					}
-				
-				}
-				catch (DatabaseException e)
-				{
-					e.printStackTrace();
-				}
-				catch (UserNotFoundException e)
-				{
-					e.printStackTrace();
-				}
 			}
 			else
 			{
