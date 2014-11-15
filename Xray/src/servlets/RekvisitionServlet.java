@@ -168,7 +168,8 @@ public class RekvisitionServlet extends HttpServlet {
 				RekvisitionExtended[] rekvlist = null;
 				// gets list of the active user - default behavior
 				if(activeUser != null){
-				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
+					rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
+//				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
 				}
 				//Stitch rekvisition[] to request object.
 				request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	

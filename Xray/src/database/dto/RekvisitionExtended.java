@@ -14,7 +14,7 @@ import com.spoledge.audao.db.dto.AbstractDto;
  *
  * @author generated
  */
-public class RekvisitionExtended extends AbstractDto {
+public class RekvisitionExtended extends AbstractDto implements Cloneable{
 
     public enum HenvistTil {
         RADIOLOGISK,

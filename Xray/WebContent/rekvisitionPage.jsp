@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
-<%@page import="database.dto.RekvisitionExtended1"%>
+<%-- <%@page import="database.dto.RekvisitionExtended1"%> --%>
 <%@page import="database.dto.Modalitet"%>
 <%@page import="servlets.RekvisitionServlet"%>
 <%@page import="database.dto.RekvisitionExtended.Status"%>
 <%@page import="database.dto.Bruger" %>
+<%@page import="database.dto.Rettigheder" %>
 <%@page import="helperClasses.Const" %>
 <%@ page import="database.dto.RekvisitionExtended"%>
 <%@ page import="java.util.ArrayList"%>
@@ -24,9 +25,16 @@
 	Modalitet[] modList = null;
 	Status[] statusList = null;
 	Bruger activeUser = null;
+	boolean userRightsRequisition = false;
 	
 	try{
 		activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		// is not being used at the moment
+		for(Rettigheder r : activeUser.getRettigheder()){
+			if(r.getRettighed().equals(Rettigheder.Rettighed.REQUEST)){
+				userRightsRequisition = true;
+			}
+		}
 // 		if(activeUser == null){
 // 			response.sendRedirect(Const.LOGIN_PAGE);
 // 		}
