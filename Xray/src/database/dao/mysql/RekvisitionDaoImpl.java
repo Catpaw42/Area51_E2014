@@ -101,8 +101,10 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 			if(params[i].getClass().isEnum()){
 				params[i] = ((Enum<?>) params[i]).ordinal() +1;
 			}
-		}
-		return findManyArray( cond, offset, count, params);
+		}	
+		RekvisitionExtended[] rekv = findManyArray( cond, offset, count, params);
+		return addObjectsToRekvisition(rekv);
+		
 	}
 
 	/**
@@ -866,6 +868,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		dto.setRekvirentId( rs.getInt( cn[7] ));
 		dto.setVisitatorId( rs.getInt( cn[8] ));
 		dto.setPatientId( rs.getInt( cn[9] ));
+		System.out.println(dto.getPatientId());
 		dto.setHenvistTil( _Rekvisition_HenvistTils[ rs.getShort( cn[10] ) ]);
 		dto.setHospitalOenske( _Rekvisition_HospitalOenskes[ rs.getShort( cn[11] ) ]);
 

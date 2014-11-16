@@ -51,9 +51,7 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 			if(params[i].getClass().isEnum()){
 				params[i] = ((Enum<?>) params[i]).ordinal() +1;
 			}
-		}
-		
-		
+		}	
 		RekvisitionExtended[] rekv = findManyArray( cond, offset, count, params);
 		return addObjectsToRekvisition(rekv);
 		

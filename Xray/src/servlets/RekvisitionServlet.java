@@ -1,6 +1,10 @@
 package servlets;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -17,9 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+import org.junit.Test;
+
 import database.DataSourceConnector;
 import database.dao.ModalitetDao;
 import database.dao.mysql.ModalitetDaoImpl;
+import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
@@ -176,7 +184,7 @@ public class RekvisitionServlet extends HttpServlet {
 				request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
 	}
 
-	
+
 
 
 }

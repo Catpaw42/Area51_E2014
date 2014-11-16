@@ -10,8 +10,22 @@ import database.dao.ModalitetDao;
 
 public class Validator {
 
+	/**
+	 * Matches phone number. Accepts numbers with area code fx: 0045, +45 and 00298 not mandatory followed by 6, 8 or 10 digit numbers
+	 * @param phoneNo as string
+	 * @return returns true if matching the rules explained before.
+	 */
+	public static boolean validatePhoneNo(String phoneNo){
+		return phoneNo == null ? false : phoneNo.matches("((\\+|00)\\d{2}(\\d{1})?)?(\\d{8}|\\d{6}|\\d{10})");
+	}
+	
+	/**
+	 * Matching cpr. with 6 digit followed by a '-' and 4 characters not necessary numbers
+	 * @param cpr
+	 * @return
+	 */
 	public static boolean validateCpr(String cpr){
-		return cpr.matches("(\\d{6}-\\w{4})");
+		return cpr == null ? false : cpr.matches("(\\d{6}-\\w{4})");
 	}
 	/**
 	 * 
@@ -20,7 +34,7 @@ public class Validator {
 	 * @return true if string matches format
 	 */
 	public static boolean validateDate(String date){
-		return date.matches("(\\d{4}-[0-1][0-2]-[0-3]\\d)");
+		return date == null ? false : date.matches("(\\d{4}-[0-1][0-2]-[0-3]\\d)");
 //		return date.matches("([0-3]\\d-[0-1][0-2]-\\d{4})|(\\d{8})");
 	}
 	/**
@@ -31,12 +45,7 @@ public class Validator {
 	 */
 	public static Timestamp stringToTimestamp(String timestamp){
 		if(!validateDate(timestamp)) return null;
-
 		DateFormat dateFormat = new SimpleDateFormat((timestamp.contains("-") ? "yyyy-MM-dd" : "yyyyMMdd"));
-
-		//		if(!timestamp.contains("-")){
-		//			dateFormat = new SimpleDateFormat("ddMMyyyy");
-		//		}
 		Date date = null;
 		try {
 			date = dateFormat.parse(timestamp);

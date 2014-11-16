@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import database.DataBaseController;
 import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.mysql.BrugerDaoImpl;
@@ -29,9 +28,6 @@ import helperClasses.Const.*;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet
 {
-	IDataBaseController dbctrl = new DataBaseController();
-
-
 	public LoginServlet()
 	{
 		super();
