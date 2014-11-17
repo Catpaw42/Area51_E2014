@@ -1,23 +1,43 @@
+<%@page import="database.DataSourceConnector"%>
 <%@page import="helperClasses.Const"%>
 <%@page import="database.dto.Rettigheder.Rettighed"%>
 <%@page import="servlets.LoginServlet"%>
 <%@page import="database.dto.Bruger"%>
 <%@page import="helperClasses.Const" %>
+<%@ page import="database.dto.RekvisitionExtended"%>
+<%@ page import="database.dao.mysql.RekvisitionDaoImplExt"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%! //methods
-	String createTableRow()
+	RekvisitionExtended rek;
+
+	void getRekvisition()
 	{
 		String returnString = "";
-
-
+		RekvisitionDaoImplExt rekDao=null;
+		try{
+			rekDao=new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
+		}
+		catch(Exception e){
+			
+		}
 		
-		return returnString;
+		
+		this.rek = rekDao.findByPrimaryKey(2);
+		
+		
+		
+		//return returnString;
 	}
 
 %>
+	
 
+<%
+	getRekvisition();
+%>
 <!DOCTYPE HTML>
 	<html>
 		<head>
@@ -34,36 +54,51 @@
 							<li>
 								<h2>Patient</h2>
 								<label for="patient_cpr">CPR-Nummer</label>
-								<input type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789" disabled>
+								<input type="text" id="patient_cpr" name="patient_cpr" disabled value=" <% out.print(rek.getPatient().getPatientCpr()); %>">
 								<label for="patient_navn">Patient Navn</label>
-								<input type="text" id="patient_navn" name="patient_navn" placeholder="Navn"  disabled>
+								<input type="text" id="patient_navn" name="patient_navn" disabled value=<% out.print(rek.getPatient().getPatientNavn()); %>>
 								<label for="patient_adresse">Adresse</label>
-								<input type="text" id="patient_adresse" name="patient_adresse" placeholder="Adresse" disabled>
+								<input type="text" id="patient_adresse" name="patient_adresse" disabled value=<% out.print(rek.getPatient().getPatientAdresse()); %>>
 								<label for="patient_tlf">Patienttelefonnummer</label>
-								<input type="text" id="patient_tlf" name="patient_tlf" placeholder="" disabled>
+								<input type="text" id="patient_tlf" name="patient_tlf" disabled value=<% out.print(rek.getPatient().getPatientTlf()); %>>
 								<label for="paaroerende">Pårørende</label>
-								<input type="text" id="paaroerende" name="paaroerende" placeholder="forældre/værge/andet" disabled>
+								<input type="text" id="paaroerende" name="paaroerende" disabled value=<% out.print(rek.getPaaroerende()==null?"":rek.getPaaroerende()); %>>
 								<label for="samtykke">Patientsamtykke</label>
 								<div id="samtykke">
-									<input type="radio" id="samtykke_ja" name="samtykke" value="ja" disabled>Ja
-									<input type="radio" id="samtykke_nej" name="samtykke" value="nej" disabled>Nej
-									<input type="radio" id="uden_samtykke" name="samtykke" value="uden" disabled>Ikke i stand til samtykke
+									<input type="radio" id="samtykke_ja" name="samtykke" value="ja"  
+									<%
+										if(rek.getSamtykke()==RekvisitionExtended.Samtykke.JA){ out.print("checked");}
+										else out.print("disabled");
+									%>
+										>Ja
+									<input type="radio" id="samtykke_nej" name="samtykke" value="nej" disabled 
+									<%
+										if(rek.getSamtykke()==RekvisitionExtended.Samtykke.NEJ) { out.print("checked");}
+										else out.print("disabled");
+									%>
+									>Nej
+									<input type="radio" id="uden_samtykke" name="samtykke" value="uden" disabled 
+									<%
+										if(rek.getSamtykke()==RekvisitionExtended.Samtykke.UDEN_SAMTYKKE) { out.print("checked");}
+										else out.print("disabled");
+									%>
+									>Ikke i stand til samtykke
 								</div>
 								<label for="triage">Triage</label>
-								<input type="text" id="triage" name="triage" placeholder="evt. EWS" disabled>
+								<input type="text" id="triage" name="triage" disabled value=<%out.print(rek.getTriage()); %>>
 								<label for="cave">Cave</label>
-								<input type="text" id="cave" name="cave" placeholder="" disabled>
+								<input type="text" id="cave" name="cave" disabled value=<%out.print(rek.getCave()); %> >
 							</li>
 							<li>
 								<h2>Rekvirent</h2>
 								<label for="rekvirent">Rekvirent</label>
-								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" disabled value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerNavn()%>>
+								<input type="text" id="rekvirent" name="rekvirent" disabled value=<%out.print(rek.getRekvirent().getFuldtNavn()); %>>
 								<label for="henv_afd">Rekvirerende Afdeling</label>
-								<input type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling" disabled>
+								<input type="text" id="henv_afd" name="henv_afd" disabled value=<%out.print(rek.getHenvAfd()); %>>
 								<label for="henv_laege">Henvisende læge</label>
-								<input type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge" disabled>
+								<input type="text" id="henv_laege" name="henv_laege" disabled value=<%out.print(rek.getHenvLaege()); %>>
 								<label for="kontakt_tlf">Kontakt telefonnr</label>
-								<input type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer" disabled>
+								<input type="text" id="kontakt_tlf" name="kontakt_tlf" disabled value=<%out.print(rek.getKontaktTlf()); %>>
 							</li>
 						</ul>
 						<hr />
@@ -165,8 +200,8 @@
 				</div>		
 								
 					<% 
-					if(request.getParameter("rekvisition_Id").equalsIgnoreCase("test1")){
-						out.print("test");
+					if(request.getParameter("rekvisition_Id").equalsIgnoreCase("1")){
+						out.print("test test test");
 					}
 					%>
 					</div>

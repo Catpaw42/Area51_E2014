@@ -92,12 +92,12 @@
 								<th>Status</th>
 							</tr>
 							<tr>
-								<td id="test1">255255-5555</td>
-								<td id="test1">Den elskede leder Magnus</td>
-								<td id="test1">UL</td>
-								<td id="test1">O</td>
-								<td id="test1">251014</td>
-								<td id="test1">Sendt</td>
+								<td id="1">255255-5555</td>
+								<td id="1">Den elskede leder Magnus</td>
+								<td id="1">UL</td>
+								<td id="1">O</td>
+								<td id="1">251014</td>
+								<td id="1">Sendt</td>
 							</tr>
 							<tr>
 								<td id="test2">050501-2222</td>
@@ -193,22 +193,24 @@
 				<li>
 					<div id="embededSite">
 					</div>
-					<div id="godkendAfvis">
-						<input type="hidden" name="rekIDSubmit" id="rekIDSubmit" value="" />
-						<div>
-							<img alt="Afvis rekvisition" src="img/afvis.png">
-							<label for="grundAfvis">Afvis grund</label>
-							<input id="grundAfvis" name="grundAfvis" type="text" maxlength="50">
-							
-						</div>
-						<div>
-							<img alt="Godkend rekvisition" src="img/godkend.png" onClick="doGodkend()">
-							<label for="prioritet">Prioritering</label>
-							<input id="prioritet" name="prioritet" type="text" maxlength="50">
-							
-						</div>
-					</div>	
-						
+					<form id="visiterform" name="visiterform" method="post" action="VisitationServlet">
+						<div id="godkendAfvis">
+							<input type="hidden" name="rekIDSubmit" id="rekIDSubmit" value="" />
+							<input type="hidden" name="visiterAction" id="visiterAction" value="" />
+							<div>
+								<img alt="Afvis rekvisition" src="img/afvis.png" onClick="doAfvis()">
+								<label for="grundAfvis">Afvis grund</label>
+								<input id="grundAfvis" name="grundAfvis" type="text" maxlength="50">
+								
+							</div>
+							<div>
+								<img alt="Godkend rekvisition" src="img/godkend.png" onClick="doGodkend()">
+								<label for="prioritet">Prioritering</label>
+								<input id="prioritet" name="prioritet" type="text" maxlength="50">
+								
+							</div>
+						</div>	
+					</form>	
 					
 				</li>
 			</ul>
