@@ -37,11 +37,24 @@
 					<not-null />
 					<edit />
 				</column>
+				<column name="afdeling">
+					<type max-length="30">String</type>
+					<not-null />
+				</column>
 			</columns>
+			
 			<methods>
+				<find name="afdeling">
+				<condition>
+					<query>
+					SELECT DISTINCT afdeling FROM Bruger
+					</query>
+				</condition>
+				</find>
 				<find name="dynamic">
 					<dynamic />
 				</find>
+				
 			</methods>
 
 		</table>
