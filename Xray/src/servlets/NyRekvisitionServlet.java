@@ -5,8 +5,6 @@ import helperClasses.Const;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -16,62 +14,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
 import database.dao.BrugerDao;
-import database.dao.DaoFactory;
-import database.dao.DaoFactory.Factory;
 import database.dao.ModalitetDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.UndersoegelsesTypeDao;
 import database.dao.mysql.BrugerDaoImpl;
-import database.dao.mysql.DaoFactoryImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
+import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.dto.Bruger;
 import database.dto.Modalitet;
@@ -99,7 +54,6 @@ public class NyRekvisitionServlet extends HttpServlet
 	private static final String PATIENT_NAVN = "patient_navn";
 	private static final String PATIENT_ADRESSE = "patient_adresse";
 	private static final String PATIENT_CPR = "patient_cpr";
-	private static String NyRekPage = "nyRekvisitionPage.jsp";
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -125,12 +79,6 @@ public class NyRekvisitionServlet extends HttpServlet
 		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
 		request.setAttribute(Const.MODALITY_LIST, modList);
 		System.out.println(modList);
-		//TODO remove
-		if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
-			BrugerDao bDao = new BrugerDaoImpl(conn);
-			Bruger bruger = bDao.findByPrimaryKey(1); //TODO CLEAN UP
-			request.getSession().setAttribute(Const.ACTIVE_USER, bruger);
-		}
 		
 		request.getRequestDispatcher(Const.NEW_REKVISITION_PAGE).forward(request, response);
 	}
@@ -149,18 +97,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
-		//TODO remove
-				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
-					BrugerDao bDao = new BrugerDaoImpl(conn);
-					Bruger abruger = bDao.findByPrimaryKey(1);
-					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
-				}
+
 		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		
 		//making patient object...
 		Patient pt = new Patient();	
-		pt.setFoedselsdag(Timestamp.valueOf(parseCprBirthday(request.getParameter(PATIENT_CPR))));
-//		pt.setFoedselsdag(java.sql.Date.valueOf(parseCprBirthday(request.getParameter(PATIENT_CPR))));
+//		pt.setFoedselsdag(Timestamp.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
+		pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
 		pt.setPatientCpr(request.getParameter(PATIENT_CPR));
 		pt.setPatientAdresse(request.getParameter(PATIENT_ADRESSE));
 		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
@@ -178,7 +121,6 @@ public class NyRekvisitionServlet extends HttpServlet
 		
 		//Making Rekvisition DTO
 		RekvisitionExtended rek = new RekvisitionExtended();
-		//Rekvisition.setPaaroerende TODO
 		rek.setPaaroerende(request.getParameter("paaroerende"));
 		rek.setSamtykke(convertSamtykke(request)); //TODO validate samtykke.
 		rek.setTriage(request.getParameter("triage"));
@@ -203,7 +145,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		Integer USTypeID = -1;
 		
 		UndersoegelsesType USType = new UndersoegelsesType();
-		USType.setModalitetId(Integer.valueOf(request.getParameter("modalitet_id")));
+		USType.setModalitetId(Integer.valueOf(request.getParameter("modalitet_navn")));
 		USType.setUndersoegelsesNavn(request.getParameter("undersoegelses_type"));
 		UndersoegelsesTypeDao usTypeDao = new UndersoegelsesTypeDaoImpl(conn) ;
 		try {
@@ -267,7 +209,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			break;
 		default:
 			//Now store the requisition
-			RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
+			RekvisitionDao rekDao = new RekvisitionDaoImplExt(conn);
 			try {
 				rekDao.insert(rek);
 			} catch (DaoException e) {
@@ -288,33 +230,33 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storePETCTSkema(HttpServletRequest request,
 			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Fill with martins code
+		return -1;
 	}
 
 	private Integer storeCTKSkema(HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return null;
+		return -1;
 	}
 
 	private Integer storeMRSkema(HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return null;
+		return -1;
 	}
 
 	private Integer storeULInvKontrolSkema(HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return null;
+		return -1;
 	}
 
-	private String parseCprBirthday(String foedselsdagString) {
+	private String parseCPRBirthday(String foedselsdagString) {
 //		String  = request.getParameter(PATIENT_CPR);
 		Integer foedeaar = Integer.valueOf(foedselsdagString.substring(4, 6));
-		String digit7String = foedselsdagString.substring(7,8);
-		if (digit7String.equalsIgnoreCase("-") ) digit7String = foedselsdagString.substring(8, 9);
+		String digit7String = foedselsdagString.substring(6,7);
+		if (digit7String.equalsIgnoreCase("-") ) digit7String = foedselsdagString.substring(7, 8);
 		Integer digit7 = Integer.valueOf(digit7String);				
 		if (digit7 <= 3  ){
 			foedeaar = 1900 + foedeaar;
@@ -340,7 +282,7 @@ public class NyRekvisitionServlet extends HttpServlet
 //		System.out.println("come on: " + Date.parse(foedselsdagString));
 //		System.out.println("new format: " + java.sql.Date.valueOf(d.toString()));
 //		System.out.println("second fomrat: " + Date.parse(d.toString()));
-		foedselsdagString = foedselsdagString + " 00:00:00.000000000";
+//		foedselsdagString = foedselsdagString + " 00:00:00.000000000";
 		
 		return foedselsdagString;
 	}
