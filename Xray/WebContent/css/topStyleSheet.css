@@ -1,17 +1,17 @@
 @charset "utf-8";
 #logo {
-	width: 120px;
+	width: 80px;
 	position: relative;
 	vertical-align: middle;
 	display: table-cell;
-	text-align: right;
+	text-align: left;
 	padding: 10px;
 }
 #mainmenu {
 /* 	width: auto; */
 	position: relative;
 	list-style-type: none;
-	margin: 0px;
+	margin: 20px;
 	padding: 0px;
 	vertical-align: middle;
 	display: table-cell;

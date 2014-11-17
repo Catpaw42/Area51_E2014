@@ -47,11 +47,13 @@
 	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(Const.REKVISITION_LIST);
 %>
 <body class="rekvisitionPage">
-	<%@include file="topMenu.jsp"%>
+	<div class="topMenuIframe">
+		<%@include file="topMenu.jsp"%>
+	</div>
 	<div id="mainpage">
 		<ul class="showInline centerAlign">
-			<li><a id="nyRekvisition" href="javascript:showOverlay()">Skriv
-					Ny Rekvisition</a></li>
+<!-- 			<li><a id="nyRekvisition" href="javascript:showOverlay()">Skriv -->
+<!-- 					Ny Rekvisiti on</a></li> -->
 			<li>
 				<div id="search">
 					<label for="search">Søg</label>

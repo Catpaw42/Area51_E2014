@@ -45,11 +45,16 @@
 					if (aUser.harRettighed(Rettighed.ADMIN))
 						out.print("<li><a href='MainServlet?page=" + Const.ADMIN_SERVLET + "'>Administrer Brugere</a></li>");
 				%>
-				<li><a href='MainServlet?action=logout'>Log out</a></li>
-
+				
+				<li><a id="nyRekvisition" href="javascript:showOverlay()">Skriv
+					Ny Rekvisition</a></li>
 			</ul>
 		</div>
-
+		<div id="mainmenu">
+			<ul>
+				<li><a href='MainServlet?action=logout'>Log out</a></li>
+			</ul>
+		</div>
 		<div id="logo">
 			<h3>Area 51</h3>
 		</div>
