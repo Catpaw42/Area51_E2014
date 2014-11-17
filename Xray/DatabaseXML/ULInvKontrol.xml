@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true" />
+		</factory>
+	</config>
+	<tables>
+
+		<table name="ul_inv_kontrolskema">
+			<edit-mode>row</edit-mode>
+			<auto-find />
+			<columns>
+				<column name="ul_inv_kontrolskema_id">
+					<type>int</type>
+					<auto />
+					<pk />
+				</column>
+				<column name="ak_timestamp">
+					<type>Timestamp</type>
+					<not-null />
+				</column>
+				<column name="trombocytter">
+					<type>int</type>
+					<not-null />
+				</column>
+				<column name="inr">
+					<type>int</type>
+					<not-null />
+				</column>
+			</columns>
+			<methods>
+				<find name="dynamic">
+					<dynamic />
+				</find>
+			</methods>
+
+		</table>
+	</tables>
+</database>
