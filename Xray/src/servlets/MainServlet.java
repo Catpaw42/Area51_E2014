@@ -60,7 +60,6 @@ public class MainServlet extends HttpServlet {
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		checkAction(request, response);
-		
 		String primaryPage = request.getParameter("page");
 		if (primaryPage==null)primaryPage="";
 		//Check if user is logging in
