@@ -225,7 +225,8 @@ public class NyRekvisitionServlet extends HttpServlet
 		System.out.println(rek);
 		//Check Modalitet
 		String modalitet = request.getParameter("modalitet_navn");
-		
+		// can not switch on null there makes empty string which results in running default case
+		modalitet = modalitet == null ? "" : modalitet;
 		switch (modalitet) {
 		case "invasiv_UL":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);

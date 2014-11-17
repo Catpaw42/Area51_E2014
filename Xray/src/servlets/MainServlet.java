@@ -106,13 +106,16 @@ public class MainServlet extends HttpServlet {
 //			forward("/" + Const.CT_KONTROLSKEMA_SERVLET, request, response);
 			break;
 		case Const.PET_CT_KONTROLSKEMA_SERVLET:
-			forward("/"+Const.PET_CT_KONTROLSKEMA_SERVLET, request, response);
+			response.sendRedirect(Const.PET_CT_KONTROLSKEMA_SERVLET);
+//			forward("/"+Const.PET_CT_KONTROLSKEMA_SERVLET, request, response);
 			break;
 		case Const.MR_KONTROLSKEMA_SERVLET:
-			forward("/"+Const.MR_KONTROLSKEMA_SERVLET, request, response);
+			response.sendRedirect(Const.MR_KONTROLSKEMA_SERVLET);
+//			forward("/"+Const.MR_KONTROLSKEMA_SERVLET, request, response);
 			break;
 		case Const.UL_INV_KONTROLSKEMA_SERVLET:
-			forward("/"+Const.UL_INV_KONTROLSKEMA_SERVLET, request, response);
+			response.sendRedirect(Const.UL_INV_KONTROLSKEMA_SERVLET);
+//			forward("/"+Const.UL_INV_KONTROLSKEMA_SERVLET, request, response);
 			break;
 		default:
 			forward("/"+Const.LOGIN_SERVLET, request, response);
