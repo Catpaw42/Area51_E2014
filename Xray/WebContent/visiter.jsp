@@ -1,3 +1,15 @@
+<%! //methods
+	String createTableRow()
+	{
+		String returnString = "";
+
+
+		
+		return returnString;
+	}
+
+%>
+
 <!DOCTYPE HTML>
 	<html>
 		<head>
@@ -10,6 +22,7 @@
 			<ul class="showInline">
 				<li>
 					<div id="stamdata">
+						
 					<% 
 					if(request.getParameter("rekvisition_Id").equalsIgnoreCase("test1")){
 						out.print("test");
@@ -21,6 +34,9 @@
 					<div id="supplerendeData">
 					
 					</div>
+				</li>
+				<li>
+					<input type="hidden" name="rekIDSubmit" id="rekIDSubmit" value="" />
 				</li>
 			</ul>
 		</body>
