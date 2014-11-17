@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.dto.RekvisitionExtended;
+
 /**
  * Servlet implementation class CTKKontrolSkemaServlet
  */
@@ -37,16 +39,27 @@ public class CTKKontrolSkemaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute(Const.ACTIVE_USER)!=null){
-			process(request, response);
+			checkRekvisition(request, response);
 		}else{
-			request.getRequestDispatcher(Const.MAIN_SERVLET);	
+			request.getRequestDispatcher(Const.MAIN_SERVLET).forward(request, response);;	
 		}
 	}
 
-	private void process(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void checkRekvisition(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RekvisitionExtended rekv = (RekvisitionExtended) request.getSession().getAttribute(Const.ACTIVE_REKVISITION);
+		if (rekv !=null) {
+			processKontrolSkema(request, response);
+		} else {
+			request.getRequestDispatcher(Const.MAIN_SERVLET).forward(request, response);
+		}
 
+	}
+
+	private void processKontrolSkema(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO store rekvisition and kontrolskema
+		
 	}
 }
 

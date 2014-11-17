@@ -48,6 +48,8 @@ public final class Const {
 	// database columns name
 	public static final String REKVIRENT_ID_COND = "rekvirent_id=?";
 
+	public static final String ACTIVE_REKVISITION = "aktiv_rekvisition";
+
 
 
 ;
