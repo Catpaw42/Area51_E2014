@@ -64,7 +64,7 @@ public final class Const {
 
 	
 	public static final String ACTIVE_REKVISITION = "aktiv_rekvisition";
-	public static final String REKVISITION_ID = "rekvisitionId";
+	public static final String REKVISITION_ID = "rekvisition_Id";
 	
 	public static final String UL_INV_KONTROL = "ULInvKontrol";
 	public static final String MRKontrol = "MRKontrol";

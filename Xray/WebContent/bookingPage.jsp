@@ -40,14 +40,15 @@
 	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(Const.REKVISITION_LIST);
 %>
 <body class="bookingPage">
+	<div class="topMenuIframe">
 	<%@include file="topMenu.jsp"%>
+	</div>
 	<div id="mainpage">
 		<ul class="showInline centerAlign">
 			<li>
 				<div id="search">
 					<label for="search">Søg</label>
-					<form id="search" name="search" method="post"
-						action="BookingServlet">
+					<form id="search" name="search" method="post" action="">
 						<table>
 							<tr>
 								<th>Cpr</th>
@@ -77,10 +78,13 @@
 
 								</select></td>
 								<td><select name="department" id="department">
-									<%
+										<%
 									if(activeUser != null){
-									%>	<option value="<% out.println(activeUser.getBrugerId()); %>"><%out.println(activeUser.getFuldtNavn());%> </option>
-									<% }
+									%>
+										<option value="<% out.println(activeUser.getBrugerId()); %>">
+											<%out.println(activeUser.getFuldtNavn());%>
+										</option>
+										<% }
 									%>
 										<option value="-1">Alle</option>
 								</select></td>
@@ -88,7 +92,7 @@
 								<td><select id="status" name="status">
 										<%
 											if(statusList != null)
-																		for(int i = 0; i < statusList.length; i++){
+												for(int i = 0; i < statusList.length; i++){
 										%><option value=<%out.println(statusList[i].name());%>>
 											<%
 												out.println(statusList[i].name().toLowerCase());
@@ -108,7 +112,7 @@
 		<hr />
 		<ul class=showInline>
 			<li>
-				<div id="rekvisitionList">
+				<div class="rekvisitionList" id="rekvisitionList">
 					<table>
 						<tr>
 							<th>Cpr</th>
@@ -118,6 +122,7 @@
 							<th>Dato</th>
 							<th>Status</th>
 						</tr>
+						<tr>
 						<%				
 						if(rekv != null)
  						 						
@@ -142,27 +147,19 @@
 								
 							}
  						%>
+ 						</tr>
 					</table>
 				</div>
-				
-				<li>
-<!-- 					<div id="embededSite"> -->
-<!-- 					</div> -->
-<!-- 					<form id="visiterform"> -->
-<!-- 						<div id="godkendAfvis"> -->
-<!-- 						</div>	 -->
-<!-- 					</form>	 -->
-					
-			
-<div id="embededSite">
-					</div>
-					<form id="visiterform" name="visiterform" method="post" action="BookingServlet">
-					</form>	
-					
+				</li>
+			<li>
+				<div id="embededSite">
+				</div>
+				<form id="visiterform" name="visiterform" method="post" action="BookingServlet">
+				</form>
 			</li>
 		</ul>
 	</div>
-		<div id="overlay"></div>
+	<div id="overlay"></div>
 	<div id="overlayPanel">
 		<%@include file="nyRekvisitionPage.jsp"%>
 	</div>

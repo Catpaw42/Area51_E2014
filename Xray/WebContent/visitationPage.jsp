@@ -70,7 +70,7 @@
 									</td>
 									<td>
 										<select id="modality" name="modality">
-									<%
+										<%
 											if(modList != null)
 												for(int i = 0; i < modList.length; i++){
 										%><option value=<%out.println(String.valueOf(i));%>>
@@ -85,7 +85,7 @@
 									</td>
 									<td>
 										<select name="department" id="department">
-							<%
+									<%
 									if(activeUser != null){
 									%>	<option value="<% out.println(activeUser.getBrugerId()); %>"><%out.println(activeUser.getFuldtNavn());%> </option>
 									<% }
@@ -99,9 +99,9 @@
 								  	</td>
 									<td>
 										<select name="status" id="status">
-					<%
+										<%
 											if(statusList != null)
-																		for(int i = 0; i < statusList.length; i++){
+												for(int i = 0; i < statusList.length; i++){
 										%><option value=<%out.println(statusList[i].name());%>>
 											<%
 												out.println(statusList[i].name().toLowerCase());

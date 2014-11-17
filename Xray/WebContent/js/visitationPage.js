@@ -47,36 +47,34 @@ function getRekvisitation(rekvisition_Id){
 }
 
 function doGodkend(){
-	//alert("hej");
 	var rek_id;
 	rek_id = $('input[name="rekIDSubmit"]').val();
 	if(rek_id!=""){
-	//alert(rek_id);
-	$('input[name="visiterAction"]').val("Godkend");
-	alert("test");
-	//customJSFunction();
-	$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data) {
-		
+		$('input[name="visiterAction"]').val("Godkend");
+		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data) {
+			location.reload(true);
 	});
-	//document.visiterform.submit();
-	//$.post("VisitationServlet",);
 	}
 	else{
 		alert("Klik på række");
 	}
+	
 }
 
 function doAfvis(){
-	//alert("hej");
 	var rek_id;
 	rek_id = $('input[name="rekIDSubmit"]').val();
 	if(rek_id!=""){
-	alert(rek_id + $('input[name="visiterAction"]').val());
+		$('input[name="visiterAction"]').val("Afvis");
+		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data){
+			location.reload(true);
+	});
 
 	}
 	else{
 		alert("Klik på række");
 	}
+	
 }
 
 function testpost(){

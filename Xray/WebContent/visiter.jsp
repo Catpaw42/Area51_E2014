@@ -33,7 +33,7 @@
 // 		if(request.getParameter(Const.REKVISITION_ID) != null){
 // 		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 // 		}
-		rek = rekDao.findByPrimaryKey(2);
+		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 
 %>
 		<body class="visiter">
@@ -188,12 +188,6 @@
 					Anfør undersøgelse, tidspunkt og hvor.</p>
 					<textarea name="tidl_billed_diagnostik" disabled></textarea>
 				</div>		
-								
-					<% 
-					if(request.getParameter("rekvisition_Id").equalsIgnoreCase("1")){
-						out.print("test test test");
-					}
-					%>
 					</div>
 				</li>
 				<li>

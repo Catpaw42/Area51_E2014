@@ -95,15 +95,19 @@ public class MainServlet extends HttpServlet {
 			forward("/" + Const.LOGIN_SERVLET,request,response);
 			break;
 		case Const.REKVISITION_SERVLET:
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
 			forward("/" + Const.REKVISITION_SERVLET,request,response);
 			break;
 		case Const.VISITATION_SERVLET:
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.VISITATION_TITLE);
 			forward("/" + Const.VISITATION_SERVLET, request, response);
 			break;
 		case Const.BOOKING_SERVLET:
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.BOOKING_TITLE);
 			forward("/" + Const.BOOKING_SERVLET, request, response);
 			break;
 		case Const.ADMIN_SERVLET:
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.ADMINISTRER_TITLE);
 			forward("/" + Const.ADMIN_SERVLET, request, response);
 			break;
 		case Const.CT_KONTROLSKEMA_SERVLET:

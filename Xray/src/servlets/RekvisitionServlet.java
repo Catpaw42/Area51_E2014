@@ -106,7 +106,6 @@ public class RekvisitionServlet extends HttpServlet {
 				}
 
 			}
-			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
 			setDefaultTable(activeUser, request, response);
 		}
 		
@@ -121,11 +120,8 @@ public class RekvisitionServlet extends HttpServlet {
 		createSearchDropdowns(request);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		
-		
-		//Getting Dummy user
 		if(activeUser == null){
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
-//			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);		
 		}else{
 			searchRekvisition(request, response);
 		}
