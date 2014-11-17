@@ -74,7 +74,7 @@
     <servlet-name>BookingServlet</servlet-name>
     <url-pattern>/BookingServlet</url-pattern>
   </servlet-mapping>
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>NyRekvisitionServlet</servlet-name>
     <url-pattern>/NyRekvisitionServlet</url-pattern>
   </servlet-mapping>
