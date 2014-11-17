@@ -61,6 +61,8 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		createSearchDropdowns(request);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		// forwards to mainServlet with LoginPage as parameter
 		if(activeUser == null){ 
@@ -68,6 +70,7 @@ public class VisitationServlet extends HttpServlet {
 		}else{
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
+		setDefaultTable(activeUser, request, response);
 	}
 
 	/**
@@ -85,6 +88,29 @@ public class VisitationServlet extends HttpServlet {
 			searchRekvisition(request, response);
 		}
 			
+	}
+	
+	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		//Rekvisition list to show user.
+		RekvisitionExtended[] rekvlist = null;
+		// gets list of the active user - default behavior
+		if(activeUser != null){
+			rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
+//		rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
+		}
+		//Stitch rekvisition[] to request object.
+		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
+//		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
+}
+	
+	/**
+	 * have to be called so the dropdowns in rekvisitionPage are filled
+	 * @param request
+	 */
+	private void createSearchDropdowns(HttpServletRequest request){
+		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, new Object[]{}));
+		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 	
 	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
