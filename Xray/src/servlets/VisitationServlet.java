@@ -25,7 +25,6 @@ public class VisitationServlet extends HttpServlet {
      */
     public VisitationServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -47,8 +46,19 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		
+		
+		
+		
 		//String id=request.getParameter("rekIDSubmit").toString();
 		//String value = request.getParameter("visiterAction").toString();
+		
+		
+		
+		
 		System.out.println("Post");
 		
 		Enumeration parameterList = request.getParameterNames();
