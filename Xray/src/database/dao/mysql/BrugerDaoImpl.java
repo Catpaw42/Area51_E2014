@@ -82,6 +82,8 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
     public Bruger findByPrimaryKey( int brugerId ) {
     	Bruger b = findOne( PK_CONDITION, brugerId);
     	RettighederDao rDao = new RettighederDaoImpl(conn);
+    	System.out.println("connection: " + conn);
+    	System.out.println("dao: " + rDao);
     	Rettigheder[] rettigheder = rDao.findDynamic(GET_RETTIGHEDER, 0, -1, new Object[]{b.getBrugerId()});
     	b.setRettigheder(rettigheder);
         return b;

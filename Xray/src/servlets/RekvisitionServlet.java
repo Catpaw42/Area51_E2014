@@ -22,7 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import org.junit.Test;
+
+import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
 import database.dao.ModalitetDao;
@@ -86,6 +89,22 @@ public class RekvisitionServlet extends HttpServlet {
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 //			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);
 		}else{
+			if("cancel".equalsIgnoreCase(request.getParameter("action"))){
+				int rekvisitionId = -1;
+				try{
+					rekvisitionId = Integer.valueOf(request.getParameter("cancelId"));
+					RekvisitionExtended r = rekvisitionDao.findByPrimaryKey(rekvisitionId);
+					r.setStatus(Status.CANCELED);
+					try {
+						rekvisitionDao.update(rekvisitionId, r);
+					} catch (DaoException e) {
+						System.err.println("could not save changes to rekvisition");
+					}
+				} catch(NumberFormatException nfe){
+					System.err.println("no id on cancel rekvisition");
+				}
+
+			}
 			setDefaultTable(activeUser, request, response);
 		}
 		
