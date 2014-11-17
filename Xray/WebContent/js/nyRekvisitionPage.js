@@ -32,19 +32,19 @@ function showSkema()
 	
 	switch ($("#modalitet_navn").val())
 	{
-		case "invasiv_UL":
+		case "3":
 			$("#ULInvSkema").css("display","block");
 			$("#ULInvSkema .required").prop('required',true);
 			break;
-		case "MR":
+		case "8":
 			$("#MRSkema").css("display","block");
 			$("#MRSkema .required").prop('required',true);
 			break;
-		case "CT_kontrast":
+		case "5":
 			$("#CTSkema").css("display","block");
 			$("#CTSkema .required").prop('required',true);
 			break;
-		case "PETCT":
+		case "6":
 			$("#PETCTSkema").css("display","block");
 			$("#PETCTSkema .required").prop('required',true);
 			break;
