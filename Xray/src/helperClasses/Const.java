@@ -61,6 +61,11 @@ public final class Const {
 	public static final String CTKKontrol = "CTKKontrol";
 	public static final String PETCTKontrol = "PETCETKontrol";
 
+	public static final String BOOKING_ACTION = "book";
+	public static final String BOOKING_ACTION_ID = "bookingId";
+
+	public static final String PARAM_ACTION = "action";
+
 
 
 
