@@ -161,7 +161,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 //			if ( dto.getVisitatorId() == null ) {
 //				throw new DaoException("Value of column 'visitator_id' cannot be null");
 //			}
-			stmt.setInt( 7, dto.getVisitatorId() );
+			stmt.setInt( 7, dto.getVisitatorId() == null ? -1 : dto.getVisitatorId() );
 
 			if ( dto.getPatientId() == null ) {
 				throw new DaoException("Value of column 'patient_id' cannot be null");
