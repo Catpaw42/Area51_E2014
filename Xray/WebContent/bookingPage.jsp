@@ -24,7 +24,6 @@
 	Bruger activeUser = null;
 	boolean userRightsBooking = false;
 		activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-		if (activeUser == null) response.sendRedirect(Const.MAIN_SERVLET+"?action=logout");
 		// is not being used at the moment
 		for(Rettigheder r : activeUser.getRettigheder()){
 			if(r.getRettighed().equals(Rettigheder.Rettighed.BOOKING)){
@@ -138,8 +137,8 @@
 								out.print(r.getAfsendtDato());
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
-								out.print("</td> <td id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
-								out.print("annuller");
+								out.print("</td> <td id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
+								out.print("book");
 								out.print("</td> </tr>");
 								
 							}
