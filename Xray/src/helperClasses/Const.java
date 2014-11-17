@@ -20,6 +20,10 @@ public final class Const {
 	public static final String BOOKING_SERVLET = "BookingServlet";
 	public static final String VISITATION_SERVLET = "VisitationServlet";
 	public static final String LOGIN_SERVLET = "LoginServlet";
+	public static final String CT_KONTROLSKEMA_SERVLET = "CTKKontrolSkemaServlet";
+	public static final String MR_KONTROLSKEMA_SERVLET = "MRKontrolSkemaServlet";
+	public static final String PET_CT_KONTROLSKEMA_SERVLET = "PETCTKontrolSkemaServlet";
+	public static final String UL_INV_KONTROLSKEMA_SERVLET = "ULInvKontrolSkemaServlet";
 	
 
 

@@ -68,6 +68,7 @@ public class LoginServlet extends HttpServlet
 				conn = DataSourceConnector.getConnection();
 			} catch (ConnectionException e1) {
 				e1.printStackTrace();
+				System.err.println("connection failed in login servlet");
 			}
 			//TODO skifte til interface når DAO og DTO er rigtige
 			BrugerDaoImplExtended b = new BrugerDaoImplExtended(conn);

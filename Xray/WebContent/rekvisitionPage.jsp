@@ -133,17 +133,17 @@
 						<%				
 						if(rekv != null)
  						 						for (RekvisitionExtended r : rekv){
- 													out.print("<tr> <td>");
+ 													out.print("<tr> <td id="+r.getRekvisitionId()+">"); // TODO test if id works
  													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
- 													out.print("</td> <td>");
+ 													out.print("</td> <td id="+r.getRekvisitionId()+">");
  													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientNavn() != null ? r.getPatient().getPatientNavn() : "intet patient navn fundet");
- 													out.print("</td> <td>");
+ 													out.print("</td> <td id="+r.getRekvisitionId()+">");
  													out.print(r.getModalitet() == null ? "ingen modalitet" : r.getModalitet().getModalitetNavn() != null ? r.getModalitet().getModalitetNavn() : "intet modalitet navn fundet" );
- 													out.print("</td> <td>");
+ 													out.print("</td> <td id="+r.getRekvisitionId()+">");
  													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
- 													out.print("</td> <td>");
+ 													out.print("</td> <td id="+r.getRekvisitionId()+">");
  													out.print(r.getAfsendtDato());
- 													out.print("</td> <td>");
+ 													out.print("</td> <td id="+r.getRekvisitionId()+">");
  													out.print(r.getStatus());
  													out.print("</td> </tr>");
  												}

@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 
@@ -146,8 +148,9 @@ public class NyRekvisitionServlet extends HttpServlet
 		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		
 		//making patient object...
-		Patient pt = new Patient();		
-		pt.setFoedselsdag(java.sql.Date.valueOf(parseCprBirthday(request)));
+		Patient pt = new Patient();	
+		pt.setFoedselsdag(Timestamp.valueOf(parseCprBirthday(request.getParameter(PATIENT_CPR))));
+//		pt.setFoedselsdag(java.sql.Date.valueOf(parseCprBirthday(request.getParameter(PATIENT_CPR))));
 		pt.setPatientCpr(request.getParameter(PATIENT_CPR));
 		pt.setPatientAdresse(request.getParameter(PATIENT_ADRESSE));
 		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
@@ -225,19 +228,19 @@ public class NyRekvisitionServlet extends HttpServlet
 		switch (modalitet) {
 		case "invasiv_UL":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.UL_INV_KONTROL).forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.UL_INV_KONTROLSKEMA_SERVLET).forward(request, response);
 			break;
 		case "MR":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.MRKontrol).forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.MR_KONTROLSKEMA_SERVLET).forward(request, response);
 			break;
 		case "CT_kontrast":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.CTKKontrol).forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.CT_KONTROLSKEMA_SERVLET).forward(request, response);
 			break;
 		case "PETCT":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.PETCTKontrol).forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.PET_CT_KONTROLSKEMA_SERVLET).forward(request, response);
 			break;
 		default:
 			//Intet kontrolskema - gem rekvisitionen
@@ -260,8 +263,8 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	}
 
-	private String parseCprBirthday(HttpServletRequest request) {
-		String foedselsdagString = request.getParameter(PATIENT_CPR);
+	private String parseCprBirthday(String foedselsdagString) {
+//		String  = request.getParameter(PATIENT_CPR);
 		Integer foedeaar = Integer.valueOf(foedselsdagString.substring(4, 6));
 		String digit7String = foedselsdagString.substring(7,8);
 		if (digit7String.equalsIgnoreCase("-") ) digit7String = foedselsdagString.substring(8, 9);
@@ -281,6 +284,17 @@ public class NyRekvisitionServlet extends HttpServlet
 			
 		}
 		foedselsdagString = String.valueOf(foedeaar) + "-" + foedselsdagString.substring(2,4)+"-"+foedselsdagString.substring(0, 2);
+		System.out.println("birthday from cpr: " + foedselsdagString);
+//		Date d = new Date();
+//		System.out.println("Date format: " + d.toString());
+//		Timestamp t = Timestamp.valueOf(foedselsdagString);
+//		new Date(foedselsdagString);
+//		new Date(123);
+//		System.out.println("come on: " + Date.parse(foedselsdagString));
+//		System.out.println("new format: " + java.sql.Date.valueOf(d.toString()));
+//		System.out.println("second fomrat: " + Date.parse(d.toString()));
+		foedselsdagString = foedselsdagString + " 00:00:00.000000000";
+		
 		return foedselsdagString;
 	}
 
