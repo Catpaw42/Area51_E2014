@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.dto.Bruger;
 import database.dto.Rettigheder;
+import database.dto.Rettigheder.Rettighed;
 
 /**
  * Main Servlet - delegates responsibilities to relevant sub Servlet
@@ -46,7 +47,7 @@ public class MainServlet extends HttpServlet {
 		if (request.getSession().getAttribute(Const.ACTIVE_USER) != null){ 
 			delegate(request, response);
 		} else { //user not logged in
-			response.sendRedirect("LoginServlet");
+			response.sendRedirect(Const.LOGIN_SERVLET);
 		}
 	}
 
@@ -58,55 +59,45 @@ public class MainServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String page = request.getParameter("page");
+		String primaryPage = request.getParameter("page");
 		
-		switch ( request.getParameter("page")) {
-		case "loggingIn":
+		if(primaryPage.equals("loggingIn")){
 			Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 			Rettigheder[] rettigheder = activeUser.getRettigheder();
-			String gotoPage = Const.REKVISITION_SERVLET;
-			int pr = 0;
+			int prioritet = 0;
 			for (Rettigheder r : rettigheder) {
-				switch (r.getRettighed()){
-				case ADMIN:
-					pr = 0;
-					gotoPage = Const.ADMIN_SERVLET;
-					break;
-				case ASSESSOR:
-					pr = 3;
-					gotoPage = Const.VISITATION_SERVLET;
-					break;
-				case BOOKING:
-					pr = 1;
-					gotoPage = Const.BOOKING_SERVLET;
-					break;
-				case REQUEST:
-					pr = 1;
-					gotoPage = Const.REKVISITION_SERVLET;
-					break;
+				if(r.getRettighed().equals(Rettighed.ASSESSOR) && prioritet < 3){
+					primaryPage=Const.VISITATION_SERVLET;
+					prioritet=3;
+				}
+				if(r.getRettighed().equals(Rettighed.REQUEST) && prioritet < 3){
+					primaryPage=Const.REKVISITION_SERVLET;
+					prioritet=2;
+				}
+				if(r.getRettighed().equals(Rettighed.BOOKING) && prioritet < 2){
+					primaryPage=Const.BOOKING_SERVLET;
+					prioritet=1;
+				}
+				if(r.getRettighed().equals(Rettighed.ADMIN) && prioritet < 1){
+					primaryPage=Const.ADMIN_SERVLET;
+					prioritet=0;
 				}
 			}
-			forward("/" + gotoPage,request,response);
-			break;
-		case "login":
+		}
+		switch (primaryPage) {
+		case Const.LOGIN_SERVLET:
 			forward("/LoginServlet",request,response);
 			break;
-		case "rekvirer":
+		case Const.REKVISITION_SERVLET:
 			forward("/RekvisitionServlet",request,response);
 			break;
-		case "visiter":
+		case Const.VISITATION_SERVLET:
 			forward("/VisitationServlet", request, response);
 			break;
-		case "book":
+		case Const.BOOKING_SERVLET:
 			forward("/BookingServlet", request, response);
 			break;
-		case "admin":
-			forward("/AdminServlet",request,response);
-			break;
-		default:
-			//If no corresponding Servlet is found tries to redirect to Servlet
-			forward("/"+ request.getParameter("page"),request,response);
-			break;
+		case Const.ADMIN_SERVLET:
 		}		
 	}
 	//Utility method to forward
