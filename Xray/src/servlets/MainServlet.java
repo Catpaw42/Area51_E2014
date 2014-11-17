@@ -126,9 +126,9 @@ public class MainServlet extends HttpServlet {
 			break;
 		}		
 	}
-	private void checkAction(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	private void checkAction(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		String action = request.getParameter("action");
+		if (action == null) action = "";
 		switch (action) {
 		case "logout":
 			request.getSession().setAttribute(Const.ACTIVE_USER, null);
