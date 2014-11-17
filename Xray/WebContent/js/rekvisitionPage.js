@@ -13,6 +13,7 @@ $(document).ready(function()
         /* Highlight one row and clean others */
         rows.removeClass("highlight");
         row.addClass("highlight");
+        alert("ID=" +e.target.id);
     });
     
     /* This 'event' is used just to avoid that the table text 

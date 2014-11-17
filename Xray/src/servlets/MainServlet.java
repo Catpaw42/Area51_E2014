@@ -84,20 +84,42 @@ public class MainServlet extends HttpServlet {
 				}
 			}
 		}
+		System.out.println("primary page: " + primaryPage);
 		switch (primaryPage) {
 		case Const.LOGIN_SERVLET:
-			forward("/LoginServlet",request,response);
+			forward("/" + Const.LOGIN_SERVLET,request,response);
 			break;
 		case Const.REKVISITION_SERVLET:
-			forward("/RekvisitionServlet",request,response);
+			forward("/" + Const.REKVISITION_SERVLET,request,response);
 			break;
 		case Const.VISITATION_SERVLET:
-			forward("/VisitationServlet", request, response);
+			forward("/" + Const.VISITATION_SERVLET, request, response);
 			break;
 		case Const.BOOKING_SERVLET:
-			forward("/BookingServlet", request, response);
+			forward("/" + Const.BOOKING_SERVLET, request, response);
 			break;
 		case Const.ADMIN_SERVLET:
+			forward("/" + Const.ADMIN_SERVLET, request, response);
+			break;
+		case Const.CT_KONTROLSKEMA_SERVLET:
+			response.sendRedirect(Const.CT_KONTROLSKEMA_SERVLET);;
+//			forward("/" + Const.CT_KONTROLSKEMA_SERVLET, request, response);
+			break;
+		case Const.PET_CT_KONTROLSKEMA_SERVLET:
+			response.sendRedirect(Const.PET_CT_KONTROLSKEMA_SERVLET);
+//			forward("/"+Const.PET_CT_KONTROLSKEMA_SERVLET, request, response);
+			break;
+		case Const.MR_KONTROLSKEMA_SERVLET:
+			response.sendRedirect(Const.MR_KONTROLSKEMA_SERVLET);
+//			forward("/"+Const.MR_KONTROLSKEMA_SERVLET, request, response);
+			break;
+		case Const.UL_INV_KONTROLSKEMA_SERVLET:
+			response.sendRedirect(Const.UL_INV_KONTROLSKEMA_SERVLET);
+//			forward("/"+Const.UL_INV_KONTROLSKEMA_SERVLET, request, response);
+			break;
+		default:
+			forward("/"+Const.LOGIN_SERVLET, request, response);
+			break;
 		}		
 	}
 	//Utility method to forward

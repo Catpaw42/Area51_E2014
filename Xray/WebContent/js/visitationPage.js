@@ -42,4 +42,17 @@ function getRekvisitation(rekvisition_Id){
 	    	$("#embededSite").html(data);
 	    }
 	});
-}	
+	$('input[name="rekIDSubmit"]').val(rekvisition_Id);
+}
+
+function doGodkend(){
+	//alert("hej");
+	var rek_id;
+	rek_id = $('input[name="rekIDSubmit"]').val();
+	if(rek_id!=""){
+	alert(rek_id);
+	}
+	else{
+		alert("Klik på række");
+	}
+}

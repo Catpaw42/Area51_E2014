@@ -13,7 +13,7 @@
 	</head>
 	<body>
 		<section class="roentgenform">
-			<img alt="" src="img/NSHospitallogo.png">
+			<img alt="Hospitalets logo" src="img/NSHospitallogo.png">
 			<h1>Rekvisition til billeddiagnostisk undersøgelse</h1>
 			<form id="rekvisitionsForm" action=NyRekvisitionServlet method="post">
 				<div>
@@ -22,9 +22,9 @@
 							<div id="patientData" class="hover">
 								<h2>Patient</h2>
 								<label for="patient_cpr">CPR-Nummer</label>
-								<input type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789" required="required">
+								<input class="required" type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789">
 								<label for="patient_navn">Patient Navn</label>
-								<input type="text" id="patient_navn" name="patient_navn" placeholder="Navn"  required="required">
+								<input class="required" type="text" id="patient_navn" name="patient_navn" placeholder="Navn">
 								<label for="patient_adresse">Adresse</label>
 								<input type="text" id="patient_adresse" name="patient_adresse" placeholder="Adresse">
 								<label for="patient_tlf">Patienttelefonnummer</label>
@@ -40,7 +40,7 @@
 								<label for="triage">Triage</label>
 								<input type="text" id="triage" name="triage" placeholder="evt. EWS">
 								<label for="cave">Cave</label>
-								<input type="text" id="cave" name="cave" placeholder="" required="required">
+								<input class="required" type="text" id="cave" name="cave" placeholder="">
 							</div>
 						</li>
 						<li>
@@ -49,11 +49,11 @@
 								<label for="rekvirent">Rekvirent</label>
 								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" readonly="readonly" value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerNavn()%>>
 								<label for="henv_afd">Rekvirerende Afdeling</label>
-								<input type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling" required="required">
+								<input class="required" type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling">
 								<label for="henv_laege">Henvisende læge</label>
 								<input type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge">
 								<label for="kontakt_tlf">Kontakt telefonnr</label>
-								<input type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer" required="required">
+								<input type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer">
 							</div>
 						</li>
 					</ul>
@@ -64,13 +64,13 @@
 					<div class="hover">
 						<label for="udf_indlagt">Udføres under indlæggelse</label>
 						<div id="udf_indlagt">
-							<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" required="required" value="false">Ambulant
-							<input type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" required="required" value="true">Indlæggelse
+							<input class="required" type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="ambulant" value="false">Ambulant
+							<input class="required" type="radio" onclick="javascript:udfIndlagt();" name="udf_indlagt" id="indlagt" value="true">Indlæggelse
 						</div>
 						<label for="henvist_til">Henvist til</label>
 						<div id="henvist_til">
-							<input type="radio" id="radiologiskAfs" name="henvist_til" checked="checked" required="required" value="radiologisk">Radiologisk Afsnit
-							<input type="radio" id="kliniskFysAfs" name="henvist_til" required="required" value="klinfys">Klinisk Fysiologisk Afsnit
+							<input class="required" type="radio" id="radiologiskAfs" name="henvist_til" checked="checked" value="radiologisk">Radiologisk Afsnit
+							<input class="required" type="radio" id="kliniskFysAfs" name="henvist_til" value="klinfys">Klinisk Fysiologisk Afsnit
 						</div>
 						<label for="hospitalsønske">Evt. Hospitalsønske</label>
 						<div id="hospitalsønske">
@@ -89,7 +89,7 @@
 					<div class="hover">
 						<div>
 						<label for="modalitet_navn">Modalitet</label>
-						<select id="modalitet_navn" >
+						<select id="modalitet_navn" name="modalitet_navn" onchange="javascript:showSkema();">
 							<option value="RTG" selected="selected">Røntgen</option>
 							<option value="UL">Ultralyd</option>
 							<option value="invasiv_UL">Invasiv Ultralyd</option>
@@ -102,7 +102,7 @@
 						</div>
 						<div>
 						<label for="undersoegelses_type">Undersøgelses type</label>
-						<input type="text" id="undersoegelses_type" required="required">
+						<input class="required" type="text" id="undersoegelses_type">
 						</div>
 					</div>
 					<div class="hover">
@@ -153,13 +153,26 @@
 						<label for="cytostatika">Cytostatika</label>
 						<input type="date" id="cytostatika" name="cytostatika">
 					</div>
+					<div class="hover">
+						<label for=tidl_billed_diagnostik>Tidligere undersøgelse</label>
+						<p>Er patienten tidligere undersøgt i billeddiagnostisk regi indenfor hospitalerne i Nordsjælland?<BR/>
+						Eller har patienten fået foretaget relevant undersøgelse udenfor hospitalerne i Nordsjælland?<BR/>
+						Anfør undersøgelse, tidspunkt og hvor.</p>
+						<textarea name="tidl_billed_diagnostik"></textarea>
+					</div>
 				</div>
-				<div class="hover">
-					<label for=tidl_billed_diagnostik>Tidligere undersøgelse</label>
-					<p>Er patienten tidligere undersøgt i billeddiagnostisk regi indenfor hospitalerne i Nordsjælland?<BR/>
-					Eller har patienten fået foretaget relevant undersøgelse udenfor hospitalerne i Nordsjælland?<BR/>
-					Anfør undersøgelse, tidspunkt og hvor.</p>
-					<textarea name="tidl_billed_diagnostik"></textarea>
+				<hr />
+				<div id="CTSkema">
+					<%@include file="CTKontrolSkema.jsp"%>
+				</div>
+				<div id="MRSkema">
+					<%@include file="MRKontrolSkema.jsp"%>
+				</div>
+				<div id="PETCTSkema">
+					<%@include file="PETCTKontrolSkema.jsp"%>
+				</div>
+				<div  id="ULInvSkema">
+					<%@include file="ULInvKontrolSkema.jsp"%>
 				</div>
 				<input type="submit" id="submit" name="submit" value="submit">
 			</form>
