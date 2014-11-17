@@ -7,22 +7,20 @@ package database.dao.mysql;
 
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-
 import java.util.ArrayList;
 
 import com.spoledge.audao.db.dao.AbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
 
-
 import database.dao.BrugerDao;
+import database.dao.RettighederDao;
 import database.dto.Bruger;
+import database.dto.Rettigheder;
+
 
 
 /**
@@ -31,6 +29,9 @@ import database.dto.Bruger;
  * @author generated
  */
 public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao {
+	
+	protected static final String USER_LOGIN_CONDITION = "bruger_navn=? AND kodeord=?";
+	protected static final String GET_RETTIGHEDER = "bruger_id=?";
 
     private static final String TABLE_NAME = "bruger";
 
@@ -44,13 +45,7 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
         super( conn );
     }
 
-    /**
-     * Finds a record identified by its primary key.
-     * @return the record found or null
-     */
-    public Bruger findByPrimaryKey( int brugerId ) {
-        return findOne( PK_CONDITION, brugerId);
-    }
+  
     
 
     /**
@@ -59,7 +54,38 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
 
     public Bruger[] findDynamic( String cond, int offset, int count, Object... params ) {
         return findManyArray( cond, offset, count, params);
-    }  
+    } 
+    
+    public boolean validate(String brugernavn, String kodeord){
+
+		Bruger[] br = findDynamic(USER_LOGIN_CONDITION, 0, -1, new Object[]{brugernavn, kodeord});
+		if(br.length != 0) return true;
+
+		return false;
+	}
+	
+	public Bruger findByUserName(String brugernavn, String kodeord){
+		Bruger[] br = findDynamic(USER_LOGIN_CONDITION, 0, -1, new Object[]{brugernavn, kodeord});
+		if(br.length != 0 || br[0].equals(null)){
+			RettighederDao rDao = new RettighederDaoImpl(conn);
+			Rettigheder[] rettigheder = rDao.findDynamic(GET_RETTIGHEDER, 0, -1, new Object[]{br[0].getBrugerId()});
+			br[0].setRettigheder(rettigheder);
+			return br[0];
+		}
+		return null;
+	}
+	
+	  /**
+     * Finds a record identified by its primary key.
+     * @return the record found or null
+     */
+    public Bruger findByPrimaryKey( int brugerId ) {
+    	Bruger b = findOne( PK_CONDITION, brugerId);
+    	RettighederDao rDao = new RettighederDaoImpl(conn);
+    	Rettigheder[] rettigheder = rDao.findDynamic(GET_RETTIGHEDER, 0, -1, new Object[]{b.getBrugerId()});
+    	b.setRettigheder(rettigheder);
+        return b;
+    }
   
 
     /**
@@ -198,5 +224,7 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
         Bruger[] ret = new Bruger[ list.size() ];
         return list.toArray( ret );
     }
+    
+    
 
 }

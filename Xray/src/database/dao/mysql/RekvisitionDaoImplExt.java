@@ -10,15 +10,10 @@ import java.util.ArrayList;
 import database.dao.BrugerDao;
 import database.dao.CtKontrastKontrolskemaDao;
 import database.dao.MRKontrolskemaDao;
-import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
-import database.dao.PatientDao;
-import database.dao.UndersoegelsesTypeDao;
 import database.dto.Modalitet;
 import database.dto.Patient;
 import database.dto.RekvisitionExtended;
-import database.dto.RekvisitionExtended;
-import database.dto.RekvisitionExtended.Status;
 
 public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 	
