@@ -88,21 +88,21 @@ public class MainServlet extends HttpServlet {
 			}
 			forward("/" + gotoPage,request,response);
 			break;
-//		case "login":
-//			forward("/LoginServlet",request,response);
-//			break;
-//		case "rekvirer":
-//			forward("/RekvisitionServlet",request,response);
-//			break;
-//		case "visiter":
-//			forward("/VisitationServlet", request, response);
-//			break;
-//		case "book":
-//			forward("/BookingServlet", request, response);
-//			break;
-//		case "admin":
-//			forward("/AdminServlet",request,response);
-//			break;
+		case "login":
+			forward("/LoginServlet",request,response);
+			break;
+		case "rekvirer":
+			forward("/RekvisitionServlet",request,response);
+			break;
+		case "visiter":
+			forward("/VisitationServlet", request, response);
+			break;
+		case "book":
+			forward("/BookingServlet", request, response);
+			break;
+		case "admin":
+			forward("/AdminServlet",request,response);
+			break;
 		default:
 			//If no corresponding Servlet is found tries to redirect to Servlet
 			forward("/"+ request.getParameter("page"),request,response);
