@@ -194,6 +194,7 @@
 					<div id="embededSite">
 					</div>
 					<div id="godkendAfvis">
+						<input type="hidden" name="rekIDSubmit" id="rekIDSubmit" value="" />
 						<div>
 							<img alt="Afvis rekvisition" src="img/afvis.png">
 							<label for="grundAfvis">Afvis grund</label>
@@ -201,7 +202,7 @@
 							
 						</div>
 						<div>
-							<img alt="Godkend rekvisition" src="img/godkend.png">
+							<img alt="Godkend rekvisition" src="img/godkend.png" onClick="doGodkend()">
 							<label for="prioritet">Prioritering</label>
 							<input id="prioritet" name="prioritet" type="text" maxlength="50">
 							
