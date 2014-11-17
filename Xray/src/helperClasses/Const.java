@@ -12,6 +12,14 @@ public final class Const {
 	public static final String BOOKING_PAGE = "bookingPage.jsp";
 	public static final String VISITATION_PAGE = "visitationPage.jsp";
 	
+	//Page titles
+	public static final String PAGEHEADING = "PageHeading";
+	public static final String VISITATION_TITLE = "Visitation";
+	public static final String REKVISITION_TITLE = "Rekvisition";
+	public static final String BOOKING_TITLE = "Booking";
+	public static final String ADMINISTRER_TITLE = "Administrer brugere";
+	
+	
 	// servlets names
 //	public static final String MENU_SERVLET = "MenuServlet";
 	public static final String ADMIN_SERVLET = "AdminServlet";
