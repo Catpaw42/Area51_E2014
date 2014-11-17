@@ -59,32 +59,32 @@ public class MainServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String page = request.getParameter("page");
+		String primaryPage = request.getParameter("page");
 		
-		if(page.equals("loggingIn")){
+		if(primaryPage.equals("loggingIn")){
 			Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 			Rettigheder[] rettigheder = activeUser.getRettigheder();
 			int prioritet = 0;
 			for (Rettigheder r : rettigheder) {
 				if(r.getRettighed().equals(Rettighed.ASSESSOR) && prioritet < 3){
-					page=Const.VISITATION_SERVLET;
+					primaryPage=Const.VISITATION_SERVLET;
 					prioritet=3;
 				}
 				if(r.getRettighed().equals(Rettighed.REQUEST) && prioritet < 3){
-					page=Const.REKVISITION_SERVLET;
+					primaryPage=Const.REKVISITION_SERVLET;
 					prioritet=2;
 				}
 				if(r.getRettighed().equals(Rettighed.BOOKING) && prioritet < 2){
-					page=Const.BOOKING_SERVLET;
+					primaryPage=Const.BOOKING_SERVLET;
 					prioritet=1;
 				}
 				if(r.getRettighed().equals(Rettighed.ADMIN) && prioritet < 1){
-					page=Const.ADMIN_SERVLET;
+					primaryPage=Const.ADMIN_SERVLET;
 					prioritet=0;
 				}
 			}
 		}
-		switch (page) {
+		switch (primaryPage) {
 		case Const.LOGIN_SERVLET:
 			forward("/LoginServlet",request,response);
 			break;
