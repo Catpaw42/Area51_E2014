@@ -30,9 +30,6 @@
 			<h2 >
 				<% 
 					if(request.getSession().getAttribute(Const.PAGEHEADING)!= null) out.print(request.getSession().getAttribute(Const.PAGEHEADING));
-// 					if(request.getParameter("page")!= null && request.getParameter("page").equalsIgnoreCase("RekvisitionServlet")) out.print("Rekvisition");
-				
-				
 				%>
 			</h2>
 		</div>
