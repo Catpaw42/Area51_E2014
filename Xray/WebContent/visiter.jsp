@@ -30,9 +30,10 @@
 		catch(Exception e){
 		}
 		
-		if(request.getParameter(Const.REKVISITION_ID) != null){
-		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
-		}
+// 		if(request.getParameter(Const.REKVISITION_ID) != null){
+// 		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
+// 		}
+		rek = rekDao.findByPrimaryKey(2);
 
 %>
 		<body class="visiter">
