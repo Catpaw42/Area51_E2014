@@ -164,13 +164,14 @@
 						<div id="godkendAfvis">
 							<input type="hidden" name="rekIDSubmit" id="rekIDSubmit" value="" />
 							<input type="hidden" name="visiterAction" id="visiterAction" value="" />
-							<div>
+							<p>
 								<img alt="Godkend rekvisition" src="img/godkend.png" onClick="doGodkend()">
 								<img alt="Afvis rekvisition" src="img/afvis.png" onClick="doAfvis()">
-							</div>
+								
+							</p>
 							<div>
 								<label for="prioritet">Prioritering</label>
-								<input id="prioritet" name="prioritet" type="text" maxlength="100" size="100">
+								<input id="prioritet" name="prioritet" type="text" maxlength="100" size="75">
 								<label for="bemaerkninger">Visitators bemærkninger - incl protokol</label>
 								<textarea id="bemaerkninger" name="bemaerkninger" rows="3" cols="75" maxlength="300"></textarea>
 							</div>
