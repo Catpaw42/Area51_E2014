@@ -96,7 +96,7 @@ public class VisitationServlet extends HttpServlet {
 		RekvisitionExtended[] rekvlist = null;
 		// gets list of the active user - default behavior
 		if(activeUser != null){
-			rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
+			rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, Status.PENDING, null, null);
 //		rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
 		}
 		//Stitch rekvisition[] to request object.
