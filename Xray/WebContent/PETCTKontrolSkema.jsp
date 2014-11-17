@@ -17,7 +17,7 @@
 					<option value="kontrolrecidiv">Udredning af recidivmistanke</option>
 				</select>
 				<label for="formaal_tekst">indsæt selectiv text her</label>
-				<textarea id="formaal_tekst"></textarea>
+				<textarea id="formaal_tekst" name="formaal_tekst"></textarea>
 			</li>
 			<li>
 				<label>Relative kontraindikationer for PET-skanning</label>
@@ -31,7 +31,7 @@
 				Ja<input type = "radio" id="diabetesJa" name="diabetes" value="true">
 				Nej<input type = "radio" id="diabetesNej" name="diabetes" value="false"></p>
 				<label for="DM_Beh">Anfør medicinsk behandling</label>
-				<input type="text" id="DM_Beh">
+				<input type="text" id="DM_Beh" name="DM_Beh">
 			</li>
 			<li>
 				<label>Andre Oplysninger:</label>
@@ -50,28 +50,28 @@
 				Ja<input type = "radio" id="allergiJa" name="allergi" value="true">
 				Nej<input type = "radio" id="allergiNej" name="allergi" value="false"></p>
 				<label for="allergi_tekst">Hvilken type allergi</label>
-				<input type="text" id="allergi_tekst">
+				<input type="text" id="allergi_tekst" name="allergi_tekst">
 			</li>
 			<li>
 				<p>Er patienten adipøs?
 				Ja<input type = "radio" id="fedmeJa" name="fedme" value="true">
 				Nej<input type = "radio" id="fedmeNej" name="fedme" value="false"></p>
 				<label for="vaegt">Vægt:</label>
-				<input type="text" id="vaegt">
+				<input type="text" id="vaegt" name="vaegt">
 			</li>
 			<li>
 				<p>Biopsi / finnålspunktur:
 				Ja<input type = "radio" id="biopsiJa" name="biopsi" value="true">
 				Nej<input type = "radio" id="biopsiNej" name="biopsi" value="false"></p>
 				<label for="biopsi_tekst">Dato og lokalisation</label>
-				<input type="text" id="biopsi_tekst">
+				<input type="text" id="biopsi_tekst" name="biopsi_tekst">
 			</li>
 			<li>
 				<p>Operation:
 				Ja<input type = "radio" id="operationJa" name="operation" value="true">
 				Nej<input type = "radio" id="operationNej" name="operation" value="false"></p>
 				<label for="operation_tekst">Dato og lokalisation</label>
-				<input type="text" id="operation_tekst">
+				<input type="text" id="operation_tekst" name= "operation_tekst">
 			</li>
 			<li>
 				<label>Kemo og stråleterapi:</label>
@@ -85,7 +85,7 @@
 				Ja<input type = "radio" id="stråleterapiJa" name="stråleterapi" value="true">
 				Nej<input type = "radio" id="stråleterapiNej" name="stråleterapi" value="false"></p>
 				<label for="straaleDato">Dato for sidste behandling:</label>
-				<input type="date" id="straaleDato">
+				<input type="date" id="straaleDato" name="straaleDato">
 			</li>
 			<li>
 				<label>Relative kontraindikationer for CT-skanning</label>
@@ -93,7 +93,7 @@
 				Ja<input type = "radio" id="kontrast_reaktionJa" name="kontrast_reaktion" value="true">
 				Nej<input type = "radio" id="kontrast_reaktionNej" name="kontrast_reaktion" value="false"></p>
 				<label for="kontrast_reaktion_tekst">Hvilke(n)?</label>
-				<input type="text" id="kontrast_reaktion_tekst">
+				<input type="text" id="kontrast_reaktion_tekst" name="kontrast_reaktion_tekst">
 			</li>
 			<li>
 				<p>Nedsat nyrefunktion:
@@ -103,9 +103,9 @@
 			<li>
 				<p>P-kreatinin skal foreligge senest 1 uge før undersøgelse hos alle patienter</p>
 				<label for="sidstePKreatinin">Sidste P-kreatinin</label>
-				<input type="text" id="sidstePKreatinin" placeholder="&#x3bcmol/l">
+				<input type="text" id="sidstePKreatinin" name= "sidstePKreatinin" placeholder="&#x3bcmol/l">
 				<label for="sidstePKreatTimestamp">Sidste P-kreatinin</label>
-				<input type="date" id="sidstePKreatTimestamp">
+				<input type="date" id="sidstePKreatTimestamp" name="sidstePKreatTimestamp">
 			</li>
 		</ul>
 	</body>

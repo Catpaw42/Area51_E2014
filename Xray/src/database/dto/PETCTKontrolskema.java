@@ -64,7 +64,11 @@ public class PETCTKontrolskema extends AbstractDto {
     private Boolean nedsatNyreFkt;
     private Integer sidstePKreatinin;
     private Timestamp sidstePKreatTimestamp;
-    private Boolean preMed;
+    private Timestamp straaleDato;
+
+
+
+	private Boolean preMed;
     private Boolean dMRegime;
     private Boolean pOKontrast;
     private Boolean iVKontrast;
@@ -86,6 +90,14 @@ public class PETCTKontrolskema extends AbstractDto {
     // Public
     ////////////////////////////////////////////////////////////////////////////
 
+    public Timestamp getStraaleDato() {
+		return straaleDato;
+	}
+
+	public void setStraaleDato(Timestamp straaleDato) {
+		this.straaleDato = straaleDato;
+	}
+    
     public Integer getPETCTKontrolskemaId() {
         return pETCTKontrolskemaId;
     }
