@@ -143,7 +143,7 @@
 								out.print(r.getAfsendtDato());
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
-								out.print("</td> <td id="+r.getRekvisitionId()+" style=cursor:pointer onclick=location.href='RekvisitionServlet?action=cancel&cancelId="+ r.getRekvisitionId()+"'>");
+								out.print("</td> <td id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
 								out.print("annuller");
 								out.print("</td> </tr>");
 								

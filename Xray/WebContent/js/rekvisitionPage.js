@@ -31,3 +31,15 @@ function showOverlay()
 	$("#overlay").css("display", "block");
 	$("#overlayPanel").css("display", "block");
 }
+
+
+function cancelRekvisition(id) {
+    if (confirm("Er du sikker du vil annullere rekvisitionen?") == true) {
+        $.get("RekvisitionServlet?action=cancel&cancelId=" + id, function(data,status){
+        	if(status == "success"){
+        		location.reload(true);
+        	}
+        });
+        
+    }
+}
