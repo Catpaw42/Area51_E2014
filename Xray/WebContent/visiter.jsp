@@ -10,42 +10,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%! //methods
-	RekvisitionExtended rek;
 
-	void getRekvisition()
-	{
-		String returnString = "";
-		RekvisitionDaoImplExt rekDao=null;
-		try{
-			rekDao=new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
-		}
-		catch(Exception e){
-			
-		}
-		
-		
-		this.rek = rekDao.findByPrimaryKey(2);
-		
-		
-		
-		//return returnString;
-	}
-
-%>
 	
-
-<%
-	getRekvisition();
-%>
 <!DOCTYPE HTML>
+
+
 	<html>
 		<head>
 			<title>Visiter</title>
 			<meta charset="utf-8">
 			<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		</head>
+		<% //methods
+	RekvisitionExtended rek = null;
+		RekvisitionDaoImplExt rekDao = null;
+		try{
+			rekDao=new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
+		}
+		catch(Exception e){
+		}
 		
+		
+		rek = rekDao.findByPrimaryKey(2);
+		
+
+%>
 		<body class="visiter">
 			<ul class="showInline">
 				<li>

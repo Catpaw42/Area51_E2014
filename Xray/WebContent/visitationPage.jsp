@@ -3,6 +3,12 @@
 <%@page import="servlets.LoginServlet"%>
 <%@page import="database.dto.Bruger"%>
 <%@page import="helperClasses.Const" %>
+<%@page import="database.dto.Modalitet"%>
+<%@page import="servlets.RekvisitionServlet"%>
+<%@page import="database.dto.RekvisitionExtended.Status"%>
+<%@page import="database.dto.Rettigheder" %>
+<%@ page import="database.dto.RekvisitionExtended"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -17,7 +23,25 @@
 <!-- 		todo fix names -->
 		<title>Visitation</title>
 	</head>
+	<%
+		Modalitet[] modList = null;
+	Status[] statusList = null;
+	Bruger activeUser = null;
+	boolean userRightsRequisition = false;
 	
+	try{
+		activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+	}catch(Exception e){}
+	
+	try{
+		modList = (Modalitet[]) request.getSession().getAttribute(Const.MODALITY_LIST);
+	} catch(Exception e){}
+	try{
+		statusList = (Status[]) request.getSession().getAttribute(Const.STATUS_LIST);
+	} catch(Exception e1){}
+	
+	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(Const.REKVISITION_LIST);
+	%>
 	<body class="visitationPage">
 		<div class="topMenuIframe">
 		 <%@include file="topMenu.jsp" %>
@@ -46,17 +70,28 @@
 									</td>
 									<td>
 										<select id="modality" name="modality">
-											<option value="ul">UL - radiograf</option>
-											<option value="ct">CT</option>
-											<option value="rg">Pet/CT</option>
-											<option value="rtg">Rtg.</option>
+									<%
+											if(modList != null)
+												for(int i = 0; i < modList.length; i++){
+										%><option value=<%out.println(String.valueOf(i));%>>
+											<%
+												out.println(modList[i].getModalitetNavn());
+											%>
+										</option>
+										<%
+											}
+										%>
 										</select>
 									</td>
 									<td>
 										<select name="department" id="department">
-											<option value="o">O</option>
-											<option value="m" selected="selected">M</option>
-											<option>Alle</option>
+							<%
+									if(activeUser != null){
+									%>	<option value="<% out.println(activeUser.getBrugerId()); %>"><%out.println(activeUser.getFuldtNavn());%> </option>
+									<% }
+									%>
+										<option selected value="-1">Alle</option>
+							
 								  		</select>
 								  	</td>
 								  	<td>
@@ -64,11 +99,17 @@
 								  	</td>
 									<td>
 										<select name="status" id="status">
-											<option value="PENDING">Sendt</option>
-											<option value="APPROVED">Visiteret</option>
-											<option value="CANCELED">Annulleret</option>
-											<option value="DECLINED">Afvist</option>
-											<option value="BOOKED">Booket</option>
+					<%
+											if(statusList != null)
+																		for(int i = 0; i < statusList.length; i++){
+										%><option value=<%out.println(statusList[i].name());%>>
+											<%
+												out.println(statusList[i].name().toLowerCase());
+											%>
+										</option>
+										<%
+											}
+										%>
 								  		</select>
 								  	</td>
 								</tr>
@@ -92,100 +133,26 @@
 								<th>Status</th>
 							</tr>
 							<tr>
-								<td id="1">255255-5555</td>
-								<td id="1">Den elskede leder Magnus</td>
-								<td id="1">UL</td>
-								<td id="1">O</td>
-								<td id="1">251014</td>
-								<td id="1">Sendt</td>
-							</tr>
-							<tr>
-								<td id="test2">050501-2222</td>
-								<td id="test2">Mickey Mouse</td>
-								<td id="test2">CT</td>
-								<td id="test2">O</td>
-								<td id="test2">300115</td>
-								<td id="test2">Visiteret</td>
-							</tr>
-							<tr>
-								<td id="test3">111100-1144</td>
-								<td id="test3">Marwin The Depressed Robot</td>
-								<td id="test3">RGT</td>
-								<td id="test3">M</td>
-								<td id="test3">011211</td>
-								<td id="test3">Annulleret</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+							<%				
+						if(rekv != null)
+ 						 						
+							for (RekvisitionExtended r : rekv){
+ 								out.print("<tr> <td id="+r.getRekvisitionId()+">"); // TODO test if id works
+ 								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
+								out.print("</td> <td id="+r.getRekvisitionId()+">");
+								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientNavn() != null ? r.getPatient().getPatientNavn() : "intet patient navn fundet");
+								out.print("</td> <td id="+r.getRekvisitionId()+">");
+								out.print(r.getModalitet() == null ? "ingen modalitet" : r.getModalitet().getModalitetNavn() != null ? r.getModalitet().getModalitetNavn() : "intet modalitet navn fundet" );
+								out.print("</td> <td id="+r.getRekvisitionId()+">");
+								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
+								out.print("</td> <td id="+r.getRekvisitionId()+">");
+								out.print(r.getAfsendtDato());
+								out.print("</td> <td id="+r.getRekvisitionId()+">");
+								out.print(r.getStatus());
+								out.print("</td> </tr>");	
+							}
+ 							
+ 						%>
 							</tr>
 						</table>
 					</div>
@@ -213,5 +180,9 @@
 				</li>
 			</ul>
 		</div>
+			<div id="overlay"></div>
+	<div id="overlayPanel">
+		<%@include file="nyRekvisitionPage.jsp"%>
+	</div>
 	</body>
 </html>

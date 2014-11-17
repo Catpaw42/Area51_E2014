@@ -141,13 +141,25 @@
 								out.print("</td> </tr>");
 								
 							}
-// 						 id=\"1\" style=\"cursor:pointer\" onclick=\"location.href='google.com'" + "
- 							
  						%>
 					</table>
 				</div>
+				
+				<li>
+<!-- 					<div id="embededSite"> -->
+<!-- 					</div> -->
+<!-- 					<form id="visiterform"> -->
+<!-- 						<div id="godkendAfvis"> -->
+<!-- 						</div>	 -->
+<!-- 					</form>	 -->
+					
+			
+<div id="embededSite">
+					</div>
+					<form id="visiterform" name="visiterform" method="post" action="BookingServlet">
+					</form>	
+					
 			</li>
-		
 		</ul>
 	</div>
 		<div id="overlay"></div>

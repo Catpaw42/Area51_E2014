@@ -29,41 +29,41 @@ import database.dto.Rettigheder;
  * @author generated
  */
 public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao {
-	
+
 	protected static final String USER_LOGIN_CONDITION = "bruger_navn=? AND kodeord=?";
 	protected static final String GET_RETTIGHEDER = "bruger_id=?";
 
-    private static final String TABLE_NAME = "bruger";
+	private static final String TABLE_NAME = "bruger";
 
-    protected static final String SELECT_COLUMNS = "bruger_id, bruger_navn, kodeord, fuldt_navn, er_aktiv";
+	protected static final String SELECT_COLUMNS = "bruger_id, bruger_navn, kodeord, fuldt_navn, er_aktiv";
 
-    protected static final String PK_CONDITION = "bruger_id=?";
+	protected static final String PK_CONDITION = "bruger_id=?";
 
-    private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,kodeord,fuldt_navn,er_aktiv) VALUES (?,?,?,?)";
+	private static final String SQL_INSERT = "INSERT INTO bruger (bruger_navn,kodeord,fuldt_navn,er_aktiv) VALUES (?,?,?,?)";
 
-    public BrugerDaoImpl( Connection conn ) {
-        super( conn );
-    }
+	public BrugerDaoImpl( Connection conn ) {
+		super( conn );
+	}
 
-  
-    
 
-    /**
-     * Finds records.
-     */
 
-    public Bruger[] findDynamic( String cond, int offset, int count, Object... params ) {
-        return findManyArray( cond, offset, count, params);
-    } 
-    
-    public boolean validate(String brugernavn, String kodeord){
+
+	/**
+	 * Finds records.
+	 */
+
+	public Bruger[] findDynamic( String cond, int offset, int count, Object... params ) {
+		return findManyArray( cond, offset, count, params);
+	} 
+
+	public boolean validate(String brugernavn, String kodeord){
 
 		Bruger[] br = findDynamic(USER_LOGIN_CONDITION, 0, -1, new Object[]{brugernavn, kodeord});
 		if(br.length != 0) return true;
 
 		return false;
 	}
-	
+
 	public Bruger findByUserName(String brugernavn, String kodeord){
 		Bruger[] br = findDynamic(USER_LOGIN_CONDITION, 0, -1, new Object[]{brugernavn, kodeord});
 		if(br.length != 0 || br[0].equals(null)){
@@ -74,159 +74,162 @@ public class BrugerDaoImpl extends AbstractDaoImpl<Bruger> implements BrugerDao 
 		}
 		return null;
 	}
-	
-	  /**
-     * Finds a record identified by its primary key.
-     * @return the record found or null
-     */
-    public Bruger findByPrimaryKey( int brugerId ) {
-    	Bruger b = findOne( PK_CONDITION, brugerId);
-    	RettighederDao rDao = new RettighederDaoImpl(conn);
-    	System.out.println("connection: " + conn);
-    	System.out.println("dao: " + rDao);
-    	Rettigheder[] rettigheder = rDao.findDynamic(GET_RETTIGHEDER, 0, -1, new Object[]{b.getBrugerId()});
-    	b.setRettigheder(rettigheder);
-        return b;
-    }
-  
 
-    /**
-     * Inserts a new record.
-     * @return the generated primary key - brugerId
-     */
-    public int insert( Bruger dto ) throws DaoException {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+	/**
+	 * Finds a record identified by its primary key.
+	 * @return the record found or null
+	 */
+	public Bruger findByPrimaryKey( int brugerId ) {
+		Bruger b = findOne( PK_CONDITION, brugerId);
+		RettighederDao rDao = new RettighederDaoImpl(conn);
+		System.out.println("argument: " + brugerId);
+		System.out.println("id: " + b);
+		System.out.println(rDao.findDynamic(null, 0, -1, new Object[]{})[0]);
+		if(b != null){
+			Rettigheder[] rettigheder = rDao.findDynamic(GET_RETTIGHEDER, 0, -1, new Object[]{b.getBrugerId()});
+			b.setRettigheder(rettigheder);
+		}
+		return b;
+	}
 
-        debugSql( SQL_INSERT, dto );
 
-        try {
-            stmt = conn.prepareStatement( SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS );
+	/**
+	 * Inserts a new record.
+	 * @return the generated primary key - brugerId
+	 */
+	public int insert( Bruger dto ) throws DaoException {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
-            if ( dto.getBrugerNavn() == null ) {
-                throw new DaoException("Value of column 'bruger_navn' cannot be null");
-            }
-            checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
-            stmt.setString( 1, dto.getBrugerNavn() );
+		debugSql( SQL_INSERT, dto );
 
-            if ( dto.getKodeord() == null ) {
-                throw new DaoException("Value of column 'kodeord' cannot be null");
-            }
-            checkMaxLength( "kodeord", dto.getKodeord(), 30 );
-            stmt.setString( 2, dto.getKodeord() );
+		try {
+			stmt = conn.prepareStatement( SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS );
 
-            if ( dto.getFuldtNavn() == null ) {
-                throw new DaoException("Value of column 'fuldt_navn' cannot be null");
-            }
-            checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
-            stmt.setString( 3, dto.getFuldtNavn() );
+			if ( dto.getBrugerNavn() == null ) {
+				throw new DaoException("Value of column 'bruger_navn' cannot be null");
+			}
+			checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
+			stmt.setString( 1, dto.getBrugerNavn() );
 
-            if ( dto.getErAktiv() == null ) {
-                throw new DaoException("Value of column 'er_aktiv' cannot be null");
-            }
-            stmt.setByte( 4, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
+			if ( dto.getKodeord() == null ) {
+				throw new DaoException("Value of column 'kodeord' cannot be null");
+			}
+			checkMaxLength( "kodeord", dto.getKodeord(), 30 );
+			stmt.setString( 2, dto.getKodeord() );
 
-            int n = stmt.executeUpdate();
+			if ( dto.getFuldtNavn() == null ) {
+				throw new DaoException("Value of column 'fuldt_navn' cannot be null");
+			}
+			checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
+			stmt.setString( 3, dto.getFuldtNavn() );
 
-            rs = stmt.getGeneratedKeys();
-            rs.next();
+			if ( dto.getErAktiv() == null ) {
+				throw new DaoException("Value of column 'er_aktiv' cannot be null");
+			}
+			stmt.setByte( 4, dto.getErAktiv() ? ((byte)1) : ((byte)0) );
 
-            dto.setBrugerId( rs.getInt( 1 ));
+			int n = stmt.executeUpdate();
 
-            return dto.getBrugerId();
-        }
-        catch (SQLException e) {
-            errorSql( e, SQL_INSERT, dto );
-            handleException( e );
-            throw new DBException( e );
-        }
-        finally {
-            if (rs != null) try { rs.close(); } catch (SQLException e) {}
-            if (stmt != null) try { stmt.close(); } catch (SQLException e) {}
-        }
-    }
+			rs = stmt.getGeneratedKeys();
+			rs.next();
 
-    /**
-     * Updates one record found by primary key.
-     * @return true iff the record was really updated (=found and any change was really saved)
-     */
-    public boolean update( int brugerId, Bruger dto ) throws DaoException {
-        StringBuffer sb = new StringBuffer();
-        ArrayList<Object> params = new ArrayList<Object>();
+			dto.setBrugerId( rs.getInt( 1 ));
 
-        if ( dto.getBrugerNavn() != null ) {
-            checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
-            sb.append( "bruger_navn=?" );
-            params.add( dto.getBrugerNavn());
-        }
+			return dto.getBrugerId();
+		}
+		catch (SQLException e) {
+			errorSql( e, SQL_INSERT, dto );
+			handleException( e );
+			throw new DBException( e );
+		}
+		finally {
+			if (rs != null) try { rs.close(); } catch (SQLException e) {}
+			if (stmt != null) try { stmt.close(); } catch (SQLException e) {}
+		}
+	}
 
-        if ( dto.getKodeord() != null ) {
-            if (sb.length() > 0) {
-                sb.append( ", " );
-            }
+	/**
+	 * Updates one record found by primary key.
+	 * @return true iff the record was really updated (=found and any change was really saved)
+	 */
+	public boolean update( int brugerId, Bruger dto ) throws DaoException {
+		StringBuffer sb = new StringBuffer();
+		ArrayList<Object> params = new ArrayList<Object>();
 
-            checkMaxLength( "kodeord", dto.getKodeord(), 30 );
-            sb.append( "kodeord=?" );
-            params.add( dto.getKodeord());
-        }
+		if ( dto.getBrugerNavn() != null ) {
+			checkMaxLength( "bruger_navn", dto.getBrugerNavn(), 30 );
+			sb.append( "bruger_navn=?" );
+			params.add( dto.getBrugerNavn());
+		}
 
-        if ( dto.getFuldtNavn() != null ) {
-            if (sb.length() > 0) {
-                sb.append( ", " );
-            }
+		if ( dto.getKodeord() != null ) {
+			if (sb.length() > 0) {
+				sb.append( ", " );
+			}
 
-            checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
-            sb.append( "fuldt_navn=?" );
-            params.add( dto.getFuldtNavn());
-        }
+			checkMaxLength( "kodeord", dto.getKodeord(), 30 );
+			sb.append( "kodeord=?" );
+			params.add( dto.getKodeord());
+		}
 
-        if ( dto.getErAktiv() != null ) {
-            if (sb.length() > 0) {
-                sb.append( ", " );
-            }
+		if ( dto.getFuldtNavn() != null ) {
+			if (sb.length() > 0) {
+				sb.append( ", " );
+			}
 
-            sb.append( "er_aktiv=?" );
-            params.add( (dto.getErAktiv() ? ((byte)1) : ((byte)0)));
-        }
+			checkMaxLength( "fuldt_navn", dto.getFuldtNavn(), 100 );
+			sb.append( "fuldt_navn=?" );
+			params.add( dto.getFuldtNavn());
+		}
 
-        if (sb.length() == 0) {
-            return false;
-        }
+		if ( dto.getErAktiv() != null ) {
+			if (sb.length() > 0) {
+				sb.append( ", " );
+			}
 
-        params.add( brugerId );
+			sb.append( "er_aktiv=?" );
+			params.add( (dto.getErAktiv() ? ((byte)1) : ((byte)0)));
+		}
 
-        Object[] oparams = new Object[ params.size() ];
+		if (sb.length() == 0) {
+			return false;
+		}
 
-        return updateOne( sb.toString(), PK_CONDITION, params.toArray( oparams ));
-    }
+		params.add( brugerId );
 
-    /**
-     * Returns the table name.
-     */
-    public String getTableName() {
-        return TABLE_NAME;
-    }
+		Object[] oparams = new Object[ params.size() ];
 
-    protected String getSelectColumns() {
-        return SELECT_COLUMNS;
-    }
+		return updateOne( sb.toString(), PK_CONDITION, params.toArray( oparams ));
+	}
 
-    protected Bruger fetch( ResultSet rs ) throws SQLException {
-        Bruger dto = new Bruger();
-        dto.setBrugerId( rs.getInt( 1 ));
-        dto.setBrugerNavn( rs.getString( 2 ));
-        dto.setKodeord( rs.getString( 3 ));
-        dto.setFuldtNavn( rs.getString( 4 ));
-        dto.setErAktiv( rs.getBoolean( 5 ) ? Boolean.TRUE : Boolean.FALSE );
+	/**
+	 * Returns the table name.
+	 */
+	public String getTableName() {
+		return TABLE_NAME;
+	}
 
-        return dto;
-    }
+	protected String getSelectColumns() {
+		return SELECT_COLUMNS;
+	}
 
-    protected Bruger[] toArray(ArrayList<Bruger> list ) {
-        Bruger[] ret = new Bruger[ list.size() ];
-        return list.toArray( ret );
-    }
-    
-    
+	protected Bruger fetch( ResultSet rs ) throws SQLException {
+		Bruger dto = new Bruger();
+		dto.setBrugerId( rs.getInt( 1 ));
+		dto.setBrugerNavn( rs.getString( 2 ));
+		dto.setKodeord( rs.getString( 3 ));
+		dto.setFuldtNavn( rs.getString( 4 ));
+		dto.setErAktiv( rs.getBoolean( 5 ) ? Boolean.TRUE : Boolean.FALSE );
+
+		return dto;
+	}
+
+	protected Bruger[] toArray(ArrayList<Bruger> list ) {
+		Bruger[] ret = new Bruger[ list.size() ];
+		return list.toArray( ret );
+	}
+
+
 
 }
