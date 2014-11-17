@@ -50,6 +50,13 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+
+
+
+
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
@@ -59,11 +66,13 @@ import database.dao.DaoFactory.Factory;
 import database.dao.ModalitetDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
+import database.dao.UndersoegelsesTypeDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.DaoFactoryImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImpl;
+import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.dto.Bruger;
 import database.dto.Modalitet;
 import database.dto.Patient;
@@ -74,6 +83,7 @@ import database.dto.RekvisitionExtended.HospitalOenske;
 import database.dto.RekvisitionExtended.IndlaeggelseTransport;
 import database.dto.RekvisitionExtended.Prioritering;
 import database.dto.RekvisitionExtended.Samtykke;
+import database.dto.UndersoegelsesType;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 
 /**
@@ -174,7 +184,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setTriage(request.getParameter("triage"));
 		rek.setCave(request.getParameter("cave"));//TODO validate
 		try {
-			rek.setRekvirentId(Integer.valueOf(request.getParameter("rekvirent")));
+			rek.setRekvirentId(Integer.valueOf(request.getParameter("rekvirent_id")));
 		} catch (NumberFormatException e){
 			//TODO handle missing rekvirent 
 			//returnToPage("Manglende RekvirentID);
@@ -188,12 +198,23 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setHenvistTil(convertHenvistTil(request));
 		rek.setHospitalOenske(convertHospitalOenske(request));
 		rek.setPrioritering(convertPrioritering(request));
+		
+		//Get undersøgelsesType data og gem en ny.
+		Integer USTypeID = -1;
+		
+		UndersoegelsesType USType = new UndersoegelsesType();
+		USType.setModalitetId(Integer.valueOf(request.getParameter("modalitet_id")));
+		USType.setUndersoegelsesNavn(request.getParameter("undersoegelses_type"));
+		UndersoegelsesTypeDao usTypeDao = new UndersoegelsesTypeDaoImpl(conn) ;
 		try {
-			rek.setUndersoegelsesTypeId(Integer.valueOf(request.getParameter("undersoegelses_id")));
-		} catch (NumberFormatException e) {
-			//TODO meaningful handling of error
+			USTypeID = usTypeDao.insert(USType);
+		} catch (DaoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		rek.setUndersoegelsesTypeId(1); //TODO FIXXX!!!
+		
+		rek.setUndersoegelsesTypeId(USTypeID); //TODO FIXXX!!!
+		
 		rek.setKliniskProblemstilling(request.getParameter("klinisk_problemstilling"));
 		rek.setAmbulantKoersel(convertAmbulantKoersel(request));
 		rek.setIndlaeggelseTransport(convertIndlaeggelseTransport(request));
@@ -225,27 +246,27 @@ public class NyRekvisitionServlet extends HttpServlet
 		System.out.println(rek);
 		//Check Modalitet
 		String modalitet = request.getParameter("modalitet_navn");
-		// can not switch on null there makes empty string which results in running default case
+		// can not switch on null - makes empty string instead should not happen
 		modalitet = modalitet == null ? "" : modalitet;
 		switch (modalitet) {
 		case "invasiv_UL":
-			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.UL_INV_KONTROLSKEMA_SERVLET).forward(request, response);
+			Integer ULSkemaID = storeULInvKontrolSkema(request,response);
+			rek.setInvasivULKontrolskemaId(ULSkemaID);
 			break;
 		case "MR":
-			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.MR_KONTROLSKEMA_SERVLET).forward(request, response);
+			Integer MRSkemaID = storeMRSkema(request, response);
+			rek.setMRKontrolskemaId(MRSkemaID);
 			break;
 		case "CT_kontrast":
-			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.CT_KONTROLSKEMA_SERVLET).forward(request, response);
+			Integer CTKSkemaID = storeCTKSkema(request, response);
+			rek.setCTKontrastKontrolskemaId(CTKSkemaID);
 			break;
 		case "PETCT":
-			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.PET_CT_KONTROLSKEMA_SERVLET).forward(request, response);
+			Integer PETCTSkemaID = storePETCTSkema(request,response);
+			rek.setPETCTKontrolskemaId(PETCTSkemaID);
 			break;
 		default:
-			//Intet kontrolskema - gem rekvisitionen
+			//Now store the requisition
 			RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
 			try {
 				rekDao.insert(rek);
@@ -263,6 +284,30 @@ public class NyRekvisitionServlet extends HttpServlet
 		
 		
 
+	}
+
+	private Integer storePETCTSkema(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Integer storeCTKSkema(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Integer storeMRSkema(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Integer storeULInvKontrolSkema(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private String parseCprBirthday(String foedselsdagString) {

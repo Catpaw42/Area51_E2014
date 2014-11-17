@@ -59,10 +59,13 @@ public class MainServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String primaryPage = request.getParameter("page");
+		checkAction(request, response);
 		
+		String primaryPage = request.getParameter("page");
+		//Check if user is logging in
 		if(primaryPage.equals("loggingIn")){
 			Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+			//Getting users permissions and redirecting to relevant page.
 			Rettigheder[] rettigheder = activeUser.getRettigheder();
 			int prioritet = 0;
 			for (Rettigheder r : rettigheder) {
@@ -85,6 +88,7 @@ public class MainServlet extends HttpServlet {
 			}
 		}
 		System.out.println("primary page: " + primaryPage);
+		//User requested
 		switch (primaryPage) {
 		case Const.LOGIN_SERVLET:
 			forward("/" + Const.LOGIN_SERVLET,request,response);
@@ -118,10 +122,25 @@ public class MainServlet extends HttpServlet {
 //			forward("/"+Const.UL_INV_KONTROLSKEMA_SERVLET, request, response);
 			break;
 		default:
-			forward("/"+Const.LOGIN_SERVLET, request, response);
+			//forward("/"+Const.LOGIN_SERVLET, request, response);
 			break;
 		}		
 	}
+	private void checkAction(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String action = request.getParameter("action");
+		switch (action) {
+		case "logout":
+			request.getSession().setAttribute(Const.ACTIVE_USER, null);
+			response.sendRedirect(Const.LOGIN_SERVLET);
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+
 	//Utility method to forward
 	private void forward(String string, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

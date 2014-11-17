@@ -38,7 +38,7 @@
 					if (aUser.harRettighed(Rettighed.ADMIN))
 						out.print("<li><a href='MainServlet?page=" + Const.ADMIN_SERVLET + "'>Administrer Brugere</a></li>");
 				%>
-
+				<li><a href='MainServlet?action=logout'>Log out</a></li>
 
 			</ul>
 		</div>
