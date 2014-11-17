@@ -46,13 +46,13 @@
 								<label for="patient_cpr">CPR-Nummer</label>
 								<input type="text" id="patient_cpr" name="patient_cpr" disabled value=" <% out.print(rek.getPatient().getPatientCpr()); %>">
 								<label for="patient_navn">Patient Navn</label>
-								<input type="text" id="patient_navn" name="patient_navn" disabled value=<% out.print(rek.getPatient().getPatientNavn()); %>>
+								<input type="text" id="patient_navn" name="patient_navn" disabled value="<% out.print(rek.getPatient().getPatientNavn()); %>">
 								<label for="patient_adresse">Adresse</label>
-								<input type="text" id="patient_adresse" name="patient_adresse" disabled value=<% out.print(rek.getPatient().getPatientAdresse()); %>>
+								<input type="text" id="patient_adresse" name="patient_adresse" disabled value="<% out.print(rek.getPatient().getPatientAdresse()); %>">
 								<label for="patient_tlf">Patienttelefonnummer</label>
-								<input type="text" id="patient_tlf" name="patient_tlf" disabled value=<% out.print(rek.getPatient().getPatientTlf()); %>>
+								<input type="text" id="patient_tlf" name="patient_tlf" disabled value="<% out.print(rek.getPatient().getPatientTlf()); %>">
 								<label for="paaroerende">Pårørende</label>
-								<input type="text" id="paaroerende" name="paaroerende" disabled value=<% out.print(rek.getPaaroerende()==null?"":rek.getPaaroerende()); %>>
+								<input type="text" id="paaroerende" name="paaroerende" disabled value="<% out.print(rek.getPaaroerende()==null?"":rek.getPaaroerende()); %>">
 								<label for="samtykke">Patientsamtykke</label>
 								<div id="samtykke">
 									<input type="radio" id="samtykke_ja" name="samtykke" value="ja"  
@@ -75,20 +75,20 @@
 									>Ikke i stand til samtykke
 								</div>
 								<label for="triage">Triage</label>
-								<input type="text" id="triage" name="triage" disabled value=<%out.print(rek.getTriage()); %>>
+								<input type="text" id="triage" name="triage" disabled value="<%out.print(rek.getTriage()); %>">
 								<label for="cave">Cave</label>
-								<input type="text" id="cave" name="cave" disabled value=<%out.print(rek.getCave()); %> >
+								<input type="text" id="cave" name="cave" disabled value="<%out.print(rek.getCave()); %>" >
 							</li>
 							<li>
 								<h2>Rekvirent</h2>
 								<label for="rekvirent">Rekvirent</label>
-								<input type="text" id="rekvirent" name="rekvirent" disabled value=<%out.print(rek.getRekvirent().getFuldtNavn()); %>>
+								<input type="text" id="rekvirent" name="rekvirent" disabled value="<%out.print(rek.getRekvirent().getFuldtNavn()); %>">
 								<label for="henv_afd">Rekvirerende Afdeling</label>
-								<input type="text" id="henv_afd" name="henv_afd" disabled value=<%out.print(rek.getHenvAfd()); %>>
+								<input type="text" id="henv_afd" name="henv_afd" disabled value="<%out.print(rek.getHenvAfd()); %>">
 								<label for="henv_laege">Henvisende læge</label>
-								<input type="text" id="henv_laege" name="henv_laege" disabled value=<%out.print(rek.getHenvLaege()); %>>
+								<input type="text" id="henv_laege" name="henv_laege" disabled value="<%out.print(rek.getHenvLaege()); %>">
 								<label for="kontakt_tlf">Kontakt telefonnr</label>
-								<input type="text" id="kontakt_tlf" name="kontakt_tlf" disabled value=<%out.print(rek.getKontaktTlf()); %>>
+								<input type="text" id="kontakt_tlf" name="kontakt_tlf" disabled value="<%out.print(rek.getKontaktTlf()); %>">
 							</li>
 						</ul>
 						<hr />
