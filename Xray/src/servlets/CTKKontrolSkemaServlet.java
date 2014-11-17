@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/CTKKontrolSkemaServlet")
 public class CTKKontrolSkemaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CTKKontrolSkemaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CTKKontrolSkemaServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,15 +39,15 @@ public class CTKKontrolSkemaServlet extends HttpServlet {
 		if (request.getSession().getAttribute(Const.ACTIVE_USER)!=null){
 			process(request, response);
 		}else{
-			request.getRequestDispatcher(Const.MAIN_SERVLET)	
-			}
+			request.getRequestDispatcher(Const.MAIN_SERVLET);	
 		}
+	}
 
 	private void process(HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
-	}
-	}
 
+	}
 }
+
+
