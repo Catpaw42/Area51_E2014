@@ -67,7 +67,6 @@ public class BookingServlet extends HttpServlet {
 		// forwards to mainServlet with LoginPage as parameter
 		if(activeUser == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
-//			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);
 		}else{
 			if(Const.BOOKING_ACTION.equalsIgnoreCase(request.getParameter(Const.PARAM_ACTION))){
 				int rekvisitionId = -1;
@@ -100,8 +99,7 @@ public class BookingServlet extends HttpServlet {
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		
 		if(activeUser == null){
-			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
-//			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);		
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);		
 		}else{
 			searchRekvisition(request, response);
 		}

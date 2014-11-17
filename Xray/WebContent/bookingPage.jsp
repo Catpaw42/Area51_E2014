@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
-<%-- <%@page import="database.dto.RekvisitionExtended1"%> --%>
 <%@page import="database.dto.Modalitet"%>
-<%@page import="servlets.RekvisitionServlet"%>
+<%@page import="servlets.BookingServlet"%>
 <%@page import="database.dto.RekvisitionExtended.Status"%>
 <%@page import="database.dto.Bruger" %>
 <%@page import="database.dto.Rettigheder" %>
@@ -12,9 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <link href="css/styleSheet.css" rel="stylesheet" type="text/css media="screen">
-<link href="css/rekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
+<link href="css/bookingPage.css" rel="stylesheet" type="text/css" media="screen">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/rekvisitionPage.js"></script>
+<script type="text/javascript" src="js/bookingPage.js"></script>
 <title>Booking</title>
 </head>
 
@@ -40,17 +39,15 @@
 	
 	RekvisitionExtended[] rekv =(RekvisitionExtended[]) request.getSession().getAttribute(Const.REKVISITION_LIST);
 %>
-<body class="rekvisitionPage">
+<body class="bookingPage">
 	<%@include file="topMenu.jsp"%>
 	<div id="mainpage">
 		<ul class="showInline centerAlign">
-			<li><a id="nyRekvisition" href="javascript:showOverlay()">Skriv
-					Ny Rekvisition</a></li>
 			<li>
 				<div id="search">
 					<label for="search">Søg</label>
 					<form id="search" name="search" method="post"
-						action="RekvisitionServlet">
+						action="BookingServlet">
 						<table>
 							<tr>
 								<th>Cpr</th>
@@ -137,8 +134,10 @@
 								out.print(r.getAfsendtDato());
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
-								out.print("</td> <td id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
+								if(r.getStatus().equals(Status.APPROVED)){
+								out.print("</td> <td bgcolor=#00FF00 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
 								out.print("book");
+								}
 								out.print("</td> </tr>");
 								
 							}
@@ -151,7 +150,7 @@
 		
 		</ul>
 	</div>
-	<div id="overlay"></div>
+		<div id="overlay"></div>
 	<div id="overlayPanel">
 		<%@include file="nyRekvisitionPage.jsp"%>
 	</div>

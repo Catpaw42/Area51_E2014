@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-<%-- <%@page import="database.dto.RekvisitionExtended1"%> --%>
 <%@page import="database.dto.Modalitet"%>
 <%@page import="servlets.RekvisitionServlet"%>
 <%@page import="database.dto.RekvisitionExtended.Status"%>
@@ -143,12 +142,12 @@
 								out.print(r.getAfsendtDato());
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
-								out.print("</td> <td id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
+								if(r.getStatus().equals(Status.PENDING) || r.getStatus().equals(Status.APPROVED)){
+								out.print("</td> <td bgcolor=#FF0000 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
 								out.print("annuller");
-								out.print("</td> </tr>");
-								
+								}
+								out.print("</td> </tr>");	
 							}
-// 						 id=\"1\" style=\"cursor:pointer\" onclick=\"location.href='google.com'" + "
  							
  						%>
 					</table>
