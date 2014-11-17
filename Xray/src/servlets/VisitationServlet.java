@@ -3,6 +3,7 @@ package servlets;
 import helperClasses.Const;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +46,31 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//String id=request.getParameter("rekIDSubmit").toString();
+		//String value = request.getParameter("visiterAction").toString();
+		System.out.println("Post");
+		
+		Enumeration parameterList = request.getParameterNames();
+		System.out.println(parameterList.toString());
+		while( parameterList.hasMoreElements() )
+		  {
+		    String sName = parameterList.nextElement().toString();
+		      String[] sMultiple = request.getParameterValues( sName );
+		      if( 1 >= sMultiple.length )
+		        // parameter has a single value. print it.
+		        System.out.println( sName + " = " + request.getParameter( sName ));
+		      else
+		        for( int i=0; i<sMultiple.length; i++ )
+		          // if a paramater contains multiple values, print all of them
+		          System.out.println( sName + "[" + i + "] = " + sMultiple[i] );
+		    
+		  }
+		
+		//request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
+		//System.out.println("id:"+id);
+		//System.out.println("Action:"+value);
+		
+		
 	}
 
 }

@@ -26,6 +26,15 @@
 				out.print(aUser.getFuldtNavn()+"<BR>");
 			%>
 		</div>
+		<div id="currentpage">
+			<h2 >
+				<% 
+					if(request.getParameter("page").equalsIgnoreCase("VisitationServlet")) out.print("Visitation");
+					if(request.getParameter("page").equalsIgnoreCase("RekvisitionServlet")) out.print("Rekvisition");
+				
+				%>
+			</h2>
+		</div>
 		<div id="mainmenu">
 			<ul>
 				<%
@@ -42,6 +51,7 @@
 
 			</ul>
 		</div>
+
 		<div id="logo">
 			<h3>Area 51</h3>
 		</div>
