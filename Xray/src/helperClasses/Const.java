@@ -2,6 +2,7 @@ package helperClasses;
 
 public final class Const {
 	public static final long serialVersionUID = 1L;
+	public static final Boolean DEBUG = true;
 
 	// pages
 	public static final String REKVISITION_PAGE = "rekvisitionPage.jsp";

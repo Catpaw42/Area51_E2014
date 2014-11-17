@@ -5,7 +5,6 @@ import helperClasses.Const;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -17,15 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
-import database.dao.BrugerDao;
 import database.dao.ModalitetDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.UndersoegelsesTypeDao;
-import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
-import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.dto.Bruger;
@@ -54,6 +50,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	private static final String PATIENT_NAVN = "patient_navn";
 	private static final String PATIENT_ADRESSE = "patient_adresse";
 	private static final String PATIENT_CPR = "patient_cpr";
+	private static final boolean DEBUG = false;
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -68,17 +65,20 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		//Getting List of modalities - first create connection
 		Connection conn = null;
 		try {
 			conn = DataSourceConnector.getConnection();
 		} catch (ConnectionException e) {
-			//Connection Fails
+			//Connection Fails TODO message to user
 			e.printStackTrace();
 		}
+		//And DAO
 		ModalitetDao modDao = new ModalitetDaoImpl(conn);
+		//Getting Modalities
 		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
 		request.setAttribute(Const.MODALITY_LIST, modList);
-		System.out.println(modList);
+		if (Const.DEBUG) System.out.println(modList);
 		
 		request.getRequestDispatcher(Const.NEW_REKVISITION_PAGE).forward(request, response);
 	}
@@ -109,7 +109,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
 		pt.setPatientTlf(request.getParameter(PATIENT_TLF));
 		pt.setStamafdeling(activeBruger.getBrugerNavn());
-		System.out.println(pt);
+		if (Const.DEBUG)System.out.println(pt);
 		//Time to store patient
 		Integer ptId = null;
 		PatientDao ptDao = new PatientDaoImpl(conn);
