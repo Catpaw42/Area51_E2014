@@ -1,3 +1,11 @@
+<%@page import="helperClasses.Const"%>
+<%@page import="database.dto.Rettigheder.Rettighed"%>
+<%@page import="servlets.LoginServlet"%>
+<%@page import="database.dto.Bruger"%>
+<%@page import="helperClasses.Const" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -18,7 +26,7 @@
 			<ul class="showInline centerAlign">
 				<li>
 					<div id="search">
-						<label for="search">Søg</label>
+						<label for="search">SÃ¸g</label>
 				    	<form id="search" name="search" method="post" action="">
 				    		<table>
 								<tr>
@@ -65,7 +73,7 @@
 								  	</td>
 								</tr>
 				  			</table>
-				  			<input type="submit" id="søg" name="søg" value="Søg">
+				  			<input type="submit" id="sÃ¸g" name="sÃ¸g" value="SÃ¸g">
 				    	</form>
 					</div>
 				</li>
@@ -184,7 +192,16 @@
 				</li>
 				<li>
 					<div id="embededSite">
-<!-- 						<iframe id="embededSiteFrame" src="visiter.jsp"></iframe> -->
+					</div>
+					<div id="godkendAfvis">
+						<img alt="Afvis rekvisition" src="img/afvis.png">
+						<img alt="Godkend rekvisition" src="img/godkend.png">
+						<input id="grundAfvis" name="grundAfvis" type="text" maxlength="50">
+						<label for="grundAfvis">Afvis grund</label>
+						<input id="prioritet" name="prioritet" type="text" maxlength="50">
+						<label for="prioritet">Prioritering</label>
+						
+						
 					</div>
 				</li>
 			</ul>
