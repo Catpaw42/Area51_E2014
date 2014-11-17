@@ -2,6 +2,14 @@
 <%@page import="database.dto.Bruger"%>
 <%@page import="helperClasses.Const"%>
 <%@page import="servlets.LoginServlet"%>
+<%@page import="database.dto.Modalitet"%>
+
+<%
+Modalitet[] modList1 = null;
+try{
+	modList1 = (Modalitet[]) request.getSession().getAttribute(Const.MODALITY_LIST);
+} catch(Exception e){}
+%>
 <html>
 	<head>
 		<title> Skriv Rekvisition </title>
@@ -33,9 +41,9 @@
 								<input type="text" id="paaroerende" name="paaroerende" placeholder="forældre/værge/andet">
 								<label for="samtykke">Patientsamtykke</label>
 								<div id="samtykke">
-									<input type="radio" id="samtykke_ja" name="samtykke" value="ja">Ja
-									<input type="radio" id="samtykke_nej" name="samtykke" value="nej">Nej
-									<input type="radio" id="uden_samtykke" name="samtykke" value="uden">Ikke i stand til samtykke
+									<input class="required" type="radio" id="samtykke_ja" name="samtykke" value="ja">Ja
+									<input class="required" type="radio" id="samtykke_nej" name="samtykke" value="nej">Nej
+									<input class="required" type="radio" id="uden_samtykke" name="samtykke" value="uden">Ikke i stand til samtykke
 								</div>
 								<label for="triage">Triage</label>
 								<input type="text" id="triage" name="triage" placeholder="evt. EWS">
@@ -48,12 +56,13 @@
 								<h2>Rekvirent</h2>
 								<label for="rekvirent">Rekvirent</label>
 								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" readonly="readonly" value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerNavn()%>>
+								<input type="hidden" name="rekvirent_id" value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerId()%>>
 								<label for="henv_afd">Rekvirerende Afdeling</label>
 								<input class="required" type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling">
 								<label for="henv_laege">Henvisende læge</label>
-								<input type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge">
+								<input class="required" type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge">
 								<label for="kontakt_tlf">Kontakt telefonnr</label>
-								<input type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer">
+								<input class="required" type="text" id="kontakt_tlf" name="kontakt_tlf" placeholder="Telefonnummer">
 							</div>
 						</li>
 					</ul>
@@ -80,24 +89,25 @@
 						</div>
 						<label for="prioriterings_oenske">Prioriteringsønske</label>
 						<div id="prioriterings_oenske">
-							<input type="radio" id="haste" name="prioriterings_oenske" value="haste">Haste
-							<input type="radio" id="fremskyndet" name="prioriterings_oenske" value="fremskyndet">Fremskyndet
-							<input type="radio" id="rutine" name="prioriterings_oenske" value="rutine">Rutine
-							<input type="radio" id="pakkeforloeb" name="prioriterings_oenske" value="pakke">Pakkeforløb
+							<input class="required" type="radio" id="haste" name="prioriterings_oenske" value="haste">Haste
+							<input class="required" type="radio" id="fremskyndet" name="prioriterings_oenske" value="fremskyndet">Fremskyndet
+							<input class="required" type="radio" id="rutine" name="prioriterings_oenske" value="rutine">Rutine
+							<input class="required" type="radio" id="pakkeforloeb" name="prioriterings_oenske" value="pakke">Pakkeforløb
 						</div>
 					</div>
 					<div class="hover">
 						<div>
 						<label for="modalitet_navn">Modalitet</label>
 						<select id="modalitet_navn" name="modalitet_navn" onchange="javascript:showSkema();">
-							<option value="RTG" selected="selected">Røntgen</option>
-							<option value="UL">Ultralyd</option>
-							<option value="invasiv_UL">Invasiv Ultralyd</option>
-							<option value="MR">MR</option>
-							<option value="CT">CT uden kontrast</option>
-							<option value="CT_kontrast">CT med kontrast</option>
-							<option value="PETCT">PET/CT</option>
-							<option value="andet">Anden US - Beskriv nedenfor</option>
+						<%
+							if(modList1 != null)
+								for(int i = 0; i < modList1.length; i++)
+								{
+						%>
+							<option value=<%= modList1[i].getModalitetId()%>><%=(modList1[i].getModalitetNavn().toString())%></option>
+						<%
+								}
+						%>
 						</select>
 						</div>
 						<div>
@@ -109,17 +119,18 @@
 					<p><label for="klinisk_problemstilling">Klinisk Problemstilling</label>
 					Anamnese - objektive fund - evt. medicin og laboratoriesvar relevant for undersøgelsen (Se kliniske vejledninger).<br>
 					Begrundelse for prioriteringsønske skal fremgå af den kliniske problemstilling.</p>
-					<textarea name="klinisk_problemstilling"></textarea>
+					<textarea class="required" name="klinisk_problemstilling"></textarea>
 					</div>
 					<div id="transport" class="hover">
-						<label for="transport">Transport</label>
 						<div id="ambulant_transport">
-							<input type="radio" id="ingenKørsel" name="ambulant_transport" value="ingen">Ingen Kørsel <br>
+							<label for="transport">Transport</label>
+							<input type="radio" id="ingenKørsel" name="ambulant_transport" value="ingen" checked="checked">Ingen Kørsel <br>
 							<input type="radio" id="siddendeKørsel" name="ambulant_transport" value="siddende">Siddende Kørsel <br>
 							<input type="radio" id="liggendeKørsel" name="ambulant_transport" value="liggende">Liggende Kørsel <br>
 
 						</div>
 						<div id="indlagt_transport">
+							<label for="transport">Transport</label>
 							<input type="radio" id="gårUdenPortør" name="indlagt_transport" value="selv">Går selv uden portør <br>
 							<input type="radio" id="gårMedPortør" name="indlagt_transport" value="portoer">Går selv med portør <br>
 							<input type="radio" id="kørestolMedPortør" name="indlagt_transport" value="koerestol">Kørestol med portør <br>
@@ -131,27 +142,38 @@
 					
 					<div id="gravididtet" class="hover">
 						<label for="gravididtet">Mulighed for graviditet</label>
-						<input type="radio" name="graviditet" id="jaGravid" value="true">Ja
-						<input type="radio" name="graviditet" id="nejGravid" value="false">Nej
+						<input class="required" type="radio" name="graviditet" id="jaGravid" value="true">Ja
+						<input class="required" type="radio" name="graviditet" id="nejGravid" value="false">Nej
 					</div>
 					
 					<div id="særligeForhold" class="hover">
 						<label for="særligeForhold">Særlige Forhold</label>
-						<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold">Ingen særlige forhold <br>
-						<input type="checkbox" id="hoerehaemmet" name="hoerehaemmet">Hørehæmmet <br>
-						<input type="checkbox" id="synshaemmet" name="synshaemmet">Synshæmmet <br>
-						<input type="checkbox" id="amputeret" name="amputeret">Amputeret <br>
-						<input type="checkbox" id="kan_ikke_staa" name="kan_ikke_staa">Kan ikke selv stå <br>
-						<input type="checkbox" id="dement" name="dement">Dement <br>
-						<input type="checkbox" id="afasi" name="afasi">Afasi <br>
-						<label for="ilt">Ilt</label>
-						<input type="text" id="ilt" name="ilt" placeholder="Liter/min"><br>
-						<label for="tolk">Tolk</label>
-						<input type="text" id="tolk" name="tolk" placeholder="Sprog"><br>
-						<label for="isolation">Isolation</label>
-						<input type="text" id="isolation" name="isolation" placeholder="Hvilken?"><br>
-						<label for="cytostatika">Cytostatika</label>
-						<input type="date" id="cytostatika" name="cytostatika">
+						<ul class="showInline">
+							<li>
+								<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold">Ingen særlige forhold <br>
+								<input type="checkbox" id="hoerehaemmet" name="hoerehaemmet">Hørehæmmet <br>
+								<input type="checkbox" id="synshaemmet" name="synshaemmet">Synshæmmet <br>
+								<input type="checkbox" id="amputeret" name="amputeret">Amputeret <br>
+								<input type="checkbox" id="kan_ikke_staa" name="kan_ikke_staa">Kan ikke selv stå <br>
+								<input type="checkbox" id="dement" name="dement">Dement <br>
+								<input type="checkbox" id="afasi" name="afasi">Afasi
+							</li>
+							<li>								
+								<input type="checkbox" id="ilt" name="ilt">Ilt
+								<input type="text" id="ilt" name="ilt" placeholder="Liter/min"><br>
+								<input type="checkbox" id="tolk" name="tolk">Tolk
+								<input type="text" id="tolk" name="tolk" placeholder="Sprog"><br>
+								<input type="checkbox" id="isolation" name="isolation">Isolation
+								<input type="text" id="isolation" name="isolation" placeholder="Hvilken?"><br>
+								<input type="checkbox" id="cytostatika" name="cytostatika">Cytostatika
+								<input type="date" id="cytostatika" name="cytostatika">	
+							</li>
+						</ul>
+						
+						
+						
+						 <br>
+						
 					</div>
 					<div class="hover">
 						<label for=tidl_billed_diagnostik>Tidligere undersøgelse</label>
