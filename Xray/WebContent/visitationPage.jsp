@@ -194,15 +194,21 @@
 					<div id="embededSite">
 					</div>
 					<div id="godkendAfvis">
-						<img alt="Afvis rekvisition" src="img/afvis.png">
-						<img alt="Godkend rekvisition" src="img/godkend.png">
-						<input id="grundAfvis" name="grundAfvis" type="text" maxlength="50">
-						<label for="grundAfvis">Afvis grund</label>
-						<input id="prioritet" name="prioritet" type="text" maxlength="50">
-						<label for="prioritet">Prioritering</label>
+						<div>
+							<img alt="Afvis rekvisition" src="img/afvis.png">
+							<label for="grundAfvis">Afvis grund</label>
+							<input id="grundAfvis" name="grundAfvis" type="text" maxlength="50">
+							
+						</div>
+						<div>
+							<img alt="Godkend rekvisition" src="img/godkend.png">
+							<label for="prioritet">Prioritering</label>
+							<input id="prioritet" name="prioritet" type="text" maxlength="50">
+							
+						</div>
+					</div>	
 						
-						
-					</div>
+					
 				</li>
 			</ul>
 		</div>
