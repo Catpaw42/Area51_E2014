@@ -218,19 +218,43 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setStatus(RekvisitionExtended.Status.PENDING);
 		rek.setAfsendtDato(new Date());
 		System.out.println(rek);
-		//Time to store requisition
-		RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
-		try {
-			rekDao.insert(rek);
-		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//Check Modalitet
+		String modalitet = request.getParameter("modalitet_navn");
+		switch (modalitet) {
+		case "invasiv_UL":
+			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=ULInvKontrol").forward(request, response);
+			break;
+		case "MR":
+			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=MRKontrol").forward(request, response);
+			break;
+		case "CT_kontrast":
+			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=CTKKontrol").forward(request, response);
+			break;
+		case "PETCT":
+			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=PETCETKontrol").forward(request, response);
+			break;
+		default:
+			//Intet kontrolskema - gem rekvisitionen
+			RekvisitionDao rekDao = new RekvisitionDaoImpl(conn);
+			try {
+				rekDao.insert(rek);
+			} catch (DaoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//HopeFully it went well ;)
+			//TODO - real page
+			PrintWriter out = response.getWriter();
+			out.println("<HTML><BODY>Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>");
+			out.println("<A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A></BODY><HTML>");
+			break;
 		}
-		//HopeFully it went well ;)
-
-		PrintWriter out = response.getWriter();
-		out.println("<HTML><BODY>Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>");
-		out.println("<A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A></BODY><HTML>");
+		
+		
 
 	}
 
