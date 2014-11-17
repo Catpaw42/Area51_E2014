@@ -62,7 +62,9 @@ public class MainServlet extends HttpServlet {
 		checkAction(request, response);
 		
 		String primaryPage = request.getParameter("page");
+		if (primaryPage==null)primaryPage="";
 		//Check if user is logging in
+		
 		if(primaryPage.equals("loggingIn")){
 			Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 			//Getting users permissions and redirecting to relevant page.
@@ -131,7 +133,7 @@ public class MainServlet extends HttpServlet {
 		if (action == null) action = "";
 		switch (action) {
 		case "logout":
-			request.getSession().setAttribute(Const.ACTIVE_USER, null);
+			request.getSession().invalidate();
 			response.sendRedirect(Const.LOGIN_SERVLET);
 			break;
 
