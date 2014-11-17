@@ -54,7 +54,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 	protected static final RekvisitionExtended.Status[] _Rekvisition_Statuss = { null, RekvisitionExtended.Status.PENDING, RekvisitionExtended.Status.CANCELED, RekvisitionExtended.Status.APPROVED, RekvisitionExtended.Status.DECLINED, RekvisitionExtended.Status.BOOKED };
 	private static final RekvisitionExtended.Samtykke[] _Rekvisition_Samtykkes = { null, RekvisitionExtended.Samtykke.JA, RekvisitionExtended.Samtykke.NEJ, RekvisitionExtended.Samtykke.UDEN_SAMTYKKE };
 
-	
+
 	public RekvisitionDaoImpl( Connection conn ) {
 		super( conn );
 	}
@@ -70,7 +70,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		rekv = addObjectsToRekvisition(rekv);
 		return rekv[0];
 	}
-	
+
 	private RekvisitionExtended[] addObjectsToRekvisition(RekvisitionExtended[] rekv){
 		if(rekv == null || rekv.length <= 0) return null;
 		MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);
@@ -80,7 +80,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		PatientDao ptDao = new PatientDaoImpl(conn);
 		ModalitetDao modDao = new ModalitetDaoImpl(conn);
 		UndersoegelsesTypeDao undDao = new UndersoegelsesTypeDaoImpl(conn);
-		
+
 		for(int i = 0; i < rekv.length; i++){
 			rekv[i].setMrMkontroKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
 			rekv[i].setPetctKontrolskema(petctDao.findByPrimaryKey(rekv[i].getPETCTKontrolskemaId() != null ? rekv[i].getPETCTKontrolskemaId() : -1));
@@ -104,7 +104,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		}	
 		RekvisitionExtended[] rekv = findManyArray( cond, offset, count, params);
 		return addObjectsToRekvisition(rekv);
-		
+
 	}
 
 	/**
@@ -158,10 +158,11 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 			}
 			stmt.setInt( 6, dto.getRekvirentId() );
 
-//			if ( dto.getVisitatorId() == null ) {
-//				throw new DaoException("Value of column 'visitator_id' cannot be null");
-//			}
-			stmt.setInt( 7, dto.getVisitatorId() == null ? -1 : dto.getVisitatorId() );
+			if ( dto.getVisitatorId() == null ) {
+				stmt.setNull( 7, Types.INTEGER );
+			} else {
+				stmt.setInt( 7, dto.getVisitatorId() );
+			}
 
 			if ( dto.getPatientId() == null ) {
 				throw new DaoException("Value of column 'patient_id' cannot be null");
