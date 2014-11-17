@@ -38,6 +38,7 @@ public class VisitationServlet extends HttpServlet {
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 //			request.getRequestDispatcher(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE).forward(request, response);
 		}else{
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.VISITATION_TITLE);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
 	}

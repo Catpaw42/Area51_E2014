@@ -29,8 +29,9 @@
 		<div id="currentpage">
 			<h2 >
 				<% 
-					if(request.getParameter("page").equalsIgnoreCase("VisitationServlet")) out.print("Visitation");
-					if(request.getParameter("page").equalsIgnoreCase("RekvisitionServlet")) out.print("Rekvisition");
+					if(request.getSession().getAttribute(Const.PAGEHEADING)!= null) out.print(request.getSession().getAttribute(Const.PAGEHEADING));
+// 					if(request.getParameter("page")!= null && request.getParameter("page").equalsIgnoreCase("RekvisitionServlet")) out.print("Rekvisition");
+				
 				
 				%>
 			</h2>

@@ -106,6 +106,7 @@ public class RekvisitionServlet extends HttpServlet {
 				}
 
 			}
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
 			setDefaultTable(activeUser, request, response);
 		}
 		
