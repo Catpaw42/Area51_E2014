@@ -9,6 +9,7 @@
 <%@page import="database.dto.Rettigheder" %>
 <%@ page import="database.dto.RekvisitionExtended"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -134,8 +135,7 @@
 							</tr>
 							<tr>
 							<%				
-						if(rekv != null)
- 						 						
+						if(rekv != null){
 							for (RekvisitionExtended r : rekv){
  								out.print("<tr> <td id="+r.getRekvisitionId()+">"); // TODO test if id works
  								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
@@ -146,12 +146,13 @@
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
-								out.print(r.getAfsendtDato());
+								
+								out.print(new SimpleDateFormat("dd-MMM-yyyy").format(r.getAfsendtDato()));
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
 								out.print("</td> </tr>");	
 							}
- 							
+						}
  						%>
 							</tr>
 						</table>
