@@ -225,6 +225,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		System.out.println(rek);
 		//Check Modalitet
 		String modalitet = request.getParameter("modalitet_navn");
+		
 		switch (modalitet) {
 		case "invasiv_UL":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);

@@ -89,7 +89,7 @@
 					<div class="hover">
 						<div>
 						<label for="modalitet_navn">Modalitet</label>
-						<select id="modalitet_navn" onchange="javascript:showSkema();">
+						<select id="modalitet_navn" name="modalitet_navn" onchange="javascript:showSkema();">
 							<option value="RTG" selected="selected">Røntgen</option>
 							<option value="UL">Ultralyd</option>
 							<option value="invasiv_UL">Invasiv Ultralyd</option>
