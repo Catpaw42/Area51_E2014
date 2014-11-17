@@ -112,7 +112,7 @@ try{
 						</div>
 						<div>
 						<label for="undersoegelses_type">Undersøgelses type</label>
-						<input class="required" type="text" id="undersoegelses_type">
+						<input class="required" type="text" id="undersoegelses_type" name="undersoegelses_type">
 						</div>
 					</div>
 					<div class="hover">
