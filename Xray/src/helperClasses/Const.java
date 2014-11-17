@@ -19,6 +19,7 @@ public final class Const {
 	public static final String NEW_REKVISITION_SERVLET = "NyRekvisitionServlet";
 	public static final String BOOKING_SERVLET = "BookingServlet";
 	public static final String VISITATION_SERVLET = "VisitationServlet";
+	public static final String LOGIN_SERVLET = "LoginServlet";
 	
 
 
@@ -47,6 +48,8 @@ public final class Const {
 	
 	// database columns name
 	public static final String REKVIRENT_ID_COND = "rekvirent_id=?";
+
+
 
 
 
