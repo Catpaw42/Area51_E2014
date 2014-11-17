@@ -98,12 +98,6 @@ public class MainServlet extends HttpServlet {
 			forward("/BookingServlet", request, response);
 			break;
 		case Const.ADMIN_SERVLET:
-			forward("/AdminServlet",request,response);
-			break;
-		default:
-			//If no corresponding Servlet is found tries to redirect to Servlet
-			forward("/"+ request.getParameter("page"),request,response);
-			break;
 		}		
 	}
 	//Utility method to forward
