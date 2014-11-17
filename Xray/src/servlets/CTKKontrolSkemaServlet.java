@@ -1,6 +1,9 @@
 package servlets;
 
+import helperClasses.Const;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +36,18 @@ public class CTKKontrolSkemaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getSession().getAttribute(Const.ACTIVE_USER)!=null){
+			process(request, response);
+		}else{
+			request.getRequestDispatcher(Const.MAIN_SERVLET)	
+			}
+		}
+
+	private void process(HttpServletRequest request,
+			HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		
+	}
 	}
 
 }
