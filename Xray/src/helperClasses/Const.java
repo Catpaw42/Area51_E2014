@@ -49,8 +49,13 @@ public final class Const {
 	// database columns name
 	public static final String REKVIRENT_ID_COND = "rekvirent_id=?";
 
+	
 	public static final String ACTIVE_REKVISITION = "aktiv_rekvisition";
-
+	
+	public static final String UL_INV_KONTROL = "ULInvKontrol";
+	public static final String MRKontrol = "MRKontrol";
+	public static final String CTKKontrol = "CTKKontrol";
+	public static final String PETCTKontrol = "PETCETKontrol";
 
 
 

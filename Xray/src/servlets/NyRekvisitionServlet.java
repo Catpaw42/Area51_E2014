@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
@@ -80,6 +81,7 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 @WebServlet("/NyRekvisitionServlet")
 public class NyRekvisitionServlet extends HttpServlet
 {      
+	
 	private static final String HENV_AFD = "henv_afd";
 	private static final String PATIENT_TLF = "patient_tlf";
 	private static final String PATIENT_NAVN = "patient_navn";
@@ -223,19 +225,19 @@ public class NyRekvisitionServlet extends HttpServlet
 		switch (modalitet) {
 		case "invasiv_UL":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=ULInvKontrol").forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.UL_INV_KONTROL).forward(request, response);
 			break;
 		case "MR":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=MRKontrol").forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.MRKontrol).forward(request, response);
 			break;
 		case "CT_kontrast":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=CTKKontrol").forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.CTKKontrol).forward(request, response);
 			break;
 		case "PETCT":
 			request.getSession().setAttribute(Const.ACTIVE_REKVISITION, rek);
-			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page=PETCETKontrol").forward(request, response);
+			request.getRequestDispatcher(Const.MAIN_SERVLET+"?page="+Const.PETCTKontrol).forward(request, response);
 			break;
 		default:
 			//Intet kontrolskema - gem rekvisitionen
