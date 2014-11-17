@@ -3,6 +3,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="css/nyRekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
 		<title></title>
 	</head>
 	<body class="MRKontrolSkema">
@@ -13,8 +15,8 @@
 		<ul>
 			<li>
 				<p>Pacemaker, efterladte paceelektroder
-				Ja<input type = "radio" id="pacemakerJa" name="pacemaker">
-				Nej<input type = "radio" id="pacemakerNej" name="pacemaker"></p>
+				Ja<input class="required" type = "radio" id="pacemakerJa" name="pacemaker">
+				Nej<input class="required" type = "radio" id="pacemakerNej" name="pacemaker"></p>
 			</li>
 			<li>
 				<p>Metalliske implantater eller andet metallisk materiale fra hjerte-, <br> neuro- eller anden kirugi.

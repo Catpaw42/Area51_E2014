@@ -11,14 +11,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="css/styleSheet.css" rel="stylesheet" type="text/css"
-	media="screen">
-<link href="css/rekvisitionPage.css" rel="stylesheet" type="text/css"
-	media="screen">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="css/styleSheet.css" rel="stylesheet" type="text/css media="screen">
+<link href="css/rekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/rekvisitionPage.js"></script>
-<title>Main Page</title>
+<title>Rekvisition</title>
 </head>
 
 <%
@@ -132,26 +129,22 @@
 						</tr>
 						<%				
 						if(rekv != null)
- 						 						for (RekvisitionExtended r : rekv){
- 													out.print("<tr> <td>");
- 													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
- 													out.print("</td> <td>");
- 													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientNavn() != null ? r.getPatient().getPatientNavn() : "intet patient navn fundet");
- 													out.print("</td> <td>");
- 													out.print(r.getModalitet() == null ? "ingen modalitet" : r.getModalitet().getModalitetNavn() != null ? r.getModalitet().getModalitetNavn() : "intet modalitet navn fundet" );
- 													out.print("</td> <td>");
- 													out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
- 													out.print("</td> <td>");
- 													out.print(r.getAfsendtDato());
- 													out.print("</td> <td>");
- 													out.print(r.getStatus());
- 													out.print("</td> </tr>");
- 												}
- 							
+	 						for (RekvisitionExtended r : rekv){
+								out.print("<tr> <td>");
+								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientCpr() != null ? r.getPatient().getPatientCpr() : "intet cpr nummer fundet");
+								out.print("</td> <td>");
+								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getPatientNavn() != null ? r.getPatient().getPatientNavn() : "intet patient navn fundet");
+								out.print("</td> <td>");
+								out.print(r.getModalitet() == null ? "ingen modalitet" : r.getModalitet().getModalitetNavn() != null ? r.getModalitet().getModalitetNavn() : "intet modalitet navn fundet" );
+								out.print("</td> <td>");
+								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
+								out.print("</td> <td>");
+								out.print(r.getAfsendtDato());
+								out.print("</td> <td>");
+								out.print(r.getStatus());
+								out.print("</td> </tr>");
+							}
  						%>
-
-
-
 					</table>
 				</div>
 			</li>
