@@ -68,9 +68,10 @@ public class VisitationServlet extends HttpServlet {
 		if(activeUser == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
+			setDefaultTable(activeUser, request, response);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
-		setDefaultTable(activeUser, request, response);
+		
 	}
 
 	/**
@@ -87,6 +88,7 @@ public class VisitationServlet extends HttpServlet {
 		}else{
 			searchRekvisition(request, response);
 		}
+		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 			
 	}
 	

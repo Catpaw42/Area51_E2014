@@ -96,15 +96,18 @@ public class MainServlet extends HttpServlet {
 			break;
 		case Const.REKVISITION_SERVLET:
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
-			forward("/" + Const.REKVISITION_SERVLET,request,response);
+			response.sendRedirect(Const.REKVISITION_SERVLET);
+//			forward("/" + Const.REKVISITION_SERVLET,request,response);
 			break;
 		case Const.VISITATION_SERVLET:
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.VISITATION_TITLE);
-			forward("/" + Const.VISITATION_SERVLET, request, response);
+			response.sendRedirect(Const.VISITATION_SERVLET);
+//			forward("/" + Const.VISITATION_SERVLET, request, response);
 			break;
 		case Const.BOOKING_SERVLET:
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.BOOKING_TITLE);
-			forward("/" + Const.BOOKING_SERVLET, request, response);
+			response.sendRedirect(Const.BOOKING_SERVLET);
+//			forward("/" + Const.BOOKING_SERVLET, request, response);
 			break;
 		case Const.ADMIN_SERVLET:
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.ADMINISTRER_TITLE);

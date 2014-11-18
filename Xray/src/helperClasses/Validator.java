@@ -11,12 +11,21 @@ import database.dao.ModalitetDao;
 public class Validator {
 
 	/**
+	 * 
+	 * @param phoneNo as string
+	 * @return returns true if phoneNo is only digits with optional '+' in the beginning 
+	 */
+	public static boolean validatePhoneNo(String phoneNo){
+		return phoneNo == null ? false : phoneNo.matches("(\\+)?\\d+"); // simple validator
+		}
+	
+	/**
 	 * Matches phone number. Accepts numbers with area code fx: 0045, +45 and 00298 not mandatory followed by 6, 8 or 10 digit numbers
 	 * @param phoneNo as string
 	 * @return returns true if matching the rules explained before.
 	 */
-	public static boolean validatePhoneNo(String phoneNo){
-		return phoneNo == null ? false : phoneNo.matches("((\\+|00)\\d{2}(\\d{1})?)?(\\d{8}|\\d{6}|\\d{10})");
+	public static boolean validatePhoneNoAdv(String phoneNo){
+		return phoneNo == null ? false : phoneNo.matches("((\\+|00)\\d{2}(\\d{1})?)?(\\d{8}|\\d{6}|\\d{10})"); // advanced validator
 	}
 	
 	/**
