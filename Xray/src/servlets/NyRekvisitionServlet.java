@@ -175,14 +175,14 @@ public class NyRekvisitionServlet extends HttpServlet
 		rek.setDement(getBoolFromCheckbox(request, "dement"));
 		rek.setAfasi(getBoolFromCheckbox(request, "afasi"));
 		try {
-			rek.setIltLiterPrmin(Integer.valueOf(request.getParameter("ilt")));
+			rek.setIltLiterPrmin(Integer.valueOf(request.getParameter("ilt_tekst")));
 		} catch (NumberFormatException e){
 			rek.setIltLiterPrmin(null);
 		}
-		rek.setTolkSprog(request.getParameter("tolk"));
-		rek.setIsolation(request.getParameter("isolation"));
+		rek.setTolkSprog(request.getParameter("tolk_tekst"));
+		rek.setIsolation(request.getParameter("isolation_tekst"));
 		try {
-			rek.setCytostatikaDato(java.sql.Date.valueOf(request.getParameter("cytostatika")));
+			rek.setCytostatikaDato(java.sql.Date.valueOf(request.getParameter("cytostatika_dato")));
 			System.out.println(rek.getCytostatikaDato());
 		} catch (IllegalArgumentException e) {
 			rek.setCytostatikaDato(null);

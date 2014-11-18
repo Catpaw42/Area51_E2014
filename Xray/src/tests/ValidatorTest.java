@@ -44,24 +44,30 @@ public class ValidatorTest {
 		assertEquals(false, testRes);
 		
 		test = "+123123456";
-		testRes = Validator.validatePhoneNo(test);
+		testRes = Validator.validatePhoneNoAdv(test);
 		assertEquals("test phone 1: " + test, true, testRes);
 		
 		test = "+12123456";
-		testRes = Validator.validatePhoneNo(test);
+		testRes = Validator.validatePhoneNoAdv(test);
 		assertEquals("test phone 2: " + test, true, testRes);
 		
 		test = "0012312345678";
-		testRes = Validator.validatePhoneNo(test);
+		testRes = Validator.validatePhoneNoAdv(test);
 		assertEquals("test phone 3: " + test, true, testRes);
 		
 		test = "+123123456789";
-		testRes = Validator.validatePhoneNo(test);
+		testRes = Validator.validatePhoneNoAdv(test);
 		assertEquals("test phone 4: " + test, true, testRes);
 		
 		test = "+123123456789012";
-		testRes = Validator.validatePhoneNo(test);
+		testRes = Validator.validatePhoneNoAdv(test);
 		assertEquals("test phone 5: " + test, false, testRes);
+		
+		test = "+12 3 12 3 4567 89";
+		testRes = Validator.validatePhoneNoAdv(test);
+		assertEquals("test phone 6: " + test, true, testRes);
+		
+		
 	}
 	
 	@Test

@@ -51,7 +51,7 @@ public class Validator {
 	 * @return returns true if matching the rules explained before.
 	 */
 	public static boolean validatePhoneNoAdv(String phoneNo){
-		return phoneNo == null ? false : phoneNo.matches("((\\+|00)\\d{2}(\\d{1})?)?(\\d{8}|\\d{6}|\\d{10})"); // advanced validator
+		return phoneNo == null ? false : phoneNo.replaceAll("", " ").matches("((\\+|00)\\d{2}(\\d{1})?)?(\\d{8}|\\d{6}|\\d{10})"); // advanced validator
 	}
 	
 	/**
