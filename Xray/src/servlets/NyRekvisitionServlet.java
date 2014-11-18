@@ -24,6 +24,7 @@ import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
+import database.dao.UlInvKontrolskemaDao;
 import database.dao.UndersoegelsesTypeDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.CtKontrastKontrolskemaDaoImpl;
@@ -32,6 +33,7 @@ import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
+import database.dao.mysql.UlInvKontrolskemaDaoImpl;
 import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
@@ -50,6 +52,7 @@ import database.dto.RekvisitionExtended.HospitalOenske;
 import database.dto.RekvisitionExtended.IndlaeggelseTransport;
 import database.dto.RekvisitionExtended.Prioritering;
 import database.dto.RekvisitionExtended.Samtykke;
+import database.dto.UlInvKontrolskema;
 import database.dto.UndersoegelsesType;
 import database.interfaces.IDataSourceConnector.ConnectionException;
 
@@ -195,7 +198,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		modalitet = modalitet == null ? "" : modalitet;
 		switch (modalitet) {
 		case "3": //Invasiv UL modalitet
-			Integer ULSkemaID = storeULInvKontrolSkema(request,response);
+			Integer ULSkemaID = null;
+			try {
+				ULSkemaID = storeULInvKontrolSkema(request,response);
+			} catch (DaoException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			rek.setInvasivULKontrolskemaId(ULSkemaID);
 			break;
 		case "8": //MR modalitet
@@ -373,9 +382,20 @@ public class NyRekvisitionServlet extends HttpServlet
 	}
 
 	private Integer storeULInvKontrolSkema(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return -1;
+			HttpServletResponse response) throws DaoException {
+		Connection conn = null;
+		try {
+			conn = DataSourceConnector.getConnection();
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+		}	
+		UlInvKontrolskema uis = new UlInvKontrolskema();
+		uis.setAkTimestamp(Timestamp.valueOf(request.getParameter("aktimestamp")));
+		uis.setTrombocytter(Integer.valueOf(request.getParameter("trombocytter")));
+		uis.setInr(Integer.valueOf(request.getParameter("inr")));
+		if(Const.DEBUG)System.out.println(uis);
+		UlInvKontrolskemaDao uisDao = new UlInvKontrolskemaDaoImpl(conn);
+		return uisDao.insert(uis);
 	}
 
 	private String parseCPRBirthday(String foedselsdagString) {
