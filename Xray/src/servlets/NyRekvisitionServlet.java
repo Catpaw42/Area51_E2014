@@ -194,11 +194,11 @@ public class NyRekvisitionServlet extends HttpServlet
 		// can not switch on null - makes empty string instead should not happen
 		modalitet = modalitet == null ? "" : modalitet;
 		switch (modalitet) {
-		case "invasiv_UL":
+		case "3": //Invasiv UL modalitet
 			Integer ULSkemaID = storeULInvKontrolSkema(request,response);
 			rek.setInvasivULKontrolskemaId(ULSkemaID);
 			break;
-		case "MR":
+		case "8": //MR modalitet
 			Integer MRSkemaID = null;
 			try {
 				MRSkemaID = storeMRSkema(request, response);
@@ -208,7 +208,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			}
 			rek.setMRKontrolskemaId(MRSkemaID);
 			break;
-		case "CT_kontrast":
+		case "5": // CT med kontrast modalitet
 			Integer CTKSkemaID = null;
 			try {
 				CTKSkemaID = storeCTKSkema(request, response);
@@ -218,7 +218,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			}
 			rek.setCTKontrastKontrolskemaId(CTKSkemaID);
 			break;
-		case "PETCT":
+		case "6": // PETCT
 			Integer PETCTSkemaID = null;
 			try {
 				PETCTSkemaID = storePETCTSkema(request,response);
@@ -367,7 +367,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		mrk.setMRBoern(convertSederingBoern(request));
 		mrk.setMRVoksen(convertSederingVoksen(request));
 		mrk.setPraepForsyn(request.getParameter("praep_forsyn"));
-		
+		if(Const.DEBUG)System.out.println(mrk);
 		MRKontrolskemaDao mrkDao = new MRKontrolskemaDaoImpl(conn);
 		return mrkDao.insert(mrk);
 	}
