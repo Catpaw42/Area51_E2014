@@ -130,7 +130,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		try {
 			rek.setRekvirentId(Integer.valueOf(request.getParameter("rekvirent_id")));
 		} catch (NumberFormatException e){
-			//Should never happen TODO - 
+			//Should never happen TODO - Now handles by setting rekvirent to null - should give backend exception
 			rek.setRekvirentId(null);
 			e.printStackTrace();
 		}
@@ -279,13 +279,6 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
-		//TODO remove
-				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
-					BrugerDao bDao = new BrugerDaoImpl(conn);
-					Bruger abruger = bDao.findByPrimaryKey(1);
-					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
-				}
-		
 		PETCTKontrolskema pck = new PETCTKontrolskema();
 		pck.setFormaal(convertFormaalMetode(request));
 		pck.setFormaalTekst(request.getParameter("formaal_text"));
@@ -322,13 +315,6 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
-		//TODO remove
-				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
-					BrugerDao bDao = new BrugerDaoImpl(conn);
-					Bruger abruger = bDao.findByPrimaryKey(1);
-					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
-				}
-		
 		//	Making CTTKontrolskema dto
 		CtKontrastKontrolskema ctk = new CtKontrastKontrolskema();
 		ctk.setDiabetes(Boolean.valueOf(request.getParameter("diabetes")));
@@ -364,14 +350,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			conn = DataSourceConnector.getConnection();
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
-		}
-		//TODO remove
-				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
-					BrugerDao bDao = new BrugerDaoImpl(conn);
-					Bruger abruger = bDao.findByPrimaryKey(1);
-					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
-				}
-		
+		}		
 		MRKontrolskema mrk = new MRKontrolskema();
 		mrk.setPacemaker(Boolean.valueOf(request.getParameter("pacemaker")));
 		mrk.setMetalImplantater(Boolean.valueOf(request.getParameter("metal_implantater")));
