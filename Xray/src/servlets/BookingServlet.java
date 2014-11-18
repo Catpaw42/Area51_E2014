@@ -173,14 +173,33 @@ public class BookingServlet extends HttpServlet {
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		//Rekvisition list to show user.
-		RekvisitionExtended[] rekvlist = null;
+		RekvisitionExtended[] rekvlist1 = null;
+		RekvisitionExtended[] rekvlist2 = null;
+		RekvisitionExtended[] rekvlist3 = null;
 		// gets list of the active user - default behavior
 		if(activeUser != null){
-			rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
+			rekvlist1 = rekvisitionDao.findByAdvSearch(null, null, null, Status.APPROVED, null, null);
+			rekvlist2 = rekvisitionDao.findByAdvSearch(null, null, null, Status.BOOKED, null, null);
 			//				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
 		}
+		int size = ((rekvlist1 == null ? 0 : rekvlist1.length) + (rekvlist2 == null ? 0 : rekvlist2.length));
+		rekvlist3 = new RekvisitionExtended[size];
+		int j = 0;
+		if(rekvlist1 != null){
+			for(int i = 0; i < rekvlist1.length; i++){
+				rekvlist3[j] = rekvlist1[i];
+				j++;
+			}
+
+		}
+		if(rekvlist2 != null){
+			for(int i = 0; i < rekvlist2.length; i++){
+				rekvlist3[j] = rekvlist2[i];
+				j++;
+			}
+		}
 		//Stitch rekvisition[] to request object.
-		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
+		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist3);	
 		request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
 	}
 
