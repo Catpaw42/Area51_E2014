@@ -141,7 +141,9 @@
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.APPROVED)){
 								out.print("</td> <td bgcolor=#00FF00 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
-								out.print("book");
+								out.print("marker som booket");
+								out.print("</td> <td bgcolor=#FFFF00 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=revisitRekvisition("+r.getRekvisitionId()+")>");
+								out.print("til visitation");
 								}
 								out.print("</td> </tr>");
 								

@@ -10,7 +10,7 @@
 		<ul>
 			<li>
 				<label for="formaal">Undersøgelsen er led i:</label>
-				<select id="formaal">
+				<select id="formaal" name="formaal">
 					<option value="primaerdiag">Primær diagnostik</option>
 					<option value="kontrolbeh">Behandlingskontrol</option>
 					<option value="kontrolremission">Kontrol uden aktuel recidivmistanke</option>
