@@ -75,27 +75,27 @@ public class PETCTKontrolSkemaServlet extends HttpServlet {
 	
 private KemoOgStraale kemostraale(HttpServletRequest request){
 		
-		KemoOgStraale pck;
-		String pckString = request.getParameter("aldrigGivetKemo");
-		if (pckString == null) return null;
-		switch (pckString) {
+		KemoOgStraale kemoOgStraale;
+		String kemiOgStraaleString = request.getParameter("aldrigGivetKemo");
+		if (kemiOgStraaleString == null) return null;
+		switch (kemiOgStraaleString) {
 		case "aldrigGivetKemoJa":
-			pck = PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET;
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET;
 			break;
 		case "kemoterapiJa":
 		case "stråleterapiNej":
-			pck = PETCTKontrolskema.KemoOgStraale.KEMOTERAPI;
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMOTERAPI;
 			break;
 		case "kemoterapiNej":
 		case "stråleterapiJa":
-			pck = PETCTKontrolskema.KemoOgStraale.STRAALETERAPI;
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.STRAALETERAPI;
 			break;
 		default:
-			pck = PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE;
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE;
 			break;
 		}
 		
-		return pck;
+		return kemoOgStraale;
 	}
 
 	private Formaal formaalMetode(HttpServletRequest request){
