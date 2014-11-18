@@ -70,7 +70,7 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 		Timestamp upperBound = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		ArrayList<RekvisitionExtended> rekv = new ArrayList<>();
+		ArrayList<RekvisitionExtended> rekv = new ArrayList<RekvisitionExtended>();
 		String query = ADV_SEARCH;
 		boolean first = false;
 
