@@ -30,7 +30,6 @@ $(document).ready(function()
 });
 
 $('form#visiterform').on('submit', function(event){
-    alert("hej");
 	event.preventDefault(); 
     $.ajax({
         url: $(this).attr('action'),
@@ -69,9 +68,7 @@ function doGodkend(){
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Godkend"); //sæt action til godkend
 		$.post('VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
-			//window.location.href = "VisitationServlet"; //redirect til samme side
-			alert("godkend - redirect");
-			window.location.href = window.location.pathname;
+			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}
 	else{
@@ -85,7 +82,7 @@ function doAfvis(){
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Afvis");
 		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data){
-			window.location.href = "VisitationServlet";
+			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}
 	else{
