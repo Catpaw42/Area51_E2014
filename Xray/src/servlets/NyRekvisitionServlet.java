@@ -88,7 +88,10 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		
+		//Getting active user
+		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		//Checking if activeUser
+		if (activeBruger == null) response.sendRedirect(Const.MAIN_SERVLET);
 		request.setCharacterEncoding("UTF-8");
 		//Getting a database connection....
 		Connection conn = null;
@@ -97,27 +100,10 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
-
-		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		//Getting active user
 		
-		//making patient object...
-		Patient pt = new Patient();	
-//		pt.setFoedselsdag(Timestamp.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
-		pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
-		pt.setPatientCpr(request.getParameter(PATIENT_CPR));
-		pt.setPatientAdresse(request.getParameter(PATIENT_ADRESSE));
-		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
-		pt.setPatientTlf(request.getParameter(PATIENT_TLF));
-		pt.setStamafdeling(activeBruger.getBrugerNavn());
-		if (Const.DEBUG)System.out.println(pt);
-		//Time to store patient
-		Integer ptId = null;
-		PatientDao ptDao = new PatientDaoImpl(conn);
-		try {
-			ptId = ptDao.insert(pt);
-		} catch (DaoException e1) {
-			e1.printStackTrace();
-		}
+		//Storing patient data.
+		Integer ptId = storePatient(request, conn, activeBruger);
 		
 		//Making Rekvisition DTO
 		RekvisitionExtended rek = new RekvisitionExtended();
@@ -128,8 +114,9 @@ public class NyRekvisitionServlet extends HttpServlet
 		try {
 			rek.setRekvirentId(Integer.valueOf(request.getParameter("rekvirent_id")));
 		} catch (NumberFormatException e){
-			//TODO handle missing rekvirent 
-			//returnToPage("Manglende RekvirentID);
+			//Should never happen TODO - 
+			rek.setRekvirentId(null);
+			e.printStackTrace();
 		}
 		rek.setRekvirentId(activeBruger.getBrugerId()); 
 		rek.setHenvAfd(request.getParameter(HENV_AFD));
@@ -226,6 +213,28 @@ public class NyRekvisitionServlet extends HttpServlet
 		
 		
 
+	}
+
+	private Integer storePatient(HttpServletRequest request, Connection conn,
+			Bruger activeBruger) {
+		Patient pt = new Patient();	
+//		pt.setFoedselsdag(Timestamp.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
+		pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
+		pt.setPatientCpr(request.getParameter(PATIENT_CPR));
+		pt.setPatientAdresse(request.getParameter(PATIENT_ADRESSE));
+		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
+		pt.setPatientTlf(request.getParameter(PATIENT_TLF));
+		pt.setStamafdeling(activeBruger.getBrugerNavn());
+		if (Const.DEBUG)System.out.println(pt);
+		//Time to store patient
+		Integer ptId = null;
+		PatientDao ptDao = new PatientDaoImpl(conn);
+		try {
+			ptId = ptDao.insert(pt);
+		} catch (DaoException e1) {
+			e1.printStackTrace();
+		}
+		return ptId;
 	}
 
 	private Integer storePETCTSkema(HttpServletRequest request,
