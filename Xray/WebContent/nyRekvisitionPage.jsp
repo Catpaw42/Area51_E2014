@@ -58,7 +58,7 @@ try{
 								<input type="text" id="rekvirent" name="rekvirent" placeholder="Rekvirent" readonly="readonly" value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerNavn()%>>
 								<input type="hidden" name="rekvirent_id" value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getBrugerId()%>>
 								<label for="henv_afd">Rekvirerende Afdeling</label>
-								<input class="required" type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling">
+								<input class="required" type="text" id="henv_afd" name="henv_afd" placeholder="Henvisende Afdeling" value=<%=((Bruger) request.getSession().getAttribute(Const.ACTIVE_USER)).getFuldtNavn()%>>
 								<label for="henv_laege">Henvisende læge</label>
 								<input class="required" type="text" id="henv_laege" name="henv_laege" placeholder="Henvisende læge">
 								<label for="kontakt_tlf">Kontakt telefonnr</label>
@@ -94,6 +94,8 @@ try{
 							<input class="required" type="radio" id="rutine" name="prioriterings_oenske" value="rutine">Rutine
 							<input class="required" type="radio" id="pakkeforloeb" name="prioriterings_oenske" value="pakke">Pakkeforløb
 						</div>
+						<label for="dato_forslag">Ønsket tidspunkt</label>
+						<input type="text" id="dato_forslag" name="dato_forslag">
 					</div>
 					<div class="hover">
 						<div>
@@ -136,8 +138,6 @@ try{
 							<input type="radio" id="kørestolMedPortør" name="indlagt_transport" value="koerestol">Kørestol med portør <br>
 							<input type="radio" id="seng" name="indlagt_transport" value="seng">Seng<br>
 						</div>
-						<label for="dato_forslag">Ønsket tidspunkt</label>
-						<input type="text" id="dato_forslag" name="dato_forslag">
 					</div>
 					
 					<div id="gravididtet" class="hover">
@@ -160,13 +160,13 @@ try{
 							</li>
 							<li>								
 								<input type="checkbox" id="ilt" name="ilt">Ilt
-								<input type="text" id="ilt" name="ilt" placeholder="Liter/min"><br>
-								<input type="checkbox" id="tolk" name="tolk">Tolk
+								<input type="text" id="ilt_tekst" name="ilt_tekst" placeholder="Liter/min"><br>
+								<input type="checkbox" id="tolk_tekst" name="tolk_tekst">Tolk
 								<input type="text" id="tolk" name="tolk" placeholder="Sprog"><br>
 								<input type="checkbox" id="isolation" name="isolation">Isolation
-								<input type="text" id="isolation" name="isolation" placeholder="Hvilken?"><br>
+								<input type="text" id="isolation_tekst" name="isolation_tekst" placeholder="Hvilken?"><br>
 								<input type="checkbox" id="cytostatika" name="cytostatika">Cytostatika
-								<input type="date" id="cytostatika" name="cytostatika">	
+								<input type="date" id="cytostatika_dato" name="cytostatika_dato" placeholder="">	
 							</li>
 						</ul>
 						

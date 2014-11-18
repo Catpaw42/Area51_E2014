@@ -74,6 +74,9 @@ public final class Const {
 	public static final String BOOKING_ACTION = "book";
 	public static final String BOOKING_ACTION_ID = "bookingId";
 
+	public static final String REVISIT_ACTION = "revisit";
+	public static final String REVISIT_ACTION_ID = "revisitId";
+	
 	public static final String PARAM_ACTION = "action";
 
 

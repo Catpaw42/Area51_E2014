@@ -15,6 +15,16 @@ function bookRekvisition(id){
     }
 }
 
+function revisitRekvisition(id){
+	if(confirm("Er du sikker du vil få rekvisitionen visiteret igen?") == true){
+		$.get("BookingServlet?action=revisit&bookingId=" + id, function(data, status){
+			if(status == "success"){
+				location.reload(true);
+			}
+		});
+	}
+}
+
 $(document).ready(function()
 		{    
 		    /* Get all rows from your 'table' but not the first one 

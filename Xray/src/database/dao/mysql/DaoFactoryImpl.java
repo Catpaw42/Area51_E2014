@@ -43,6 +43,9 @@ public class DaoFactoryImpl extends DaoFactory.Factory {
     public RettighederDao createRettighederDao( Connection conn ) {
         return new RettighederDaoImpl( conn );
     }
+	public UlInvKontrolskemaDao createUlInvKontrolskemaDao(Connection conn) {
+		return new UlInvKontrolskemaDaoImpl(conn);
+	}
 
 
 

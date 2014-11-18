@@ -5,15 +5,16 @@
 			<title>Login</title>
 			<meta charset="utf-8">
 			<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
-			<link href="css/loginPage.css.css" rel="stylesheet" type="text/css" media="screen">
+			<link href="css/loginPage.css" rel="stylesheet" type="text/css" media="screen">
 			<% Boolean loginFailed = (Boolean) request.getAttribute(Const.LOGIN_FAILED); %>
 		</head>
 		
 		<body>
 			<section class="loginform" >
+			<img alt="Logo for norsjællands hospital" src="img/NSHospitallogo.png">
 			<h1>Login</h1>
 				<form id="login" action=LoginServlet method="post" accept-charset="utf-8">
-				<div>-<% if (loginFailed !=null && loginFailed==true){
+				<div><% if (loginFailed !=null && loginFailed==true){
 							out.print("Brugernavn eller kodeord forkert!!");
 						}
 							

@@ -31,7 +31,7 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 @WebServlet("/BookingServlet")
 public class BookingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private RekvisitionDaoImplExt rekvisitionDao;
 	private ModalitetDao modDao;
 
@@ -41,11 +41,11 @@ public class BookingServlet extends HttpServlet {
 	public Modalitet[] modList = null;
 	public Status[] statusList = null;		
 	////////////////////////////////////////////////////
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BookingServlet() {
-        super();
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public BookingServlet() {
+		super();
 		try {
 			this.conn = DataSourceConnector.getConnection();
 		} catch (ConnectionException e) {
@@ -53,9 +53,9 @@ public class BookingServlet extends HttpServlet {
 		}
 		this.rekvisitionDao = new RekvisitionDaoImplExt(conn);
 		this.modDao = new ModalitetDaoImpl(conn);
-    }
+	}
 
-    /**
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,28 +68,32 @@ public class BookingServlet extends HttpServlet {
 		if(activeUser == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
-			if(Const.BOOKING_ACTION.equalsIgnoreCase(request.getParameter(Const.PARAM_ACTION))){
-				int rekvisitionId = -1;
-				try{
-					rekvisitionId = Integer.valueOf(request.getParameter(Const.BOOKING_ACTION_ID));
-					RekvisitionExtended r = rekvisitionDao.findByPrimaryKey(rekvisitionId);
-					r.setStatus(Status.BOOKED);
-					try {
-						rekvisitionDao.update(rekvisitionId, r);
-					} catch (DaoException e) {
-						System.err.println("could not save changes to rekvisition");
-					}
-				} catch(NumberFormatException nfe){
-					System.err.println("no id on booking rekvisition");
-				}
+			String action = request.getParameter(Const.PARAM_ACTION);
+			int rekvisitionId = -1;
+			String id = request.getParameter(Const.BOOKING_ACTION_ID);
+			if(id != null){
+				rekvisitionId = Integer.valueOf(id);
 
+				RekvisitionExtended r = rekvisitionDao.findByPrimaryKey(rekvisitionId);
+				if(Const.BOOKING_ACTION.equals(action)){
+					r.setStatus(Status.BOOKED);
+				}
+				else if(Const.REVISIT_ACTION.equals(action)){
+					r.setStatus(Status.PENDING);
+
+				}
+				try {
+					rekvisitionDao.update(rekvisitionId, r);
+				} catch (DaoException e) {
+					System.err.println("could not save changes to rekvisition");
+				}
 			}
 			setDefaultTable(activeUser, request, response);
 		}
-		
+
 
 	}
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -97,14 +101,14 @@ public class BookingServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		createSearchDropdowns(request);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-		
+
 		if(activeUser == null){
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);		
 		}else{
 			searchRekvisition(request, response);
 		}
-		
-		
+
+
 	}
 
 	/**
@@ -115,9 +119,9 @@ public class BookingServlet extends HttpServlet {
 		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
-	
+
 	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
 		// parameters
 		String cpr = request.getParameter(Const.PARAM_CPR);
 		String name = request.getParameter(Const.PARAM_NAME);
@@ -125,12 +129,12 @@ public class BookingServlet extends HttpServlet {
 		String department = request.getParameter(Const.PARAM_DEPARTMENT);
 		department = (department.equals("-1") ? null : department);
 		String date = request.getParameter(Const.PARAM_DATE).replace(" ", "");
-		
+
 		Timestamp timestamp = null;
 		timestamp = (Validator.validateDate(date) ? Validator.stringToTimestamp(date) : null);
-	
+
 		String status = request.getParameter(Const.PARAM_STATUS);
-	
+
 
 		Status statusObj = null;
 
@@ -148,7 +152,7 @@ public class BookingServlet extends HttpServlet {
 		System.out.println("department: " + department);
 		System.out.println("date: " + timestamp);
 		System.out.println("status: " + status);
-		
+
 		// objekter
 		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
@@ -160,24 +164,43 @@ public class BookingServlet extends HttpServlet {
 		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
 		System.out.println("in " + (d2.getTime()- d1.getTime()) + " ms");
 		System.out.println("##################################");
-		
+
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
 		request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
 
 	}
-	
+
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-				
-				//Rekvisition list to show user.
-				RekvisitionExtended[] rekvlist = null;
-				// gets list of the active user - default behavior
-				if(activeUser != null){
-					rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
-//				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
-				}
-				//Stitch rekvisition[] to request object.
-				request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
-				request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
+
+		//Rekvisition list to show user.
+		RekvisitionExtended[] rekvlist1 = null;
+		RekvisitionExtended[] rekvlist2 = null;
+		RekvisitionExtended[] rekvlist3 = null;
+		// gets list of the active user - default behavior
+		if(activeUser != null){
+			rekvlist1 = rekvisitionDao.findByAdvSearch(null, null, null, Status.APPROVED, null, null);
+			rekvlist2 = rekvisitionDao.findByAdvSearch(null, null, null, Status.BOOKED, null, null);
+			//				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
+		}
+		int size = ((rekvlist1 == null ? 0 : rekvlist1.length) + (rekvlist2 == null ? 0 : rekvlist2.length));
+		rekvlist3 = new RekvisitionExtended[size];
+		int j = 0;
+		if(rekvlist1 != null){
+			for(int i = 0; i < rekvlist1.length; i++){
+				rekvlist3[j] = rekvlist1[i];
+				j++;
+			}
+
+		}
+		if(rekvlist2 != null){
+			for(int i = 0; i < rekvlist2.length; i++){
+				rekvlist3[j] = rekvlist2[i];
+				j++;
+			}
+		}
+		//Stitch rekvisition[] to request object.
+		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist3);	
+		request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
 	}
 
 }
