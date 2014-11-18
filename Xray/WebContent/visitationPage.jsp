@@ -178,13 +178,8 @@
 							</div>
 						</div>	
 					</form>	
-					
 				</li>
 			</ul>
 		</div>
-			<div id="overlay"></div>
-	<div id="overlayPanel">
-		<%@include file="nyRekvisitionPage.jsp"%>
-	</div>
 	</body>
 </html>

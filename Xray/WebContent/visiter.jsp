@@ -44,7 +44,7 @@
 							<li>
 								<h2>Patient</h2>
 								<label for="patient_cpr">CPR-Nummer</label>
-								<input type="text" id="patient_cpr" name="patient_cpr" disabled value=" <% out.print(rek.getPatient().getPatientCpr()); %>">
+								<input type="text" id="patient_cpr" name="patient_cpr" disabled value="<% out.print(rek.getPatient().getPatientCpr()); %>">
 								<label for="patient_navn">Patient Navn</label>
 								<input type="text" id="patient_navn" name="patient_navn" disabled value="<% out.print(rek.getPatient().getPatientNavn()); %>">
 								<label for="patient_adresse">Adresse</label>

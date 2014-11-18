@@ -30,8 +30,14 @@ function showOverlay()
 {
 	$("#overlay").css("display", "block");
 	$("#overlayPanel").css("display", "block");
+	$(".closeButton").css("display", "block");
 }
-
+function hideOverlay()
+{
+	$("#overlay").css("display", "none");
+	$("#overlayPanel").css("display", "none");
+	$(".closeButton").css("display", "none");
+}
 
 function cancelRekvisition(id) {
     if (confirm("Er du sikker du vil annullere rekvisitionen?") == true) {
@@ -40,7 +46,6 @@ function cancelRekvisition(id) {
         		location.reload(true);
         	}
         });
-        
     }
 }
 
