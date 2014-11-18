@@ -5,6 +5,7 @@ import helperClasses.Const;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -16,18 +17,33 @@ import javax.servlet.http.HttpServletResponse;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
+import database.dao.BrugerDao;
+import database.dao.CtKontrastKontrolskemaDao;
+import database.dao.MRKontrolskemaDao;
 import database.dao.ModalitetDao;
+import database.dao.PETCTKontrolskemaDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.UndersoegelsesTypeDao;
+import database.dao.mysql.BrugerDaoImpl;
+import database.dao.mysql.CtKontrastKontrolskemaDaoImpl;
+import database.dao.mysql.MRKontrolskemaDaoImpl;
 import database.dao.mysql.ModalitetDaoImpl;
+import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.dto.Bruger;
+import database.dto.CtKontrastKontrolskema;
+import database.dto.MRKontrolskema;
 import database.dto.Modalitet;
+import database.dto.PETCTKontrolskema;
 import database.dto.Patient;
 import database.dto.RekvisitionExtended;
+import database.dto.MRKontrolskema.MRBoern;
+import database.dto.MRKontrolskema.MRVoksen;
+import database.dto.PETCTKontrolskema.Formaal;
+import database.dto.PETCTKontrolskema.KemoOgStraale;
 import database.dto.RekvisitionExtended.AmbulantKoersel;
 import database.dto.RekvisitionExtended.HenvistTil;
 import database.dto.RekvisitionExtended.HospitalOenske;
@@ -196,15 +212,33 @@ public class NyRekvisitionServlet extends HttpServlet
 			rek.setInvasivULKontrolskemaId(ULSkemaID);
 			break;
 		case "MR":
-			Integer MRSkemaID = storeMRSkema(request, response);
+			Integer MRSkemaID = null;
+			try {
+				MRSkemaID = storeMRSkema(request, response);
+			} catch (DaoException e1) {
+				// TODO Error page???
+				e1.printStackTrace();
+			}
 			rek.setMRKontrolskemaId(MRSkemaID);
 			break;
 		case "CT_kontrast":
-			Integer CTKSkemaID = storeCTKSkema(request, response);
+			Integer CTKSkemaID = null;
+			try {
+				CTKSkemaID = storeCTKSkema(request, response);
+			} catch (DaoException e1) {
+				// TODO Error page???
+				e1.printStackTrace();
+			}
 			rek.setCTKontrastKontrolskemaId(CTKSkemaID);
 			break;
 		case "PETCT":
-			Integer PETCTSkemaID = storePETCTSkema(request,response);
+			Integer PETCTSkemaID = null;
+			try {
+				PETCTSkemaID = storePETCTSkema(request,response);
+			} catch (DaoException e1) {
+				// TODO Error page???
+				e1.printStackTrace();
+			}
 			rek.setPETCTKontrolskemaId(PETCTSkemaID);
 			break;
 		default:
@@ -229,21 +263,125 @@ public class NyRekvisitionServlet extends HttpServlet
 	}
 
 	private Integer storePETCTSkema(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Fill with martins code
-		return -1;
+			HttpServletResponse response) throws DaoException {
+		Connection conn = null;
+		try {
+			conn = DataSourceConnector.getConnection();
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+		}
+		//TODO remove
+				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
+					BrugerDao bDao = new BrugerDaoImpl(conn);
+					Bruger abruger = bDao.findByPrimaryKey(1);
+					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
+				}
+		
+		PETCTKontrolskema pck = new PETCTKontrolskema();
+		pck.setFormaal(convertFormaalMetode(request));
+		pck.setFormaalTekst(request.getParameter("formaal_text"));
+		pck.setKanPtLiggeStille30(Boolean.valueOf(request.getParameter("kanPtLiggeStille30")));
+		pck.setPtTaalerFaste(Boolean.valueOf(request.getParameter("ptTaalerFaste")));
+		pck.setDiabetes(Boolean.valueOf(request.getParameter("diabetes")));
+		pck.setDMBeh(request.getParameter("DM_Beh"));
+		pck.setSmerter(Boolean.valueOf(request.getParameter("smerter")));
+		pck.setRespInsuff(Boolean.valueOf(request.getParameter("respInsuff")));
+		pck.setKlaustrofobi(Boolean.valueOf(request.getParameter("klaustrofobi")));
+		pck.setAllergi(Boolean.valueOf(request.getParameter("allergi")));
+		pck.setAllergiTekst(request.getParameter("allergi_tekst"));
+		pck.setFedme(Boolean.valueOf(request.getParameter("fedme")));
+		pck.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+		pck.setBiopsi(Boolean.valueOf(request.getParameter("biopsi")));
+		pck.setBiopsiTekst(request.getParameter("biopsi_tekst"));
+		pck.setOperation(Boolean.valueOf(request.getParameter("operation")));
+		pck.setOperationTekst(request.getParameter("operation_tekst"));
+		pck.setKemoOgStraale(convertKemostraale(request));
+		pck.setSidstePKreatTimestamp(Timestamp.valueOf(request.getParameter("straaleDato")));
+		pck.setNedsatNyreFkt(Boolean.valueOf(request.getParameter("nedsatNyreFkt")));
+		pck.setSidstePKreatinin(Integer.valueOf(request.getParameter("sidstePKreatinin")));
+		pck.setSidstePKreatTimestamp(Timestamp.valueOf(request.getParameter("sidstePKreatTimestamp")));
+		
+		PETCTKontrolskemaDao petctkDao = new PETCTKontrolskemaDaoImpl(conn);
+		return petctkDao.insert(pck);
 	}
 
 	private Integer storeCTKSkema(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return -1;
+			HttpServletResponse response) throws DaoException {
+		Connection conn = null;
+		try {
+			conn = DataSourceConnector.getConnection();
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+		}
+		//TODO remove
+				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
+					BrugerDao bDao = new BrugerDaoImpl(conn);
+					Bruger abruger = bDao.findByPrimaryKey(1);
+					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
+				}
+		
+		//	Making CTTKontrolskema dto
+		CtKontrastKontrolskema ctk = new CtKontrastKontrolskema();
+		ctk.setDiabetes(Boolean.valueOf(request.getParameter("diabetes")));
+		ctk.setNyrefunktion(Boolean.valueOf(request.getParameter("nyrefunktion")));
+		ctk.setNyreopereret(Boolean.valueOf(request.getParameter("nyreopereret")));
+		ctk.setHjertesygdom(Boolean.valueOf(request.getParameter("hjertesygdom")));
+		ctk.setMyokardieinfarkt(Boolean.valueOf(request.getParameter("myokardieinfarkt")));
+		ctk.setProteinuri(Boolean.valueOf(request.getParameter("proteinuri")));
+		ctk.setUrinsyregigt(Boolean.valueOf(request.getParameter("urinsyregigt")));
+		ctk.setOver70(Boolean.valueOf(request.getParameter("over70")));
+		ctk.setHypertension(Boolean.valueOf(request.getParameter("hypertension")));
+		ctk.setNsaidPraeparat(Boolean.valueOf(request.getParameter("NSAIDpræparat")));
+		ctk.setAllergi(Boolean.valueOf(request.getParameter("alergi")));
+		ctk.setKontraststofreaktion(Boolean.valueOf(request.getParameter("konstrastofreaktion")));
+		ctk.setAstma(Boolean.valueOf(request.getParameter("astma")));
+		ctk.setHyperthyreoidisme(Boolean.valueOf(request.getParameter("hyperthyreoidisme")));
+		ctk.setMetformin(Boolean.valueOf(request.getParameter("metformin")));
+		ctk.setInterleukin2(Boolean.valueOf(request.getParameter("interleukin")));
+		ctk.setBetaBlokkere(Boolean.valueOf(request.getParameter("betaBlokkere")));
+		ctk.setPKreatininVaerdi(request.getParameter("Værdi"));
+		//	setPKreatininTimestamp???
+		ctk.setPtHoejde(Integer.valueOf(request.getParameter("Højde")));
+		ctk.setPtVaegt(Integer.valueOf(request.getParameter("Vægt")));
+		
+		CtKontrastKontrolskemaDao ctkDao = new CtKontrastKontrolskemaDaoImpl(conn);
+			return ctkDao.insert(ctk);		
 	}
 
 	private Integer storeMRSkema(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return -1;
+			HttpServletResponse response) throws DaoException {
+		Connection conn = null;
+		try {
+			conn = DataSourceConnector.getConnection();
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+		}
+		//TODO remove
+				if (request.getSession().getAttribute(Const.ACTIVE_USER) == null) {
+					BrugerDao bDao = new BrugerDaoImpl(conn);
+					Bruger abruger = bDao.findByPrimaryKey(1);
+					request.getSession().setAttribute(Const.ACTIVE_USER, abruger);
+				}
+		
+		MRKontrolskema mrk = new MRKontrolskema();
+		mrk.setPacemaker(Boolean.valueOf(request.getParameter("pacemaker")));
+		mrk.setMetalImplantater(Boolean.valueOf(request.getParameter("metal_implantater")));
+		mrk.setMetalImplantaterBeskrivelse(request.getParameter("metal_implantater_beskrivelse"));
+		mrk.setAndetMetalisk(Boolean.valueOf(request.getParameter("andet_metalisk")));
+		mrk.setAndetMetaliskBeskrivelse(request.getParameter("andet_metalisk_beskrivelse"));
+		mrk.setNyresygdom(Boolean.valueOf(request.getParameter("nyresygdom")));
+		mrk.setNyresygdomKreatinin(Integer.valueOf(request.getParameter("nyresygdom_kreatinin")));
+		mrk.setGraviditet(Boolean.valueOf(request.getParameter("graviditet")));
+		mrk.setGraviditetUge(Integer.valueOf(request.getParameter("graviditet_uge")));
+		mrk.setKlaustrofobi(Boolean.valueOf(request.getParameter("klaustrofobi")));
+		mrk.setHoejde(Integer.valueOf(request.getParameter("hoejde")));
+		mrk.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+		mrk.setMRBoern(convertSederingBoern(request));
+		mrk.setMRVoksen(convertSederingVoksen(request));
+		mrk.setPraepForsyn(request.getParameter("praep_forsyn"));
+		
+		MRKontrolskemaDao mrkDao = new MRKontrolskemaDaoImpl(conn);
+		return mrkDao.insert(mrk);
 	}
 
 	private Integer storeULInvKontrolSkema(HttpServletRequest request,
@@ -425,5 +563,93 @@ public class NyRekvisitionServlet extends HttpServlet
 		}
 		return samtykke;
 	}
+	
+private MRBoern convertSederingBoern(HttpServletRequest request){
+		
+		MRBoern mrboern;
+		String mrboernString = request.getParameter("sederingBoern");
+		if (mrboernString == null) return null;
+		switch (mrboernString) {
+		case "uden_sedering":
+			mrboern = MRKontrolskema.MRBoern.UDEN_SEDERING;
+			break;
+		case "i_generel_anaestesi":
+			mrboern = MRKontrolskema.MRBoern.I_GENEREL_ANAESTESI;
+			break;
+		default:
+			mrboern = MRKontrolskema.MRBoern.UDEN_SEDERING;
+			break;
+		}
+		
+		return mrboern;
+	}
+
+private MRVoksen convertSederingVoksen(HttpServletRequest request){
+	
+	MRVoksen mrvoksen;
+	String mrvoksenString = request.getParameter("sederingVoksne");
+	if (mrvoksenString == null) return null;
+	switch (mrvoksenString) {
+	case "uden_sedering":
+		mrvoksen = MRKontrolskema.MRVoksen.UDEN_SEDERING;
+		break;
+	case "i_generel_anaestesi":
+		mrvoksen = MRKontrolskema.MRVoksen.I_GENEREL_ANAESTESI;
+		break;
+	default:
+		mrvoksen = MRKontrolskema.MRVoksen.UDEN_SEDERING;
+		break;
+	}
+	
+	return mrvoksen;
+}
+
+private KemoOgStraale convertKemostraale(HttpServletRequest request){
+	
+	KemoOgStraale kemoOgStraale;
+	String kemiOgStraaleString = request.getParameter("aldrigGivetKemo");
+	if (kemiOgStraaleString == null) return null;
+	switch (kemiOgStraaleString) {
+	case "aldrigGivetKemoJa":
+		kemoOgStraale = PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET;
+		break;
+	case "kemoterapiJa":
+	case "stråleterapiNej":
+		kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMOTERAPI;
+		break;
+	case "kemoterapiNej":
+	case "stråleterapiJa":
+		kemoOgStraale = PETCTKontrolskema.KemoOgStraale.STRAALETERAPI;
+		break;
+	default:
+		kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE;
+		break;
+	}
+	
+	return kemoOgStraale;
+}
+
+private Formaal convertFormaalMetode(HttpServletRequest request){
+
+	Formaal formaal = null;
+	String formaalString = request.getParameter("formaal");
+	if (formaalString == null) return null;
+	switch (formaalString) {
+	case "primardiag":
+		formaal = PETCTKontrolskema.Formaal.PRIMAERDIAG;
+		break;
+	case "kontrolbeh":
+		formaal = PETCTKontrolskema.Formaal.KONTROLBEH;
+		break;
+	case "kontrolremission":
+		formaal = PETCTKontrolskema.Formaal.KONTROLREMISSION;
+		break;
+	case "kontrolrecidiv":
+		formaal = PETCTKontrolskema.Formaal.KONTROLRECIDIV;
+		break;
+	}
+
+	return formaal;
+}
 
 }
