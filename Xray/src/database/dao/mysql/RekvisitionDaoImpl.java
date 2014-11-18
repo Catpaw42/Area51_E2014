@@ -89,6 +89,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));		
 			rekv[i].setPatient(ptDao.findByPrimaryKey(rekv[i].getPatientId() != null ? rekv[i].getPatientId() : -1));
 			rekv[i].setModalitet(modDao.findByPrimaryKey(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId() != null ? rekv[i].getUndersoegelsesTypeId() : -1).getModalitetId()));
+			rekv[i].setUndersoegelsesType(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId()));
 		}
 		return rekv;
 	}
