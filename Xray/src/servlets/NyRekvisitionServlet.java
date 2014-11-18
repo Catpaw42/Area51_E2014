@@ -196,8 +196,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		String modalitet = request.getParameter("modalitet_navn");
 		// can not switch on null - makes empty string instead should not happen
 		modalitet = modalitet == null ? "" : modalitet;
-		switch (modalitet) {
-		case "3": //Invasiv UL modalitet
+		if ("3".equals(modalitet)) {
 			Integer ULSkemaID = null;
 			try {
 				ULSkemaID = storeULInvKontrolSkema(request,response);
@@ -206,8 +205,7 @@ public class NyRekvisitionServlet extends HttpServlet
 				e2.printStackTrace();
 			}
 			rek.setInvasivULKontrolskemaId(ULSkemaID);
-			break;
-		case "8": //MR modalitet
+		} else if ("8".equals(modalitet)) {
 			Integer MRSkemaID = null;
 			try {
 				MRSkemaID = storeMRSkema(request, response);
@@ -216,8 +214,7 @@ public class NyRekvisitionServlet extends HttpServlet
 				e1.printStackTrace();
 			}
 			rek.setMRKontrolskemaId(MRSkemaID);
-			break;
-		case "5": // CT med kontrast modalitet
+		} else if ("5".equals(modalitet)) {
 			Integer CTKSkemaID = null;
 			try {
 				CTKSkemaID = storeCTKSkema(request, response);
@@ -226,8 +223,7 @@ public class NyRekvisitionServlet extends HttpServlet
 				e1.printStackTrace();
 			}
 			rek.setCTKontrastKontrolskemaId(CTKSkemaID);
-			break;
-		case "6": // PETCT
+		} else if ("6".equals(modalitet)) {
 			Integer PETCTSkemaID = null;
 			try {
 				PETCTSkemaID = storePETCTSkema(request,response);
@@ -236,9 +232,7 @@ public class NyRekvisitionServlet extends HttpServlet
 				e1.printStackTrace();
 			}
 			rek.setPETCTKontrolskemaId(PETCTSkemaID);
-			break;
-		default:
-			break;
+		} else {
 		}
 		//Now store the requisition
 		RekvisitionDao rekDao = new RekvisitionDaoImplExt(conn);
@@ -250,10 +244,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		}
 		//HopeFully it went well ;)
 		//TODO - real page
-		PrintWriter out = response.getWriter();
-		out.println("<HTML><BODY>Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>");
-		out.println("<A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A></BODY><HTML>");
-
+		response.sendRedirect("rekvisitionSendt.jsp");
 
 
 	}
@@ -301,7 +292,11 @@ public class NyRekvisitionServlet extends HttpServlet
 		pck.setAllergi(Boolean.valueOf(request.getParameter("allergi")));
 		pck.setAllergiTekst(request.getParameter("allergi_tekst"));
 		pck.setFedme(Boolean.valueOf(request.getParameter("fedme")));
-		pck.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+		try {
+			pck.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+		} catch (NumberFormatException e) {
+			pck.setVaegt(null);
+		}
 		pck.setBiopsi(Boolean.valueOf(request.getParameter("biopsi")));
 		pck.setBiopsiTekst(request.getParameter("biopsi_tekst"));
 		pck.setOperation(Boolean.valueOf(request.getParameter("operation")));
@@ -309,7 +304,11 @@ public class NyRekvisitionServlet extends HttpServlet
 		pck.setKemoOgStraale(convertKemostraale(request));
 		pck.setSidstePKreatTimestamp(Timestamp.valueOf(request.getParameter("straaleDato")));
 		pck.setNedsatNyreFkt(Boolean.valueOf(request.getParameter("nedsatNyreFkt")));
-		pck.setSidstePKreatinin(Integer.valueOf(request.getParameter("sidstePKreatinin")));
+		try {
+			pck.setSidstePKreatinin(Integer.valueOf(request.getParameter("sidstePKreatinin")));
+		} catch (NumberFormatException e) {
+			pck.setSidstePKreatinin(null);
+		}
 		pck.setSidstePKreatTimestamp(Timestamp.valueOf(request.getParameter("sidstePKreatTimestamp")));
 
 		PETCTKontrolskemaDao petctkDao = new PETCTKontrolskemaDaoImpl(conn);
@@ -345,8 +344,16 @@ public class NyRekvisitionServlet extends HttpServlet
 		ctk.setBetaBlokkere(Boolean.valueOf(request.getParameter("betaBlokkere")));
 		ctk.setPKreatininVaerdi(request.getParameter("Værdi"));
 		//	setPKreatininTimestamp???
-		ctk.setPtHoejde(Integer.valueOf(request.getParameter("Højde")));
-		ctk.setPtVaegt(Integer.valueOf(request.getParameter("Vægt")));
+		try {
+			ctk.setPtHoejde(Integer.valueOf(request.getParameter("Højde")));
+		} catch (NumberFormatException e) {
+			ctk.setPtHoejde(null);
+		}
+		try {
+			ctk.setPtVaegt(Integer.valueOf(request.getParameter("Vægt")));
+		} catch (NumberFormatException e) {
+			ctk.setPtVaegt(null);
+		}
 
 		CtKontrastKontrolskemaDao ctkDao = new CtKontrastKontrolskemaDaoImpl(conn);
 		return ctkDao.insert(ctk);		
@@ -367,12 +374,28 @@ public class NyRekvisitionServlet extends HttpServlet
 		mrk.setAndetMetalisk(Boolean.valueOf(request.getParameter("andet_metalisk")));
 		mrk.setAndetMetaliskBeskrivelse(request.getParameter("andet_metalisk_beskrivelse"));
 		mrk.setNyresygdom(Boolean.valueOf(request.getParameter("nyresygdom")));
-		mrk.setNyresygdomKreatinin(Integer.valueOf(request.getParameter("nyresygdom_kreatinin")));
+		try {
+			mrk.setNyresygdomKreatinin(Integer.valueOf(request.getParameter("nyresygdom_kreatinin")));
+		} catch (NumberFormatException e) {
+			mrk.setNyresygdomKreatinin(null);
+		}
 		mrk.setGraviditet(Boolean.valueOf(request.getParameter("graviditet")));
-		mrk.setGraviditetUge(Integer.valueOf(request.getParameter("graviditet_uge")));
+		try {
+			mrk.setGraviditetUge(Integer.valueOf(request.getParameter("graviditet_uge")));
+		} catch (NumberFormatException e) {
+			mrk.setGraviditetUge(null);
+		}
 		mrk.setKlaustrofobi(Boolean.valueOf(request.getParameter("klaustrofobi")));
-		mrk.setHoejde(Integer.valueOf(request.getParameter("hoejde")));
-		mrk.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+		try {
+			mrk.setHoejde(Integer.valueOf(request.getParameter("hoejde")));
+		} catch (NumberFormatException e) {
+			mrk.setHoejde(null);
+		}
+		try {
+			mrk.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+		} catch (NumberFormatException e) {
+			mrk.setVaegt(null);
+		}
 		mrk.setMRBoern(convertSederingBoern(request));
 		mrk.setMRVoksen(convertSederingVoksen(request));
 		mrk.setPraepForsyn(request.getParameter("praep_forsyn"));
@@ -391,8 +414,16 @@ public class NyRekvisitionServlet extends HttpServlet
 		}	
 		UlInvKontrolskema uis = new UlInvKontrolskema();
 		uis.setAkTimestamp(Timestamp.valueOf(request.getParameter("aktimestamp")));
-		uis.setTrombocytter(Integer.valueOf(request.getParameter("trombocytter")));
-		uis.setInr(Integer.valueOf(request.getParameter("inr")));
+		try {
+			uis.setTrombocytter(Integer.valueOf(request.getParameter("trombocytter")));
+		} catch (NumberFormatException e) {
+			uis.setTrombocytter(null);
+		}
+		try {
+			uis.setInr(Integer.valueOf(request.getParameter("inr")));
+		} catch (NumberFormatException e) {
+			uis.setInr(null);
+		}
 		if(Const.DEBUG)System.out.println(uis);
 		UlInvKontrolskemaDao uisDao = new UlInvKontrolskemaDaoImpl(conn);
 		return uisDao.insert(uis);
@@ -449,22 +480,16 @@ public class NyRekvisitionServlet extends HttpServlet
 		IndlaeggelseTransport indlTrans;
 		String transString = request.getParameter("indlagt_transport");
 		if (transString==null) return null;
-		switch (transString) {
-		case "selv":
+		if ("selv".equals(transString)) {
 			indlTrans = RekvisitionExtended.IndlaeggelseTransport.GAA_UDEN_PORTOER;
-			break;
-		case "portoer":
+		} else if ("portoer".equals(transString)) {
 			indlTrans = RekvisitionExtended.IndlaeggelseTransport.GAA_MED_PORTOER;
-			break;
-		case "koerestol":
+		} else if ("koerestol".equals(transString)) {
 			indlTrans = RekvisitionExtended.IndlaeggelseTransport.KOERESTOL;
-			break;
-		case "seng":
+		} else if ("seng".equals(transString)) {
 			indlTrans = RekvisitionExtended.IndlaeggelseTransport.SENG;
-			break;
-		default:
+		} else {
 			indlTrans=null;
-			break;
 		}
 		return indlTrans;
 	}
@@ -473,19 +498,14 @@ public class NyRekvisitionServlet extends HttpServlet
 		AmbulantKoersel ambuTrans;
 		String transString = request.getParameter("ambulant_transport");
 		if (transString==null) return null;
-		switch (transString) {
-		case "ingen":
+		if ("ingen".equals(transString)) {
 			ambuTrans = RekvisitionExtended.AmbulantKoersel.INGEN;
-			break;
-		case "siddende":
+		} else if ("siddende".equals(transString)) {
 			ambuTrans = RekvisitionExtended.AmbulantKoersel.SIDDENDE;
-			break;
-		case "liggende":
+		} else if ("liggende".equals(transString)) {
 			ambuTrans = RekvisitionExtended.AmbulantKoersel.LIGGENDE;
-			break;
-		default:
+		} else {
 			ambuTrans = null;
-			break;
 		}
 		return ambuTrans;
 	}
@@ -494,22 +514,16 @@ public class NyRekvisitionServlet extends HttpServlet
 		Prioritering prio;
 		String prioString = request.getParameter("prioriterings_oenske");
 		if (prioString==null)return null;
-		switch (prioString) {
-		case "haste":
-			prio = RekvisitionExtended.Prioritering.HASTE; 
-			break;
-		case "fremskyndet":
-			prio = RekvisitionExtended.Prioritering.FREMSKYNDET; 
-			break;
-		case "rutine":
-			prio = RekvisitionExtended.Prioritering.RUTINE; 
-			break;
-		case "pakke":
-			prio = RekvisitionExtended.Prioritering.PAKKEFORLOEB; 
-			break;
-		default:
+		if ("haste".equals(prioString)) {
+			prio = RekvisitionExtended.Prioritering.HASTE;
+		} else if ("fremskyndet".equals(prioString)) {
+			prio = RekvisitionExtended.Prioritering.FREMSKYNDET;
+		} else if ("rutine".equals(prioString)) {
+			prio = RekvisitionExtended.Prioritering.RUTINE;
+		} else if ("pakke".equals(prioString)) {
+			prio = RekvisitionExtended.Prioritering.PAKKEFORLOEB;
+		} else {
 			prio = null;
-			break;
 		}
 
 		return prio;
@@ -519,19 +533,14 @@ public class NyRekvisitionServlet extends HttpServlet
 		HospitalOenske hospOensk;
 		String hospOenskString = request.getParameter("hospitals_oenske");
 		if (hospOenskString==null) return null;
-		switch (hospOenskString) {
-		case "hilleroed":
+		if ("hilleroed".equals(hospOenskString)) {
 			hospOensk = RekvisitionExtended.HospitalOenske.HILLEROED;
-			break;
-		case "frederikssund":
+		} else if ("frederikssund".equals(hospOenskString)) {
 			hospOensk = RekvisitionExtended.HospitalOenske.FREDERIKSSUND;
-			break;
-		case "helsingoer":
+		} else if ("helsingoer".equals(hospOenskString)) {
 			hospOensk = RekvisitionExtended.HospitalOenske.HELSINGOER;
-			break;
-		default:
+		} else {
 			hospOensk=null;
-			break;
 		}
 		return hospOensk;
 	}
@@ -540,16 +549,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		HenvistTil henv;
 		String henvString = request.getParameter("henvist_til");
 		if (henvString==null) return null;
-		switch (henvString) {
-		case "radiologisk":
+		if ("radiologisk".equals(henvString)) {
 			henv = RekvisitionExtended.HenvistTil.RADIOLOGISK;
-			break;
-		case "klinfys":
+		} else if ("klinfys".equals(henvString)) {
 			henv = RekvisitionExtended.HenvistTil.KLINISK;
-			break;
-		default:
+		} else {
 			henv = null;
-			break;
 		}
 		return henv;
 	}
@@ -558,16 +563,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		Samtykke samtykke;
 		String samtykkeString = request.getParameter("samtykke");
 		if (samtykkeString == null) return null;
-		switch (samtykkeString) {
-		case "ja":
+		if ("ja".equals(samtykkeString)) {
 			samtykke = RekvisitionExtended.Samtykke.JA;
-			break;
-		case "nej":
+		} else if ("nej".equals(samtykkeString)) {
 			samtykke = RekvisitionExtended.Samtykke.NEJ;
-			break;
-		default:
+		} else {
 			samtykke = RekvisitionExtended.Samtykke.UDEN_SAMTYKKE;
-			break;
 		}
 		return samtykke;
 	}
@@ -577,16 +578,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		MRBoern mrboern;
 		String mrboernString = request.getParameter("sederingBoern");
 		if (mrboernString == null) return null;
-		switch (mrboernString) {
-		case "uden_sedering":
+		if ("uden_sedering".equals(mrboernString)) {
 			mrboern = MRKontrolskema.MRBoern.UDEN_SEDERING;
-			break;
-		case "i_generel_anaestesi":
+		} else if ("i_generel_anaestesi".equals(mrboernString)) {
 			mrboern = MRKontrolskema.MRBoern.I_GENEREL_ANAESTESI;
-			break;
-		default:
+		} else {
 			mrboern = MRKontrolskema.MRBoern.UDEN_SEDERING;
-			break;
 		}
 
 		return mrboern;
@@ -597,16 +594,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		MRVoksen mrvoksen;
 		String mrvoksenString = request.getParameter("sederingVoksne");
 		if (mrvoksenString == null) return null;
-		switch (mrvoksenString) {
-		case "uden_sedering":
+		if ("uden_sedering".equals(mrvoksenString)) {
 			mrvoksen = MRKontrolskema.MRVoksen.UDEN_SEDERING;
-			break;
-		case "i_generel_anaestesi":
+		} else if ("i_generel_anaestesi".equals(mrvoksenString)) {
 			mrvoksen = MRKontrolskema.MRVoksen.I_GENEREL_ANAESTESI;
-			break;
-		default:
+		} else {
 			mrvoksen = MRKontrolskema.MRVoksen.UDEN_SEDERING;
-			break;
 		}
 
 		return mrvoksen;
@@ -617,21 +610,14 @@ public class NyRekvisitionServlet extends HttpServlet
 		KemoOgStraale kemoOgStraale;
 		String kemiOgStraaleString = request.getParameter("aldrigGivetKemo");
 		if (kemiOgStraaleString == null) return null;
-		switch (kemiOgStraaleString) {
-		case "aldrigGivetKemoJa":
+		if ("aldrigGivetKemoJa".equals(kemiOgStraaleString)) {
 			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET;
-			break;
-		case "kemoterapiJa":
-		case "stråleterapiNej":
+		} else if ("kemoterapiJa".equals(kemiOgStraaleString) || "stråleterapiNej".equals(kemiOgStraaleString)) {
 			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMOTERAPI;
-			break;
-		case "kemoterapiNej":
-		case "stråleterapiJa":
+		} else if ("kemoterapiNej".equals(kemiOgStraaleString) || "stråleterapiJa".equals(kemiOgStraaleString)) {
 			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.STRAALETERAPI;
-			break;
-		default:
+		} else {
 			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE;
-			break;
 		}
 
 		return kemoOgStraale;
@@ -642,19 +628,14 @@ public class NyRekvisitionServlet extends HttpServlet
 		Formaal formaal = null;
 		String formaalString = request.getParameter("formaal");
 		if (formaalString == null) return null;
-		switch (formaalString) {
-		case "primardiag":
+		if ("primardiag".equals(formaalString)) {
 			formaal = PETCTKontrolskema.Formaal.PRIMAERDIAG;
-			break;
-		case "kontrolbeh":
+		} else if ("kontrolbeh".equals(formaalString)) {
 			formaal = PETCTKontrolskema.Formaal.KONTROLBEH;
-			break;
-		case "kontrolremission":
+		} else if ("kontrolremission".equals(formaalString)) {
 			formaal = PETCTKontrolskema.Formaal.KONTROLREMISSION;
-			break;
-		case "kontrolrecidiv":
+		} else if ("kontrolrecidiv".equals(formaalString)) {
 			formaal = PETCTKontrolskema.Formaal.KONTROLRECIDIV;
-			break;
 		}
 
 		return formaal;
