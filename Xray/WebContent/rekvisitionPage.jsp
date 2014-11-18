@@ -117,6 +117,11 @@
 			</li>
 		</ul>
 		<hr />
+		<ul id="mainmenu">
+			<li><a id="nyRekvisition" href="javascript:showOverlay()">Skriv
+					Ny Rekvisition</a>
+			</li>
+		</ul>
 		<ul class=showInline>
 			<li>
 				<div id="rekvisitionList">
