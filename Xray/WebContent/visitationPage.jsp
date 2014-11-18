@@ -17,6 +17,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta http-equiv="Cache-control" content="no-cache">
 		<link href="css/styleSheet.css" rel="stylesheet" type="text/css" media="screen">
 		<link href="css/visitationPage.css" rel="stylesheet" type="text/css" media="screen">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

@@ -16,6 +16,8 @@ $(document).ready(function()
         getRekvisitation(e.target.id);
     });
     
+
+    
     /* This 'event' is used just to avoid that the table text 
      * gets selected (just for styling). 
      * For example, when pressing 'Shift' keyboard key and clicking 
@@ -26,6 +28,21 @@ $(document).ready(function()
         e.preventDefault(); return false; 
     });
 });
+
+$('form#visiterform').on('submit', function(event){
+    alert("hej");
+	event.preventDefault(); 
+    $.ajax({
+        url: $(this).attr('action'),
+        type: $(this).attr('method'),
+        data: $(this).serialize(),
+        success: function(html) {
+        alert('ok');
+        }
+    });
+    //return false; 
+});
+
 function showOverlay()
 {
 	$("#overlay").css("display", "block");
@@ -48,17 +65,18 @@ function getRekvisitation(rekvisition_Id){
 
 function doGodkend(){
 	var rek_id;
-	rek_id = $('input[name="rekIDSubmit"]').val();
+	rek_id = $('input[name="rekIDSubmit"]').val(); //sæt rekvisition id på hidden element
 	if(rek_id!=""){
-		$('input[name="visiterAction"]').val("Godkend");
-		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data) {
-			location.reload(true);
-	});
+		$('input[name="visiterAction"]').val("Godkend"); //sæt action til godkend
+		$.post('VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
+			//window.location.href = "VisitationServlet"; //redirect til samme side
+			alert("godkend - redirect");
+			window.location.href = window.location.pathname;
+		});
 	}
 	else{
 		alert("Klik på række");
 	}
-	
 }
 
 function doAfvis(){
@@ -67,76 +85,11 @@ function doAfvis(){
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Afvis");
 		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data){
-			location.reload(true);
-	});
-
+			window.location.href = "VisitationServlet";
+		});
 	}
 	else{
 		alert("Klik på række");
 	}
-	
 }
 
-function testpost(){
-//	  context = '${pageContext.request.contextPath}';
-//	  var http_request = getXMLHttpRequest();
-//	            if (!http_request) {
-//	        alert('Giving up :( Cannot create an XMLHTTP instance');
-//	        return false;
-//	    }
-	    alert("hej");
-//	    http_request.open("POST", context, true);
-//	    http_request.onreadystatechange = function() {
-//	        if (http_request.readyState == 4) {
-//	            if (http_request.status == 200) {
-//	                var response = http_request.responseText;
-//	                //do something if you have a response from the servlet
-//	            }
-//	        }
-//	    };
-//	    http_request.send(null);
-	}
-
-function customJSFunction(){
-	proto=window.location.protocol;
-	host=window.location.host;
-	context=window.location.pathname;
-	context=window.location.pathname.substring(0,context.lastIndexOf("/"));
-	context=context.replace("/pages", ""); //applicationcontext
-	var xmlHttp;
-	try
-	{
-		// Firefox, Opera 8.0+, Safari
-		xmlHttp=new XMLHttpRequest();
-	}
-	catch (exception)
-	{ // Internet Explorer
-		try
-		{
-			xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
-		}
-		catch (exception)
-		{
-			try
-			{
-				xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			catch (exception)
-			{
-				alert("Your browser does not support AJAX!");
-				return false;
-			}
-		}
-	}
-	var host = window.location.host;
-	url = proto+"//"+host+context+"/VisitationServlet";
-	//alert("url ==== "+url);
-	xmlHttp.open("POST",url,true); //the value true is for using asynchronous mode
-	xmlHttp.send(null);
-	xmlHttp.onreadystatechange=function(){
-		if(xmlHttp.readyState==4)
-		{
-			alert("POST executed successfully");
-		}
-	};
-}

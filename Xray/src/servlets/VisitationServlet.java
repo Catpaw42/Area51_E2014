@@ -81,6 +81,8 @@ public class VisitationServlet extends HttpServlet {
 		String visiterAction = request.getParameter("visiterAction");
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
+			
+			response.sendRedirect(Const.VISITATION_PAGE);
 		}
 		else if("Afvis".equals(visiterAction)){
 			declineRekvisition(request);
