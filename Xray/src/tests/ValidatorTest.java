@@ -34,6 +34,33 @@ public class ValidatorTest {
 		
 		test = "+123123456789012";
 		testRes = Validator.validatePhoneNo(test);
+		assertEquals("test phone 5: " + test, true, testRes);
+	}
+	
+	@Test
+	public void testPhoneNoValidatorAdv(){
+		String test = null;
+		boolean testRes = Validator.validatePhoneNo(test);
+		assertEquals(false, testRes);
+		
+		test = "+123123456";
+		testRes = Validator.validatePhoneNo(test);
+		assertEquals("test phone 1: " + test, true, testRes);
+		
+		test = "+12123456";
+		testRes = Validator.validatePhoneNo(test);
+		assertEquals("test phone 2: " + test, true, testRes);
+		
+		test = "0012312345678";
+		testRes = Validator.validatePhoneNo(test);
+		assertEquals("test phone 3: " + test, true, testRes);
+		
+		test = "+123123456789";
+		testRes = Validator.validatePhoneNo(test);
+		assertEquals("test phone 4: " + test, true, testRes);
+		
+		test = "+123123456789012";
+		testRes = Validator.validatePhoneNo(test);
 		assertEquals("test phone 5: " + test, false, testRes);
 	}
 	
