@@ -40,7 +40,15 @@
 			<ul class="showInline">
 				<li>
 					<div id="stamdata">
+							<%if(rek.getVisitatorBemaerkning()!=null){
+								out.print("<h2>Visitatorbemærkninger</h2>");
+								out.println("<p>" + rek.getVisitatorBemaerkning()+ "</p>");
+								out.println("<b>Visitatorprioritering</b>");
+								out.println("<p>" +rek.getVisitatorPrioritering() + "</p>");
+							}%>
 						<ul class="showInline">
+
+							
 							<li>
 								<h2>Patient</h2>
 								<label for="patient_cpr">CPR-Nummer</label>

@@ -82,6 +82,8 @@ public class VisitationServlet extends HttpServlet {
 		String visiterAction = request.getParameter("visiterAction");
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
+			
+			response.sendRedirect(Const.VISITATION_PAGE);
 		}
 		else if("Afvis".equals(visiterAction)){
 			declineRekvisition(request);
@@ -172,6 +174,7 @@ public class VisitationServlet extends HttpServlet {
 			rekDao = new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
 			RekvisitionExtended rek = rekDao.findByPrimaryKey(id);
 			rek.setStatus(Status.DECLINED);
+			rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
 			try {
 				System.out.println("decline");
 				System.out.println(rekDao.update(id, rek));
@@ -190,6 +193,8 @@ public class VisitationServlet extends HttpServlet {
 			rekDao = new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
 			RekvisitionExtended rek = rekDao.findByPrimaryKey(id);
 			rek.setStatus(Status.APPROVED);
+			rek.setVisitatorPrioritering(request.getParameter("prioritet").toString());
+			rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
 			try {
 				System.out.println("approve");
 				System.out.println(rekDao.update(id, rek));
