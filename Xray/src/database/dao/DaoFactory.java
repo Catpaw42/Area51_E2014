@@ -79,6 +79,12 @@ public class DaoFactory {
 	public static RettighederDao createRettighederDao( Connection conn ) {
 		return factory.createRettighederDao(conn);
 	}
+	public static UlInvKontrolskemaDao createUlInvKontrolskemaDao( Connection conn ) {
+        return factory.createUlInvKontrolskemaDao( conn );
+    }
+
+
+ 
 
 	////////////////////////////////////////////////////////////////////////////
 	// Inner classes
@@ -95,6 +101,7 @@ public class DaoFactory {
 		public abstract PETCTKontrolskemaDao createPetctKontrolskemaDao( Connection conn );
 		public abstract RekvisitionDao createRekvisitionDao( Connection conn );
 		public abstract RettighederDao createRettighederDao( Connection conn );
+		public abstract UlInvKontrolskemaDao createUlInvKontrolskemaDao( Connection conn );
 
 	}
 }
