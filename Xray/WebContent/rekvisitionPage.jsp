@@ -151,8 +151,8 @@
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.PENDING) || r.getStatus().equals(Status.APPROVED)){
-								out.print("</td> <td bgcolor=#FF0000 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
-								out.print("annuller");
+								out.print("</td> <td  id="+r.getRekvisitionId()+" href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
+								out.print("<button class=\"anullerButton\">annuller</button>");
 								}
 								out.print("</td> </tr>");	
 							}
@@ -161,10 +161,10 @@
 					</table>
 				</div>
 			</li>
-		
 		</ul>
 	</div>
 	<div id="overlay"></div>
+	<button class="closeButton" onclick="javascript:hideOverlay()">X</button>
 	<div id="overlayPanel">
 		<%@include file="nyRekvisitionPage.jsp"%>
 	</div>
