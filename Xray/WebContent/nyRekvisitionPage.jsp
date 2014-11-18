@@ -160,13 +160,13 @@ try{
 							</li>
 							<li>								
 								<input type="checkbox" id="ilt" name="ilt">Ilt
-								<input type="text" id="ilt" name="ilt" placeholder="Liter/min"><br>
-								<input type="checkbox" id="tolk" name="tolk">Tolk
+								<input type="text" id="ilt_tekst" name="ilt_tekst" placeholder="Liter/min"><br>
+								<input type="checkbox" id="tolk_tekst" name="tolk_tekst">Tolk
 								<input type="text" id="tolk" name="tolk" placeholder="Sprog"><br>
 								<input type="checkbox" id="isolation" name="isolation">Isolation
-								<input type="text" id="isolation" name="isolation" placeholder="Hvilken?"><br>
+								<input type="text" id="isolation_tekst" name="isolation_tekst" placeholder="Hvilken?"><br>
 								<input type="checkbox" id="cytostatika" name="cytostatika">Cytostatika
-								<input type="date" id="cytostatika" name="cytostatika">	
+								<input type="date" id="cytostatika_dato" name="cytostatika_dato" placeholder="">	
 							</li>
 						</ul>
 						
