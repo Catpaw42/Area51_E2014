@@ -40,6 +40,7 @@ public final class Const {
 	public static final String MODALITY_LIST = "modalityList";
 	public static final String STATUS_LIST = "statusList";
 	public static final String DATABASE = "database";
+	public static final String REKVISITION_SELECTED = "selectedRekvisition";
 
 
 	

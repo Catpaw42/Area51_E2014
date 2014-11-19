@@ -81,6 +81,7 @@
 	width: 670px;
 	height: 400px;
 	border: 1px solid black;
+	overflow: auto;
 }
 #rekvisitionList table, #rekvisitionList th {
 	border: 2px solid black;

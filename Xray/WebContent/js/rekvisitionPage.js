@@ -13,7 +13,8 @@ $(document).ready(function()
         /* Highlight one row and clean others */
         rows.removeClass("highlight");
         row.addClass("highlight");
-        alert("ID=" +e.target.id);
+        getRekvisitation(e.target.id);
+//        alert("ID=" +e.target.id);
     });
     
     /* This 'event' is used just to avoid that the table text 
@@ -26,6 +27,22 @@ $(document).ready(function()
         e.preventDefault(); return false; 
     });
 });
+
+function getvisitationString(rekvisition_Id){
+	return "visiter.jsp?rekvisition_Id="+rekvisition_Id;
+}
+
+function getRekvisitation(rekvisition_Id){
+	$.get(getvisitationString(rekvisition_Id),function(data,status){
+	    if(status = "success"){
+	    	//indsæt de hentede data i div element
+	    	$("#embededSite").html(data);
+	    }
+	});
+	$('input[name="rekIDSubmit"]').val(rekvisition_Id);
+	$('input[name="visiterAction"]').val("");
+}
+
 function showOverlay()
 {
 	$("#overlay").css("display", "block");

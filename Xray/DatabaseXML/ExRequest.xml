@@ -43,6 +43,7 @@
 				</column>
 				<column name="visitator_id">
 					<type>int</type>
+					<edit />
 				</column>
 				<column name="patient_id">
 					<type>int</type>
