@@ -293,7 +293,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		pck.setAllergiTekst(request.getParameter("allergi_tekst"));
 		pck.setFedme(Boolean.valueOf(request.getParameter("fedme")));
 		try {
-			pck.setVaegt(Integer.valueOf(request.getParameter("vaegt")));
+			pck.setVaegt(Integer.valueOf(request.getParameter("petctvaegt")));
 		} catch (NumberFormatException e) {
 			pck.setVaegt(null);
 		}
@@ -302,7 +302,9 @@ public class NyRekvisitionServlet extends HttpServlet
 		pck.setOperation(Boolean.valueOf(request.getParameter("operation")));
 		pck.setOperationTekst(request.getParameter("operation_tekst"));
 		pck.setKemoOgStraale(convertKemostraale(request));
-		pck.setSidstePKreatTimestamp(java.sql.Date.valueOf(request.getParameter("straaleDato")));
+		pck.setStraaleDato(java.sql.Date.valueOf(request.getParameter("straaleDato")));
+		pck.setKontrastReaktion(Boolean.valueOf(request.getParameter("kontrast_reaktion")));
+		pck.setKontrastReaktionTekst(request.getParameter("kontrast_reaktion_tekst"));
 		pck.setNedsatNyreFkt(Boolean.valueOf(request.getParameter("nedsatNyreFkt")));
 		try {
 			pck.setSidstePKreatinin(Integer.valueOf(request.getParameter("sidstePKreatinin")));
@@ -610,16 +612,19 @@ public class NyRekvisitionServlet extends HttpServlet
 	private KemoOgStraale convertKemostraale(HttpServletRequest request){
 
 		KemoOgStraale kemoOgStraale;
-		String kemiOgStraaleString = request.getParameter("aldrigGivetKemo");
-		if (kemiOgStraaleString == null) return null;
-		if ("aldrigGivetKemoJa".equals(kemiOgStraaleString)) {
-			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET;
-		} else if ("kemoterapiJa".equals(kemiOgStraaleString) || "stråleterapiNej".equals(kemiOgStraaleString)) {
+		Boolean aldrigGivet = Boolean.valueOf(request.getParameter("aldrigGivetKemo"));
+		Boolean kemoAfsluttet = Boolean.valueOf(request.getParameter("kemoterapiafsluttet"));
+		Boolean stråleterapiafsluttet = Boolean.valueOf(request.getParameter("stråleterapiafsluttet"));
+		if (aldrigGivet.equals(true)) {
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.NEJ;
+		} else if (kemoAfsluttet.equals(false) && stråleterapiafsluttet.equals(false)) {
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE;
+		} else if (kemoAfsluttet.equals(false) && stråleterapiafsluttet.equals(true)) {
 			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMOTERAPI;
-		} else if ("kemoterapiNej".equals(kemiOgStraaleString) || "stråleterapiJa".equals(kemiOgStraaleString)) {
+		} else if (kemoAfsluttet.equals(true) && stråleterapiafsluttet.equals(false)) {
 			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.STRAALETERAPI;
 		} else {
-			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE;
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.NEJ;
 		}
 
 		return kemoOgStraale;
@@ -630,7 +635,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		Formaal formaal = null;
 		String formaalString = request.getParameter("formaal");
 		if (formaalString == null) return null;
-		if ("primardiag".equals(formaalString)) {
+		if ("primaerdiag".equals(formaalString)) {
 			formaal = PETCTKontrolskema.Formaal.PRIMAERDIAG;
 		} else if ("kontrolbeh".equals(formaalString)) {
 			formaal = PETCTKontrolskema.Formaal.KONTROLBEH;

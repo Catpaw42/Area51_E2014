@@ -40,7 +40,7 @@ public class PETCTKontrolskemaDaoImpl extends AbstractDaoImpl<PETCTKontrolskema>
 
     private static final String SQL_INSERT = "INSERT INTO PETCT_kontrolskema (formaal,formaal_tekst,kanPtLiggeStille30,ptTaalerFaste,diabetes,DM_Beh,smerter,respInsuff,klaustrofobi,allergi,allergi_tekst,fedme,vaegt,biopsi,biopsi_tekst,operation,operation_tekst,kemo_og_straale,kontrast_reaktion,kontrast_reaktion_tekst,nedsatNyreFkt,SidstePKreatinin,SidstePKreatTimestamp,preMed,DMRegime,POKontrast,IVKontrast,AktuelPKreatinin,AktuelPKreatTimestamp,Aktuel_andet_tekst) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final PETCTKontrolskema.Formaal[] _PETCTKontrolskema_Formaals = { null, PETCTKontrolskema.Formaal.PRIMAERDIAG, PETCTKontrolskema.Formaal.KONTROLBEH, PETCTKontrolskema.Formaal.KONTROLREMISSION, PETCTKontrolskema.Formaal.KONTROLRECIDIV };
-    private static final PETCTKontrolskema.KemoOgStraale[] _PETCTKontrolskema_KemoOgStraales = { null, PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET, PETCTKontrolskema.KemoOgStraale.KEMOTERAPI, PETCTKontrolskema.KemoOgStraale.STRAALETERAPI, PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE };
+    private static final PETCTKontrolskema.KemoOgStraale[] _PETCTKontrolskema_KemoOgStraales = { null, PETCTKontrolskema.KemoOgStraale.NEJ, PETCTKontrolskema.KemoOgStraale.KEMOTERAPI, PETCTKontrolskema.KemoOgStraale.STRAALETERAPI, PETCTKontrolskema.KemoOgStraale.KEMO_OG_STRAALE };
 
     public PETCTKontrolskemaDaoImpl( Connection conn ) {
         super( conn );

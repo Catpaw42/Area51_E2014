@@ -56,8 +56,8 @@
 				<p>Er patienten adipøs?
 				Ja<input type = "radio" id="fedmeJa" name="fedme" value="true">
 				Nej<input type = "radio" id="fedmeNej" name="fedme" value="false"></p>
-				<label for="vaegt">Vægt:</label>
-				<input type="text" id="vaegt" name="vaegt">
+				<label for="petctvaegt">Vægt:</label>
+				<input type="text" id="petctvaegt" name="petctvaegt">
 			</li>
 			<li>
 				<p>Biopsi / finnålspunktur:
@@ -79,11 +79,11 @@
 				Ja<input type = "radio" id="aldrigGivetKemoJa" name="aldrigGivetKemo" value="true">
 				Nej<input type = "radio" id="aldrigGivetKemoNej" name="aldrigGivetKemo" value="false"></p>
 				<p>Kemoterapi har været afsluttet i 2-3 uger
-				Ja<input type = "radio" id="kemoterapiJa" name="kemoterapi" value="true">
-				Nej<input type = "radio" id="kemoterapiNej" name="kemoterapi" value="false"></p>
+				Ja<input type = "radio" id="kemoterapiJa" name="kemoterapiafsluttet" value="true">
+				Nej<input type = "radio" id="kemoterapiNej" name="kemoterapiafsluttet" value="false"></p>
 				<p>Stråleterapi har været afsluttet i 2-3 måneder
-				Ja<input type = "radio" id="stråleterapiJa" name="stråleterapi" value="true">
-				Nej<input type = "radio" id="stråleterapiNej" name="stråleterapi" value="false"></p>
+				Ja<input type = "radio" id="stråleterapiJa" name="stråleterapiafsluttet" value="true">
+				Nej<input type = "radio" id="stråleterapiNej" name="stråleterapiafsluttet" value="false"></p>
 				<label for="straaleDato">Dato for sidste behandling:</label>
 				<input type="date" id="straaleDato" name="straaleDato">
 			</li>

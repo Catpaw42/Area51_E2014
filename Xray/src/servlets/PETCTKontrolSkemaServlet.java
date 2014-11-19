@@ -80,7 +80,7 @@ private KemoOgStraale kemostraale(HttpServletRequest request){
 		if (kemiOgStraaleString == null) return null;
 		switch (kemiOgStraaleString) {
 		case "aldrigGivetKemoJa":
-			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.ALDRIGGIVET;
+			kemoOgStraale = PETCTKontrolskema.KemoOgStraale.NEJ;
 			break;
 		case "kemoterapiJa":
 		case "stråleterapiNej":
