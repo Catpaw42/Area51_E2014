@@ -75,13 +75,13 @@
 										else out.print("disabled");
 									%>
 										>Ja
-									<input type="radio" id="samtykke_nej" name="samtykke" value="nej" disabled 
+									<input type="radio" id="samtykke_nej" name="samtykke" value="nej"  
 									<%
 										if(rek.getSamtykke()==RekvisitionExtended.Samtykke.NEJ) { out.print("checked");}
 										else out.print("disabled");
  									%>>
 									Nej
-									<input type="radio" id="uden_samtykke" name="samtykke" value="uden" disabled 
+									<input type="radio" id="uden_samtykke" name="samtykke" value="uden"  
 									<%
 										if(rek.getSamtykke()==RekvisitionExtended.Samtykke.UDEN_SAMTYKKE) { out.print("checked");}
 										else out.print("disabled");
@@ -110,26 +110,26 @@
 					<h2>Undersøgelse</h2>
 					<label for="udf_indlagt">Udføres under indlæggelse</label>
 					<div id="udf_indlagt">
-						<input type="radio" name="udf_indlagt" id="ambulant" disabled value="ambulant" <%out.print(rek.getAmbulant() == null ? "disabled" : "checked"); %>>Ambulant
-						<input type="radio" name="udf_indlagt" id="indlagt" disabled value="indlagt" <%out.print(rek.getUdfIndlagt() == null ? "disabled" : "checked"); %>>Indlæggelse
+						<input type="radio" name="udf_indlagt" id="ambulant"  value="ambulant" <%out.print(rek.getAmbulant() == null ? "disabled" : "checked"); %>>Ambulant
+						<input type="radio" name="udf_indlagt" id="indlagt"  value="indlagt" <%out.print(rek.getUdfIndlagt() == null ? "disabled" : "checked"); %>>Indlæggelse
 					</div>
 					<label for="henvist_til">Henvist til</label>
 					<div id="henvist_til">
-						<input type="radio" id="radiologiskAfs" name="henvist_til" <%out.print(rek.getHenvistTil() == HenvistTil.RADIOLOGISK ? "checked" : "disabled"); %> disabled value="radiologisk">Radiologisk Afsnit
-						<input type="radio" id="kliniskFysAfs" name="henvist_til" <%out.print(rek.getHenvistTil() == HenvistTil.KLINISK ? "checked" : "disabled"); %> disabled value="klinfys">Klinisk Fysiologisk Afsnit
+						<input type="radio" id="radiologiskAfs" name="henvist_til" <%out.print(rek.getHenvistTil() == HenvistTil.RADIOLOGISK ? "checked" : "disabled"); %>  value="radiologisk">Radiologisk Afsnit
+						<input type="radio" id="kliniskFysAfs" name="henvist_til" <%out.print(rek.getHenvistTil() == HenvistTil.KLINISK ? "checked" : "disabled"); %>  value="klinfys">Klinisk Fysiologisk Afsnit
 					</div>
 					<label for="hospitalsønske">Evt. Hospitalsønske</label>
 					<div id="hospitalsønske">
-						<input type="radio" id="hillerød" name="hospitals_oenske" <%out.print(rek.getHospitalOenske() == HospitalOenske.HILLEROED ? "checked" : "disabled"); %> value="hilleroed" disabled>Hillerød
-						<input type="radio" id="frederikssund" name="hospitals_oenske" <%out.print(rek.getHospitalOenske() == HospitalOenske.FREDERIKSSUND ? "checked" : "disabled"); %> value="frederikssund" disabled>Frederikssund
-						<input type="radio" id="helsingør" name="hospitals_oenske" <%out.print(rek.getHospitalOenske() == HospitalOenske.HELSINGOER ? "checked" : "disabled"); %> value="helsingoer" disabled>Helsingør
+						<input type="radio" id="hillerød" name="hospitals_oenske" <%out.print(rek.getHospitalOenske() == HospitalOenske.HILLEROED ? "checked" : "disabled"); %> value="hilleroed" >Hillerød
+						<input type="radio" id="frederikssund" name="hospitals_oenske" <%out.print(rek.getHospitalOenske() == HospitalOenske.FREDERIKSSUND ? "checked" : "disabled"); %> value="frederikssund" >Frederikssund
+						<input type="radio" id="helsingør" name="hospitals_oenske" <%out.print(rek.getHospitalOenske() == HospitalOenske.HELSINGOER ? "checked" : "disabled"); %> value="helsingoer" >Helsingør
 					</div>
 					<label for="prioriterings_oenske">Prioriteringsønske</label>
 					<div id="prioriterings_oenske">
-						<input type="radio" id="haste" name="prioriterings_oenske" value="haste" <%out.print(rek.getPrioritering() == Prioritering.HASTE ? "checked" : "disabled" ); %> disabled>Haste
-						<input type="radio" id="fremskyndet" name="prioriterings_oenske" value="fremskyndet" <%out.print(rek.getPrioritering() == Prioritering.FREMSKYNDET ? "checked" : "disabled" ); %> disabled>Fremskyndet
-						<input type="radio" id="rutine" name="prioriterings_oenske" value="rutine" <%out.print(rek.getPrioritering() == Prioritering.RUTINE ? "checked" : "disabled" ); %> disabled>Rutine
-						<input type="radio" id="pakkeforloeb" name="prioriterings_oenske" value="pakke" <%out.print(rek.getPrioritering() == Prioritering.PAKKEFORLOEB ? "checked" : "disabled" ); %> disabled>Pakkeforløb
+						<input type="radio" id="haste" name="prioriterings_oenske" value="haste" <%out.print(rek.getPrioritering() == Prioritering.HASTE ? "checked" : "disabled" ); %> >Haste
+						<input type="radio" id="fremskyndet" name="prioriterings_oenske" value="fremskyndet" <%out.print(rek.getPrioritering() == Prioritering.FREMSKYNDET ? "checked" : "disabled" ); %> >Fremskyndet
+						<input type="radio" id="rutine" name="prioriterings_oenske" value="rutine" <%out.print(rek.getPrioritering() == Prioritering.RUTINE ? "checked" : "disabled" ); %> >Rutine
+						<input type="radio" id="pakkeforloeb" name="prioriterings_oenske" value="pakke" <%out.print(rek.getPrioritering() == Prioritering.PAKKEFORLOEB ? "checked" : "disabled" ); %> >Pakkeforløb
 					</div>
 					<div>
 					<label for="modalitet_navn">Modalitet</label>
@@ -148,16 +148,16 @@
 					<div id="transport">
 						<label for="transport">Transport</label>
 						<div id="ambulant_transport">
-							<input type="radio" id="ingenKørsel" name="ambulant_transport" value="ingen" <%out.print(rek.getAmbulantKoersel() == AmbulantKoersel.INGEN ? "checked" : "disabled"); %> disabled>Ingen Kørsel <br>
-							<input type="radio" id="siddendeKørsel" name="ambulant_transport" value="siddende" <%out.print(rek.getAmbulantKoersel() == AmbulantKoersel.SIDDENDE ? "checked" : "disabled"); %> disabled>Siddende Kørsel <br>
-							<input type="radio" id="liggendeKørsel" name="ambulant_transport" value="liggende" <%out.print(rek.getAmbulantKoersel() == AmbulantKoersel.LIGGENDE ? "checked" : "disabled"); %> disabled>Liggende Kørsel <br>
+							<input type="radio" id="ingenKørsel" name="ambulant_transport" value="ingen" <%out.print(rek.getAmbulantKoersel() == AmbulantKoersel.INGEN ? "checked" : "disabled"); %> >Ingen Kørsel <br>
+							<input type="radio" id="siddendeKørsel" name="ambulant_transport" value="siddende" <%out.print(rek.getAmbulantKoersel() == AmbulantKoersel.SIDDENDE ? "checked" : "disabled"); %> >Siddende Kørsel <br>
+							<input type="radio" id="liggendeKørsel" name="ambulant_transport" value="liggende" <%out.print(rek.getAmbulantKoersel() == AmbulantKoersel.LIGGENDE ? "checked" : "disabled"); %> >Liggende Kørsel <br>
 
 						</div>
 						<div id="indlagt_transport">
-							<input type="radio" id="gårUdenPortør" name="indlagt_transport" value="selv" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.GAA_UDEN_PORTOER ? "checked" : "disabled"); %> disabled>Går selv uden portør <br>
-							<input type="radio" id="gårMedPortør" name="indlagt_transport" value="portoer" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.GAA_MED_PORTOER ? "checked" : "disabled"); %> disabled>Går selv med portør <br>
-							<input type="radio" id="kørestolMedPortør" name="indlagt_transport" value="koerestol" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.KOERESTOL ? "checked" : "disabled"); %> disabled>Kørestol med portør <br>
-							<input type="radio" id="seng" name="indlagt_transport" value="seng" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.SENG ? "checked" : "disabled"); %> disabled>Seng<br>
+							<input type="radio" id="gårUdenPortør" name="indlagt_transport" value="selv" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.GAA_UDEN_PORTOER ? "checked" : "disabled"); %> >Går selv uden portør <br>
+							<input type="radio" id="gårMedPortør" name="indlagt_transport" value="portoer" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.GAA_MED_PORTOER ? "checked" : "disabled"); %> >Går selv med portør <br>
+							<input type="radio" id="kørestolMedPortør" name="indlagt_transport" value="koerestol" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.KOERESTOL ? "checked" : "disabled"); %> >Kørestol med portør <br>
+							<input type="radio" id="seng" name="indlagt_transport" value="seng" <%out.print(rek.getIndlaeggelseTransport() == IndlaeggelseTransport.SENG ? "checked" : "disabled"); %> >Seng<br>
 						</div>
 						<label for="dato_forslag">Ønsket tidspunkt</label>
 						<input type="text" id="dato_forslag" name="dato_forslag" value="<%out.print(rek.getDatoForslag() == null ? "" : rek.getDatoForslag()); %>" disabled>
@@ -165,8 +165,8 @@
 					
 					<div id="gravididtet">
 						<label for="gravididtet">Mulighed for graviditet</label>
-						<input type="radio" name="graviditet" id="jaGravid" value="true" <%out.print(rek.getGraviditet() ? "checked" : "disabled"); %> disabled>Ja
-						<input type="radio" name="graviditet" id="nejGravid" value="false" <%out.print(!rek.getGraviditet() ? "checked" : "disabled"); %> disabled>Nej
+						<input type="radio" name="graviditet" id="jaGravid" value="true" <%out.print(rek.getGraviditet() ? "checked" : "disabled"); %> >Ja
+						<input type="radio" name="graviditet" id="nejGravid" value="false" <%out.print(!rek.getGraviditet() ? "checked" : "disabled"); %> >Nej
 					</div>
 					
 					<div id="særligeForhold">
@@ -181,13 +181,13 @@
 								ingenSaerligeForhold = true;
 							}
  						%>
-						<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold" <%out.print(ingenSaerligeForhold ? "checked" : "disabled"); %> disabled>Ingen særlige forhold <br>
-						<input type="checkbox" id="hoerehaemmet" name="hoerehaemmet" <%out.print(rek.getHoerehaemmet() ? "checked" : "disabled"); %> disabled>Hørehæmmet <br>
-						<input type="checkbox" id="synshaemmet" name="synshaemmet" <%out.print(rek.getSynshaemmet() ? "checked" : "disabled"); %> disabled>Synshæmmet <br>
-						<input type="checkbox" id="amputeret" name="amputeret" <%out.print(rek.getAmputeret() ? "checked" : "disabled"); %> disabled>Amputeret <br>
-						<input type="checkbox" id="kan_ikke_staa" name="kan_ikke_staa" <%out.print(rek.getKanIkkeStaa() ? "checked" : "disabled"); %> disabled>Kan ikke selv stå <br>
-						<input type="checkbox" id="dement" name="dement" <%out.print(rek.getDement() ? "checked" : "disabled"); %> disabled>Dement <br>
-						<input type="checkbox" id="afasi" name="afasi" <%out.print(rek.getAfasi() ? "checked" : "disabled"); %> disabled>Afasi <br>
+						<input type="checkbox" id="ingen_saerlige_forhold" name="ingen_saerlige_forhold" <%out.print(ingenSaerligeForhold ? "checked" : ""); %> disabled>Ingen særlige forhold <br>
+						<input type="checkbox" id="hoerehaemmet" name="hoerehaemmet" <%out.print(rek.getHoerehaemmet() ? "checked" : ""); %> disabled>Hørehæmmet <br>
+						<input type="checkbox" id="synshaemmet" name="synshaemmet" <%out.print(rek.getSynshaemmet() ? "checked" : ""); %> disabled>Synshæmmet <br>
+						<input type="checkbox" id="amputeret" name="amputeret" <%out.print(rek.getAmputeret() ? "checked" : ""); %> disabled>Amputeret <br>
+						<input type="checkbox" id="kan_ikke_staa" name="kan_ikke_staa" <%out.print(rek.getKanIkkeStaa() ? "checked" : ""); %> disabled>Kan ikke selv stå <br>
+						<input type="checkbox" id="dement" name="dement" <%out.print(rek.getDement() ? "checked" : ""); %> disabled>Dement <br>
+						<input type="checkbox" id="afasi" name="afasi" <%out.print(rek.getAfasi() ? "checked" : ""); %> disabled>Afasi <br>
 						<label for="ilt">Ilt</label>
 						<input type="text" id="ilt" name="ilt" value="<%out.print(rek.getIltLiterPrmin() == null ? "" : rek.getIltLiterPrmin().toString()); %>" disabled><br>
 						<label for="tolk">Tolk</label>
@@ -209,7 +209,7 @@
 				</li>
 				<li>
 					<div id="supplerendeData">
-					
+						 
 					</div>
 				</li>
 				<li>
