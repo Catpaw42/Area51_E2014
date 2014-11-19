@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
+import database.dao.BrugerDao;
 import database.dao.ModalitetDao;
+import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
@@ -32,7 +34,7 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 @WebServlet("/VisitationServlet")
 public class VisitationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private java.sql.Connection conn = null;
 
 	// used for the search boxes in rekvisitionPage.jsp
@@ -42,12 +44,12 @@ public class VisitationServlet extends HttpServlet {
 
 	private RekvisitionDaoImplExt rekvisitionDao;
 	private ModalitetDao modDao;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public VisitationServlet() {
-        super();
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public VisitationServlet() {
+		super();
 		try {
 			this.conn = DataSourceConnector.getConnection();
 		} catch (ConnectionException e) {
@@ -55,7 +57,7 @@ public class VisitationServlet extends HttpServlet {
 		}
 		this.rekvisitionDao = new RekvisitionDaoImplExt(conn);
 		this.modDao = new ModalitetDaoImpl(conn);
-    }
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,7 +73,7 @@ public class VisitationServlet extends HttpServlet {
 			setDefaultTable(activeUser, request, response);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
-		
+
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class VisitationServlet extends HttpServlet {
 		String visiterAction = request.getParameter("visiterAction");
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
-			
+
 			response.sendRedirect(Const.VISITATION_PAGE);
 		}
 		else if("Afvis".equals(visiterAction)){
@@ -91,23 +93,21 @@ public class VisitationServlet extends HttpServlet {
 			searchRekvisition(request, response);
 		}
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-			
+
 	}
-	
+
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist = null;
 		// gets list of the active user - default behavior
 		if(activeUser != null){
 			rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, Status.PENDING, null, null);
-//		rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
 		}
 		//Stitch rekvisition[] to request object.
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
-//		request.getRequestDispatcher(Const.REKVISITION_PAGE).forward(request, response);
-}
-	
+	}
+
 	/**
 	 * have to be called so the dropdowns in rekvisitionPage are filled
 	 * @param request
@@ -116,9 +116,9 @@ public class VisitationServlet extends HttpServlet {
 		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
-	
+
 	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
 		// parameters
 		String cpr = request.getParameter(Const.PARAM_CPR);
 		String name = request.getParameter(Const.PARAM_NAME);
@@ -126,12 +126,12 @@ public class VisitationServlet extends HttpServlet {
 		String department = request.getParameter(Const.PARAM_DEPARTMENT);
 		department = (department.equals("-1") ? null : department);
 		String date = request.getParameter(Const.PARAM_DATE).replace(" ", "");
-		
+
 		Timestamp timestamp = null;
 		timestamp = (Validator.validateDate(date) ? Validator.stringToTimestamp(date) : null);
-	
+
 		String status = request.getParameter(Const.PARAM_STATUS);
-	
+
 
 		Status statusObj = null;
 
@@ -149,7 +149,7 @@ public class VisitationServlet extends HttpServlet {
 		System.out.println("department: " + department);
 		System.out.println("date: " + timestamp);
 		System.out.println("status: " + status);
-		
+
 		// objekter
 		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
@@ -161,47 +161,49 @@ public class VisitationServlet extends HttpServlet {
 		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
 		System.out.println("in " + (d2.getTime()- d1.getTime()) + " ms");
 		System.out.println("##################################");
-		
+
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
 		request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 
 	}
-	
+
 	private void declineRekvisition(HttpServletRequest request){
-		RekvisitionDaoImplExt rekDao = null;
+
 		int id=Integer.valueOf(request.getParameter("rekIDSubmit"));
+		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+
+		RekvisitionExtended rek = rekvisitionDao.findByPrimaryKey(id);
+		rek.setStatus(Status.DECLINED);
+		rek.setVisitatorId(activeBruger.getBrugerId());
+		System.out.println("id hey: " + activeBruger.getBrugerId());
+		rek.setVisitator(activeBruger); // is not necessary at the moment
+		rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
 		try {
-			rekDao = new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
-			RekvisitionExtended rek = rekDao.findByPrimaryKey(id);
-			rek.setStatus(Status.DECLINED);
-			rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
-			try {
-				System.out.println("decline");
-				System.out.println(rekDao.update(id, rek));
-			} catch (DaoException e) {
-				e.printStackTrace();
-			}
-		} catch (ConnectionException e) {
+			System.out.println("decline");
+			boolean success = rekvisitionDao.update(id, rek);
+			System.out.println("it rek successfully: " + success);
+		} catch (DaoException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void approveRekvisition(HttpServletRequest request){
-		RekvisitionDaoImplExt rekDao = null;
+		// gets selected rekvisition id
 		int id=Integer.valueOf(request.getParameter("rekIDSubmit"));
+		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+
+		RekvisitionExtended rek = rekvisitionDao.findByPrimaryKey(id);
+		rek.setStatus(Status.APPROVED);
+		rek.setVisitatorId(activeBruger.getBrugerId());
+		System.out.println("id hey: " + activeBruger.getBrugerId());
+		rek.setVisitator(activeBruger); // is not necessary at the moment
+		rek.setVisitatorPrioritering(request.getParameter("prioritet").toString());
+		rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
 		try {
-			rekDao = new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
-			RekvisitionExtended rek = rekDao.findByPrimaryKey(id);
-			rek.setStatus(Status.APPROVED);
-			rek.setVisitatorPrioritering(request.getParameter("prioritet").toString());
-			rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
-			try {
-				System.out.println("approve");
-				System.out.println(rekDao.update(id, rek));
-			} catch (DaoException e) {
-				e.printStackTrace();
-			}
-		} catch (ConnectionException e) {
+			System.out.println("approve");
+			boolean success = rekvisitionDao.update(id, rek);
+			System.out.println("it rek successfully: " + success);
+		} catch (DaoException e) {
 			e.printStackTrace();
 		}
 	}

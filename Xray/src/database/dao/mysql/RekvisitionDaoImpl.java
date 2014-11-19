@@ -430,6 +430,20 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 				params.add( dto.getInvasivULKontrolskemaId());
 			}
 		}
+		
+		if ( dto.isVisitatorIdModified()) {
+			if (sb.length() > 0) {
+				sb.append( ", " );
+			}
+
+			if ( dto.getVisitatorId() == null ) {
+				sb.append( "visitator_id=NULL" );
+			}
+			else {
+				sb.append( "visitator_id=?" );
+				params.add( dto.getVisitatorId());
+			}
+		}
 
 		if ( dto.getUndersoegelsesTypeId() != null ) {
 			if (sb.length() > 0) {
@@ -870,7 +884,6 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		dto.setRekvirentId( rs.getInt( cn[7] ));
 		dto.setVisitatorId( rs.getInt( cn[8] ));
 		dto.setPatientId( rs.getInt( cn[9] ));
-		System.out.println(dto.getPatientId());
 		dto.setHenvistTil( _Rekvisition_HenvistTils[ rs.getShort( cn[10] ) ]);
 		dto.setHospitalOenske( _Rekvisition_HospitalOenskes[ rs.getShort( cn[11] ) ]);
 

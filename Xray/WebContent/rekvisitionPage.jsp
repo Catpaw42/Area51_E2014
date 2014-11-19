@@ -15,6 +15,7 @@
 <link href="css/rekvisitionPage.css" rel="stylesheet" type="text/css" media="screen">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/rekvisitionPage.js"></script>
+		<script type="text/javascript" src="js/visitationPage.js"></script>
 <title>Rekvisition</title>
 </head>
 
@@ -160,6 +161,10 @@
  						%>
 					</table>
 				</div>
+			</li>
+			<li>
+			<div id="embededSite"></div>
+				<form id="visiterform" name="visiterform" method="post" action="RekvisitionServlet"></form>
 			</li>
 		</ul>
 	</div>

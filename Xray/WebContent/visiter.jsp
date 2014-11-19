@@ -34,10 +34,11 @@
 		}
 		catch(Exception e){
 		}
-		
+// 		rek = (RekvisitionExtended) request.getAttribute(Const.REKVISITION_SELECTED);
 // 		if(request.getParameter(Const.REKVISITION_ID) != null){
 // 		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 // 		}
+//TODO should not be retrieved from dao but as an attribute on request object
 		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 
 %>

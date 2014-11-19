@@ -67,6 +67,8 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
 
     public static final String TABLE = "rekvisition";
 
+	
+
     ////////////////////////////////////////////////////////////////////////////
     // Attributes
     ////////////////////////////////////////////////////////////////////////////
@@ -128,6 +130,7 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
     private boolean isPETCTKontrolskemaIdModified;
     private boolean isCTKontrastKontrolskemaIdModified;
     private boolean isInvasivULKontrolskemaIdModified;
+    private boolean isVisitatorIdModified;
     private boolean isHospitalOenskeModified;
     private boolean isAmbulantKoerselModified;
     private boolean isIndlaeggelseTransportModified;
@@ -242,6 +245,11 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
 
     public void setVisitatorId( Integer _val) {
         this.visitatorId = _val;
+        this.isVisitatorIdModified = true;
+    }
+    
+    public boolean isVisitatorIdModified(){
+    	return this.isVisitatorIdModified;
     }
 
     public Integer getPatientId() {
