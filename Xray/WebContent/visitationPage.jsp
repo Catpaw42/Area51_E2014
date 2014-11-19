@@ -125,6 +125,7 @@
 			<ul class=showInline>
 				<li>
 					<div class="visitationList">
+					Marker en undersøgelse for at se den i vinduet
 						<table>
 							<tr>
 								<th>Cpr</th>

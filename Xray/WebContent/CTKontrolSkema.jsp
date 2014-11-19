@@ -59,7 +59,12 @@
 				Nej<input type = "radio" id="NSAIDpræparatNej" name="NSAIDpræparat"></p>
 			</li>
 			<li>
-				<p>Har patienten kendt alergi?
+				<p>Er patienten i behandling med aminoglykosider?
+				Ja<input type = "radio" id="aminoglykosidJa" name="aminoglykosid">
+				Nej<input type = "radio" id="aminoglykosidNej" name="aminoglykosid"></p>
+			</li>
+			<li>
+				<p>Har patienten kendt allergi?
 				Ja<input type = "radio" id="alergiJa" name="alergi">
 				Nej<input type = "radio" id="alergiNej" name="alergi"></p>
 			</li>

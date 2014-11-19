@@ -7,7 +7,7 @@
 		</head>
 		<body>
 			<body class="UlInvKontrolSkema">
-		<h2>UlInvKontrolSkema</h2>
+		<h2>KontrolSkema for invasiv ultralyd</h2>
 		<ul>
 			<li>
 				<label for="akdato">Tidspunkt for sidste INR/Trombocytter</label>

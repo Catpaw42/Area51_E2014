@@ -302,14 +302,14 @@ public class NyRekvisitionServlet extends HttpServlet
 		pck.setOperation(Boolean.valueOf(request.getParameter("operation")));
 		pck.setOperationTekst(request.getParameter("operation_tekst"));
 		pck.setKemoOgStraale(convertKemostraale(request));
-		pck.setSidstePKreatTimestamp(Timestamp.valueOf(request.getParameter("straaleDato")));
+		pck.setSidstePKreatTimestamp(java.sql.Date.valueOf(request.getParameter("straaleDato")));
 		pck.setNedsatNyreFkt(Boolean.valueOf(request.getParameter("nedsatNyreFkt")));
 		try {
 			pck.setSidstePKreatinin(Integer.valueOf(request.getParameter("sidstePKreatinin")));
 		} catch (NumberFormatException e) {
 			pck.setSidstePKreatinin(null);
 		}
-		pck.setSidstePKreatTimestamp(Timestamp.valueOf(request.getParameter("sidstePKreatTimestamp")));
+		pck.setSidstePKreatTimestamp(java.sql.Date.valueOf(request.getParameter("sidstePKreatTimestamp")));
 
 		PETCTKontrolskemaDao petctkDao = new PETCTKontrolskemaDaoImpl(conn);
 		return petctkDao.insert(pck);
@@ -335,6 +335,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		ctk.setOver70(Boolean.valueOf(request.getParameter("over70")));
 		ctk.setHypertension(Boolean.valueOf(request.getParameter("hypertension")));
 		ctk.setNsaidPraeparat(Boolean.valueOf(request.getParameter("NSAIDpræparat")));
+		ctk.setAminoglykosider(Boolean.valueOf(request.getParameter("aminoglykosider")));
 		ctk.setAllergi(Boolean.valueOf(request.getParameter("alergi")));
 		ctk.setKontraststofreaktion(Boolean.valueOf(request.getParameter("konstrastofreaktion")));
 		ctk.setAstma(Boolean.valueOf(request.getParameter("astma")));
@@ -342,15 +343,15 @@ public class NyRekvisitionServlet extends HttpServlet
 		ctk.setMetformin(Boolean.valueOf(request.getParameter("metformin")));
 		ctk.setInterleukin2(Boolean.valueOf(request.getParameter("interleukin")));
 		ctk.setBetaBlokkere(Boolean.valueOf(request.getParameter("betaBlokkere")));
-		ctk.setPKreatininVaerdi(request.getParameter("Værdi"));
-		//	setPKreatininTimestamp???
+		ctk.setPKreatininVaerdi(request.getParameter("pKreatinin"));
+		ctk.setPKreatininTimestamp(java.sql.Date.valueOf(request.getParameter("pKreatininDato")));
 		try {
-			ctk.setPtHoejde(Integer.valueOf(request.getParameter("Højde")));
+			ctk.setPtHoejde(Integer.valueOf(request.getParameter("ptHøjde")));
 		} catch (NumberFormatException e) {
 			ctk.setPtHoejde(null);
 		}
 		try {
-			ctk.setPtVaegt(Integer.valueOf(request.getParameter("Vægt")));
+			ctk.setPtVaegt(Integer.valueOf(request.getParameter("ptVægt")));
 		} catch (NumberFormatException e) {
 			ctk.setPtVaegt(null);
 		}
@@ -413,7 +414,8 @@ public class NyRekvisitionServlet extends HttpServlet
 			e1.printStackTrace();
 		}	
 		UlInvKontrolskema uis = new UlInvKontrolskema();
-		uis.setAkTimestamp(Timestamp.valueOf(request.getParameter("aktimestamp")));
+		System.out.println(request.getParameter("aktimestamp"));
+		uis.setAkTimestamp(java.sql.Date.valueOf(request.getParameter("aktimestamp")));
 		try {
 			uis.setTrombocytter(Integer.valueOf(request.getParameter("trombocytter")));
 		} catch (NumberFormatException e) {

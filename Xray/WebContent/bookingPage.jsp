@@ -113,6 +113,7 @@
 		<ul class=showInline>
 			<li>
 				<div class="rekvisitionList" id="rekvisitionList">
+				Marker en undersøgelse for at se den i vinduet
 					<table>
 						<tr>
 							<th>Cpr</th>
