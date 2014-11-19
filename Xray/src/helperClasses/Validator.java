@@ -45,6 +45,43 @@ public class Validator {
 		return true;
 	}
 	
+	public static String parseCPRBirthday(String foedselsdagString) {
+		if(!validateCpr(foedselsdagString)){
+			return null;
+		}
+		Integer foedeaar = Integer.valueOf(foedselsdagString.substring(4, 6));
+		String digit7String = foedselsdagString.substring(6,7);
+		if (digit7String.equalsIgnoreCase("-") ) digit7String = foedselsdagString.substring(7, 8);
+		Integer digit7 = Integer.valueOf(digit7String);				
+		if (digit7 <= 3  ){
+			foedeaar = 1900 + foedeaar;
+		} else {
+			if ((digit7 == 4 || digit7 == 9) && foedeaar >=37){
+				foedeaar = 1900 + foedeaar;	
+			} else {
+				if (foedeaar >=58 && (digit7 !=4||digit7!=9)){
+					foedeaar = 1800 + foedeaar;
+				} else {
+					foedeaar = 2000 + foedeaar;
+				}
+			}
+
+		}
+		foedselsdagString = String.valueOf(foedeaar) + "-" + foedselsdagString.substring(2,4)+"-"+foedselsdagString.substring(0, 2);
+		System.out.println("birthday from cpr: " + foedselsdagString);
+		//		Date d = new Date();
+		//		System.out.println("Date format: " + d.toString());
+		//		Timestamp t = Timestamp.valueOf(foedselsdagString);
+		//		new Date(foedselsdagString);
+		//		new Date(123);
+		//		System.out.println("come on: " + Date.parse(foedselsdagString));
+		//		System.out.println("new format: " + java.sql.Date.valueOf(d.toString()));
+		//		System.out.println("second fomrat: " + Date.parse(d.toString()));
+		//		foedselsdagString = foedselsdagString + " 00:00:00.000000000";
+
+		return foedselsdagString;
+	}
+	
 	/**
 	 * Matches phone number. Accepts numbers with area code fx: 0045, +45 and 00298 not mandatory followed by 6, 8 or 10 digit numbers
 	 * @param phoneNo as string
@@ -60,7 +97,13 @@ public class Validator {
 	 * @return
 	 */
 	public static boolean validateCpr(String cpr){
-		return cpr == null ? false : cpr.matches("(\\d{6}-\\w{4})");
+		if(cpr == null || cpr.equalsIgnoreCase("") || cpr.length() < 10){
+			return false;
+		}
+		if(Integer.valueOf(cpr.substring(0, 1)) > 31 || Integer.valueOf(cpr.substring(2, 3)) > 12){
+			return false;
+		}
+		return cpr == null ? false : cpr.matches("(\\d{6}(-)?\\w{4})");
 	}
 	/**
 	 * 
