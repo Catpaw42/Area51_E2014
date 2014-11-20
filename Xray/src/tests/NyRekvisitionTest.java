@@ -1,8 +1,6 @@
 package tests;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -68,17 +66,17 @@ public class NyRekvisitionTest{
 		Bruger activeUser = BDao.findByPrimaryKey(1);
 		System.out.println("active user: " + activeUser);
 		
-		
-		
-        this.request = mock(HttpServletRequest.class);       
-        this. response = mock(HttpServletResponse.class);
-        
-		when(request.getPathInfo()).thenReturn("/lineup/world.xml");
-		final StubServletOutputStream servletOutputStream = new StubServletOutputStream();
-		when(response.getOutputStream()).thenReturn(servletOutputStream);
-		final ServletConfig servletConfig = mock(ServletConfig.class);
-		when(servletConfig.getInitParameter("defaultPool")).thenReturn("testpool1");
-		
+//		
+//		
+//        this.request = mock(HttpServletRequest.class);       
+//        this. response = mock(HttpServletResponse.class);
+//        
+//		when(request.getPathInfo()).thenReturn("/lineup/world.xml");
+//		final StubServletOutputStream servletOutputStream = new StubServletOutputStream();
+//		when(response.getOutputStream()).thenReturn(servletOutputStream);
+//		final ServletConfig servletConfig = mock(ServletConfig.class);
+//		when(servletConfig.getInitParameter("defaultPool")).thenReturn("testpool1");
+//		
 		request.getPathInfo();
 		
         this.rekvServlet = new NyRekvisitionServlet();
