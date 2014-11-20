@@ -253,7 +253,12 @@ public class NyRekvisitionServlet extends HttpServlet
 			Bruger activeBruger) {
 		Patient pt = new Patient();	
 		//		pt.setFoedselsdag(Timestamp.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
-		pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
+		
+		try {
+			pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
 		pt.setPatientCpr(request.getParameter(PATIENT_CPR));
 		pt.setPatientAdresse(request.getParameter(PATIENT_ADRESSE));
 		pt.setPatientNavn(request.getParameter(PATIENT_NAVN));
@@ -424,11 +429,15 @@ public class NyRekvisitionServlet extends HttpServlet
 			uis.setTrombocytter(null);
 		}
 		try {
-			uis.setInr(Integer.valueOf(request.getParameter("inr")));
+			String inrString = request.getParameter("inr");
+			String inrString2 = inrString.replace(",", ".");
+			uis.setInr(Double.valueOf(inrString2));
 		} catch (NumberFormatException e) {
-			uis.setInr(null);
+			uis.setInr(0.0);
 		}
-		if(Const.DEBUG)System.out.println(uis);
+		if(Const.DEBUG){
+			System.out.println(uis);
+		}
 		UlInvKontrolskemaDao uisDao = new UlInvKontrolskemaDaoImpl(conn);
 		return uisDao.insert(uis);
 	}

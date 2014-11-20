@@ -27,8 +27,10 @@ import database.dao.ModalitetDao;
 import database.dao.PETCTKontrolskemaDao;
 import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
+import database.dao.UlInvKontrolskemaDao;
 import database.dao.UndersoegelsesTypeDao;
 import database.dto.RekvisitionExtended;
+import database.dto.UlInvKontrolskema;
 import database.dto.RekvisitionExtended.Status;
 
 
@@ -80,16 +82,19 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		PatientDao ptDao = new PatientDaoImpl(conn);
 		ModalitetDao modDao = new ModalitetDaoImpl(conn);
 		UndersoegelsesTypeDao undDao = new UndersoegelsesTypeDaoImpl(conn);
+		UlInvKontrolskemaDao ulInvDao = new UlInvKontrolskemaDaoImpl(conn);
 
+		
 		for(int i = 0; i < rekv.length; i++){
-			rekv[i].setMrMkontroKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
+			rekv[i].setPatient(ptDao.findByPrimaryKey(rekv[i].getPatientId() != null ? rekv[i].getPatientId() : -1));
+			rekv[i].setUndersoegelsesType(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId() != null ? rekv[i].getUndersoegelsesTypeId() : -1));
+			rekv[i].setModalitet(modDao.findByPrimaryKey(rekv[i].getUndersoegelsesType() != null ? rekv[i].getUndersoegelsesType().getModalitetId() : -1));
+			rekv[i].setMRKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
 			rekv[i].setPetctKontrolskema(petctDao.findByPrimaryKey(rekv[i].getPETCTKontrolskemaId() != null ? rekv[i].getPETCTKontrolskemaId() : -1));
 			rekv[i].setCtKontrastKontrolskema(ctKontrDao.findByPrimaryKey(rekv[i].getCTKontrastKontrolskemaId() != null ? rekv[i].getCTKontrastKontrolskemaId() : -1));
+			rekv[i].setUlInvKontrolskema(ulInvDao.findByPrimaryKey(rekv[i].getInvasivULKontrolskemaId() != null ? rekv[i].getInvasivULKontrolskemaId() : -1));
 			rekv[i].setRekvirent(brugerDao.findByPrimaryKey(rekv[i].getRekvirentId() != null ? rekv[i].getRekvirentId() : -1));
-			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));		
-			rekv[i].setPatient(ptDao.findByPrimaryKey(rekv[i].getPatientId() != null ? rekv[i].getPatientId() : -1));
-			rekv[i].setModalitet(modDao.findByPrimaryKey(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId() != null ? rekv[i].getUndersoegelsesTypeId() : -1).getModalitetId()));
-			rekv[i].setUndersoegelsesType(undDao.findByPrimaryKey(rekv[i].getUndersoegelsesTypeId()));
+			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));
 		}
 		return rekv;
 	}

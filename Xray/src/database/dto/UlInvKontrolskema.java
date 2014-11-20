@@ -29,7 +29,7 @@ public class UlInvKontrolskema extends AbstractDto {
     private Integer ulInvKontrolskemaId;
     private Timestamp akTimestamp;
     private Integer trombocytter;
-    private Integer inr;
+    private Double inr;
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructors
@@ -73,11 +73,11 @@ public class UlInvKontrolskema extends AbstractDto {
         this.trombocytter = _val;
     }
 
-    public Integer getInr() {
+    public Double getInr() {
         return inr;
     }
 
-    public void setInr( Integer _val) {
+    public void setInr( Double _val) {
         this.inr = _val;
     }
 
@@ -110,7 +110,7 @@ public class UlInvKontrolskema extends AbstractDto {
         if ( inr == null ) {
             if ( _o.inr != null ) return false;
         }
-        else if ( _o.inr == null || inr.intValue() != _o.inr.intValue()) return false;
+        else if ( _o.inr == null || inr.doubleValue() != _o.inr.doubleValue()) return false;
 
         return true;
     }
@@ -124,7 +124,7 @@ public class UlInvKontrolskema extends AbstractDto {
         _ret += ulInvKontrolskemaId == null ? 0 : ulInvKontrolskemaId;
         _ret = 29 * _ret + (akTimestamp == null ? 0 : (int)akTimestamp.getTime());
         _ret = 29 * _ret + (trombocytter == null ? 0 : trombocytter);
-        _ret = 29 * _ret + (inr == null ? 0 : inr);
+        _ret = 29 * _ret + (inr == null ? 0 : Float.floatToIntBits(inr.floatValue()));
 
         return _ret;
     }
