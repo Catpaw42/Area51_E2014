@@ -231,9 +231,6 @@
 						kontrolSkemaTekst = rek.getUlInvKontrolskema().toString();
 					}
 					
-					if(rek.getInvasivULKontrolskemaId() != null){
-						System.out.println("UL ID:" + rek.getInvasivULKontrolskemaId().toString());
-					}
 					if(kontrolSkemaTekst != null){
 						kontrolSkemaTekst = kontrolSkemaTekst.replace("{", "</h2><p>");
 						kontrolSkemaTekst = kontrolSkemaTekst.replace("}", "</p>");
