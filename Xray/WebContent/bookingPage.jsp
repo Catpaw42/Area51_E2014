@@ -6,6 +6,7 @@
 <%@page import="database.dto.Rettigheder" %>
 <%@page import="helperClasses.Const" %>
 <%@ page import="database.dto.RekvisitionExtended"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.ArrayList"%>
 <html>
 <head>
@@ -137,7 +138,7 @@
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getPatient() == null ? "ingen patient" : r.getPatient().getStamafdeling() != null ? r.getPatient().getStamafdeling() : "ingen stamafdeling");
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
-								out.print(r.getAfsendtDato());
+								out.print(new SimpleDateFormat("dd-MMM-yyyy").format(r.getAfsendtDato()));
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.APPROVED)){
