@@ -85,7 +85,7 @@ public class UlInvKontrolskemaDaoImpl extends AbstractDaoImpl<UlInvKontrolskema>
             if ( dto.getInr() == null ) {
                 throw new DaoException("Value of column 'inr' cannot be null");
             }
-            stmt.setInt( 3, dto.getInr() );
+            stmt.setDouble( 3, dto.getInr() );
 
             int n = stmt.executeUpdate();
 
@@ -123,7 +123,7 @@ public class UlInvKontrolskemaDaoImpl extends AbstractDaoImpl<UlInvKontrolskema>
         dto.setUlInvKontrolskemaId( rs.getInt( 1 ));
         dto.setAkTimestamp( rs.getTimestamp( 2 ));
         dto.setTrombocytter( rs.getInt( 3 ));
-        dto.setInr( rs.getInt( 4 ));
+        dto.setInr( rs.getDouble( 4 ));
 
         return dto;
     }
