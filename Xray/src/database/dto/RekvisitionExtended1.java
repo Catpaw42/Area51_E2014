@@ -56,10 +56,10 @@ public class RekvisitionExtended1 extends RekvisitionExtended {
 		
 
 	}
-	public MRKontrolskema getMrMkontroKontrolskema() {
+	public MRKontrolskema getMRKontrolskema() {
 		return mrMkontroKontrolskema;
 	}
-	public void setMrMkontroKontrolskema(MRKontrolskema mrMkontroKontrolskema) {
+	public void setMRKontrolskema(MRKontrolskema mrMkontroKontrolskema) {
 		this.mrMkontroKontrolskema = mrMkontroKontrolskema;
 	}
 	public PETCTKontrolskema getPetctKontrolskema() {

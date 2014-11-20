@@ -73,7 +73,7 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
     // Attributes
     ////////////////////////////////////////////////////////////////////////////
     
-	private MRKontrolskema mrMkontroKontrolskema;
+	private MRKontrolskema mrKontrolskema;
 	private PETCTKontrolskema petctKontrolskema;
 	private CtKontrastKontrolskema ctKontrastKontrolskema;
 //	private invasiv_UL_kontrolskema ??
@@ -914,11 +914,11 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
         append( sb, "afsendtDato", afsendtDato );
     }
     
-	public MRKontrolskema getMrMkontroKontrolskema() {
-		return mrMkontroKontrolskema;
+	public MRKontrolskema getMRKontrolskema() {
+		return mrKontrolskema;
 	}
-	public void setMrMkontroKontrolskema(MRKontrolskema mrMkontroKontrolskema) {
-		this.mrMkontroKontrolskema = mrMkontroKontrolskema;
+	public void setMRKontrolskema(MRKontrolskema mrKontrolskema) {
+		this.mrKontrolskema = mrKontrolskema;
 	}
 	public PETCTKontrolskema getPetctKontrolskema() {
 		return petctKontrolskema;
