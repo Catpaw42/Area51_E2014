@@ -1,23 +1,17 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.sql.Connection;
-
-import database.DataSourceConnector;
-import junit.framework.TestResult;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import database.DataSourceConnector;
-import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.Status;
 import database.dto.Rettigheder;
-import database.dto.Rettigheder.Rettighed;
-import database.interfaces.IDataSourceConnector.ConnectionException;
 
 public class DtoTest {
 	
