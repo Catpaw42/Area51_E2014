@@ -15,6 +15,7 @@ import database.dao.UlInvKontrolskemaDao;
 import database.dto.Modalitet;
 import database.dto.Patient;
 import database.dto.RekvisitionExtended;
+import database.dto.UlInvKontrolskema;
 
 public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 	
@@ -226,7 +227,10 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 			rekv[i].setMRKontrolskema(mrDao.findByPrimaryKey(rekv[i].getMRKontrolskemaId() != null ? rekv[i].getMRKontrolskemaId() : -1));
 			rekv[i].setPetctKontrolskema(petctDao.findByPrimaryKey(rekv[i].getPETCTKontrolskemaId() != null ? rekv[i].getPETCTKontrolskemaId() : -1));
 			rekv[i].setCtKontrastKontrolskema(ctKontrDao.findByPrimaryKey(rekv[i].getCTKontrastKontrolskemaId() != null ? rekv[i].getCTKontrastKontrolskemaId() : -1));
-			rekv[i].setUlInvKontrolskema(ulInvDao.findByPrimaryKey(rekv[i].getInvasivULKontrolskemaId() != null ? rekv[i].getInvasivULKontrolskemaId() : -1));
+			
+			UlInvKontrolskema test =  ulInvDao.findByPrimaryKey(rekv[i].getInvasivULKontrolskemaId() != null ? rekv[i].getInvasivULKontrolskemaId() : -1);
+			System.out.println("ulinv: " + test.toString() + " og id: " + rekv[i].getInvasivULKontrolskemaId());
+			rekv[i].setUlInvKontrolskema(test);
 			rekv[i].setRekvirent(brugerDao.findByPrimaryKey(rekv[i].getRekvirentId() != null ? rekv[i].getRekvirentId() : -1));
 			rekv[i].setVisitator(brugerDao.findByPrimaryKey(rekv[i].getVisitatorId() != null ? rekv[i].getVisitatorId() : -1));
 		}
