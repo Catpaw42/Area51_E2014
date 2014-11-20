@@ -46,8 +46,13 @@
 			<ul class="showInline">
 				<li>
 					<div id="stamdata">
+							<%if(rek.getVisitator() != null) {
+								out.print("<b> Visitator</b>");
+								out.println("<p>" + rek.getVisitator().getFuldtNavn() + "</p>");
+							
+							}%>
 							<%if(rek.getVisitatorBemaerkning()!=null){
-								out.print("<h2>Visitatorbemærkninger</h2>");
+								out.print("<b>Visitatorbemærkninger</b>");
 								out.println("<p>" + rek.getVisitatorBemaerkning()+ "</p>");
 								out.println("<b>Visitatorprioritering</b>");
 								out.println("<p>" +rek.getVisitatorPrioritering() + "</p>");
@@ -241,3 +246,4 @@
 
 	</body>
 </html>
+

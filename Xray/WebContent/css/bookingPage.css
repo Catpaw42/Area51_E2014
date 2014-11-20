@@ -81,3 +81,11 @@
 	list-style-type: none;
 	
 }
+.markerBookedKnap {
+	background-color: #00FF00;
+	cursor: pointer;
+}
+.tilVisitationKnap {
+	 background-color: #FFFF00;
+	 cursor: pointer;
+}

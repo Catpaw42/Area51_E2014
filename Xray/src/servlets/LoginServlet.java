@@ -1,4 +1,6 @@
 package servlets;
+import helperClasses.Const;
+
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -9,16 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.DataSourceConnector;
-import database.dao.BrugerDao;
-import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dto.Bruger;
-import database.interfaces.IDataBaseController;
-import database.interfaces.IDataBaseController.DatabaseException;
-import database.interfaces.IDataBaseController.UserNotFoundException;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-import helperClasses.Const;
-import helperClasses.Const.*;
 
 /**
  * Servlet implementation class LoginServlet

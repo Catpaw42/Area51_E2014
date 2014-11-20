@@ -141,12 +141,12 @@
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.APPROVED)){
-								out.print("</td> <td bgcolor=#00FF00 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
-								out.print("marker som booket");
+								out.print("</td> <td id="+r.getRekvisitionId()+" href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
+								out.print("<button class=\"markerBookedKnap\">marker som booket</button>");
 								}
 								if(r.getStatus().equals(Status.BOOKED) || r.getStatus().equals(Status.APPROVED)){
-									out.print("</td> <td bgcolor=#FFFF00 id="+r.getRekvisitionId()+" style=cursor:pointer href=\"#\" onclick=revisitRekvisition("+r.getRekvisitionId()+")>");
-									out.print("til visitation");
+									out.print("</td> <td id="+r.getRekvisitionId()+" href=\"#\" onclick=revisitRekvisition("+r.getRekvisitionId()+")>");
+									out.print("<button class=\"tilVisitationKnap\">til visitation</button>");
 								}
 								out.print("</td> </tr>");
 								

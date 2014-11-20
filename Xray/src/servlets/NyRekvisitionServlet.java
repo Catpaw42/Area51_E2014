@@ -424,7 +424,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			uis.setTrombocytter(null);
 		}
 		try {
-			uis.setInr(Integer.valueOf(request.getParameter("inr")));
+			uis.setInr(Double.valueOf(request.getParameter("inr")));
 		} catch (NumberFormatException e) {
 			uis.setInr(null);
 		}
