@@ -76,7 +76,7 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
 	private MRKontrolskema mrKontrolskema;
 	private PETCTKontrolskema petctKontrolskema;
 	private CtKontrastKontrolskema ctKontrastKontrolskema;
-//	private invasiv_UL_kontrolskema ??
+	private UlInvKontrolskema ulInvKontrolskema;
 	private UndersoegelsesType undersoegelsesType;
 	private Bruger rekvirent;
 	private Bruger visitator;
@@ -964,6 +964,14 @@ public class RekvisitionExtended extends AbstractDto implements Cloneable{
 
 	public void setModalitet(Modalitet modalitet) {
 		this.modalitet = modalitet;
+	}
+
+	public UlInvKontrolskema getUlInvKontrolskema() {
+		return ulInvKontrolskema;
+	}
+
+	public void setUlInvKontrolskema(UlInvKontrolskema ulInvKontrolskema) {
+		this.ulInvKontrolskema = ulInvKontrolskema;
 	}
     
 }

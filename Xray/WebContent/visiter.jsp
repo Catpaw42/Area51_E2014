@@ -215,23 +215,25 @@
 					<h2>
 					<%
 					String kontrolSkemaTekst=null;
-					if(rek.getCTKontrastKontrolskemaId() != null){
+					if(rek.getCtKontrastKontrolskema() != null){
 						kontrolSkemaTekst = rek.getCtKontrastKontrolskema().toString();
 					}
 					
-					if(rek.getMRKontrolskemaId() != null){
+					if(rek.getMRKontrolskema() != null){
 						kontrolSkemaTekst = rek.getMRKontrolskema().toString();
 					}
 					
-					if(rek.getPETCTKontrolskemaId() != null){
+					if(rek.getPetctKontrolskema() != null){
 						kontrolSkemaTekst = rek.getPetctKontrolskema().toString();
 					}
 					
-					if(rek.getInvasivULKontrolskemaId() != null){
-						//missing
-						//kontrolSkemaTekst = rek.geti.toString();
+					if(rek.getUlInvKontrolskema() != null){
+						kontrolSkemaTekst = rek.getUlInvKontrolskema().toString();
 					}
 					
+					if(rek.getInvasivULKontrolskemaId() != null){
+						System.out.println("UL ID:" + rek.getInvasivULKontrolskemaId().toString());
+					}
 					if(kontrolSkemaTekst != null){
 						kontrolSkemaTekst = kontrolSkemaTekst.replace("{", "</h2><p>");
 						kontrolSkemaTekst = kontrolSkemaTekst.replace("}", "</p>");
