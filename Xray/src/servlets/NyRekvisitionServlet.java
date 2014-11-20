@@ -79,10 +79,10 @@ public class NyRekvisitionServlet extends HttpServlet
 		super();
 	}
 
-	/**
+	/**is Public so it can be tested with junit
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		//Getting List of modalities - first create connection
 		Connection conn = null;
@@ -102,10 +102,10 @@ public class NyRekvisitionServlet extends HttpServlet
 		request.getRequestDispatcher(Const.NEW_REKVISITION_PAGE).forward(request, response);
 	}
 
-	/**
+	/**is Public so it can be tested with junit 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		//Getting active user
 		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
