@@ -21,9 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 
 /**
  * This is the root parent of all DAO implementation classes.
@@ -36,7 +33,7 @@ public abstract class RootDaoImpl {
     /**
      * The logger.
      */
-    protected Log log = LogFactory.getLog( getClass());
+    //protected Log log = LogFactory.getLog( getClass());
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -138,38 +135,38 @@ public abstract class RootDaoImpl {
 
 
     protected final void debugSql( String sql ) {
-        if (log.isDebugEnabled()) {
-            log.debug( sqlLog( sql, null));
-        }
+//        if (log.isDebugEnabled()) {
+//            log.debug( sqlLog( sql, null));
+//        }
     }
 
 
     protected final void debugSql( String sql, Object param ) {
-        if (log.isDebugEnabled()) {
-            log.debug( sqlLog( sql, null) + " PARAM: " + param );
-        }
+//        if (log.isDebugEnabled()) {
+//            log.debug( sqlLog( sql, null) + " PARAM: " + param );
+//        }
     }
 
 
     protected final void debugSql( String sql, Object[] params ) {
-        if (log.isDebugEnabled()) {
-            log.debug( sqlLog( sql, params));
-        }
+//        if (log.isDebugEnabled()) {
+//            log.debug( sqlLog( sql, params));
+//        }
     }
 
 
     protected final void errorSql( Throwable t, String sql ) {
-        log.error( sqlLog( sql, null), t );
+//        log.error( sqlLog( sql, null), t );
     }
 
 
     protected final void errorSql( Throwable t, String sql, Object param ) {
-        log.error( sqlLog( sql, null) + " PARAM: " + param, t );
+//        log.error( sqlLog( sql, null) + " PARAM: " + param, t );
     }
 
 
     protected final void errorSql( Throwable t, String sql, Object[] params ) {
-        log.error( sqlLog( sql, params), t );
+//        log.error( sqlLog( sql, params), t );
     }
 
 

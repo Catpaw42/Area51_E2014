@@ -30,7 +30,7 @@ try{
 							<div id="patientData" class="hover">
 								<h2>Patient</h2>
 								<label for="patient_cpr">CPR-Nummer</label>
-								<input class="required" type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789">
+								<input class="required" type="text" id="patient_cpr" name="patient_cpr" placeholder="012345-6789" pattern="(?:(?:(?:(?:31)(?:(?:0[13578])|10|12))[0-9]{2})|(?:(?:(?:30)(?:(?:0[013-9])|1[0-2]))[0-9]{2})|(?:(?:[0-2][0-9])(?:(0[0-9])|(?:1[0-2]))[0-9]{2}))-?[0-9]{4}">
 								<label for="patient_navn">Patient Navn</label>
 								<input class="required" type="text" id="patient_navn" name="patient_navn" placeholder="Navn">
 								<label for="patient_adresse">Adresse</label>

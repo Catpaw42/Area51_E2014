@@ -89,62 +89,39 @@ public class MainServlet extends HttpServlet {
 			}
 		}
 		System.out.println("primary page: " + primaryPage);
-		//User requested
-		switch (primaryPage) {
-		case Const.LOGIN_SERVLET:
+		if (Const.LOGIN_SERVLET.equals(primaryPage)) {
 			forward("/" + Const.LOGIN_SERVLET,request,response);
-			break;
-		case Const.REKVISITION_SERVLET:
+		} else if (Const.REKVISITION_SERVLET.equals(primaryPage)) {
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
 			response.sendRedirect(Const.REKVISITION_SERVLET);
-//			forward("/" + Const.REKVISITION_SERVLET,request,response);
-			break;
-		case Const.VISITATION_SERVLET:
+		} else if (Const.VISITATION_SERVLET.equals(primaryPage)) {
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.VISITATION_TITLE);
 			response.sendRedirect(Const.VISITATION_SERVLET);
-//			forward("/" + Const.VISITATION_SERVLET, request, response);
-			break;
-		case Const.BOOKING_SERVLET:
+		} else if (Const.BOOKING_SERVLET.equals(primaryPage)) {
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.BOOKING_TITLE);
 			response.sendRedirect(Const.BOOKING_SERVLET);
-//			forward("/" + Const.BOOKING_SERVLET, request, response);
-			break;
-		case Const.ADMIN_SERVLET:
+		} else if (Const.ADMIN_SERVLET.equals(primaryPage)) {
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.ADMINISTRER_TITLE);
 			forward("/" + Const.ADMIN_SERVLET, request, response);
-			break;
-		case Const.CT_KONTROLSKEMA_SERVLET:
-			response.sendRedirect(Const.CT_KONTROLSKEMA_SERVLET);;
-//			forward("/" + Const.CT_KONTROLSKEMA_SERVLET, request, response);
-			break;
-		case Const.PET_CT_KONTROLSKEMA_SERVLET:
+		} else if (Const.CT_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
+			response.sendRedirect(Const.CT_KONTROLSKEMA_SERVLET);
+			;
+		} else if (Const.PET_CT_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
 			response.sendRedirect(Const.PET_CT_KONTROLSKEMA_SERVLET);
-//			forward("/"+Const.PET_CT_KONTROLSKEMA_SERVLET, request, response);
-			break;
-		case Const.MR_KONTROLSKEMA_SERVLET:
+		} else if (Const.MR_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
 			response.sendRedirect(Const.MR_KONTROLSKEMA_SERVLET);
-//			forward("/"+Const.MR_KONTROLSKEMA_SERVLET, request, response);
-			break;
-		case Const.UL_INV_KONTROLSKEMA_SERVLET:
+		} else if (Const.UL_INV_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
 			response.sendRedirect(Const.UL_INV_KONTROLSKEMA_SERVLET);
-//			forward("/"+Const.UL_INV_KONTROLSKEMA_SERVLET, request, response);
-			break;
-		default:
-			//forward("/"+Const.LOGIN_SERVLET, request, response);
-			break;
+		} else {
 		}		
 	}
 	private void checkAction(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		String action = request.getParameter("action");
 		if (action == null) action = "";
-		switch (action) {
-		case "logout":
+		if ("logout".equals(action)) {
 			request.getSession().invalidate();
 			response.sendRedirect(Const.LOGIN_SERVLET);
-			break;
-
-		default:
-			break;
+		} else {
 		}
 		
 	}

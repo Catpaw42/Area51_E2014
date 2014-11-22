@@ -100,17 +100,17 @@
 			</li>
 			<li>
 				<label for="pKreatinin">P-Kreatinin</label>
-				<input type="text" id="pKreatinin" name="pKreatinin" placeholder="Værdi">
+				<input type="number" id="pKreatinin" name="pKreatinin" placeholder="Værdi">
 				<label for="pKreatininDato">P-Kreatinin Dato</label>
 				<input type="date" id="pKreatininDato" name="pKreatininDato">
 			</li>
 			<li>
 				<label for="ptHøjde">Pt. Højde</label>
-				<input type="text" id="ptHøjde" name="ptHøjde" placeholder="Højde">
+				<input type="number" id="ptHøjde" name="ptHøjde" placeholder="Højde">
 			</li>
 			<li>
 				<label for="ptVægt">Pt. Vægt</label>
-				<input type="text" id="ptVægt" name="ptVægt" placeholder="Vægt">
+				<input type="number" id="ptVægt" name="ptVægt" placeholder="Vægt">
 			</li>
 		</ul>
 	</body>

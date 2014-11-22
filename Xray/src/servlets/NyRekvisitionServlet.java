@@ -286,7 +286,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		}
 		PETCTKontrolskema pck = new PETCTKontrolskema();
 		pck.setFormaal(convertFormaalMetode(request));
-		pck.setFormaalTekst(request.getParameter("formaal_text"));
+		pck.setFormaalTekst(request.getParameter("formaal_tekst"));
 		pck.setKanPtLiggeStille30(Boolean.valueOf(request.getParameter("kanPtLiggeStille30")));
 		pck.setPtTaalerFaste(Boolean.valueOf(request.getParameter("ptTaalerFaste")));
 		pck.setDiabetes(Boolean.valueOf(request.getParameter("diabetes")));

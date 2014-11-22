@@ -183,7 +183,7 @@ public abstract class AbstractDaoImpl<T> extends RootDaoImpl {
 
         if (ret > 1) {
             String err = "More than one record deleted";
-            log.error( err + " for " + sqlLog( sql, params ));
+//            log.error( err + " for " + sqlLog( sql, params ));
 
             throw new DaoException( err );
         }

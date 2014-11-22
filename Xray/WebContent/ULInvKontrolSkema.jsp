@@ -15,11 +15,11 @@
 			</li>
 			<li>
 					<label for="trombocytter">Trombocytter</label>
-					<input type="text" id="trombocytter" name="trombocytter" placeholder="Indtast trompocytter">
+					<input type="number" id="trombocytter" name="trombocytter" placeholder="Indtast trombocytter">
 			</li>
 			<li>
-					<label for="inr">INR</label>
-					<input type="text" id="inr" name="inr" placeholder="Indtast INR">
+					<label for="inr">INR (med 1 decimal)</label>
+					<input type="text" id="inr" name="inr" placeholder="Indtast INR" pattern="[0-9]+[.,][0-9]?">
 			</li>
 		</ul>
 		</body>

@@ -57,7 +57,7 @@
 				Ja<input type = "radio" id="fedmeJa" name="fedme" value="true">
 				Nej<input type = "radio" id="fedmeNej" name="fedme" value="false"></p>
 				<label for="petctvaegt">Vægt:</label>
-				<input type="text" id="petctvaegt" name="petctvaegt">
+				<input type="number" id="petctvaegt" name="petctvaegt">
 			</li>
 			<li>
 				<p>Biopsi / finnålspunktur:
@@ -103,7 +103,7 @@
 			<li>
 				<p>P-kreatinin skal foreligge senest 1 uge før undersøgelse hos alle patienter</p>
 				<label for="sidstePKreatinin">Sidste P-kreatinin</label>
-				<input type="text" id="sidstePKreatinin" name= "sidstePKreatinin" placeholder="&#x3bcmol/l">
+				<input type="number" id="sidstePKreatinin" name= "sidstePKreatinin" placeholder="&#x3bcmol/l">
 				<label for="sidstePKreatTimestamp">Sidste P-kreatinin</label>
 				<input type="date" id="sidstePKreatTimestamp" name="sidstePKreatTimestamp">
 			</li>

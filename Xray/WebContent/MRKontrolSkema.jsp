@@ -35,14 +35,14 @@
 				Ja<input type = "radio" id="nyresygdomJa" name="nyresygdom">
 				Nej<input type = "radio" id="nyresygdomNej" name="nyresygdom"></p>
 				<p>P-Creatinin (max. 7 dage gammel)</p>
-				<input type="text" id="nyresygdom_kreatinin" name="nyresygdom_kreatinin" placeholder="&#x3bcmol/l">
+				<input type="number" id="nyresygdom_kreatinin" name="nyresygdom_kreatinin" placeholder="&#x3bcmol/l">
 			</li>
 			<li>
 				<p>Graviditet
 				Ja<input type = "radio" id="graviditetJa" name="graviditet">
 				Nej<input type = "radio" id="graviditetNej" name="graviditet"></p>
 				<p>Graviditetsuge</p>
-				<input type="text" id="graviditet_uge" name="graviditet_uge">
+				<input type="number" id="graviditet_uge" name="graviditet_uge">
 			</li>
 			<li>
 				<p>Klaustrofobi
@@ -51,11 +51,11 @@
 			</li>
 			<li>
 				<p>Højde</p>
-				<input type="text" id="hoejde" name="hoejde">
+				<input type="number" id="hoejde" name="hoejde">
 			</li>
 			<li>
 				<p>Vægt</p>
-				<input type="text" id="vaegt" name="vaegt">
+				<input type="number" id="vaegt" name="vaegt">
 			</li>
 			<li>
 				<p>Ved MR skanning af børn <br>
