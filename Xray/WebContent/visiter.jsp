@@ -31,11 +31,9 @@
 		<% //methods
 	RekvisitionExtended rek = null;
 	
-// 		rek = (RekvisitionExtended) request.getAttribute(Const.REKVISITION_SELECTED);
-// 		if(request.getParameter(Const.REKVISITION_ID) != null){
-// 		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
-// 		}
-//TODO should not be retrieved from dao but as an attribute on request object
+
+	if(request.getParameter(Const.REKVISITION_ID)!=null){ //start if (slutter i bunden)
+	
 		DatabaseController databaseController = (DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		rek = databaseController.getRekvisitionDao().findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 
@@ -243,4 +241,4 @@
 
 	</body>
 </html>
-
+<% }//end if %>

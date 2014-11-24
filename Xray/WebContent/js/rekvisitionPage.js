@@ -37,6 +37,8 @@ function getRekvisitation(rekvisition_Id){
 	    if(status = "success"){
 	    	//indsæt de hentede data i div element
 	    	$("#embededSite").html(data);
+	    	var visiterDiv = document.getElementById('embededSite');
+	    	visiterDiv.scrollTop = 0; //scroll til top af siden
 	    }
 	});
 	$('input[name="rekIDSubmit"]').val(rekvisition_Id);

@@ -19,7 +19,7 @@ function revisitRekvisition(id){
 	if(confirm("Er du sikker du vil få rekvisitionen visiteret igen?") == true){
 		$.get("BookingServlet?action=revisit&bookingId=" + id, function(data, status){
 			if(status == "success"){
-				location.reload(true);
+				console.log("id="+id);
 			}
 		});
 	}
@@ -67,6 +67,8 @@ $(document).ready(function()
 			    if(status = "success"){
 			    	//indsæt de hentede data i div element
 			    	$("#embededSite").html(data);
+			    	var visiterDiv = document.getElementById('embededSite');
+			    	visiterDiv.scrollTop = 0; //scroll til top af siden
 			    }
 			});
 			$('input[name="rekIDSubmit"]').val(rekvisition_Id);
