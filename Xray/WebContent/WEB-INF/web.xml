@@ -59,10 +59,6 @@
     <servlet-class>servlets.TestServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/LoginServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>MainServlet</servlet-name>
     <url-pattern>/MainServlet</url-pattern>
   </servlet-mapping>
