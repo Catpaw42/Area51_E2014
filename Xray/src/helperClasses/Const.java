@@ -5,12 +5,12 @@ public final class Const {
 	public static final Boolean DEBUG = true;
 
 	// pages
-	public static final String REKVISITION_PAGE = "rekvisitionPage.jsp";
-	public static final String LOGIN_PAGE = "loginPage.jsp";
-	public static final String NEW_REKVISITION_PAGE = "nyRekvisitionPage.jsp";
-	public static final String ADMIN_PAGE = "adminPage.jsp";
-	public static final String BOOKING_PAGE = "bookingPage.jsp";
-	public static final String VISITATION_PAGE = "visitationPage.jsp";
+	public static final String REKVISITION_PAGE = "WEB-INF/rekvisitionPage.jsp";
+	public static final String LOGIN_PAGE = "WEB-INF/loginPage.jsp";
+	public static final String NEW_REKVISITION_PAGE = "WEB-INF/nyRekvisitionPage.jsp";
+	public static final String ADMIN_PAGE = "WEB-INF/adminPage.jsp";
+	public static final String BOOKING_PAGE = "WEB-INF/bookingPage.jsp";
+	public static final String VISITATION_PAGE = "WEB-INF/visitationPage.jsp";
 	
 	//Page titles
 	public static final String PAGEHEADING = "PageHeading";

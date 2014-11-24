@@ -1,13 +1,13 @@
 package tests;
+import java.sql.Connection;
+
 import com.spoledge.audao.db.dao.DaoException;
 
+import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.mysql.BrugerDaoImpl;
 import database.dto.Bruger;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-import database.DataSourceConnector;
-
-import java.sql.*;
 // TODO Make this work
 public class DatabaseTest {
 

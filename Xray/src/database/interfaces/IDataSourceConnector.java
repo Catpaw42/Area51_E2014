@@ -1,6 +1,5 @@
 package database.interfaces;
 
-import javax.naming.NamingException;
 
 public interface IDataSourceConnector {
 

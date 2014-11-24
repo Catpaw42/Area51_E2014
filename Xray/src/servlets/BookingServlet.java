@@ -15,16 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.DataSourceConnector;
-import database.DatabaseController;
-import database.dao.ModalitetDao;
-import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.Status;
-import database.interfaces.IDataSourceConnector.ConnectionException;
+import database.interfaces.IDatabaseController;
 
 /**
  * Servlet implementation class BookingServlet
@@ -52,7 +48,7 @@ public class BookingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		createSearchDropdowns(request);
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 
 
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
@@ -109,7 +105,7 @@ public class BookingServlet extends HttpServlet {
 	 * @param request
 	 */
 	private void createSearchDropdowns(HttpServletRequest request){
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
@@ -165,7 +161,7 @@ public class BookingServlet extends HttpServlet {
 	}
 
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist1 = null;
 		RekvisitionExtended[] rekvlist2 = null;

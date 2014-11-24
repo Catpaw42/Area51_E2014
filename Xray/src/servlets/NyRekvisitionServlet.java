@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.DatabaseController;
-import database.dao.RekvisitionDao;
-import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
 import database.dto.MRKontrolskema;
@@ -35,6 +32,7 @@ import database.dto.RekvisitionExtended.Prioritering;
 import database.dto.RekvisitionExtended.Samtykke;
 import database.dto.UlInvKontrolskema;
 import database.dto.UndersoegelsesType;
+import database.interfaces.IDatabaseController;
 
 /**
  * Servlet implementation class NyRekvisitionServlet
@@ -64,7 +62,7 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 
 		//Getting Modalities
 		Modalitet[] modList = databaseController.getModalitetDao().findDynamic(null, 0, -1, null);
@@ -85,7 +83,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (activeBruger == null) response.sendRedirect(Const.MAIN_SERVLET);
 		request.setCharacterEncoding("UTF-8");
 
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Getting active user
 
 		//Storing patient data.
@@ -215,7 +213,7 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storePatient(HttpServletRequest request, Bruger activeBruger) {
 		Patient pt = new Patient();	
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		try {
 			pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
 		} catch (IllegalArgumentException e) {
@@ -240,7 +238,7 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storePETCTSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		PETCTKontrolskema pck = new PETCTKontrolskema();
 		pck.setFormaal(convertFormaalMetode(request));
 		pck.setFormaalTekst(request.getParameter("formaal_tekst"));
@@ -280,7 +278,7 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storeCTKSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//	Making CTTKontrolskema dto
 		CtKontrastKontrolskema ctk = new CtKontrastKontrolskema();
 		ctk.setDiabetes(Boolean.valueOf(request.getParameter("diabetes")));
@@ -319,7 +317,7 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storeMRSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		MRKontrolskema mrk = new MRKontrolskema();
 		mrk.setPacemaker(Boolean.valueOf(request.getParameter("pacemaker")));
 		mrk.setMetalImplantater(Boolean.valueOf(request.getParameter("metal_implantater")));
@@ -358,7 +356,7 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storeULInvKontrolSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);	
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);	
 		UlInvKontrolskema uis = new UlInvKontrolskema();
 		System.out.println(request.getParameter("aktimestamp"));
 		uis.setAkTimestamp(java.sql.Date.valueOf(request.getParameter("aktimestamp")));

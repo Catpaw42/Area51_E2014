@@ -7,19 +7,14 @@ package database.dao.mysql;
 
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-
 import java.util.ArrayList;
 
 import com.spoledge.audao.db.dao.AbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
-
 
 import database.dao.PatientDao;
 import database.dto.Patient;

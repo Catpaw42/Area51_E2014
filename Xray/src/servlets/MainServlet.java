@@ -13,6 +13,7 @@ import database.DatabaseController;
 import database.dto.Bruger;
 import database.dto.Rettigheder;
 import database.dto.Rettigheder.Rettighed;
+import database.interfaces.IDatabaseController;
 
 /**
  * Main Servlet - delegates responsibilities to relevant sub Servlet
@@ -32,7 +33,7 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		if(databaseController == null){
 			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController());
 		}
@@ -43,7 +44,7 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		if(databaseController == null){
 			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController());
 		}
@@ -129,6 +130,7 @@ public class MainServlet extends HttpServlet {
 		if (action == null) action = "";
 		if ("logout".equals(action)) {
 			request.getSession().invalidate();
+			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController()); // fix så man kan logge ind igen
 			response.sendRedirect(Const.LOGIN_SERVLET);
 		} else {
 		}
