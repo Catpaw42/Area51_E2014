@@ -216,6 +216,8 @@ public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 		
 		
 	}
+	
+	
 	private RekvisitionExtended[] addObjectsToRekvisition(RekvisitionExtended[] rekv){
 		if(rekv == null || rekv.length <= 0) return null;
 

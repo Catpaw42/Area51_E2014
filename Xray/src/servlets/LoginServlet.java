@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.DataSourceConnector;
+import database.DatabaseController;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dto.Bruger;
 import database.interfaces.IDataSourceConnector.ConnectionException;
@@ -48,6 +49,7 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//User posts login data
 		String username = request.getParameter(Const.USERNAME);
 		String password = request.getParameter(Const.PASSWORD);
@@ -57,22 +59,14 @@ public class LoginServlet extends HttpServlet
 		if (username != null && password != null)
 		{
 			boolean loginSuccess = false;
-				
-			Connection conn = null;
-			try {
-				conn = DataSourceConnector.getConnection();
-			} catch (ConnectionException e1) {
-				e1.printStackTrace();
-				System.err.println("connection failed in login servlet");
-			}
-			//TODO skifte til interface når DAO og DTO er rigtige
-			BrugerDaoImplExtended b = new BrugerDaoImplExtended(conn);
 			
-			loginSuccess = b.validate(username, password);
+
+			
+			loginSuccess = databaseController.getBrugerDao().validate(username, password);
 			System.out.println(loginSuccess);
 			if (loginSuccess)
 			{
-					Bruger loggedInUser= b.findByUserName(username, password);
+					Bruger loggedInUser= databaseController.getBrugerDao().findByUserName(username, password);
 					
 					if(loggedInUser.getErAktiv())
 					{

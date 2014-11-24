@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<%@page import="database.DatabaseController"%>
 <%@page import="database.dto.RekvisitionExtended.IndlaeggelseTransport"%>
 <%@page import="database.dto.RekvisitionExtended.AmbulantKoersel"%>
 <%@page import="database.dto.RekvisitionExtended.Prioritering"%>
@@ -14,6 +15,7 @@
 <%@page import="servlets.LoginServlet"%>
 <%@page import="database.dto.Bruger"%>
 <%@page import="helperClasses.Const" %>
+<%@ page import="database.DatabaseController"%>
 <%@ page import="database.dto.RekvisitionExtended"%>
 <%@ page import="database.dao.mysql.RekvisitionDaoImplExt"%>
 <%@ page import="java.util.ArrayList"%>
@@ -28,18 +30,14 @@
 		</head>
 		<% //methods
 	RekvisitionExtended rek = null;
-		RekvisitionDaoImplExt rekDao = null;
-		try{
-			rekDao=new RekvisitionDaoImplExt(DataSourceConnector.getConnection());
-		}
-		catch(Exception e){
-		}
+	
 // 		rek = (RekvisitionExtended) request.getAttribute(Const.REKVISITION_SELECTED);
 // 		if(request.getParameter(Const.REKVISITION_ID) != null){
 // 		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 // 		}
 //TODO should not be retrieved from dao but as an attribute on request object
-		rek = rekDao.findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
+		DatabaseController databaseController = (DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		rek = databaseController.getRekvisitionDao().findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 
 %>
 		<body class="visiter">

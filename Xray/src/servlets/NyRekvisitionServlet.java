@@ -3,9 +3,6 @@ package servlets;
 import helperClasses.Const;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -16,36 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.DataSourceConnector;
-import database.dao.BrugerDao;
-import database.dao.CtKontrastKontrolskemaDao;
-import database.dao.MRKontrolskemaDao;
-import database.dao.ModalitetDao;
-import database.dao.PETCTKontrolskemaDao;
-import database.dao.PatientDao;
+import database.DatabaseController;
 import database.dao.RekvisitionDao;
-import database.dao.UlInvKontrolskemaDao;
-import database.dao.UndersoegelsesTypeDao;
-import database.dao.mysql.BrugerDaoImpl;
-import database.dao.mysql.CtKontrastKontrolskemaDaoImpl;
-import database.dao.mysql.MRKontrolskemaDaoImpl;
-import database.dao.mysql.ModalitetDaoImpl;
-import database.dao.mysql.PETCTKontrolskemaDaoImpl;
-import database.dao.mysql.PatientDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
-import database.dao.mysql.UlInvKontrolskemaDaoImpl;
-import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
 import database.dto.MRKontrolskema;
-import database.dto.Modalitet;
-import database.dto.PETCTKontrolskema;
-import database.dto.Patient;
-import database.dto.RekvisitionExtended;
 import database.dto.MRKontrolskema.MRBoern;
 import database.dto.MRKontrolskema.MRVoksen;
+import database.dto.Modalitet;
+import database.dto.PETCTKontrolskema;
 import database.dto.PETCTKontrolskema.Formaal;
 import database.dto.PETCTKontrolskema.KemoOgStraale;
+import database.dto.Patient;
+import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.AmbulantKoersel;
 import database.dto.RekvisitionExtended.HenvistTil;
 import database.dto.RekvisitionExtended.HospitalOenske;
@@ -54,7 +35,6 @@ import database.dto.RekvisitionExtended.Prioritering;
 import database.dto.RekvisitionExtended.Samtykke;
 import database.dto.UlInvKontrolskema;
 import database.dto.UndersoegelsesType;
-import database.interfaces.IDataSourceConnector.ConnectionException;
 
 /**
  * Servlet implementation class NyRekvisitionServlet
@@ -84,18 +64,10 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		//Getting List of modalities - first create connection
-		Connection conn = null;
-		try {
-			conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e) {
-			//Connection Fails TODO message to user
-			e.printStackTrace();
-		}
-		//And DAO
-		ModalitetDao modDao = new ModalitetDaoImpl(conn);
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+
 		//Getting Modalities
-		Modalitet[] modList = modDao.findDynamic(null, 0, -1, null);
+		Modalitet[] modList = databaseController.getModalitetDao().findDynamic(null, 0, -1, null);
 		request.setAttribute(Const.MODALITY_LIST, modList);
 		if (Const.DEBUG) System.out.println(modList);
 
@@ -112,17 +84,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		//Checking if activeUser
 		if (activeBruger == null) response.sendRedirect(Const.MAIN_SERVLET);
 		request.setCharacterEncoding("UTF-8");
-		//Getting a database connection....
-		Connection conn = null;
-		try {
-			conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
-		}
+
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Getting active user
 
 		//Storing patient data.
-		Integer ptId = storePatient(request, conn, activeBruger);
+		Integer ptId = storePatient(request, activeBruger);
 
 		//Making Rekvisition DTO
 		RekvisitionExtended rek = new RekvisitionExtended();
@@ -153,15 +120,13 @@ public class NyRekvisitionServlet extends HttpServlet
 		UndersoegelsesType USType = new UndersoegelsesType();
 		USType.setModalitetId(Integer.valueOf(request.getParameter("modalitet_navn")));
 		USType.setUndersoegelsesNavn(request.getParameter("undersoegelses_type"));
-		UndersoegelsesTypeDao usTypeDao = new UndersoegelsesTypeDaoImpl(conn) ;
 		try {
-			USTypeID = usTypeDao.insert(USType);
+			USTypeID = databaseController.getUndersoegelsesTypeDao().insert(USType);
 		} catch (DaoException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		rek.setUndersoegelsesTypeId(USTypeID); //TODO FIXXX!!!
+		rek.setUndersoegelsesTypeId(USTypeID);
 
 		rek.setKliniskProblemstilling(request.getParameter("klinisk_problemstilling"));
 		rek.setAmbulantKoersel(convertAmbulantKoersel(request));
@@ -235,9 +200,8 @@ public class NyRekvisitionServlet extends HttpServlet
 		} else {
 		}
 		//Now store the requisition
-		RekvisitionDao rekDao = new RekvisitionDaoImplExt(conn);
 		try {
-			rekDao.insert(rek);
+			databaseController.getRekvisitionDao().insert(rek);
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -249,11 +213,9 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	}
 
-	private Integer storePatient(HttpServletRequest request, Connection conn,
-			Bruger activeBruger) {
+	private Integer storePatient(HttpServletRequest request, Bruger activeBruger) {
 		Patient pt = new Patient();	
-		//		pt.setFoedselsdag(Timestamp.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
-		
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		try {
 			pt.setFoedselsdag(java.sql.Date.valueOf(parseCPRBirthday(request.getParameter(PATIENT_CPR))));
 		} catch (IllegalArgumentException e) {
@@ -267,9 +229,9 @@ public class NyRekvisitionServlet extends HttpServlet
 		if (Const.DEBUG)System.out.println(pt);
 		//Time to store patient
 		Integer ptId = null;
-		PatientDao ptDao = new PatientDaoImpl(conn);
+		
 		try {
-			ptId = ptDao.insert(pt);
+			ptId = databaseController.getPatientDao().insert(pt);
 		} catch (DaoException e1) {
 			e1.printStackTrace();
 		}
@@ -278,12 +240,7 @@ public class NyRekvisitionServlet extends HttpServlet
 
 	private Integer storePETCTSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		Connection conn = null;
-		try {
-			conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
-		}
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		PETCTKontrolskema pck = new PETCTKontrolskema();
 		pck.setFormaal(convertFormaalMetode(request));
 		pck.setFormaalTekst(request.getParameter("formaal_tekst"));
@@ -318,18 +275,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		}
 		pck.setSidstePKreatTimestamp(java.sql.Date.valueOf(request.getParameter("sidstePKreatTimestamp")));
 
-		PETCTKontrolskemaDao petctkDao = new PETCTKontrolskemaDaoImpl(conn);
-		return petctkDao.insert(pck);
+		return databaseController.getPetCtKontrolskemaDao().insert(pck);
 	}
 
 	private Integer storeCTKSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		Connection conn = null;
-		try {
-			conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
-		}
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//	Making CTTKontrolskema dto
 		CtKontrastKontrolskema ctk = new CtKontrastKontrolskema();
 		ctk.setDiabetes(Boolean.valueOf(request.getParameter("diabetes")));
@@ -363,18 +314,12 @@ public class NyRekvisitionServlet extends HttpServlet
 			ctk.setPtVaegt(null);
 		}
 
-		CtKontrastKontrolskemaDao ctkDao = new CtKontrastKontrolskemaDaoImpl(conn);
-		return ctkDao.insert(ctk);		
+		return databaseController.getCtKontrastKontrolskemaDao().insert(ctk);		
 	}
 
 	private Integer storeMRSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		Connection conn = null;
-		try {
-			conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
-		}		
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		MRKontrolskema mrk = new MRKontrolskema();
 		mrk.setPacemaker(Boolean.valueOf(request.getParameter("pacemaker")));
 		mrk.setMetalImplantater(Boolean.valueOf(request.getParameter("metal_implantater")));
@@ -408,18 +353,12 @@ public class NyRekvisitionServlet extends HttpServlet
 		mrk.setMRVoksen(convertSederingVoksen(request));
 		mrk.setPraepForsyn(request.getParameter("praep_forsyn"));
 		if(Const.DEBUG)System.out.println(mrk);
-		MRKontrolskemaDao mrkDao = new MRKontrolskemaDaoImpl(conn);
-		return mrkDao.insert(mrk);
+		return databaseController.getMrKontrolskemaDao().insert(mrk);
 	}
 
 	private Integer storeULInvKontrolSkema(HttpServletRequest request,
 			HttpServletResponse response) throws DaoException {
-		Connection conn = null;
-		try {
-			conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
-		}	
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);	
 		UlInvKontrolskema uis = new UlInvKontrolskema();
 		System.out.println(request.getParameter("aktimestamp"));
 		uis.setAkTimestamp(java.sql.Date.valueOf(request.getParameter("aktimestamp")));
@@ -438,8 +377,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		if(Const.DEBUG){
 			System.out.println(uis);
 		}
-		UlInvKontrolskemaDao uisDao = new UlInvKontrolskemaDaoImpl(conn);
-		return uisDao.insert(uis);
+		return databaseController.getUlInvKontrolskemaDao().insert(uis);
 	}
 
 	private String parseCPRBirthday(String foedselsdagString) {

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.DataSourceConnector;
+import database.DatabaseController;
 import database.dao.ModalitetDao;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
@@ -32,9 +33,6 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 public class BookingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private RekvisitionDaoImplExt rekvisitionDao;
-	private ModalitetDao modDao;
-
 	private java.sql.Connection conn = null;
 
 	// used for the search boxes in rekvisitionPage.jsp
@@ -46,13 +44,6 @@ public class BookingServlet extends HttpServlet {
 	 */
 	public BookingServlet() {
 		super();
-		try {
-			this.conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		}
-		this.rekvisitionDao = new RekvisitionDaoImplExt(conn);
-		this.modDao = new ModalitetDaoImpl(conn);
 	}
 
 	/**
@@ -61,6 +52,7 @@ public class BookingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		createSearchDropdowns(request);
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 
 
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
@@ -73,8 +65,8 @@ public class BookingServlet extends HttpServlet {
 			String id = request.getParameter(Const.BOOKING_ACTION_ID);
 			if(id != null){
 				rekvisitionId = Integer.valueOf(id);
-
-				RekvisitionExtended r = rekvisitionDao.findByPrimaryKey(rekvisitionId);
+				
+				RekvisitionExtended r = databaseController.getRekvisitionDao().findByPrimaryKey(rekvisitionId);
 				if(Const.BOOKING_ACTION.equals(action)){
 					r.setStatus(Status.BOOKED);
 				}
@@ -83,7 +75,7 @@ public class BookingServlet extends HttpServlet {
 
 				}
 				try {
-					rekvisitionDao.update(rekvisitionId, r);
+					databaseController.getRekvisitionDao().update(rekvisitionId, r);
 				} catch (DaoException e) {
 					System.err.println("could not save changes to rekvisition");
 				}
@@ -101,6 +93,7 @@ public class BookingServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		createSearchDropdowns(request);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		
 
 		if(activeUser == null){
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);		
@@ -116,7 +109,8 @@ public class BookingServlet extends HttpServlet {
 	 * @param request
 	 */
 	private void createSearchDropdowns(HttpServletRequest request){
-		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, new Object[]{}));
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 
@@ -171,16 +165,15 @@ public class BookingServlet extends HttpServlet {
 	}
 
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist1 = null;
 		RekvisitionExtended[] rekvlist2 = null;
 		RekvisitionExtended[] rekvlist3 = null;
 		// gets list of the active user - default behavior
 		if(activeUser != null){
-			rekvlist1 = rekvisitionDao.findByAdvSearch(null, null, null, Status.APPROVED, null, null);
-			rekvlist2 = rekvisitionDao.findByAdvSearch(null, null, null, Status.BOOKED, null, null);
-			//				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
+			rekvlist1 = databaseController.getRekvisitionDao().findByAdvSearch(null, null, null, Status.APPROVED, null, null);
+			rekvlist2 = databaseController.getRekvisitionDao().findByAdvSearch(null, null, null, Status.BOOKED, null, null);
 		}
 		int size = ((rekvlist1 == null ? 0 : rekvlist1.length) + (rekvlist2 == null ? 0 : rekvlist2.length));
 		rekvlist3 = new RekvisitionExtended[size];

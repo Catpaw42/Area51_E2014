@@ -12,6 +12,7 @@ import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.dto.RekvisitionExtended;
+import database.dto.RekvisitionExtended.Status;
 
 
 /**
@@ -43,5 +44,29 @@ public interface RekvisitionDao extends AbstractDao {
      * @return true iff the record was really updated (=found and any change was really saved)
      */
     public boolean update( int rekvisitionId, RekvisitionExtended dto ) throws DaoException;
-
+    
+    /**
+     * 
+     * @param cpr
+     * @param name
+     * @param modality
+     * @param status
+     * @param date
+     * @param department
+     * @param rekvirentId
+     * @return
+     */
+    public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department, int rekvirentId);
+    
+    /**
+     * 
+     * @param cpr
+     * @param name
+     * @param modality
+     * @param status
+     * @param date
+     * @param department
+     * @return
+     */
+    public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department);	
 }

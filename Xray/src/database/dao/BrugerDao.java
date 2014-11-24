@@ -43,6 +43,22 @@ public interface BrugerDao extends AbstractDao {
      * @return true iff the record was really updated (=found and any change was really saved)
      */
     public boolean update( int brugerId, Bruger dto ) throws DaoException;
+
+    /**
+     * 
+     * @param username
+     * @param password
+     * @return
+     */
+	public Bruger findByUserName(String username, String password);
+
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public boolean validate(String username, String password);
     
     /**
      * Method for validating userlogin

@@ -1,10 +1,9 @@
 package servlets;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import helperClasses.Const;
+import helperClasses.Validator;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -14,31 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-
-
-
-
-
-
-import org.junit.Test;
-
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.DataSourceConnector;
-import database.dao.ModalitetDao;
-import database.dao.mysql.ModalitetDaoImpl;
-import database.dao.mysql.RekvisitionDaoImpl;
-import database.dao.mysql.RekvisitionDaoImplExt;
+import database.DatabaseController;
 import database.dto.Bruger;
 import database.dto.Modalitet;
-import database.dto.RekvisitionExtended.Status;
 import database.dto.RekvisitionExtended;
-import database.interfaces.IDataSourceConnector.ConnectionException;
-import helperClasses.Const;
-import helperClasses.Validator;
+import database.dto.RekvisitionExtended.Status;
 
 
 /**
@@ -51,29 +32,17 @@ public class RekvisitionServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private java.sql.Connection conn = null;
 
 	// used for the search boxes in rekvisitionPage.jsp
 	public Modalitet[] modList = null;
 	public Status[] statusList = null;		
 	////////////////////////////////////////////////////	
 
-	private RekvisitionDaoImplExt rekvisitionDao;
-	private ModalitetDao modDao;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public RekvisitionServlet() {
 		super();
-		try {
-			this.conn = DataSourceConnector.getConnection();
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		}
-		this.rekvisitionDao = new RekvisitionDaoImplExt(conn);
-		this.modDao = new ModalitetDaoImpl(conn);
-
-		
 	}
 
 	/**
@@ -82,7 +51,7 @@ public class RekvisitionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		createSearchDropdowns(request);
-
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		// forwards to mainServlet with LoginPage as parameter
@@ -94,10 +63,10 @@ public class RekvisitionServlet extends HttpServlet {
 				int rekvisitionId = -1;
 				try{
 					rekvisitionId = Integer.valueOf(request.getParameter("cancelId"));
-					RekvisitionExtended r = rekvisitionDao.findByPrimaryKey(rekvisitionId);
+					RekvisitionExtended r = databaseController.getRekvisitionDao().findByPrimaryKey(rekvisitionId);
 					r.setStatus(Status.CANCELED);
 					try {
-						rekvisitionDao.update(rekvisitionId, r);
+						databaseController.getRekvisitionDao().update(rekvisitionId, r);
 					} catch (DaoException e) {
 						System.err.println("could not save changes to rekvisition");
 					}
@@ -134,12 +103,14 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @param request
 	 */
 	private void createSearchDropdowns(HttpServletRequest request){
-		request.getSession().setAttribute(Const.MODALITY_LIST, modDao.findDynamic(null, 0, -1, new Object[]{}));
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 	
 	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		// parameters
 		String cpr = request.getParameter(Const.PARAM_CPR);
 		String name = request.getParameter(Const.PARAM_NAME);
@@ -175,8 +146,8 @@ public class RekvisitionServlet extends HttpServlet {
 		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
 		Date d1 = new Date();
-		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
-		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
+
+		rekvDto = databaseController.getRekvisitionDao().findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
 		Date d2 = new Date();
 
 		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
@@ -189,12 +160,12 @@ public class RekvisitionServlet extends HttpServlet {
 	}
 	
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-				
+		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 				//Rekvisition list to show user.
 				RekvisitionExtended[] rekvlist = null;
 				// gets list of the active user - default behavior
 				if(activeUser != null){
-					rekvlist = rekvisitionDao.findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
+					rekvlist = databaseController.getRekvisitionDao().findByAdvSearch(null, null, null, null, null, null, activeUser.getBrugerId());
 //				rekvlist = rekvisitionDao.findDynamic(Const.REKVIRENT_ID_COND, 0, -1, activeUser.getBrugerId());
 				}
 				//Stitch rekvisition[] to request object.
