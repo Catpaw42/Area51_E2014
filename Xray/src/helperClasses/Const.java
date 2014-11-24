@@ -11,6 +11,7 @@ public final class Const {
 	public static final String ADMIN_PAGE = "WEB-INF/adminPage.jsp";
 	public static final String BOOKING_PAGE = "WEB-INF/bookingPage.jsp";
 	public static final String VISITATION_PAGE = "WEB-INF/visitationPage.jsp";
+	public static final String SHOW_REKVISITION_PAGE = "WEB-INF/visRekvisition.jsp";
 	
 	//Page titles
 	public static final String PAGEHEADING = "PageHeading";

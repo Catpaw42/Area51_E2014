@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<%@page import="helperClasses.Const"%>
 <%@page import="database.DatabaseController"%>
 <%@page import="database.dto.RekvisitionExtended.IndlaeggelseTransport"%>
 <%@page import="database.dto.RekvisitionExtended.AmbulantKoersel"%>
@@ -34,8 +35,10 @@
 
 	if(request.getParameter(Const.REKVISITION_ID)!=null){ //start if (slutter i bunden)
 	
-		DatabaseController databaseController = (DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-		rek = databaseController.getRekvisitionDao().findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
+		//DatabaseController databaseController = (DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		rek = (RekvisitionExtended) request.getSession().getAttribute(Const.REKVISITION_SELECTED);
+
+		//databaseController.getRekvisitionDao().findByPrimaryKey(Integer.valueOf(request.getParameter(Const.REKVISITION_ID)));
 
 %>
 		<body class="visiter">

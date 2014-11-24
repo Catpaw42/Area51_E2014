@@ -48,7 +48,7 @@ function showOverlay()
 	$("#overlayPanel").css("display", "block");
 }
 function getvisitationString(rekvisition_Id){
-	return "WEB-INF/visiter.jsp?rekvisition_Id="+rekvisition_Id;
+	return "VisRekvisitionServlet?rekvisition_Id="+rekvisition_Id;
 }
 
 function getRekvisitation(rekvisition_Id){

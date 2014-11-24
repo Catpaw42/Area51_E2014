@@ -57,6 +57,7 @@
 .visitationList td {
 	border: 1px solid black;
 	border-collapse: collapse;
+	padding: 2px;
 }
 #search table, #search th, #search td {
 	border: 1px solid black;

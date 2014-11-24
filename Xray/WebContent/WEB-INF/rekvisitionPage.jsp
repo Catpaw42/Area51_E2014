@@ -152,8 +152,8 @@
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.PENDING) || r.getStatus().equals(Status.APPROVED)){
-								out.print("</td> <td  id="+r.getRekvisitionId()+" href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
-								out.print("<button class=\"anullerButton\">annuller</button>");
+								out.print("</td> <td  id="+r.getRekvisitionId()+" class=\"button\" href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
+								out.print("<button class=\"annullerButton\" >Annuller</button>");
 								}
 								out.print("</td> </tr>");	
 							}

@@ -86,11 +86,14 @@
 #rekvisitionList table, #rekvisitionList th {
 	border: 2px solid black;
 	border-collapse: collapse;
+	padding: 5px;
 }
 #rekvisitionList td {
 	border: 1px solid black;
 	border-collapse: collapse;
+	padding: 2px 2px 2px 2px;
 }
+
 #search table, #search th, #search td {
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -102,7 +105,46 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+/* .annullerButton { */
+/* 	 background-color: #FF0000; */
+/* 	 cursor: pointer; */
+/* } */
+
 .annullerButton {
-	 background-color: #FF0000;
-	 cursor: pointer;
+	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
+	background:-moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:-webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:-o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:-ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+	background-color:#f24537;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-weight:bold;
+	padding:0px 4px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+.annullerButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
+	background:-moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	background:-webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	background:-o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	background:-ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
+	background-color:#c62d1f;
+}
+.annullerButton:active {
+	position:relative;
+	top:1px;
 }

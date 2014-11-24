@@ -29,11 +29,12 @@ $(document).ready(function()
 });
 
 function getvisitationString(rekvisition_Id){
-	return "WEB-INF/visiter.jsp?rekvisition_Id="+rekvisition_Id;
+	return "VisRekvisitionServlet?rekvisition_Id="+rekvisition_Id;
 }
 
 function getRekvisitation(rekvisition_Id){
 	$.get(getvisitationString(rekvisition_Id),function(data,status){
+			
 	    if(status = "success"){
 	    	//indsæt de hentede data i div element
 	    	$("#embededSite").html(data);
@@ -60,7 +61,7 @@ function hideOverlay()
 
 function cancelRekvisition(id) {
     if (confirm("Er du sikker du vil annullere rekvisitionen?") == true) {
-        $.get("WEB-INF/RekvisitionServlet?action=cancel&cancelId=" + id, function(data,status){
+        $.get("RekvisitionServlet?action=cancel&cancelId=" + id, function(data,status){
         	if(status == "success"){
         		location.reload(true);
         	}
