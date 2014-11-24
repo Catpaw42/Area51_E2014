@@ -26,7 +26,6 @@ import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
-import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;

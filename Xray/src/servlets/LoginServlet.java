@@ -2,7 +2,6 @@ package servlets;
 import helperClasses.Const;
 
 import java.io.IOException;
-import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import database.DataSourceConnector;
-import database.DatabaseController;
-import database.dao.mysql.BrugerDaoImplExtended;
 import database.dto.Bruger;
-import database.interfaces.IDataSourceConnector.ConnectionException;
+import database.interfaces.IDatabaseController;
 
 /**
  * Servlet implementation class LoginServlet
@@ -49,7 +45,7 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//User posts login data
 		String username = request.getParameter(Const.USERNAME);
 		String password = request.getParameter(Const.PASSWORD);

@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.DatabaseController;
 import database.dto.Bruger;
 import database.dto.Modalitet;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.Status;
+import database.interfaces.IDatabaseController;
 
 
 /**
@@ -51,7 +51,7 @@ public class RekvisitionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		createSearchDropdowns(request);
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		// forwards to mainServlet with LoginPage as parameter
@@ -103,14 +103,14 @@ public class RekvisitionServlet extends HttpServlet {
 	 * @param request
 	 */
 	private void createSearchDropdowns(HttpServletRequest request){
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
 	
 	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		// parameters
 		String cpr = request.getParameter(Const.PARAM_CPR);
 		String name = request.getParameter(Const.PARAM_NAME);
@@ -160,7 +160,7 @@ public class RekvisitionServlet extends HttpServlet {
 	}
 	
 	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		DatabaseController databaseController =(DatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 				//Rekvisition list to show user.
 				RekvisitionExtended[] rekvlist = null;
 				// gets list of the active user - default behavior

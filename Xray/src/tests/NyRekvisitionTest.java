@@ -1,13 +1,12 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import helperClasses.Const;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 
-import helperClasses.Const;
-
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,30 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 import servlets.MainServlet;
 import servlets.NyRekvisitionServlet;
-import servlets.RekvisitionServlet;
-import database.DataSourceConnector;
 import database.dao.BrugerDao;
 import database.dao.RekvisitionDao;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.RekvisitionExtended;
-import database.interfaces.IDataSourceConnector.ConnectionException;
 
 
 

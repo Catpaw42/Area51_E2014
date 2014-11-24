@@ -8,13 +8,6 @@ package database.dao;
 import java.sql.Connection;
 
 import database.dao.mysql.BrugerDaoImpl;
-import database.dao.mysql.CtKontrastKontrolskemaDaoImpl;
-import database.dao.mysql.MRKontrolskemaDaoImpl;
-import database.dao.mysql.ModalitetDaoImpl;
-import database.dao.mysql.PETCTKontrolskemaDaoImpl;
-import database.dao.mysql.PatientDaoImpl;
-import database.dao.mysql.RekvisitionDaoImpl;
-import database.dao.mysql.RettighederDaoImpl;
 
 
 /**

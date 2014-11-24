@@ -10,13 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 
 import com.spoledge.audao.db.dao.AbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
-
 
 import database.dao.UndersoegelsesTypeDao;
 import database.dto.UndersoegelsesType;

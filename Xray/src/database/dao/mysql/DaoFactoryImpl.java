@@ -7,7 +7,17 @@ package database.dao.mysql;
 
 import java.sql.Connection;
 
-import database.dao.*;
+import database.dao.BrugerDao;
+import database.dao.CtKontrastKontrolskemaDao;
+import database.dao.DaoFactory;
+import database.dao.MRKontrolskemaDao;
+import database.dao.ModalitetDao;
+import database.dao.PETCTKontrolskemaDao;
+import database.dao.PatientDao;
+import database.dao.RekvisitionDao;
+import database.dao.RettighederDao;
+import database.dao.UlInvKontrolskemaDao;
+import database.dao.UndersoegelsesTypeDao;
 
 
 /**

@@ -1,10 +1,8 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import helperClasses.Validator;
-import junit.framework.TestResult;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class ValidatorTest {

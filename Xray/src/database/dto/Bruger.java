@@ -7,8 +7,6 @@ package database.dto;
 
 import com.spoledge.audao.db.dto.AbstractDto;
 
-import database.dto.Rettigheder.Rettighed;
-
 /**
  * This is a DTO class.
  *

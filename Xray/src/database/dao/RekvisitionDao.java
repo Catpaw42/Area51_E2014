@@ -5,14 +5,12 @@
  */
 package database.dao;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
 import database.dto.RekvisitionExtended;
-import database.dto.RekvisitionExtended.Status;
 
 
 /**
