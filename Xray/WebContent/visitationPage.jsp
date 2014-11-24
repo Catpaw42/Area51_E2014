@@ -164,7 +164,7 @@
 					<br>
 					<div id="embededSite">
 					</div>
-					<form id="visiterform" name="visiterform" method="post" action="VisitationServlet">
+					<form id="visiterform" name="visiterform" method="post" action="WEB-INF/VisitationServlet">
 						<div id="godkendAfvis">
 							<input type="hidden" name="rekIDSubmit" id="rekIDSubmit" value="" />
 							<input type="hidden" name="visiterAction" id="visiterAction" value="" />

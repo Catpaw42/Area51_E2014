@@ -154,7 +154,7 @@
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.PENDING) || r.getStatus().equals(Status.APPROVED)){
 								out.print("</td> <td  id="+r.getRekvisitionId()+" href=\"#\" onclick=cancelRekvisition("+ r.getRekvisitionId()+")>");
-								out.print("<button class=\"anullerButton\">annuller</button>");
+								out.print("<button class=\"annullerButton\">annuller</button>");
 								}
 								out.print("</td> </tr>");	
 							}
@@ -166,7 +166,7 @@
 			<li>
 			<br>
 			<div id="embededSite"></div>
-				<form id="visiterform" name="visiterform" method="post" action="RekvisitionServlet"></form>
+				<form id="visiterform" name="visiterform" method="post" action="WEB-INF/RekvisitionServlet"></form>
 			</li>
 		</ul>
 	</div>

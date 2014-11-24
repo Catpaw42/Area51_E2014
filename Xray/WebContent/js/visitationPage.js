@@ -48,7 +48,7 @@ function showOverlay()
 	$("#overlayPanel").css("display", "block");
 }
 function getvisitationString(rekvisition_Id){
-	return "visiter.jsp?rekvisition_Id="+rekvisition_Id;
+	return "WEB-INF/visiter.jsp?rekvisition_Id="+rekvisition_Id;
 }
 
 function getRekvisitation(rekvisition_Id){
@@ -69,7 +69,7 @@ function doGodkend(){
 	rek_id = $('input[name="rekIDSubmit"]').val(); //sæt rekvisition id på hidden element
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Godkend"); //sæt action til godkend
-		$.post('VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
+		$.post('WEB-INF/VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
 			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}
@@ -83,7 +83,7 @@ function doAfvis(){
 	rek_id = $('input[name="rekIDSubmit"]').val();
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Afvis");
-		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data){
+		$.post( 'WEB-INF/VisitationServlet', $('form#visiterform').serialize(), function(data){
 			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}

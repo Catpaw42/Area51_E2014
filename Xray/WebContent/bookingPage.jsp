@@ -165,7 +165,7 @@
 				<br>
 				<div id="embededSite">
 				</div>
-				<form id="visiterform" name="visiterform" method="post" action="BookingServlet">
+				<form id="visiterform" name="visiterform" method="post" action="WEB-INF/BookingServlet">
 				</form>
 			</li>
 		</ul>

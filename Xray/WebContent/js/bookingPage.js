@@ -6,7 +6,7 @@
  */
 function bookRekvisition(id){
 	if (confirm("Er du sikker du vil booke rekvisitionen?") == true) {
-        $.get("BookingServlet?action=book&bookingId=" + id, function(data,status){
+        $.get("WEB-INF/BookingServlet?action=book&bookingId=" + id, function(data,status){
         	if(status == "success"){
         		location.reload(true);
         	}
@@ -17,7 +17,7 @@ function bookRekvisition(id){
 
 function revisitRekvisition(id){
 	if(confirm("Er du sikker du vil få rekvisitionen visiteret igen?") == true){
-		$.get("BookingServlet?action=revisit&bookingId=" + id, function(data, status){
+		$.get("WEB-INF/BookingServlet?action=revisit&bookingId=" + id, function(data, status){
 			if(status == "success"){
 				console.log("id="+id);
 			}
@@ -59,7 +59,7 @@ $(document).ready(function()
 			$("#overlayPanel").css("display", "block");
 		}
 		function getvisitationString(rekvisition_Id){
-			return "visiter.jsp?rekvisition_Id="+rekvisition_Id;
+			return "WEB-INF/visiter.jsp?rekvisition_Id="+rekvisition_Id;
 		}
 
 		function getRekvisitation(rekvisition_Id){
