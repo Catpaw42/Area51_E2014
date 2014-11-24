@@ -42,7 +42,9 @@
 	frameBorder: 0;
 	margin-left: auto;
 	margin-right: auto;
-	background-color:#ffc26b;
+	background-color:#00acea;
+	border-radius: 25px;
+	box-shadow: 5px 5px 2px #888888;
 	display: table;
 	
 }
