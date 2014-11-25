@@ -142,16 +142,16 @@
 								out.print("</td> <td id="+r.getRekvisitionId()+">");
 								out.print(r.getStatus());
 								if(r.getStatus().equals(Status.APPROVED)){
-								out.print("</td> <td id="+r.getRekvisitionId()+" href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
+								out.print("</td> <td id="+r.getRekvisitionId()+ " class=\"button\" href=\"#\" onclick=bookRekvisition("+ r.getRekvisitionId()+")>");
 								out.print("<button class=\"markerBookedKnap\">Marker som booket</button>");
 								}
 								else{
-									out.print("</td> <td id="+r.getRekvisitionId() +">&nbsp;");
+									out.print("</td> <td id="+r.getRekvisitionId() +" class=\"button\">&nbsp;");
 									
 								}
 								if(r.getStatus().equals(Status.BOOKED) || r.getStatus().equals(Status.APPROVED)){
-									out.print("</td> <td id="+r.getRekvisitionId()+" href=\"#\" onclick=revisitRekvisition("+r.getRekvisitionId()+")>");
-									out.print("<button class=\"tilVisitationKnap\">Til visitation</button>");
+									out.print("</td> <td id="+r.getRekvisitionId()+" class=\"button\" href=\"#\" onclick=revisitRekvisition("+r.getRekvisitionId()+")>");
+									out.print("<button class=\"tilVisitationKnap button\">Til visitation</button>");
 								}
 								out.print("</td> </tr>");
 								

@@ -94,6 +94,12 @@
 	padding: 2px 2px 2px 2px;
 }
 
+#rekvisitionList .button {
+	border: 0px none white;
+	border-collapse: collapse;
+	padding: 2px 2px 2px 2px;
+}
+
 #search table, #search th, #search td {
 	border: 1px solid black;
 	border-collapse: collapse;
