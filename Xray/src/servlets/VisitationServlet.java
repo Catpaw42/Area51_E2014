@@ -44,14 +44,13 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		createSearchDropdowns(request);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		// forwards to mainServlet with LoginPage as parameter
 		if(activeUser == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
-			setDefaultTable(activeUser, request, response);
+			initPage(request, response, databaseController, activeUser);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
 
@@ -61,14 +60,17 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String visiterAction = request.getParameter("visiterAction");
-		if("Godkend".equals(visiterAction)){
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		initPage(request, response, databaseController, activeUser);
+		
+		String visiterAction = request.getParameter(Const.PARAM_ACTION);
+		if(Const.PARAM_ACTION_OPT_ACCEPT.equals(visiterAction)){
 			approveRekvisition(request);
 
 			response.sendRedirect(Const.VISITATION_PAGE);
 		}
-		else if("Afvis".equals(visiterAction)){
+		else if(Const.PARAM_ACTION_OPT_DECLINE.equals(visiterAction)){
 			declineRekvisition(request);
 		}else{
 			searchRekvisition(request, response);
@@ -76,9 +78,14 @@ public class VisitationServlet extends HttpServlet {
 
 
 	}
+	
+	private void initPage(HttpServletRequest request, HttpServletResponse response, IDatabaseController databaseController, Bruger activeUser) throws ServletException, IOException{
+		request.setCharacterEncoding("UTF-8");
+		createSearchDropdowns(request, databaseController);
+		setDefaultTable(request, response, databaseController, activeUser);
+	}
 
-	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response, IDatabaseController databaseController, Bruger activeUser) throws ServletException, IOException{
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist = null;
 		// gets list of the active user - default behavior
@@ -88,13 +95,15 @@ public class VisitationServlet extends HttpServlet {
 		//Stitch rekvisition[] to request object.
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
 	}
+	
+
 
 	/**
 	 * have to be called so the dropdowns in rekvisitionPage are filled
 	 * @param request
+	 * @param databaseController2 
 	 */
-	private void createSearchDropdowns(HttpServletRequest request){
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+	private void createSearchDropdowns(HttpServletRequest request, IDatabaseController databaseController){
 		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
@@ -125,14 +134,6 @@ public class VisitationServlet extends HttpServlet {
 			}
 		}
 
-		System.out.println("############SEARCH###############");
-		System.out.println("cpr: " + cpr);
-		System.out.println("name: " + name);
-		System.out.println("modality: " + modality);
-		System.out.println("department: " + department);
-		System.out.println("date: " + timestamp);
-		System.out.println("status: " + status);
-
 		// objekter
 		RekvisitionExtended[] rekvDto;
 		//TODO dao'er. skal ændres til almindeligt interface senere
@@ -140,9 +141,6 @@ public class VisitationServlet extends HttpServlet {
 		rekvDto = databaseController.getRekvisitionDao().findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
 		Date d2 = new Date();
 
-		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
-		System.out.println("in " + (d2.getTime()- d1.getTime()) + " ms");
-		System.out.println("##################################");
 
 		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
 		request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
@@ -157,13 +155,11 @@ public class VisitationServlet extends HttpServlet {
 		RekvisitionExtended rek = databaseController.getRekvisitionDao().findByPrimaryKey(id);
 		rek.setStatus(Status.DECLINED);
 		rek.setVisitatorId(activeBruger.getBrugerId());
-		System.out.println("id hey: " + activeBruger.getBrugerId());
 		rek.setVisitator(activeBruger); // is not necessary at the moment
 		rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
 		try {
-			System.out.println("decline");
+			// TODO should handle the case update is not succesfull
 			boolean success = databaseController.getRekvisitionDao().update(id, rek);
-			System.out.println("it rek successfully: " + success);
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
@@ -172,20 +168,18 @@ public class VisitationServlet extends HttpServlet {
 	private void approveRekvisition(HttpServletRequest request){
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		// gets selected rekvisition id
-		int id=Integer.valueOf(request.getParameter("rekIDSubmit"));
+		int id=Integer.valueOf(request.getParameter(Const.REKVISITION_ID_SUBMIT));
 		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 
 		RekvisitionExtended rek = databaseController.getRekvisitionDao().findByPrimaryKey(id);
 		rek.setStatus(Status.APPROVED);
 		rek.setVisitatorId(activeBruger.getBrugerId());
-		System.out.println("id hey: " + activeBruger.getBrugerId());
 		rek.setVisitator(activeBruger); // is not necessary at the moment
 		rek.setVisitatorPrioritering(request.getParameter("prioritet").toString());
 		rek.setVisitatorBemaerkning(request.getParameter("bemaerkninger").toString());
 		try {
-			System.out.println("approve");
+			// TODO should handle the case update is not succesfull
 			boolean success = databaseController.getRekvisitionDao().update(id, rek);
-			System.out.println("it rek successfully: " + success);
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}

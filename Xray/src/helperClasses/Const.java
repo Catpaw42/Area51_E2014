@@ -22,7 +22,7 @@ public final class Const {
 	
 	
 	// servlets names
-//	public static final String MENU_SERVLET = "MenuServlet";
+	public static final String LOGIN_USER = "loggingIn";
 	public static final String ADMIN_SERVLET = "AdminServlet";
 	public static final String MAIN_SERVLET = "MainServlet";
 	public static final String REKVISITION_SERVLET = "RekvisitionServlet";
@@ -80,7 +80,19 @@ public final class Const {
 	public static final String REVISIT_ACTION = "revisit";
 	public static final String REVISIT_ACTION_ID = "revisitId";
 	
+	// parameter. action options named ACTION_OPT
+	/**
+	 * action options for parameter are named: "ACTION_OPT_ + optionName"
+	 */
 	public static final String PARAM_ACTION = "action";
+	
+	// possible parameters to action
+	public static final String ACTION_OPT_CANCEL = "cancel";
+	public static final String PARAM_ACTION_OPT_CANCEL_ID = "cancelId";
+	public static final String PARAM_ACTION_OPT_ACCEPT = "Godkend";
+	public static final String PARAM_ACTION_OPT_DECLINE = "Afvis";
+	
+	public static final String REKVISITION_ID_SUBMIT = "rekIDSubmit";
 
 
 
