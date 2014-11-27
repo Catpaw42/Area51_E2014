@@ -30,6 +30,7 @@ $(document).ready(function()
 });
 
 $('form#visiterform').on('submit', function(event){
+	console.log("debug");
 	event.preventDefault(); 
     $.ajax({
         url: $(this).attr('action'),
@@ -69,7 +70,7 @@ function doGodkend(){
 	rek_id = $('input[name="rekIDSubmit"]').val(); //sæt rekvisition id på hidden element
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Godkend"); //sæt action til godkend
-		$.post('WEB-INF/VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
+		$.post('VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
 			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}
@@ -83,7 +84,7 @@ function doAfvis(){
 	rek_id = $('input[name="rekIDSubmit"]').val();
 	if(rek_id!=""){
 		$('input[name="visiterAction"]').val("Afvis");
-		$.post( 'WEB-INF/VisitationServlet', $('form#visiterform').serialize(), function(data){
+		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data){
 			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}

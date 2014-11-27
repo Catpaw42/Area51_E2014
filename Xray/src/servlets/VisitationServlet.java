@@ -66,10 +66,11 @@ public class VisitationServlet extends HttpServlet {
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
 
-			response.sendRedirect(Const.VISITATION_PAGE);
+			response.sendRedirect(Const.VISITATION_SERVLET);
 		}
 		else if("Afvis".equals(visiterAction)){
 			declineRekvisition(request);
+			response.sendRedirect(Const.VISITATION_SERVLET);
 		}else{
 			searchRekvisition(request, response);
 		}
