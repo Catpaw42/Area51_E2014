@@ -65,12 +65,13 @@ public class VisitationServlet extends HttpServlet {
 		String visiterAction = request.getParameter("visiterAction");
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
-
-			response.sendRedirect(Const.VISITATION_SERVLET);
+			setDefaultTable((Bruger)request.getSession().getAttribute(Const.ACTIVE_USER), request, response);
+			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
 		else if("Afvis".equals(visiterAction)){
 			declineRekvisition(request);
-			response.sendRedirect(Const.VISITATION_SERVLET);
+			setDefaultTable((Bruger)request.getSession().getAttribute(Const.ACTIVE_USER), request, response);
+			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}else{
 			searchRekvisition(request, response);
 		}
