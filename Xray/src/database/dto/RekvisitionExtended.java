@@ -12,7 +12,7 @@ import com.spoledge.audao.db.dto.AbstractDto;
 /**
  * This is a DTO class.
  *
- * @author generated
+ * @author generated, Rúni
  */
 public class RekvisitionExtended extends AbstractDto implements Cloneable{
 

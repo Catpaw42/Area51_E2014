@@ -35,7 +35,7 @@ import database.dto.RekvisitionExtended;
 /**
  * This is the DAO imlementation class.
  *
- * @author generated
+ * @author generated, modified by Rúni
  */
 public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> implements RekvisitionDao {
 	
@@ -63,7 +63,9 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		super( conn );
 	}
 	
-	
+	/**
+	 * @author Rúni
+	 */
 	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department, int rekvirentId) {
 		Timestamp lowBound = null;
 		Timestamp upperBound = null;
@@ -206,6 +208,9 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 				return ret;
 	}
 
+	/**
+	 * @author Rúni
+	 */
 	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department){ 	
 		return findByAdvSearch(cpr, name, modality, status, date, department, -1);
 		
@@ -225,7 +230,11 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		rekv = addObjectsToRekvisition(rekv);
 		return rekv[0];
 	}
-
+	/**
+	 * @author Rúni
+	 * @param rekv
+	 * @return same object but with all the needed objects
+	 */
 	private RekvisitionExtended[] addObjectsToRekvisition(RekvisitionExtended[] rekv){
 		if(rekv == null || rekv.length <= 0) return null;
 		MRKontrolskemaDao mrDao = new MRKontrolskemaDaoImpl(conn);

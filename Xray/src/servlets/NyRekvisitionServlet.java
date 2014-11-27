@@ -34,7 +34,7 @@ import database.dto.UlInvKontrolskema;
 import database.dto.UndersoegelsesType;
 import database.interfaces.IDatabaseController;
 
-/**
+/**@author Christian, Morten, Rúni
  * Servlet implementation class NyRekvisitionServlet
  */
 @SuppressWarnings("serial")
@@ -179,9 +179,9 @@ public class NyRekvisitionServlet extends HttpServlet
 		try {
 			rek.setIltLiterPrmin(Integer.valueOf(request.getParameter("ilt_tekst")));
 		} catch (NumberFormatException e){
-			if(request.getParameter("ilt_tekst") != null || request.getParameter("ilt_tekst").equals("")){
+			if(request.getParameter("ilt_tekst") != null && !request.getParameter("ilt_tekst").equals("")){
 				System.out.println("ilt tekst: " + request.getParameter("ilt_tekst"));
-			errorMsg(errorType.WARNING, "ilt bliver sat til null");
+				errorMsg(errorType.WARNING, "ilt bliver sat til null");
 			}
 			rek.setIltLiterPrmin(null);
 		}

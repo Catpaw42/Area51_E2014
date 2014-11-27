@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database xmlns="http://www.spoledge.com/audao" version="1.0">
 
+<!-- 
+@autor alle
+ -->
 	<config>
 		<factory>
 			<create-params default="false" direct="true" />

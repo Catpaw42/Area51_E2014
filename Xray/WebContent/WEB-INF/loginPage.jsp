@@ -1,3 +1,4 @@
+<!-- @author Magnus -->
 <!DOCTYPE HTML>
 	<%@page import="helperClasses.Const"%>
 <html>

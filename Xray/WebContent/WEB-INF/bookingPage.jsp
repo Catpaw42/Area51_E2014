@@ -1,3 +1,4 @@
+<!--@author Morten, Magnus -->
 <!DOCTYPE HTML>
 <%@page import="database.dto.Modalitet"%>
 <%@page import="servlets.BookingServlet"%>

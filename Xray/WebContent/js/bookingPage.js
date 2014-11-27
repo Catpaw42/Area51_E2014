@@ -1,5 +1,5 @@
 /**
- * 
+ * @author Morten
  */
 /**
  * shows popup box and calls servlet to change status of rekvisition then reloads table

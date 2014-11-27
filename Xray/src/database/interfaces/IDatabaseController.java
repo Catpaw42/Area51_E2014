@@ -9,7 +9,11 @@ import database.dao.PatientDao;
 import database.dao.RekvisitionDao;
 import database.dao.UlInvKontrolskemaDao;
 import database.dao.UndersoegelsesTypeDao;
-
+/**
+ * 
+ * @author Rúni
+ *
+ */
 public interface IDatabaseController {
 
 	public abstract BrugerDao getBrugerDao();

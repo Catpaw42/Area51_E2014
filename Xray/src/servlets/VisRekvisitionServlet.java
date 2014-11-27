@@ -19,7 +19,7 @@ import database.dto.RekvisitionExtended.Status;
 import database.interfaces.IDatabaseController;
 
 
-/**
+/**@author Morten
  * Servlet implementation class VisRekvisitionServlet
  */
 @WebServlet("/VisRekvisitionServlet")

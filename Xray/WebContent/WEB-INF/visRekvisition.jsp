@@ -1,3 +1,4 @@
+<!-- @author Morten -->
 <!DOCTYPE HTML>
 <%@page import="helperClasses.Const"%>
 <%@page import="database.DatabaseController"%>

@@ -22,7 +22,11 @@ import database.dao.mysql.UlInvKontrolskemaDaoImpl;
 import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.interfaces.IDatabaseController;
 import database.interfaces.IDataSourceConnector.ConnectionException;
-
+/**
+ * 
+ * @author Rúni
+ *
+ */
 public class DatabaseController implements IDatabaseController{
 	
 	private BrugerDao brugerDao;

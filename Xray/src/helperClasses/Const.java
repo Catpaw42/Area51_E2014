@@ -1,5 +1,10 @@
 package helperClasses;
 
+/**
+ * 
+ * @author Rúni, Morten, Christian
+ *
+ */
 public final class Const {
 	public static final long serialVersionUID = 1L;
 	public static final Boolean DEBUG = true;

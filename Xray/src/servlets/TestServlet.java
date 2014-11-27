@@ -45,7 +45,7 @@ import database.interfaces.IDataSourceConnector.ConnectionException;
 //import dto.DTOexRequest;
 //import dto.DTOexRequest.Status;
 
-/**
+/**@author Rúni
  * Servlet implementation class TestServlet
  */
 @WebServlet("/TestServlet")

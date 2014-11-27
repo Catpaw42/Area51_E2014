@@ -6,6 +6,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 
+ * @author Rúni
+ *
+ */
 public class Validator {
 
 	/**

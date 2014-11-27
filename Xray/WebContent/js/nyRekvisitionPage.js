@@ -1,3 +1,6 @@
+/**
+ * @author Magnus
+ */
 $(function(){
 	$("#patientData .required").prop('required',true);
 	$("#rekvirentData .required").prop('required',true);

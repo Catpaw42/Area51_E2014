@@ -1,3 +1,4 @@
+<!-- @author Magnus, Christian -->
 <!DOCTYPE HTML>
 <%@page import="database.dto.Bruger"%>
 <%@page import="helperClasses.Const"%>

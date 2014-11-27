@@ -16,7 +16,11 @@ import database.dto.Modalitet;
 import database.dto.Patient;
 import database.dto.RekvisitionExtended;
 import database.dto.UlInvKontrolskema;
-
+/**
+ * 
+ * @author Rúni
+ *
+ */
 public class RekvisitionDaoImplExt extends RekvisitionDaoImpl {
 	
 	private static final String ADV_SEARCH = "SELECT * FROM rekvisition NATURAL JOIN patient NATURAL JOIN modalitet NATURAL JOIN undersoegelses_type WHERE ";

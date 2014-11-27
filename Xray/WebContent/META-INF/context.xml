@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- @author Christian -->
 <Context crossContext="true" reloadable="true">
     <!-- Specifying a JDBC datasource -->
     <Resource name="jdbc/s134004" auth="Container"

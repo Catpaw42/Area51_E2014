@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import database.dto.Bruger;
 import database.interfaces.IDatabaseController;
 
-/**
+/**@author Christian, Martin, Magnus
+ * refactor og update: Rúni
  * Servlet implementation class LoginServlet
  * 
  */

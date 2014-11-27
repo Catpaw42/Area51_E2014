@@ -12,7 +12,11 @@ import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.Status;
 import database.dto.Rettigheder;
-
+/**
+ * 
+ * @author Rúni
+ *
+ */
 public class DtoTest {
 	
 //	public static void main(String[] args){

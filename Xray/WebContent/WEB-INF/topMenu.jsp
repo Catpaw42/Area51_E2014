@@ -1,3 +1,4 @@
+<!-- @author Morten, Christian, Magnus -->
 <%@page import="helperClasses.Const"%>
 <%@page import="database.dto.Rettigheder.Rettighed"%>
 <%@page import="servlets.LoginServlet"%>

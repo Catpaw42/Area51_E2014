@@ -1,6 +1,10 @@
 package database.interfaces;
 
-
+/**
+ * 
+ * @author Christian
+ *
+ */
 public interface IDataSourceConnector {
 
 

@@ -1,3 +1,6 @@
+/**
+ * @author Magnus, Morten
+ */
 $(document).ready(function()
 {    
     /* Get all rows from your 'table' but not the first one 

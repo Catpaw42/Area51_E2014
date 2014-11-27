@@ -4,7 +4,11 @@ import static org.junit.Assert.assertEquals;
 import helperClasses.Validator;
 
 import org.junit.Test;
-
+/**
+ * 
+ * @author Rúni
+ *
+ */
 public class ValidatorTest {
 
 	@Test

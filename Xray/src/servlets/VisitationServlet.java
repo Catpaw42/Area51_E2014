@@ -22,7 +22,7 @@ import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.Status;
 import database.interfaces.IDatabaseController;
 
-/**
+/**@author Morten, Rúni
  * Servlet implementation class VisitationServlet
  */
 @WebServlet("/VisitationServlet")

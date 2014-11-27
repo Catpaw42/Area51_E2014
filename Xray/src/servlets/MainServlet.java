@@ -15,7 +15,7 @@ import database.dto.Rettigheder;
 import database.dto.Rettigheder.Rettighed;
 import database.interfaces.IDatabaseController;
 
-/**
+/**@author Christian, Rúni
  * Main Servlet - delegates responsibilities to relevant sub Servlet
  */
 @WebServlet("/MainServlet")

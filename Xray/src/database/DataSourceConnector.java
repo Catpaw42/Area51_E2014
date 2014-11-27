@@ -9,7 +9,11 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import database.interfaces.IDataSourceConnector;
-
+/**
+ * 
+ * @author Christian
+ *
+ */
 public class DataSourceConnector implements IDataSourceConnector {
 	protected static DataSource dataSource = null;
 
