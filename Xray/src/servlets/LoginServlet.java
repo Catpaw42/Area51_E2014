@@ -31,8 +31,11 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Check for login
-		if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
+		if(databaseController == null){
+			response.sendRedirect(Const.MAIN_SERVLET);
+		}else if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
 			//TODO determine main user role and redirect to relevant page
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + "loggingIn");
 		else
@@ -51,8 +54,10 @@ public class LoginServlet extends HttpServlet
 		String password = request.getParameter(Const.PASSWORD);
 		System.out.println("username: " + username);
 		System.out.println("password: " + password);
-		
-		if (username != null && password != null)
+		if(databaseController == null){
+			response.sendRedirect(Const.MAIN_SERVLET);
+		}
+		else if (username != null && password != null)
 		{
 			boolean loginSuccess = false;
 			

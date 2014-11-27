@@ -33,10 +33,7 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-		if(databaseController == null){
-			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController());
-		}
+		
 		processReq(request, response);
 	}
 
@@ -44,15 +41,17 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-		if(databaseController == null){
-			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController());
-		}
+		
 		processReq(request, response);
 	}
 
 	private void processReq(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		if(databaseController == null){
+			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController());
+		}
 		//Checks whether user is logged in
 		if (request.getSession().getAttribute(Const.ACTIVE_USER) != null){ 
 			delegate(request, response);
@@ -69,7 +68,7 @@ public class MainServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private void delegate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		checkAction(request, response);
+		boolean logout = checkAction(request, response);
 		String primaryPage = request.getParameter("page");
 		if (primaryPage==null)primaryPage="";
 		//Check if user is logging in
@@ -99,41 +98,44 @@ public class MainServlet extends HttpServlet {
 			}
 		}
 		System.out.println("primary page: " + primaryPage);
-		if (Const.LOGIN_SERVLET.equals(primaryPage)) {
+		
+		if (logout || Const.LOGIN_SERVLET.equals(primaryPage) || Const.LOGIN_PAGE.equals(primaryPage)) {
+			
 			forward("/" + Const.LOGIN_SERVLET,request,response);
-		} else if (Const.REKVISITION_SERVLET.equals(primaryPage)) {
+			
+		} else if (Const.REKVISITION_SERVLET.equals(primaryPage) || Const.REKVISITION_PAGE.equals(primaryPage)) {
+			
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
 			response.sendRedirect(Const.REKVISITION_SERVLET);
-		} else if (Const.VISITATION_SERVLET.equals(primaryPage)) {
+			
+		} else if (Const.VISITATION_SERVLET.equals(primaryPage) || Const.VISITATION_PAGE.equals(primaryPage)) {
+			
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.VISITATION_TITLE);
 			response.sendRedirect(Const.VISITATION_SERVLET);
-		} else if (Const.BOOKING_SERVLET.equals(primaryPage)) {
+			
+		} else if (Const.BOOKING_SERVLET.equals(primaryPage) || Const.BOOKING_PAGE.equals(primaryPage)) {
+			
 			request.getSession().setAttribute(Const.PAGEHEADING, Const.BOOKING_TITLE);
 			response.sendRedirect(Const.BOOKING_SERVLET);
-		} else if (Const.ADMIN_SERVLET.equals(primaryPage)) {
-			request.getSession().setAttribute(Const.PAGEHEADING, Const.ADMINISTRER_TITLE);
-			forward("/" + Const.ADMIN_SERVLET, request, response);
-		} else if (Const.CT_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
-			response.sendRedirect(Const.CT_KONTROLSKEMA_SERVLET);
-			;
-		} else if (Const.PET_CT_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
-			response.sendRedirect(Const.PET_CT_KONTROLSKEMA_SERVLET);
-		} else if (Const.MR_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
-			response.sendRedirect(Const.MR_KONTROLSKEMA_SERVLET);
-		} else if (Const.UL_INV_KONTROLSKEMA_SERVLET.equals(primaryPage)) {
-			response.sendRedirect(Const.UL_INV_KONTROLSKEMA_SERVLET);
+			
+		} else if (Const.ADMIN_SERVLET.equals(primaryPage) || Const.ADMIN_PAGE.equals(primaryPage)) {
+			
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_SERVLET); // while admin is not implemented
+//			request.getSession().setAttribute(Const.PAGEHEADING, Const.ADMINISTRER_TITLE); // TODO incomment when implementation finished
+			forward("/" + Const.REKVISITION_SERVLET, request, response);
+			
 		} else {
+			response.sendRedirect("/" + Const.LOGIN_SERVLET);
 		}		
 	}
-	private void checkAction(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	private boolean checkAction(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		String action = request.getParameter("action");
 		if (action == null) action = "";
 		if ("logout".equals(action)) {
 			request.getSession().invalidate();
-			request.getSession().setAttribute(Const.DATABASE_CONTROLLER, new DatabaseController()); // fix så man kan logge ind igen
-			response.sendRedirect(Const.LOGIN_SERVLET);
-		} else {
+			return true;
 		}
+		return false;
 		
 	}
 

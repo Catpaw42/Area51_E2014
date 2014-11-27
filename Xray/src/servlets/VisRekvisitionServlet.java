@@ -42,7 +42,7 @@ public class VisRekvisitionServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-
+		request.setCharacterEncoding("UTF-8");
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		// forwards to mainServlet with LoginPage as parameter
 		if(activeUser == null || databaseController == null){ 
@@ -54,7 +54,6 @@ public class VisRekvisitionServlet extends HttpServlet {
 				request.getSession().setAttribute(Const.REKVISITION_SELECTED, rek);
 				request.getRequestDispatcher(Const.SHOW_REKVISITION_PAGE).forward(request, response);
 		
-//				System.err.println("Rekvisition id not found");
 			
 		}
 		

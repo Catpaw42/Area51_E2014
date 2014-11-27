@@ -30,6 +30,7 @@ $(document).ready(function()
 });
 
 $('form#visiterform').on('submit', function(event){
+	console.log("debug");
 	event.preventDefault(); 
     $.ajax({
         url: $(this).attr('action'),

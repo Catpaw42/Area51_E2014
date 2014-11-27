@@ -48,6 +48,9 @@ public class NyRekvisitionServlet extends HttpServlet
 	private static final String PATIENT_ADRESSE = "patient_adresse";
 	private static final String PATIENT_CPR = "patient_cpr";
 	private static final boolean DEBUG = false;
+	private String errorMsg;
+	private int errorCount;
+	private enum errorType{WARNING, ERROR};
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -63,13 +66,18 @@ public class NyRekvisitionServlet extends HttpServlet
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-
+		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		if(activeBruger == null || databaseController == null){
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.REKVISITION_SERVLET);
+		}
+		else{
 		//Getting Modalities
-		Modalitet[] modList = databaseController.getModalitetDao().findDynamic(null, 0, -1, null);
+		Modalitet[] modList = databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{});
 		request.setAttribute(Const.MODALITY_LIST, modList);
 		if (Const.DEBUG) System.out.println(modList);
 
 		request.getRequestDispatcher(Const.NEW_REKVISITION_PAGE).forward(request, response);
+		}
 	}
 
 	/**is Public so it can be tested with junit 
@@ -77,19 +85,50 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		request.setCharacterEncoding("UTF-8");
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Getting active user
 		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		//Checking if activeUser
-		if (activeBruger == null) response.sendRedirect(Const.MAIN_SERVLET);
-		request.setCharacterEncoding("UTF-8");
-
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-		//Getting active user
+		if (activeBruger == null || databaseController == null){
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.NEW_REKVISITION_SERVLET);
+		}
+		else{
+		
 
 		//Storing patient data.
 		Integer ptId = storePatient(request, activeBruger);
+		createRekvisition(request, response, ptId, activeBruger, databaseController);
+		//HopeFully it went well ;)
+		request.getSession().setAttribute("errorMsg", errorMsg);
+		System.out.println(errorMsg);
+		request.getRequestDispatcher("WEB-INF/rekvisitionSendt.jsp").forward(request, response);
 
+		}
+	}
+	
+	private void errorMsg(errorType type, String error){
+		errorCount++;
+		String et = null;
+		switch(type){
+		case ERROR:
+			et = "error:";
+			break;
+		case WARNING:
+			et = "besked:";
+			break;
+		default:
+			et = "error:";
+			break;
+		
+		}
+		this.errorMsg = this.errorMsg + "\n" + et + " " + errorCount + ": " + error;
+	}
+	
+	private void createRekvisition(HttpServletRequest request, HttpServletResponse response, Integer ptId, Bruger activeBruger, IDatabaseController databaseController){
 		//Making Rekvisition DTO
+		errorMsg = "";
+		errorCount = 0;
 		RekvisitionExtended rek = new RekvisitionExtended();
 		rek.setPaaroerende(request.getParameter("paaroerende"));
 		rek.setSamtykke(convertSamtykke(request)); //TODO validate samtykke.
@@ -100,7 +139,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		} catch (NumberFormatException e){
 			//Should never happen TODO - Now handles by setting rekvirent to null - should give backend exception
 			rek.setRekvirentId(null);
-			e.printStackTrace();
+			errorMsg(errorType.ERROR,"rekvirent id ikke gyldigt.");
 		}
 		rek.setRekvirentId(activeBruger.getBrugerId()); 
 		rek.setHenvAfd(request.getParameter(HENV_AFD));
@@ -121,7 +160,7 @@ public class NyRekvisitionServlet extends HttpServlet
 		try {
 			USTypeID = databaseController.getUndersoegelsesTypeDao().insert(USType);
 		} catch (DaoException e1) {
-			e1.printStackTrace();
+			errorMsg(errorType.ERROR,e1.getMessage());
 		}
 
 		rek.setUndersoegelsesTypeId(USTypeID);
@@ -140,14 +179,20 @@ public class NyRekvisitionServlet extends HttpServlet
 		try {
 			rek.setIltLiterPrmin(Integer.valueOf(request.getParameter("ilt_tekst")));
 		} catch (NumberFormatException e){
+			if(request.getParameter("ilt_tekst") != null || request.getParameter("ilt_tekst").equals("")){
+				System.out.println("ilt tekst: " + request.getParameter("ilt_tekst"));
+			errorMsg(errorType.WARNING, "ilt bliver sat til null");
+			}
 			rek.setIltLiterPrmin(null);
 		}
 		rek.setTolkSprog(request.getParameter("tolk_tekst"));
 		rek.setIsolation(request.getParameter("isolation_tekst"));
 		try {
 			rek.setCytostatikaDato(java.sql.Date.valueOf(request.getParameter("cytostatika_dato")));
-			System.out.println(rek.getCytostatikaDato());
 		} catch (IllegalArgumentException e) {
+			if(request.getParameter("cytostatika_dato") == null){
+			errorMsg(errorType.WARNING, "cytostatika dato bliver sat til null.");
+			}
 			rek.setCytostatikaDato(null);
 		}
 		rek.setTidlBilledDiagnostik(request.getParameter("tidl_billed_diagnostik"));
@@ -164,8 +209,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			try {
 				ULSkemaID = storeULInvKontrolSkema(request,response);
 			} catch (DaoException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
+				errorMsg(errorType.ERROR, e2.getMessage());
 			}
 			rek.setInvasivULKontrolskemaId(ULSkemaID);
 		} else if ("8".equals(modalitet)) {
@@ -173,8 +217,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			try {
 				MRSkemaID = storeMRSkema(request, response);
 			} catch (DaoException e1) {
-				// TODO Error page???
-				e1.printStackTrace();
+				errorMsg(errorType.ERROR, e1.getMessage());
 			}
 			rek.setMRKontrolskemaId(MRSkemaID);
 		} else if ("5".equals(modalitet)) {
@@ -182,8 +225,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			try {
 				CTKSkemaID = storeCTKSkema(request, response);
 			} catch (DaoException e1) {
-				// TODO Error page???
-				e1.printStackTrace();
+				errorMsg(errorType.ERROR, e1.getMessage());
 			}
 			rek.setCTKontrastKontrolskemaId(CTKSkemaID);
 		} else if ("6".equals(modalitet)) {
@@ -191,8 +233,7 @@ public class NyRekvisitionServlet extends HttpServlet
 			try {
 				PETCTSkemaID = storePETCTSkema(request,response);
 			} catch (DaoException e1) {
-				// TODO Error page???
-				e1.printStackTrace();
+				errorMsg(errorType.ERROR, e1.getMessage());
 			}
 			rek.setPETCTKontrolskemaId(PETCTSkemaID);
 		} else {
@@ -201,13 +242,8 @@ public class NyRekvisitionServlet extends HttpServlet
 		try {
 			databaseController.getRekvisitionDao().insert(rek);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorMsg(errorType.ERROR, e.getMessage());
 		}
-		//HopeFully it went well ;)
-		//TODO - real page
-		response.sendRedirect("rekvisitionSendt.jsp");
-
 
 	}
 

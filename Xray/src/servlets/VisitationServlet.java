@@ -58,14 +58,6 @@ public class VisitationServlet extends HttpServlet {
 
 	}
 
-	private void initSession(HttpServletRequest request,
-			HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
-		request.setCharacterEncoding("UTF-8");
-		setDefaultTable(request, response, activeUser, databaseController);
-		createSearchDropdowns(request, databaseController);
-		
-	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -76,11 +68,9 @@ public class VisitationServlet extends HttpServlet {
 		String visiterAction = request.getParameter("visiterAction");
 
 		initSession(request, response, activeUser, databaseController);
-		
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
-//			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.VISITATION_SERVLET);
 		}
 		else if("Afvis".equals(visiterAction)){
 			declineRekvisition(request);
@@ -91,6 +81,14 @@ public class VisitationServlet extends HttpServlet {
 
 
 
+	}
+	
+	private void initSession(HttpServletRequest request,
+			HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
+		request.setCharacterEncoding("UTF-8");
+		setDefaultTable(request, response, activeUser, databaseController);
+		createSearchDropdowns(request, databaseController);
+		
 	}
 
 	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{

@@ -7,7 +7,15 @@
 <title>Rekvisition sendt</title>
 </head>
 <body>
+
 Tak for din henvendelse - du kan følge med i status for din rekvisition i oversigten <BR>
 <A HREF='RekvisitionServlet'>Tilbage til rekvisitioner</A>
+
+<%
+String error = (String) request.getSession().getAttribute("errorMsg");
+out.println();
+if(error != null)
+out.println(error);
+%>
 </body>
 </html>

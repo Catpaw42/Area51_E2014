@@ -19,7 +19,7 @@ function revisitRekvisition(id){
 	if(confirm("Er du sikker du vil få rekvisitionen visiteret igen?") == true){
 		$.get("BookingServlet?action=revisit&bookingId=" + id, function(data, status){
 			if(status == "success"){
-				console.log("id="+id);
+				//console.log("id="+id);
 			}
 		});
 	}
