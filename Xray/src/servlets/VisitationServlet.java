@@ -4,6 +4,7 @@ import helperClasses.Const;
 import helperClasses.Validator;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -44,48 +45,56 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		createSearchDropdowns(request);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
+		
 		// forwards to mainServlet with LoginPage as parameter
-		if(activeUser == null){ 
+		if(activeUser == null || databaseController == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
-			setDefaultTable(activeUser, request, response);
+			initSession(request, response,activeUser, databaseController);		
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
 
+	}
+
+	private void initSession(HttpServletRequest request,
+			HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
+		request.setCharacterEncoding("UTF-8");
+		setDefaultTable(request, response, activeUser, databaseController);
+		createSearchDropdowns(request, databaseController);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+
+		Bruger activeUser = (Bruger)request.getSession().getAttribute(Const.ACTIVE_USER);
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		String visiterAction = request.getParameter("visiterAction");
-		int id=Integer.valueOf(request.getParameter("rekIDSubmit"));
-		System.out.println("post: action: " + visiterAction + " id: " + id);
-		
+
+		initSession(request, response, activeUser, databaseController);
 		
 		if("Godkend".equals(visiterAction)){
 			approveRekvisition(request);
-			setDefaultTable((Bruger)request.getSession().getAttribute(Const.ACTIVE_USER), request, response);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
-//			response.sendRedirect(Const.VISITATION_PAGE);
+//			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.VISITATION_SERVLET);
 		}
 		else if("Afvis".equals(visiterAction)){
 			declineRekvisition(request);
-			setDefaultTable((Bruger)request.getSession().getAttribute(Const.ACTIVE_USER), request, response);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}else{
 			searchRekvisition(request, response);
 		}
 
 
+
 	}
 
-	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
+		
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist = null;
 		// gets list of the active user - default behavior
@@ -99,9 +108,9 @@ public class VisitationServlet extends HttpServlet {
 	/**
 	 * have to be called so the dropdowns in rekvisitionPage are filled
 	 * @param request
+	 * @param databaseController 
 	 */
-	private void createSearchDropdowns(HttpServletRequest request){
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+	private void createSearchDropdowns(HttpServletRequest request, IDatabaseController databaseController){
 		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
