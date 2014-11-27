@@ -46,11 +46,14 @@ public class BookingServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		createSearchDropdowns(request);
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+
 
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		// forwards to mainServlet with LoginPage as parameter
-		if(activeUser == null || databaseController == null){ 
+		if(activeUser == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
 			String action = request.getParameter(Const.PARAM_ACTION);
@@ -73,7 +76,7 @@ public class BookingServlet extends HttpServlet {
 					System.err.println("could not save changes to rekvisition");
 				}
 			}
-			
+			setDefaultTable(activeUser, request, response);
 		}
 
 
@@ -83,32 +86,26 @@ public class BookingServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
+		request.setCharacterEncoding("UTF-8");
+		createSearchDropdowns(request);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		
 
-		if(activeUser == null || databaseController == null){
+		if(activeUser == null){
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);		
 		}else{
 			searchRekvisition(request, response);
 		}
-		initPage(request, response, databaseController, activeUser);
 
-	}
-	
-	private void initPage(HttpServletRequest request, HttpServletResponse response, IDatabaseController databaseController, Bruger activeUser) throws ServletException, IOException{
-		request.setCharacterEncoding("UTF-8");
-		createSearchDropdowns(request, databaseController);
-		setDefaultTable(request, response, databaseController, activeUser);
+
 	}
 
 	/**
 	 * have to be called so the dropdowns in rekvisitionPage are filled
 	 * @param request
-	 * @param databaseController 
 	 */
-	private void createSearchDropdowns(HttpServletRequest request, IDatabaseController databaseController){
+	private void createSearchDropdowns(HttpServletRequest request){
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
 		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
 	}
@@ -163,7 +160,8 @@ public class BookingServlet extends HttpServlet {
 
 	}
 
-	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response, IDatabaseController databaseController, Bruger activeUser) throws ServletException, IOException{
+	private void setDefaultTable(Bruger activeUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Rekvisition list to show user.
 		RekvisitionExtended[] rekvlist1 = null;
 		RekvisitionExtended[] rekvlist2 = null;

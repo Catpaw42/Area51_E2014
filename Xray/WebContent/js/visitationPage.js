@@ -61,15 +61,15 @@ function getRekvisitation(rekvisition_Id){
 	    }
 	});
 	$('input[name="rekIDSubmit"]').val(rekvisition_Id);
-	$('input[name="action"]').val("");
+	$('input[name="visiterAction"]').val("");
 }
 
 function doGodkend(){
 	var rek_id;
 	rek_id = $('input[name="rekIDSubmit"]').val(); //sæt rekvisition id på hidden element
 	if(rek_id!=""){
-		$('input[name="action"]').val("Godkend"); //sæt action til godkend
-		$.post('WEB-INF/VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
+		$('input[name="visiterAction"]').val("Godkend"); //sæt action til godkend
+		$.post('VisitationServlet', $('form#visiterform').serialize(), function(data) { //post form
 			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}
@@ -82,8 +82,8 @@ function doAfvis(){
 	var rek_id;
 	rek_id = $('input[name="rekIDSubmit"]').val();
 	if(rek_id!=""){
-		$('input[name="action"]').val("Afvis");
-		$.post( 'WEB-INF/VisitationServlet', $('form#visiterform').serialize(), function(data){
+		$('input[name="visiterAction"]').val("Afvis");
+		$.post( 'VisitationServlet', $('form#visiterform').serialize(), function(data){
 			window.location.href = window.location.pathname; //redirect til samme side
 		});
 	}

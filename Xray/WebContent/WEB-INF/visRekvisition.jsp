@@ -231,12 +231,12 @@
 					}
 					
 					if(kontrolSkemaTekst != null){
-						kontrolSkemaTekst = kontrolSkemaTekst.replace("{", "</h2><p>");
-						kontrolSkemaTekst = kontrolSkemaTekst.replace("}", "</p>");
-						kontrolSkemaTekst = kontrolSkemaTekst.replace(",", "<br>");
-						kontrolSkemaTekst = kontrolSkemaTekst.replace("=", ": ");
-						kontrolSkemaTekst = kontrolSkemaTekst.replace("true", "ja");
-						kontrolSkemaTekst = kontrolSkemaTekst.replace("false", "nej");
+						kontrolSkemaTekst = kontrolSkemaTekst.replaceAll("\\{", "</h2><p>");
+						kontrolSkemaTekst = kontrolSkemaTekst.replaceAll("\\}", "</p>");
+						kontrolSkemaTekst = kontrolSkemaTekst.replaceAll(",", "<br>");
+						kontrolSkemaTekst = kontrolSkemaTekst.replaceAll("=", ": ");
+						kontrolSkemaTekst = kontrolSkemaTekst.replaceAll("true", "ja");
+						kontrolSkemaTekst = kontrolSkemaTekst.replaceAll("false", "nej");
 						out.println(kontrolSkemaTekst);
 					}
 					%> 

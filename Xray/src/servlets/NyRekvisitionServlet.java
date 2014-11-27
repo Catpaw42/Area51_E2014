@@ -65,13 +65,11 @@ public class NyRekvisitionServlet extends HttpServlet
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 
 		//Getting Modalities
-		Modalitet[] modList = databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{});
+		Modalitet[] modList = databaseController.getModalitetDao().findDynamic(null, 0, -1, null);
 		request.setAttribute(Const.MODALITY_LIST, modList);
 		if (Const.DEBUG) System.out.println(modList);
-		
-	
+
 		request.getRequestDispatcher(Const.NEW_REKVISITION_PAGE).forward(request, response);
-		
 	}
 
 	/**is Public so it can be tested with junit 
@@ -79,14 +77,13 @@ public class NyRekvisitionServlet extends HttpServlet
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Getting active user
 		Bruger activeBruger = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
 		//Checking if activeUser
-		if (activeBruger == null || databaseController == null) response.sendRedirect(Const.MAIN_SERVLET);
+		if (activeBruger == null) response.sendRedirect(Const.MAIN_SERVLET);
 		request.setCharacterEncoding("UTF-8");
 
+		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		//Getting active user
 
 		//Storing patient data.

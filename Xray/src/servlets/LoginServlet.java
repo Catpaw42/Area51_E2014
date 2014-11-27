@@ -31,13 +31,10 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		// if databaseController null requests to get back to loginServlet, but this time with a databaseController
-		if(request.getSession().getAttribute(Const.DATABASE_CONTROLLER) == null){
-			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_SERVLET);
-		}
 		//Check for login
-	else if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
-			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_USER);
+		if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
+			//TODO determine main user role and redirect to relevant page
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + "loggingIn");
 		else
 			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
 	}
@@ -52,12 +49,17 @@ public class LoginServlet extends HttpServlet
 		//User posts login data
 		String username = request.getParameter(Const.USERNAME);
 		String password = request.getParameter(Const.PASSWORD);
+		System.out.println("username: " + username);
+		System.out.println("password: " + password);
 		
 		if (username != null && password != null)
 		{
 			boolean loginSuccess = false;
 			
+
+			
 			loginSuccess = databaseController.getBrugerDao().validate(username, password);
+			System.out.println(loginSuccess);
 			if (loginSuccess)
 			{
 					Bruger loggedInUser= databaseController.getBrugerDao().findByUserName(username, password);
