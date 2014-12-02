@@ -112,6 +112,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		if(!first){
 			query = GET_ALL_REKV;
 		}
+		query = query + " ORDER BY status, afsendt_dato DESC, modalitet_navn";
 		//    	modalitet_navn
 		//    	patient_cpr
 		//    	patient_navn
