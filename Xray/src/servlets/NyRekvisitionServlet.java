@@ -108,17 +108,12 @@ public class NyRekvisitionServlet extends HttpServlet
 	private void errorMsg(errorType type, String error){
 		errorCount++;
 		String et = null;
-		switch(type){
-		case ERROR:
+		if (type == errorType.ERROR) {
 			et = "error:";
-			break;
-		case WARNING:
+		} else if (type == errorType.WARNING) {
 			et = "besked:";
-			break;
-		default:
+		} else {
 			et = "error:";
-			break;
-		
 		}
 		this.errorMsg = this.errorMsg + "\n" + et + " " + errorCount + ": " + error;
 	}
