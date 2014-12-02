@@ -9,7 +9,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<!-- TODO: user validation/protection -->
 <base target="_parent">
 <meta charset="utf-8">
 <link href="css/topStyleSheet.css" rel="stylesheet" type="text/css"

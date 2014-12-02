@@ -37,7 +37,6 @@ public class LoginServlet extends HttpServlet
 		if(databaseController == null){
 			response.sendRedirect(Const.MAIN_SERVLET);
 		}else if (request.getSession().getAttribute(Const.ACTIVE_USER)!= null)
-			//TODO determine main user role and redirect to relevant page
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + "loggingIn");
 		else
 			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
@@ -53,17 +52,13 @@ public class LoginServlet extends HttpServlet
 		//User posts login data
 		String username = request.getParameter(Const.USERNAME);
 		String password = request.getParameter(Const.PASSWORD);
-		System.out.println("username: " + username);
-		System.out.println("password: " + password);
 		if(databaseController == null){
 			response.sendRedirect(Const.MAIN_SERVLET);
 		}
 		else if (username != null && password != null)
 		{
 			boolean loginSuccess = false;
-			
-
-			
+		
 			loginSuccess = databaseController.getBrugerDao().validate(username, password);
 			System.out.println(loginSuccess);
 			if (loginSuccess)
@@ -72,24 +67,19 @@ public class LoginServlet extends HttpServlet
 					
 					if(loggedInUser.getErAktiv())
 					{
-						System.out.println("Login success, forwarding");
-						request.getSession().setAttribute(Const.ACTIVE_USER, loggedInUser );
-					
-//						request.getSession().setAttribute(Const.DATABASE, dbctrl);
-						
+						request.getSession().setAttribute(Const.ACTIVE_USER, loggedInUser );		
 						response.sendRedirect(Const.MAIN_SERVLET + "?page=loggingIn");
-						System.out.println("forward finished");
 					}
 					else
 					{
 						request.setAttribute(Const.LOGIN_FAILED, true);
-						request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- stod som argument, men må være forkert??
+						request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); 
 					}
 			}
 			else
 			{
 				request.setAttribute(Const.LOGIN_FAILED, true);
-				request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/loginScreen.jsp" -- må også være forkert??
+				request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
 			}
 				
 			
@@ -98,7 +88,7 @@ public class LoginServlet extends HttpServlet
 		{
 			if (request.getParameter(Const.USERNAME) != null)
 				request.setAttribute(Const.LOGIN_FAILED, true);
-			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response); // "WEB-INF/userlogin.jsp" -- må være forkert??
+			request.getRequestDispatcher(Const.LOGIN_PAGE).forward(request, response);
 		}
 	}
 }

@@ -19,7 +19,6 @@
 <%@page import="helperClasses.Const" %>
 <%@ page import="database.DatabaseController"%>
 <%@ page import="database.dto.RekvisitionExtended"%>
-<%@ page import="database.dao.mysql.RekvisitionDaoImplExt"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 

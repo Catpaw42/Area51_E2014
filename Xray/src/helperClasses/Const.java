@@ -62,7 +62,8 @@ public final class Const {
 	public static final String PARAM_NAME = "name";
 	public static final String PARAM_MODALITY = "modality";
 	public static final String PARAM_DEPARTMENT = "department";
-	public static final String PARAM_DATE = "date";
+	public static final String PARAM_FROM_DATE = "fromDate";
+	public static final String PARAM_TO_DATE = "toDate";
 	public static final String PARAM_STATUS = "status";
 
 	public static final String LOGIN_FAILED = "loginFailed";

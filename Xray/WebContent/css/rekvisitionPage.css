@@ -84,6 +84,11 @@
 	border: 1px solid black;
 	overflow: auto;
 }
+
+div {
+	padding-bottom: 10px;
+}
+
 #rekvisitionList table, #rekvisitionList th {
 	border: 2px solid black;
 	border-collapse: collapse;

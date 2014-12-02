@@ -1,7 +1,8 @@
 /* @autor Morten, Magnus */
-.visitationPage tr { 
+.bookingPage tr, .visitationPage tr, .rekvisitionPage tr { 
 	cursor: default;
 }
+
 #overlay {
     position: fixed;
     top: 0;
@@ -29,6 +30,7 @@
 .centerAlign{
 		align-items: center;
 }
+
 #nyRekvisition {
 	margin-right: 10px;
 	text-decoration:none;
@@ -50,26 +52,30 @@
 	height: 400px;
 	overflow: auto;
 	border: 1px solid black;
+	overflow: auto;
 }
-.visitationList table, .visitationList th {
+#rekvisitionList table, .rekvisitionList rh{
 	border: 2px solid black;
 	border-collapse: collapse;
 	padding: 5px;
 }
-div {
-	padding-bottom: 10px;
-}
-
-.visitationList td {
+#rekvisitionList td, .visitationList td {
 	border: 1px solid black;
 	border-collapse: collapse;
 	padding: 2px 2px 2px 2px;
 }
+
+#rekvisitionList .button {
+	border: 0px none white;
+	border-collapse: collapse;
+	padding: 2px 2px 2px 2px;
+}
+
 #search table, #search th, #search td {
 	border: 1px solid black;
 	border-collapse: collapse;
 }
-#topMenuIframe {
+.topMenuIframe {
 	width: 100%;
 	height: 60px;
 	frameBorder: 0;
@@ -77,25 +83,5 @@ div {
 	margin-right: auto;
 }
 
-#godkendAfvis {
-	margin-top : 10px;
-	margin-left: 10px;
-	display: inline-flex;
-	flex-direction: row;
-	padding: 0;
-	list-style-type: none;
-	
-}
 
-input[type=submit] {  
-    border: 1px solid rgba(0, 0, 0, 0.3);  
-    background: -webkit-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%); /* Chrome10+,Safari5.1+ */  
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64c8ef', endColorstr='#00a2e2',GradientType=0 ); /* IE6-9 */  
-    color: #fff;  
-    padding: 5px 15px;  
-    margin-right: 0;  
-    margin-top: 18px;  
-    border-radius: 3px;  
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);  
-}
 

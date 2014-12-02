@@ -66,7 +66,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 	/**
 	 * @author Rúni
 	 */
-	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department, int rekvirentId) {
+	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp fromDate, Timestamp toDate, String department, int rekvirentId) {
 		Timestamp lowBound = null;
 		Timestamp upperBound = null;
 		PreparedStatement stmt = null;
@@ -74,17 +74,18 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		ArrayList<RekvisitionExtended> rekv = new ArrayList<RekvisitionExtended>();
 		String query = ADV_SEARCH;
 		boolean first = false;
+		
+		System.out.println("modalitet: " + modality);
 
 		if (cpr != null && !cpr.equals("")){
-			query = query + "patient_cpr=? ";
+			query = query + "patient_cpr LIKE ? ";
 			first = true;
 		}
 		if(name != null && !name.equals("")){			
-			query = query + (first ? " AND " : " ") + "patient_navn=? ";
+			query = query + (first ? " AND " : " ") + "patient_navn LIKE ? ";
 			first=true;
 		}
-		if(modality != null && !modality.equals("")){
-			// query = query + (first ? " AND modalitet_navn=? " : " modalitet_navn=? ");
+		if(modality != null && !modality.equals("") && !modality.equals("0")){
 			query = query + (first ? " AND " : " ") + "modalitet_id=? ";
 			first = true;
 		}
@@ -92,14 +93,14 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 			query = query + (first ? " AND " : " ") + "status=? ";
 			first = true;
 		}
-		if(date != null){
-			long day = 60*60*24*1000-1;
-			lowBound = new Timestamp(date.getTime());
-			upperBound = new Timestamp(date.getTime()+day);
-			query = query + (first ? " AND  " : " ") + "afsendt_dato>? AND afsendt_dato<? ";
+		if(fromDate != null){
+			query = query + (first ? " AND  " : " ") + "afsendt_dato>? ";
 			first = true;
 		}
-		if(department != null && !department.equals("") && !department.equalsIgnoreCase("alle")){
+		if(toDate != null){
+			query = query + (first ? " AND " : " ") + "afsendt_dato<? ";
+		}
+		if(department != null && !department.equals("") && !department.equalsIgnoreCase("0")){
 			query = query + (first ? " AND " : " ") + "stamafdeling=? ";
 			first = true;
 		}
@@ -117,34 +118,35 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		//    	stamafdeling
 		//    	status
 		//    	afsendt_dato
-
-		System.out.println("Query: " + query);
+//
 				try {
 					stmt = conn.prepareStatement(query);
 					int i = 1;
 					if (cpr != null && !cpr.equals("")){
-						stmt.setString(i, cpr);
+						stmt.setString(i, cpr+"%");
 						i++;
 					}
 					if(name != null && !name.equals("")){			
-						stmt.setString(i, name);
+						stmt.setString(i, name+"%");
 						i++;
 					}
-					if(modality != null && !modality.equals("")){
-						stmt.setInt(i, Integer.valueOf(modality)+1);
+					if(modality != null && !modality.equals("") && !modality.equals("0")){
+						stmt.setInt(i, Integer.valueOf(modality));
 						i++;
 					}
 					if(status != null){
 						stmt.setShort( i, (short) (status.ordinal() + 1));
 						i++;
 					}
-					if(date != null){
-						stmt.setTimestamp(i, lowBound);
-						i++;
-						stmt.setTimestamp(i, upperBound);
+					if(fromDate != null){
+						stmt.setTimestamp(i, fromDate);
 						i++;
 					}
-					if(department != null && !department.equals("") && !department.equalsIgnoreCase("alle")){
+					if(toDate != null){
+						stmt.setTimestamp(i, toDate);
+						i++;
+					}
+					if(department != null && !department.equals("") && !department.equalsIgnoreCase("0")){
 						stmt.setString(i, department);
 						i++;
 					}
@@ -157,18 +159,17 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 					e.printStackTrace();
 				}
 				try {
-			
+					System.out.println("statement: " + stmt.toString());
 					rs = stmt.executeQuery();
 					String pt_cpr = "patient_cpr";
 					String pt_name = "patient_navn";
 					String mod_name = "modalitet_navn";
+					String mod_id = "modalitet_id";
 					String stam_afdeling = "stamafdeling";
 					String afs_dato = "afsendt_dato";
 					String rekv_status = "status";
 					String rekv_id = "rekvisition_id";
 
-
-					
 					while (rs.next()){
 						RekvisitionExtended rekvRsRow = new RekvisitionExtended();
 						Patient dummyP = new Patient();
@@ -179,6 +180,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 						rekvRsRow.getPatient().setPatientCpr(rs.getString(pt_cpr));
 						rekvRsRow.getPatient().setPatientNavn(rs.getString(pt_name));
 						rekvRsRow.getModalitet().setModalitetNavn(rs.getString(mod_name));
+						rekvRsRow.getModalitet().setModalitetId(rs.getInt(mod_id));
 						rekvRsRow.getPatient().setStamafdeling(rs.getString(stam_afdeling));
 						rekvRsRow.setAfsendtDato(rs.getTimestamp(afs_dato));
 						rekvRsRow.setStatus(_Rekvisition_Statuss[ rs.getShort( rekv_status) ]);
@@ -211,8 +213,8 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 	/**
 	 * @author Rúni
 	 */
-	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department){ 	
-		return findByAdvSearch(cpr, name, modality, status, date, department, -1);
+	public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp fromDate, Timestamp toDate, String department){ 	
+		return findByAdvSearch(cpr, name, modality, status, fromDate, toDate, department, -1);
 		
 		
 	}
@@ -603,7 +605,7 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 				sb.append( ", " );
 			}
 
-			if ( dto.getVisitatorId() == null ) {
+			if ( dto.getVisitatorId() == null || dto.getVisitatorId() == 0) {
 				sb.append( "visitator_id=NULL" );
 			}
 			else {
@@ -998,7 +1000,9 @@ public class RekvisitionDaoImpl extends AbstractDaoImpl<RekvisitionExtended> imp
 		params.add( rekvisitionId );
 
 		Object[] oparams = new Object[ params.size() ];
-
+		System.out.println(sb.toString());
+		System.out.println(PK_CONDITION);
+		System.out.println(params.toString());
 		return updateOne( sb.toString(), PK_CONDITION, params.toArray( oparams ));
 	}
 

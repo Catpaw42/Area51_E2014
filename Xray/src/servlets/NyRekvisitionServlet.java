@@ -94,8 +94,6 @@ public class NyRekvisitionServlet extends HttpServlet
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.NEW_REKVISITION_SERVLET);
 		}
 		else{
-		
-
 		//Storing patient data.
 		Integer ptId = storePatient(request, activeBruger);
 		createRekvisition(request, response, ptId, activeBruger, databaseController);

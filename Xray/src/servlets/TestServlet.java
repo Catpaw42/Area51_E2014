@@ -26,7 +26,7 @@ import database.dao.mysql.BrugerDaoImpl;
 import database.dao.mysql.BrugerDaoImplExtended;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
-import database.dao.mysql.RekvisitionDaoImplExt;
+import database.dao.mysql.RekvisitionDaoImpl;
 import database.dto.Bruger;
 import database.dto.CtKontrastKontrolskema;
 import database.dto.Modalitet;
@@ -114,9 +114,9 @@ public class TestServlet extends HttpServlet {
 
 	private void testAdvSearch(Connection connection) {
 		RekvisitionExtended[] r = null;
-		RekvisitionDaoImplExt dao = new RekvisitionDaoImplExt(connection);
+		RekvisitionDaoImpl dao = new RekvisitionDaoImpl(connection);
 		// test: "Røntgen"
-		r = dao.findByAdvSearch(null, null, null, null, null, null);
+		r = dao.findByAdvSearch(null, null, null, null, null, null, null);
 		System.out.println("################ adv search########################");
 		System.out.println("arrayStørrelse: " + r.length);
 		for (RekvisitionExtended rekvisition : r) {

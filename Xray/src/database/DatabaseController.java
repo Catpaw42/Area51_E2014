@@ -17,7 +17,7 @@ import database.dao.mysql.MRKontrolskemaDaoImpl;
 import database.dao.mysql.ModalitetDaoImpl;
 import database.dao.mysql.PETCTKontrolskemaDaoImpl;
 import database.dao.mysql.PatientDaoImpl;
-import database.dao.mysql.RekvisitionDaoImplExt;
+import database.dao.mysql.RekvisitionDaoImpl;
 import database.dao.mysql.UlInvKontrolskemaDaoImpl;
 import database.dao.mysql.UndersoegelsesTypeDaoImpl;
 import database.interfaces.IDatabaseController;
@@ -176,7 +176,7 @@ public class DatabaseController implements IDatabaseController{
 	@Override
 	public RekvisitionDao getRekvisitionDao() {
 		if(conn == null || this.rekvisitionDao == null){
-			this.rekvisitionDao = new RekvisitionDaoImplExt(getConnection());
+			this.rekvisitionDao = new RekvisitionDaoImpl(getConnection());
 		}
 		return rekvisitionDao;
 	}

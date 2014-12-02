@@ -54,7 +54,7 @@ public interface RekvisitionDao extends AbstractDao {
      * @param rekvirentId
      * @return
      */
-    public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department, int rekvirentId);
+    public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp fromDate, Timestamp toDate, String department, int rekvirentId);
     
     /**
      * 
@@ -66,5 +66,5 @@ public interface RekvisitionDao extends AbstractDao {
      * @param department
      * @return
      */
-    public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp date, String department);	
+    public RekvisitionExtended[] findByAdvSearch(String cpr, String name, String modality, RekvisitionExtended.Status status,Timestamp fromDate, Timestamp toDate, String department);	
 }

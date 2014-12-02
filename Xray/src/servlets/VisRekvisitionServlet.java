@@ -49,11 +49,14 @@ public class VisRekvisitionServlet extends HttpServlet {
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
 			int rekvisitionId = -1;
+				try{
 				rekvisitionId = Integer.valueOf(request.getParameter("rekvisition_Id"));
+				}catch(Exception e) {}
 				RekvisitionExtended rek = databaseController.getRekvisitionDao().findByPrimaryKey(rekvisitionId);
+				if(rek != null){
 				request.getSession().setAttribute(Const.REKVISITION_SELECTED, rek);
 				request.getRequestDispatcher(Const.SHOW_REKVISITION_PAGE).forward(request, response);
-		
+				}
 			
 		}
 		

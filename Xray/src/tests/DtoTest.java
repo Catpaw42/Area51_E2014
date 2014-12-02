@@ -8,7 +8,7 @@ import java.sql.Connection;
 import org.junit.Before;
 import org.junit.Test;
 
-import database.dao.mysql.RekvisitionDaoImplExt;
+import database.dao.mysql.RekvisitionDaoImpl;
 import database.dto.RekvisitionExtended;
 import database.dto.RekvisitionExtended.Status;
 import database.dto.Rettigheder;
@@ -24,13 +24,13 @@ public class DtoTest {
 //		t.testRekvisitionExtended();
 //	}
 	Connection conn;
-	RekvisitionDaoImplExt rekDao;
+	RekvisitionDaoImpl rekDao;
 	
 	@Before
 	public void setUp() throws Exception{
 		SQLConnector sql = new SQLConnector();
 		this.conn = sql.getConnection();
-		this.rekDao = new RekvisitionDaoImplExt(conn);
+		this.rekDao = new RekvisitionDaoImpl(conn);
 	}
 	
 	/**

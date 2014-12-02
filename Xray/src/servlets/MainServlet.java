@@ -71,37 +71,18 @@ public class MainServlet extends HttpServlet {
 		boolean logout = checkAction(request, response);
 		String primaryPage = request.getParameter("page");
 		if (primaryPage==null)primaryPage="";
-		//Check if user is logging in
 		
+		//Check if user is logging in
 		if(primaryPage.equals("loggingIn")){
 			Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-			//Getting users permissions and redirecting to relevant page.
-			Rettigheder[] rettigheder = activeUser.getRettigheder();
-			int prioritet = 0;
-			for (Rettigheder r : rettigheder) {
-				if(r.getRettighed().equals(Rettighed.ASSESSOR) && prioritet < 3){
-					primaryPage=Const.VISITATION_SERVLET;
-					prioritet=3;
-				}
-				if(r.getRettighed().equals(Rettighed.REQUEST) && prioritet < 3){
-					primaryPage=Const.REKVISITION_SERVLET;
-					prioritet=2;
-				}
-				if(r.getRettighed().equals(Rettighed.BOOKING) && prioritet < 2){
-					primaryPage=Const.BOOKING_SERVLET;
-					prioritet=1;
-				}
-				if(r.getRettighed().equals(Rettighed.ADMIN) && prioritet < 1){
-					primaryPage=Const.ADMIN_SERVLET;
-					prioritet=0;
-				}
-			}
+			primaryPage = checkActiveUserRights(activeUser);
+
 		}
-		System.out.println("primary page: " + primaryPage);
 		
 		if (logout || Const.LOGIN_SERVLET.equals(primaryPage) || Const.LOGIN_PAGE.equals(primaryPage)) {
 			
-			forward("/" + Const.LOGIN_SERVLET,request,response);
+			response.sendRedirect(Const.LOGIN_SERVLET);
+//			forward("/" + Const.LOGIN_SERVLET,request,response);
 			
 		} else if (Const.REKVISITION_SERVLET.equals(primaryPage) || Const.REKVISITION_PAGE.equals(primaryPage)) {
 			
@@ -120,14 +101,49 @@ public class MainServlet extends HttpServlet {
 			
 		} else if (Const.ADMIN_SERVLET.equals(primaryPage) || Const.ADMIN_PAGE.equals(primaryPage)) {
 			
-			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_SERVLET); // while admin is not implemented
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE); // while admin is not implemented
 //			request.getSession().setAttribute(Const.PAGEHEADING, Const.ADMINISTRER_TITLE); // TODO incomment when implementation finished
-			forward("/" + Const.REKVISITION_SERVLET, request, response);
+//			forward("/" + Const.REKVISITION_SERVLET, request, response);
+			response.sendRedirect(Const.REKVISITION_SERVLET);
 			
 		} else {
-			response.sendRedirect("/" + Const.LOGIN_SERVLET);
+			
+			request.getSession().setAttribute(Const.PAGEHEADING, Const.REKVISITION_TITLE);
+			response.sendRedirect(Const.REKVISITION_SERVLET);
 		}		
 	}
+	
+	/**
+	 * finds the page that seems to be most relevant to user
+	 * @param activeUser
+	 * @return
+	 */
+	private String checkActiveUserRights(Bruger activeUser) {
+		String primaryPage = null;
+		//Getting users permissions and redirecting to relevant page.
+		Rettigheder[] rettigheder = activeUser.getRettigheder();
+		int prioritet = 0;
+		for (Rettigheder r : rettigheder) {
+			if(r.getRettighed().equals(Rettighed.ASSESSOR) && prioritet < 3){
+				primaryPage=Const.VISITATION_SERVLET;
+				prioritet=3;
+			}
+			if(r.getRettighed().equals(Rettighed.REQUEST) && prioritet < 3){
+				primaryPage=Const.REKVISITION_SERVLET;
+				prioritet=2;
+			}
+			if(r.getRettighed().equals(Rettighed.BOOKING) && prioritet < 2){
+				primaryPage=Const.BOOKING_SERVLET;
+				prioritet=1;
+			}
+			if(r.getRettighed().equals(Rettighed.ADMIN) && prioritet < 1){
+				primaryPage=Const.ADMIN_SERVLET;
+				prioritet=0;
+			}
+		}
+		return primaryPage;
+	}
+
 	private boolean checkAction(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		String action = request.getParameter("action");
 		if (action == null) action = "";
@@ -138,13 +154,5 @@ public class MainServlet extends HttpServlet {
 		return false;
 		
 	}
-
-	//Utility method to forward
-	private void forward(String string, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher(string).forward(request, response);
-		
-	}
-
 
 }

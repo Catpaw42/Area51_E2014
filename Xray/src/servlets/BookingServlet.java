@@ -1,11 +1,10 @@
 package servlets;
 
-import helperClasses.Const;
-import helperClasses.Validator;
-
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
+
+import helperClasses.Const;
+
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.spoledge.audao.db.dao.DaoException;
 
-import database.dao.mysql.RekvisitionDaoImplExt;
 import database.dto.Bruger;
 import database.dto.Modalitet;
 import database.dto.RekvisitionExtended;
@@ -26,10 +24,8 @@ import database.interfaces.IDatabaseController;
  * Servlet implementation class BookingServlet
  */
 @WebServlet("/BookingServlet")
-public class BookingServlet extends HttpServlet {
+public class BookingServlet extends ParentServlet {
 	private static final long serialVersionUID = 1L;
-
-	private java.sql.Connection conn = null;
 
 	// used for the search boxes in rekvisitionPage.jsp
 	public Modalitet[] modList = null;
@@ -54,27 +50,32 @@ public class BookingServlet extends HttpServlet {
 		if(activeUser == null || databaseController == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
-			initSession(request, response, activeUser, databaseController);
+			initSession(request, new Status[]{Status.APPROVED, Status.BOOKED}, databaseController);
 			String action = request.getParameter(Const.PARAM_ACTION);
 			int rekvisitionId = -1;
 			String id = request.getParameter(Const.BOOKING_ACTION_ID);
 			if(id != null){
+				// getting id of rekvisition wished to book or send back to visitation
 				rekvisitionId = Integer.valueOf(id);
-
+				// getting wanted rekvisition
 				RekvisitionExtended r = databaseController.getRekvisitionDao().findByPrimaryKey(rekvisitionId);
+				// if action is booking rekvisition
 				if(Const.BOOKING_ACTION.equals(action)){
 					r.setStatus(Status.BOOKED);
 				}
+				// if action is to send back og visitation
 				else if(Const.REVISIT_ACTION.equals(action)){
 					r.setStatus(Status.PENDING);
 
 				}
 				try {
+					// trying to update in database
 					databaseController.getRekvisitionDao().update(rekvisitionId, r);
 				} catch (DaoException e) {
 					System.err.println("could not save changes to rekvisition");
 				}
 			}
+			request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
 		}
 
 
@@ -91,111 +92,17 @@ public class BookingServlet extends HttpServlet {
 		if(activeUser == null || databaseController == null){
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);		
 		}else{
-			initSession(request, response, activeUser, databaseController);
-			searchRekvisition(request, response);
+			initSession(request, new Status[] {Status.APPROVED, Status.BOOKED}, databaseController);
+			searchRekvisition(request, databaseController);
+			request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
 		}
 
 
 	}
 
-	private void initSession(HttpServletRequest request,
-			HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
-		request.setCharacterEncoding("UTF-8");
-		setDefaultTable(request, response, activeUser, databaseController);
-		createSearchDropdowns(request, databaseController);
-
-	}
-
-	/**
-	 * have to be called so the dropdowns in rekvisitionPage are filled
-	 * @param request
-	 * @param databaseController 
-	 */
-	private void createSearchDropdowns(HttpServletRequest request, IDatabaseController databaseController){
-		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
-		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
-	}
-
-	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
-		// parameters
-		String cpr = request.getParameter(Const.PARAM_CPR);
-		String name = request.getParameter(Const.PARAM_NAME);
-		String modality = request.getParameter(Const.PARAM_MODALITY);
-		String department = request.getParameter(Const.PARAM_DEPARTMENT);
-		department = (department.equals("-1") ? null : department);
-		String date = request.getParameter(Const.PARAM_DATE).replace(" ", "");
-
-		Timestamp timestamp = null;
-		timestamp = (Validator.validateDate(date) ? Validator.stringToTimestamp(date) : null);
-
-		String status = request.getParameter(Const.PARAM_STATUS);
 
 
-		Status statusObj = null;
 
-		for(int i = 0; i < Status.values().length; i++){
-			if(status.equalsIgnoreCase(Status.values()[i].name())){
-				statusObj = Status.values()[i];
-				System.out.println("Selected status in search: " + statusObj.name());
-			}
-		}
 
-		System.out.println("############SEARCH###############");
-		System.out.println("cpr: " + cpr);
-		System.out.println("name: " + name);
-		System.out.println("modality: " + modality);
-		System.out.println("department: " + department);
-		System.out.println("date: " + timestamp);
-		System.out.println("status: " + status);
-
-		// objekter
-		RekvisitionExtended[] rekvDto;
-		//TODO dao'er. skal ændres til almindeligt interface senere
-		Date d1 = new Date();
-		RekvisitionDaoImplExt rekvDao = new RekvisitionDaoImplExt(conn);
-		rekvDto = rekvDao.findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
-		Date d2 = new Date();
-
-		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
-		System.out.println("in " + (d2.getTime()- d1.getTime()) + " ms");
-		System.out.println("##################################");
-
-		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
-		request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
-
-	}
-
-	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController2) throws ServletException, IOException{
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-		//Rekvisition list to show user.
-		RekvisitionExtended[] rekvlist1 = null;
-		RekvisitionExtended[] rekvlist2 = null;
-		RekvisitionExtended[] rekvlist3 = null;
-		// gets list of the active user - default behavior
-		if(activeUser != null){
-			rekvlist1 = databaseController.getRekvisitionDao().findByAdvSearch(null, null, null, Status.APPROVED, null, null);
-			rekvlist2 = databaseController.getRekvisitionDao().findByAdvSearch(null, null, null, Status.BOOKED, null, null);
-		}
-		int size = ((rekvlist1 == null ? 0 : rekvlist1.length) + (rekvlist2 == null ? 0 : rekvlist2.length));
-		rekvlist3 = new RekvisitionExtended[size];
-		int j = 0;
-		if(rekvlist1 != null){
-			for(int i = 0; i < rekvlist1.length; i++){
-				rekvlist3[j] = rekvlist1[i];
-				j++;
-			}
-
-		}
-		if(rekvlist2 != null){
-			for(int i = 0; i < rekvlist2.length; i++){
-				rekvlist3[j] = rekvlist2[i];
-				j++;
-			}
-		}
-		//Stitch rekvisition[] to request object.
-		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist3);	
-		request.getRequestDispatcher(Const.BOOKING_PAGE).forward(request, response);
-	}
-
+	
 }

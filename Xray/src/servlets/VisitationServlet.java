@@ -1,13 +1,8 @@
 package servlets;
 
 import helperClasses.Const;
-import helperClasses.Validator;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.util.Date;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +21,7 @@ import database.interfaces.IDatabaseController;
  * Servlet implementation class VisitationServlet
  */
 @WebServlet("/VisitationServlet")
-public class VisitationServlet extends HttpServlet {
+public class VisitationServlet extends ParentServlet {
 	private static final long serialVersionUID = 1L;
 
 	// used for the search boxes in rekvisitionPage.jsp
@@ -39,7 +34,7 @@ public class VisitationServlet extends HttpServlet {
 	 */
 	public VisitationServlet() {
 		super();
-		}
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,12 +42,12 @@ public class VisitationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		Bruger activeUser = (Bruger) request.getSession().getAttribute(Const.ACTIVE_USER);
-		
+
 		// forwards to mainServlet with LoginPage as parameter
 		if(activeUser == null || databaseController == null){ 
 			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_PAGE);
 		}else{
-			initSession(request, response,activeUser, databaseController);		
+			initSession(request, new Status[]{Status.PENDING, Status.APPROVED}, databaseController);
 			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
 
@@ -62,106 +57,27 @@ public class VisitationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		Bruger activeUser = (Bruger)request.getSession().getAttribute(Const.ACTIVE_USER);
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
 		String visiterAction = request.getParameter("visiterAction");
-
-		initSession(request, response, activeUser, databaseController);
-		if("Godkend".equals(visiterAction)){
-			approveRekvisition(request);
-			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
-		}
-		else if("Afvis".equals(visiterAction)){
-			declineRekvisition(request);
-			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
+		if(databaseController == null || request.getSession().getAttribute(Const.ACTIVE_USER) == null){
+			response.sendRedirect(Const.MAIN_SERVLET + "?page=" + Const.LOGIN_SERVLET);
 		}else{
-			searchRekvisition(request, response);
-		}
-
-
-
-	}
-	
-	private void initSession(HttpServletRequest request,
-			HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
-		request.setCharacterEncoding("UTF-8");
-		setDefaultTable(request, response, activeUser, databaseController);
-		createSearchDropdowns(request, databaseController);
-		
-	}
-
-	private void setDefaultTable(HttpServletRequest request, HttpServletResponse response, Bruger activeUser, IDatabaseController databaseController) throws ServletException, IOException{
-		
-		//Rekvisition list to show user.
-		RekvisitionExtended[] rekvlist = null;
-		// gets list of the active user - default behavior
-		if(activeUser != null){
-			rekvlist = databaseController.getRekvisitionDao().findByAdvSearch(null, null, null, Status.PENDING, null, null);
-		}
-		//Stitch rekvisition[] to request object.
-		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvlist);	
-	}
-
-	/**
-	 * have to be called so the dropdowns in rekvisitionPage are filled
-	 * @param request
-	 * @param databaseController 
-	 */
-	private void createSearchDropdowns(HttpServletRequest request, IDatabaseController databaseController){
-		request.getSession().setAttribute(Const.MODALITY_LIST, databaseController.getModalitetDao().findDynamic(null, 0, -1, new Object[]{}));
-		request.getSession().setAttribute(Const.STATUS_LIST, Status.values());
-	}
-
-	private void searchRekvisition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
-		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
-		// parameters
-		String cpr = request.getParameter(Const.PARAM_CPR);
-		String name = request.getParameter(Const.PARAM_NAME);
-		String modality = request.getParameter(Const.PARAM_MODALITY);
-		String department = request.getParameter(Const.PARAM_DEPARTMENT);
-		department = (department.equals("-1") ? null : department);
-		String date = request.getParameter(Const.PARAM_DATE).replace(" ", "");
-
-		Timestamp timestamp = null;
-		timestamp = (Validator.validateDate(date) ? Validator.stringToTimestamp(date) : null);
-
-		String status = request.getParameter(Const.PARAM_STATUS);
-
-
-		Status statusObj = null;
-
-		for(int i = 0; i < Status.values().length; i++){
-			if(status.equalsIgnoreCase(Status.values()[i].name())){
-				statusObj = Status.values()[i];
-				System.out.println("Selected status in search: " + statusObj.name());
+			initSession(request, null, databaseController);
+			if("Godkend".equals(visiterAction)){
+				approveRekvisition(request);
+			}else if("Afvis".equals(visiterAction)){
+				declineRekvisition(request);
+			}else{
+				searchRekvisition(request, databaseController);
 			}
+			request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
 		}
 
-		System.out.println("############SEARCH###############");
-		System.out.println("cpr: " + cpr);
-		System.out.println("name: " + name);
-		System.out.println("modality: " + modality);
-		System.out.println("department: " + department);
-		System.out.println("date: " + timestamp);
-		System.out.println("status: " + status);
-
-		// objekter
-		RekvisitionExtended[] rekvDto;
-		//TODO dao'er. skal ændres til almindeligt interface senere
-		Date d1 = new Date();
-		rekvDto = databaseController.getRekvisitionDao().findByAdvSearch(cpr, name, modality, statusObj, timestamp, department);
-		Date d2 = new Date();
-
-		System.out.println("##found " + (rekvDto != null ? rekvDto.length : 0) + " rekvisitions");
-		System.out.println("in " + (d2.getTime()- d1.getTime()) + " ms");
-		System.out.println("##################################");
-
-		request.getSession().setAttribute(Const.REKVISITION_LIST, rekvDto);
-		request.getRequestDispatcher(Const.VISITATION_PAGE).forward(request, response);
-
 	}
+
+
+
+
 
 	private void declineRekvisition(HttpServletRequest request){
 		IDatabaseController databaseController =(IDatabaseController) request.getSession().getAttribute(Const.DATABASE_CONTROLLER);
